@@ -1,0 +1,19 @@
+{
+  "name": "subapp/sql",
+  "description": "SQL Two Way Parser/Builder",
+  "keywords": ["sql", "sql query", "sql builder"],
+  "authors": [
+    {"name": "Ivan Hontarenko", "email": "ihontarenko@gmail.com"}
+  ],
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": ">=7.2",
+    "subapp/lexer": "~2.0",
+    "subapp/cache": "~1.0",
+    "subapp/collection": "~1.1"
+  },
+  "autoload": {
+    "psr-4": { "Subapp\\Sql\\": "src" }
+  }
+}
