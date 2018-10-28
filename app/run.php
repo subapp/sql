@@ -28,10 +28,19 @@ foreach ($lexer as $token) {
 
 $lexer->rewind();
 
-$processor = new \Subapp\Sql\Parser\Processor($lexer, new Subapp\Sql\Platform\MySQLPlatform());
+$processor = new \Subapp\Sql\Syntax\Processor($lexer, new Subapp\Sql\Platform\MySQLPlatform());
+$processor->setup(new \Subapp\Sql\Syntax\MySQL\Parser\MySQLParserProcessorSetupLoader());
 
-$processor->addParser(new \Subapp\Sql\Parser\Statement\SelectParser());
-$processor->addParser(new \Subapp\Sql\Parser\Common\FromParser());
-$processor->addParser(new \Subapp\Sql\Parser\Func\TrimParser());
+/** @var \Subapp\Sql\Ast\Statement\Select $select */
+$select = $processor->parse();
 
-var_dump($processor->parse());
+$renderer = new \Subapp\Sql\Represent\Renderer();
+$renderer->setup(new \Subapp\Sql\Represent\MySQL\MySQLRendererSetupLoader());
+
+echo "\n====== SELECT AST Object ======\n";
+var_dump($select);
+
+echo "\n====== SELECT AST Render ======\n";
+echo $renderer->render($select);
+
+echo "\n\n\n";

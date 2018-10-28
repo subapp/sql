@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Parser;
+namespace Subapp\Sql\Syntax;
 
 use Subapp\Collection\Collection;
 use Subapp\Collection\CollectionInterface;
@@ -44,6 +44,14 @@ final class Processor implements ProcessorInterface
     }
     
     /**
+     * @param ParserProcessorSetupLoaderInterface $loader
+     */
+    public function setup(ParserProcessorSetupLoaderInterface $loader)
+    {
+        $loader->setup($this);
+    }
+    
+    /**
      * @param ParserInterface $parser
      */
     public function addParser(ParserInterface $parser)
@@ -71,14 +79,14 @@ final class Processor implements ProcessorInterface
     /**
      * @param $name
      * @return ParserInterface
-     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function getParser($name)
     {
         $parser = $this->parsers->offsetGet($name);
         
         if (!($parser instanceof ParserInterface)) {
-            throw new \InvalidArgumentException(sprintf('Unfortunately parser with name "%s" doesn\'t registered yet',
+            throw new \RuntimeException(sprintf('Unfortunately parser with name "%s" doesn\'t registered yet',
                 $name));
         }
         
@@ -109,7 +117,7 @@ final class Processor implements ProcessorInterface
                     $lexer->getTokenValue(), $lexer->getTokenPosition()));
         }
     
-        return $this->getParser("statement.{$name}_parser")->parse($lexer, $this);
+        return $this->getParser("statement.{$name}")->parse($lexer, $this);
     }
     
     /**

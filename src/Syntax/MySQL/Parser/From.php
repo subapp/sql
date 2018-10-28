@@ -1,18 +1,18 @@
 <?php
 
-namespace Subapp\Sql\Parser\Common;
+namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\Common\From;
+use Subapp\Sql\Ast;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Parser\AbstractParser;
-use Subapp\Sql\Parser\ProcessorInterface;
+use Subapp\Sql\Syntax\AbstractParser;
+use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class FromParser
- * @package Subapp\Sql\Parser\Common
+ * @package Subapp\Sql\Syntax\MySQL\Parser\Common
  */
-class FromParser extends AbstractParser
+class From extends AbstractParser
 {
     
     /**
@@ -24,8 +24,8 @@ class FromParser extends AbstractParser
         $this->matchIf(Lexer::T_GRAVE_ACCENT, $lexer);
         $this->match(Lexer::T_IDENTIFIER, $lexer);
         
-        $expression = new From();
-        $expression->{'table'} = $lexer->getTokenValue();
+        $expression = new Ast\From();
+        $expression->setTable($lexer->getTokenValue());
         
         $this->matchIf(Lexer::T_GRAVE_ACCENT, $lexer);
         

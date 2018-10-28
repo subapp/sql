@@ -1,14 +1,14 @@
 <?php
 
-namespace Subapp\Sql\Ast;
+namespace Subapp\Sql\Represent;
 
 use Subapp\Sql\Common\ClassNameTrait;
 
 /**
- * Class AbstractExpression
- * @package Subapp\Sql\Ast
+ * Class AbstractRepresent
+ * @package Subapp\Sql\Represent
  */
-abstract class AbstractExpression implements ExpressionInterface
+abstract class AbstractSqlizer implements SqlizerInterface
 {
     
     use ClassNameTrait;

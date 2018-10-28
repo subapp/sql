@@ -1,15 +1,15 @@
 <?php
 
-namespace Subapp\Sql\Parser\Func;
+namespace Subapp\Sql\Syntax\MySQL\Parser\Func;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Parser\AbstractParser;
-use Subapp\Sql\Parser\ProcessorInterface;
+use Subapp\Sql\Syntax\AbstractParser;
+use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class TrimFunctionParser
- * @package Subapp\Sql\Parser\Func
+ * @package Subapp\Sql\Syntax\MySQL\Parser\Func
  */
 class TrimParser extends AbstractParser
 {

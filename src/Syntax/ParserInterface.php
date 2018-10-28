@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Parser;
+namespace Subapp\Sql\Syntax;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
@@ -8,7 +8,7 @@ use Subapp\Sql\Exception\SyntaxErrorException;
 
 /**
  * Interface ParserInterface
- * @package Subapp\Sql\Parser
+ * @package Subapp\Sql\Syntax
  */
 interface ParserInterface
 {
@@ -37,5 +37,11 @@ interface ParserInterface
      * @return boolean
      */
     public function isFunction(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isSubSelect(LexerInterface $lexer);
     
 }

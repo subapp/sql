@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Parser;
+namespace Subapp\Sql\Syntax;
 
 use Subapp\Collection\CollectionInterface;
 use Subapp\Lexer\LexerInterface;
@@ -13,6 +13,12 @@ use Subapp\Sql\Platform\PlatformInterface;
  */
 interface ProcessorInterface
 {
+    
+    
+    /**
+     * @param ParserProcessorSetupLoaderInterface $loader
+     */
+    public function setup(ParserProcessorSetupLoaderInterface $loader);
     
     /**
      * @param ParserInterface $parser
