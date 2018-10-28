@@ -33,6 +33,13 @@ class Select extends AbstractExpression
         $this->from = $from;
     }
     
+    public function setPrimaryTable($table)
+    {
+        $from = new Ast\From();
+        $from->setTable($table);
+        $this->setFrom($from);
+    }
+    
     /**
      * @return string
      */

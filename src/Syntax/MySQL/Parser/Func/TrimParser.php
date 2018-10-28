@@ -4,14 +4,14 @@ namespace Subapp\Sql\Syntax\MySQL\Parser\Func;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Syntax\AbstractParser;
+use Subapp\Sql\Syntax\MySQL;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class TrimFunctionParser
  * @package Subapp\Sql\Syntax\MySQL\Parser\Func
  */
-class TrimParser extends AbstractParser
+class TrimParser extends MySQL\Parser\AbstractMySQLParser
 {
     
     /**

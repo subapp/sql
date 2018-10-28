@@ -5,14 +5,13 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Syntax\AbstractParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class FromParser
  * @package Subapp\Sql\Syntax\MySQL\Parser\Common
  */
-class From extends AbstractParser
+class From extends AbstractMySQLParser
 {
     
     /**

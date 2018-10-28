@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Syntax\MySQL\Parser;
+namespace Subapp\Sql\Syntax\MySQL;
 
 use Subapp\Sql\Syntax\MySQL\Parser;
 use Subapp\Sql\Syntax\ParserProcessorSetupLoaderInterface;
@@ -18,13 +18,17 @@ class MySQLParserProcessorSetupLoader implements ParserProcessorSetupLoaderInter
      */
     public function setup(ProcessorInterface $processor)
     {
-        // general statement parsers
+        // SELECT Parsers
         $processor->addParser(new Parser\Statement\Select());
+        $processor->addParser(new Parser\Statement\Select\SelectExpression());
         
-        // common expression parsers
+        // Base expressions parser
+        $processor->addParser(new Parser\Identifier());
+        
+        // Common expression parsers
         $processor->addParser(new Parser\From());
         
-        // default MySQL function parsers
+        // Default MySQL function parsers
         $processor->addParser(new Parser\Func\TrimParser());
     }
     

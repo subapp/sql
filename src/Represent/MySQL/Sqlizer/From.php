@@ -20,7 +20,7 @@ class From extends AbstractSqlizer
      */
     public function getSql(RendererInterface $renderer, ExpressionInterface $expression)
     {
-        return sprintf('FROM %s', $expression->getTable());
+        return sprintf('FROM `%s`', $expression->getTable());
     }
     
 }

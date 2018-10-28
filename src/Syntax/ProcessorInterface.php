@@ -14,7 +14,6 @@ use Subapp\Sql\Platform\PlatformInterface;
 interface ProcessorInterface
 {
     
-    
     /**
      * @param ParserProcessorSetupLoaderInterface $loader
      */

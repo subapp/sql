@@ -13,6 +13,13 @@ use Subapp\Sql\Exception\SyntaxErrorException;
 interface ParserInterface
 {
     
+    const SELECT_STATEMENT_PARSER = 'statement.select';
+    const UPDATE_STATEMENT_PARSER = 'statement.update';
+    const DELETE_STATEMENT_PARSER = 'statement.delete';
+    
+    const EXPRESSION_FROM_PARSER = 'parser.from';
+    
+    
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
@@ -31,6 +38,12 @@ interface ParserInterface
      * @throws SyntaxErrorException
      */
     public function throwSyntaxError(LexerInterface $lexer, ...$tokenType);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isMathOperator(LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer

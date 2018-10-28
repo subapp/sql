@@ -1,1 +1,1 @@
-select *, count(DISTINCT P.id) AS cnt_permissions from `users` AS u, `permissions` P;
+select id, name, email, cnt('test'), t0.id from `users` AS u, `permissions` P;

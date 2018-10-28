@@ -29,7 +29,7 @@ foreach ($lexer as $token) {
 $lexer->rewind();
 
 $processor = new \Subapp\Sql\Syntax\Processor($lexer, new Subapp\Sql\Platform\MySQLPlatform());
-$processor->setup(new \Subapp\Sql\Syntax\MySQL\Parser\MySQLParserProcessorSetupLoader());
+$processor->setup(new \Subapp\Sql\Syntax\MySQL\MySQLParserProcessorSetupLoader());
 
 /** @var \Subapp\Sql\Ast\Statement\Select $select */
 $select = $processor->parse();
@@ -42,5 +42,12 @@ var_dump($select);
 
 echo "\n====== SELECT AST Render ======\n";
 echo $renderer->render($select);
+
+$query = new \Subapp\Sql\Ast\Statement\Select();
+$query->setFrom(new \Subapp\Sql\Ast\From());
+$query->getFrom()->setTable('images');
+
+echo "\n====== SELECT AST Render ======\n";
+echo $renderer->render($query);
 
 echo "\n\n\n";
