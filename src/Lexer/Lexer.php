@@ -1,14 +1,14 @@
 <?php
 
-namespace Subapp\Sql\Parser\Query;
+namespace Subapp\Sql\Lexer;
 
 use Subapp\Lexer\TokenInterface;
 
 /**
  * Class SqlLexer
- * @package Subapp\Sql\Parser\Query
+ * @package Subapp\Sql\Lexer
  */
-class SqlLexer extends AbstractSqlLexer
+class Lexer extends AbstractSqlLexer
 {
 
     /**
@@ -50,7 +50,7 @@ class SqlLexer extends AbstractSqlLexer
             }
         }
 
-        $token->setType($tokenType ?? SqlLexer::T_UNKNOWN);
+        $token->setType($tokenType ?? Lexer::T_UNKNOWN);
     }
 
     /**
@@ -58,7 +58,7 @@ class SqlLexer extends AbstractSqlLexer
      */
     protected function isApplicable(TokenInterface $token)
     {
-        return ($token->getType() !== SqlLexer::T_UNDEFINED);
+        return ($token->getType() !== Lexer::T_UNDEFINED);
     }
 
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Subapp\Sql\Parser\Query;
+namespace Subapp\Sql\Lexer;
 
 use Subapp\Lexer\AbstractLexer;
 
 /**
  * Class AbstractSqlLexer
- * @package Subapp\Sql\Parser\Query
+ * @package Subapp\Sql\Query
  */
 abstract class AbstractSqlLexer extends AbstractLexer
 {

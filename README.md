@@ -1,2 +1,2 @@
 # sql
-SQL Two Way Parser/Builder
+SQL Two Way Query/Builder

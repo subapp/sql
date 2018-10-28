@@ -8,26 +8,26 @@
     "packages": [
         {
             "name": "league/flysystem",
-            "version": "1.0.46",
+            "version": "1.0.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2"
+                "reference": "a6ded5b2f6055e2db97b4b859fdfca2b952b78aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a6ded5b2f6055e2db97b4b859fdfca2b952b78aa",
+                "reference": "a6ded5b2f6055e2db97b4b859fdfca2b952b78aa",
                 "shasum": ""
             },
             "require": {
+                "ext-fileinfo": "*",
                 "php": ">=5.5.9"
             },
             "conflict": {
                 "league/flysystem-sftp": "<1.0.6"
             },
             "require-dev": {
-                "ext-fileinfo": "*",
                 "phpspec/phpspec": "^3.4",
                 "phpunit/phpunit": "^5.7.10"
             },
@@ -88,7 +88,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2018-08-22T07:45:22+00:00"
+            "time": "2018-10-15T13:53:10+00:00"
         },
         {
             "name": "predis/predis",
@@ -276,16 +276,16 @@
         },
         {
             "name": "subapp/lexer",
-            "version": "v2.0.4",
+            "version": "v2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/subapp/lexer.git",
-                "reference": "adcf48258419da4c44bd3851a52543dccd7575ba"
+                "reference": "dec5a4ba2a7debc08a5032051a8648b1bfc76c3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/subapp/lexer/zipball/adcf48258419da4c44bd3851a52543dccd7575ba",
-                "reference": "adcf48258419da4c44bd3851a52543dccd7575ba",
+                "url": "https://api.github.com/repos/subapp/lexer/zipball/dec5a4ba2a7debc08a5032051a8648b1bfc76c3e",
+                "reference": "dec5a4ba2a7debc08a5032051a8648b1bfc76c3e",
                 "shasum": ""
             },
             "require": {
@@ -311,7 +311,7 @@
             "keywords": [
                 "lexer"
             ],
-            "time": "2018-10-26T10:30:48+00:00"
+            "time": "2018-10-28T00:40:04+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",

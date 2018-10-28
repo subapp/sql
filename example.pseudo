@@ -1,0 +1,3 @@
+
+$expr = new FunctionCount(new ParserCount(), new CountPresenter());
+
