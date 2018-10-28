@@ -10,10 +10,10 @@ use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Platform\PlatformInterface;
 
 /**
- * Class ParserFacade
+ * Class ParserProcessor
  * @package Subapp\Sql
  */
-final class ParserFacade
+final class Processor implements ProcessorInterface
 {
     
     /**
@@ -71,18 +71,24 @@ final class ParserFacade
     /**
      * @param $name
      * @return ParserInterface
+     * @throws \InvalidArgumentException
      */
     public function getParser($name)
     {
         $parser = $this->parsers->offsetGet($name);
         
         if (!($parser instanceof ParserInterface)) {
-        
+            throw new \InvalidArgumentException(sprintf('Unfortunately parser with name "%s" doesn\'t registered yet',
+                $name));
         }
         
         return $parser;
     }
     
+    /**
+     * @return \Subapp\Sql\Ast\ExpressionInterface
+     * @throws SyntaxErrorException
+     */
     public function parse()
     {
         $lexer = $this->getLexer();
@@ -93,21 +99,18 @@ final class ParserFacade
         // determine which of statement will be parsed
         switch (true) {
             case ($lexer->isCurrent(Lexer::T_SELECT)):
-                $this->getParser('select')->parse($lexer);
-                break;
+                $name = 'select'; break;
             case ($lexer->isCurrent(Lexer::T_UPDATE)):
-                break;
+                $name = 'update'; break;
             case ($lexer->isCurrent(Lexer::T_DELETE)):
-                break;
+                $name = 'delete'; break;
             default:
                 throw new SyntaxErrorException(sprintf('Syntax error. Expected either SELECT, UPDATE or DELETE got "%s" at position %d',
                     $lexer->getTokenValue(), $lexer->getTokenPosition()));
         }
-        
-        return;
+    
+        return $this->getParser("statement.{$name}_parser")->parse($lexer, $this);
     }
-    
-    
     
     /**
      * @return LexerInterface

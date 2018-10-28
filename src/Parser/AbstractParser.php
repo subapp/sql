@@ -44,8 +44,25 @@ abstract class AbstractParser implements ParserInterface
         $position = $token ? $token->getPosition() : -1;
         $token = $token ? $token->getToken() : '[END OF LINE]';
         
-        throw new SyntaxErrorException(sprintf('Syntax error. Expected %s got "%s" at position %d',
-            $tokenType, $token, $position));
+        throw new SyntaxErrorException(sprintf('Syntax error when parser "%s" work. Expected %s got "%s" at position %d',
+            $this->getName(), $tokenType, $token, $position));
+    }
+    
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        $namespace = explode('\\', static::class);
+    
+        $flags = (PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        
+        $class = preg_split('/([A-Z]?[^A-Z]+)/', array_pop($namespace), -1, $flags);
+        $class = implode('_', $class);
+    
+        $parserName = sprintf('%s.%s', array_pop($namespace), $class);
+        
+        return strtolower($parserName);
     }
     
     /**
@@ -55,6 +72,15 @@ abstract class AbstractParser implements ParserInterface
     protected function match($token, LexerInterface $lexer)
     {
         $lexer->toToken($token) || $this->throwSyntaxError($lexer, $token);
+    }
+    
+    /**
+     * @param                $token
+     * @param LexerInterface $lexer
+     */
+    protected function matchIf($token, LexerInterface $lexer)
+    {
+        $lexer->toToken($token);
     }
     
 }

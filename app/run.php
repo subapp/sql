@@ -4,7 +4,7 @@ use Subapp\Sql\Lexer\Lexer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = '0002';
+$sqlVersion = '0000';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -28,6 +28,10 @@ foreach ($lexer as $token) {
 
 $lexer->rewind();
 
-$trimFunction = new \Subapp\Sql\Parser\Func\TrimFunctionParser();
-var_dump($trimFunction->isFunction($lexer));
-$trimFunction->parse($lexer);
+$processor = new \Subapp\Sql\Parser\Processor($lexer, new Subapp\Sql\Platform\MySQLPlatform());
+
+$processor->addParser(new \Subapp\Sql\Parser\Statement\SelectParser());
+$processor->addParser(new \Subapp\Sql\Parser\Common\FromParser());
+$processor->addParser(new \Subapp\Sql\Parser\Func\TrimParser());
+
+var_dump($processor->parse());

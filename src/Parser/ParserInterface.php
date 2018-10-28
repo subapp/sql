@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Parser;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Exception\SyntaxErrorException;
 
 /**
@@ -13,9 +14,11 @@ interface ParserInterface
 {
     
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
+     * @param ProcessorInterface $processor
+     * @return ExpressionInterface
      */
-    public function parse(LexerInterface $lexer);
+    public function parse(LexerInterface $lexer, ProcessorInterface $processor);
     
     /**
      * @return string

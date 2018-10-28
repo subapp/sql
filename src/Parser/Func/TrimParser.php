@@ -5,18 +5,20 @@ namespace Subapp\Sql\Parser\Func;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Parser\AbstractParser;
+use Subapp\Sql\Parser\ProcessorInterface;
 
 /**
  * Class TrimFunctionParser
  * @package Subapp\Sql\Parser\Func
  */
-class TrimFunctionParser extends AbstractParser
+class TrimParser extends AbstractParser
 {
     
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
+     * @param ProcessorInterface $processor
      */
-    public function parse(LexerInterface $lexer)
+    public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         // @todo for test...
         $this->match(Lexer::T_IDENTIFIER, $lexer);
@@ -28,9 +30,9 @@ class TrimFunctionParser extends AbstractParser
     /**
      * @return string
      */
-    public function getName()
-    {
-        return 'function.trim';
-    }
+//    public function getName()
+//    {
+//        return 'function.trim';
+//    }
     
 }
