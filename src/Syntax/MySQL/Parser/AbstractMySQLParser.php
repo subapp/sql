@@ -22,23 +22,59 @@ abstract class AbstractMySQLParser extends AbstractParser
     {
         return $processor->getParser('parser.identifier');
     }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\DefaultFunction
+     */
+    public function getDefaultFunctionParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.default_function');
+    }
     
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|MySQL\Parser\From
      */
-    public function getExpressionFromParser(ProcessorInterface $processor)
+    public function getFromParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.from');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\FieldPath
+     */
+    public function getFieldPathParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.field_path');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Literal
+     */
+    public function getLiteralParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.literal');
     }
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|MySQL\Parser\Statement\Select\SelectExpression
+     * @return ParserInterface|MySQL\Parser\Variables
      */
-    public function getSelectExpressionParser(ProcessorInterface $processor)
+    public function getSelectVarsParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('select.select_expression');
+        return $processor->getParser('parser.variables');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Expression
+     */
+    public function getExpressionParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.expression');
     }
     
 }

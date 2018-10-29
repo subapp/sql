@@ -10,14 +10,15 @@ use Subapp\Sql\Ast\ExpressionInterface;
  */
 interface SqlizerInterface
 {
-    
+
     /**
-     * @param RendererInterface   $renderer
      * @param ExpressionInterface $expression
+     * @param RendererInterface   $renderer
+     *
      * @return string
      */
-    public function getSql(RendererInterface $renderer, ExpressionInterface $expression);
-    
+    public function getSql(ExpressionInterface $expression, RendererInterface $renderer);
+
     /**
      * @return string
      */

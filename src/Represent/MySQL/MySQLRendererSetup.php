@@ -4,13 +4,13 @@ namespace Subapp\Sql\Represent\MySQL;
 
 use Subapp\Sql\Represent\MySQL\Sqlizer;
 use Subapp\Sql\Represent\RendererInterface;
-use Subapp\Sql\Represent\RendererSetupLoaderInterface;
+use Subapp\Sql\Represent\RendererSetupInterface;
 
 /**
  * Class MySQLRendererSetupLoader
  * @package Subapp\Sql\Represent\MySQL
  */
-class MySQLRendererSetupLoader implements RendererSetupLoaderInterface
+class MySQLRendererSetup implements RendererSetupInterface
 {
     
     /**

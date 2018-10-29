@@ -12,9 +12,9 @@ interface RendererInterface
 {
     
     /**
-     * @param RendererSetupLoaderInterface $loader
+     * @param RendererSetupInterface $loader
      */
-    public function setup(RendererSetupLoaderInterface $loader);
+    public function setup(RendererSetupInterface $loader);
     
     /**
      * @param ExpressionInterface $expression

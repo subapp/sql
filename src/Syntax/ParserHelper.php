@@ -15,7 +15,28 @@ final class ParserHelper
 {
     
     use ClassNameTrait;
-    
+
+    /**
+     * @param LexerInterface $lexer
+     * @param integer $type
+     * @return string
+     */
+    public function renderToToken(LexerInterface $lexer, $type)
+    {
+        $expression = null;
+
+        $token = $lexer->peek();
+
+        while ($token && !$token->is($type)) {
+            $expression = sprintf('%s %s', $expression, $token->getToken());
+            $token = $lexer->peek();
+        }
+
+        $lexer->resetPeek();
+
+        return $expression;
+    }
+
     /**
      * @param ParserInterface $parser
      * @param LexerInterface  $lexer
@@ -26,7 +47,7 @@ final class ParserHelper
     {
         /** @var Lexer $lexer */
         $tokenType = array_map(function ($type) use ($lexer) {
-            return $lexer->getConstantName($type);
+            return is_integer($type) ? $lexer->getConstantName($type) : $type;
         }, $tokenType);
         
         $lastToken = array_pop($tokenType);

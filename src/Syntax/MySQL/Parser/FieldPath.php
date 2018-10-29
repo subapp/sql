@@ -22,11 +22,11 @@ class FieldPath extends AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $identifierParser = $this->getIdentifierParser($processor);
+        $parser = $this->getIdentifierParser($processor);
         
-        $table = $identifierParser->parse($lexer, $processor);
+        $table = $parser->parse($lexer, $processor);
         $this->match(Lexer::T_DOT, $lexer);
-        $field = $identifierParser->parse($lexer, $processor);
+        $field = $parser->parse($lexer, $processor);
         
         $expression = new FieldPathExpression();
         

@@ -3,14 +3,14 @@
 namespace Subapp\Sql\Syntax\MySQL;
 
 use Subapp\Sql\Syntax\MySQL\Parser;
-use Subapp\Sql\Syntax\ParserProcessorSetupLoaderInterface;
+use Subapp\Sql\Syntax\ParserSetupInterface;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class MySQLParserProcessorSetupLoader
  * @package Subapp\Sql\Syntax\MySQL\Parser
  */
-class MySQLParserProcessorSetupLoader implements ParserProcessorSetupLoaderInterface
+class MySQLParserSetup implements ParserSetupInterface
 {
     
     /**
@@ -20,16 +20,17 @@ class MySQLParserProcessorSetupLoader implements ParserProcessorSetupLoaderInter
     {
         // SELECT Parsers
         $processor->addParser(new Parser\Statement\Select());
-        $processor->addParser(new Parser\Statement\Select\SelectExpression());
+        $processor->addParser(new Parser\Variables());
         
         // Base expressions parser
         $processor->addParser(new Parser\Identifier());
+        $processor->addParser(new Parser\Literal());
+        $processor->addParser(new Parser\FieldPath());
+        $processor->addParser(new Parser\Expression());
+        $processor->addParser(new Parser\DefaultFunction());
         
         // Common expression parsers
         $processor->addParser(new Parser\From());
-        
-        // Default MySQL function parsers
-        $processor->addParser(new Parser\Func\TrimParser());
     }
     
 }

@@ -26,9 +26,9 @@ class Renderer implements RendererInterface
     }
     
     /**
-     * @param RendererSetupLoaderInterface $loader
+     * @param RendererSetupInterface $loader
      */
-    public function setup(RendererSetupLoaderInterface $loader)
+    public function setup(RendererSetupInterface $loader)
     {
         $loader->setup($this);
     }
@@ -81,7 +81,7 @@ class Renderer implements RendererInterface
      */
     public function render(ExpressionInterface $expression)
     {
-        return $this->getSqlizer($expression->getSqlizerName())->getSql($this, $expression);
+        return $this->getSqlizer($expression->getSqlizerName())->getSql($expression, $this);
     }
     
 }

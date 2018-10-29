@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Represent\MySQL\Sqlizer;
 
 use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\From as FromExpression;
 use Subapp\Sql\Represent\AbstractSqlizer;
 use Subapp\Sql\Represent\RendererInterface;
 
@@ -15,10 +16,10 @@ class From extends AbstractSqlizer
     
     /**
      * @param RendererInterface   $renderer
-     * @param ExpressionInterface|\Subapp\Sql\Ast\From $expression
+     * @param ExpressionInterface|FromExpression $expression
      * @return string
      */
-    public function getSql(RendererInterface $renderer, ExpressionInterface $expression)
+    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
         return sprintf('FROM `%s`', $expression->getTable());
     }

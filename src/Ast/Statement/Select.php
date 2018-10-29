@@ -16,6 +16,11 @@ class Select extends AbstractExpression
      * @var Ast\From
      */
     private $from;
+
+    /**
+     * @var Ast\Variables
+     */
+    private $expression;
     
     /**
      * @return Ast\From
@@ -32,12 +37,31 @@ class Select extends AbstractExpression
     {
         $this->from = $from;
     }
-    
+
+    /**
+     * @param string $table
+     */
     public function setPrimaryTable($table)
     {
         $from = new Ast\From();
         $from->setTable($table);
         $this->setFrom($from);
+    }
+
+    /**
+     * @return Ast\Variables
+     */
+    public function getExpression()
+    {
+        return $this->expression;
+    }
+
+    /**
+     * @param Ast\Variables $expression
+     */
+    public function setExpression(Ast\Variables $expression)
+    {
+        $this->expression = $expression;
     }
     
     /**

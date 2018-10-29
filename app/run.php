@@ -4,7 +4,7 @@ use Subapp\Sql\Lexer\Lexer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = '0000';
+$sqlVersion = '0003';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -29,13 +29,13 @@ foreach ($lexer as $token) {
 $lexer->rewind();
 
 $processor = new \Subapp\Sql\Syntax\Processor($lexer, new Subapp\Sql\Platform\MySQLPlatform());
-$processor->setup(new \Subapp\Sql\Syntax\MySQL\MySQLParserProcessorSetupLoader());
+$processor->setup(new \Subapp\Sql\Syntax\MySQL\MySQLParserSetup());
 
 /** @var \Subapp\Sql\Ast\Statement\Select $select */
 $select = $processor->parse();
 
 $renderer = new \Subapp\Sql\Represent\Renderer();
-$renderer->setup(new \Subapp\Sql\Represent\MySQL\MySQLRendererSetupLoader());
+$renderer->setup(new \Subapp\Sql\Represent\MySQL\MySQLRendererSetup());
 
 echo "\n====== SELECT AST Object ======\n";
 var_dump($select);

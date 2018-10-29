@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Syntax;
 
 /**
- * Interface ParserProcessorSetupLoaderInterface
+ * Interface ParserSetupInterface
  * @package Subapp\Sql\Syntax
  */
-interface ParserProcessorSetupLoaderInterface
+interface ParserSetupInterface
 {
     
     /**

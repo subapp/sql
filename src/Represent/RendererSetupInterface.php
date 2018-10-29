@@ -6,7 +6,7 @@ namespace Subapp\Sql\Represent;
  * Interface RendererSetupLoader
  * @package Subapp\Sql\Represent
  */
-interface RendererSetupLoaderInterface
+interface RendererSetupInterface
 {
     
     /**
