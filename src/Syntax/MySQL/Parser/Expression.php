@@ -27,12 +27,13 @@ class Expression extends AbstractMySQLParser
 
         switch (true) {
             case $this->isMathExpression($lexer):
-                die(var_dump("isMathExpression " . $this->renderToToken($lexer, Lexer::T_COMMA)));
+                $expression = $this->getArithmeticParser($processor)->parse($lexer, $processor);
                 break;
 
             case $this->isFunction($lexer):
-                $expression = $this->getDefaultFunctionParser($processor)->parse($lexer, $processor);
-
+                $expression = $this->getOrdinaryFunctionParser($processor)->parse($lexer, $processor);
+                break;
+                
             case $this->isFieldPath($lexer):
                 $expression = $this->getFieldPathParser($processor)->parse($lexer, $processor);
                 break;
@@ -42,10 +43,8 @@ class Expression extends AbstractMySQLParser
                 break;
 
             default:
-                $this->throwSyntaxError($lexer, 'expression like: table.id', '123', '"string"', 'COUNT()', '(123 + 456) * SUM(table.qty)');
+                $this->throwSyntaxError($lexer, 'Literal', 'FieldPath', 'Function', 'MathExpression');
         }
-
-        var_dump($expression);
 
         return $expression;
     }

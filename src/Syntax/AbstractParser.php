@@ -134,9 +134,9 @@ abstract class AbstractParser implements ParserInterface
      * @param integer $type
      * @return string
      */
-    public function renderToToken(LexerInterface $lexer, $type)
+    public function getStringToToken(LexerInterface $lexer, $type)
     {
-        return $this->helper->renderToToken($lexer, $type);
+        return $this->helper->getStringToToken($lexer, $type);
     }
 
     /**

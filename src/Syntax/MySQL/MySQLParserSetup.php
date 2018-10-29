@@ -23,11 +23,13 @@ class MySQLParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Variables());
         
         // Base expressions parser
+        $processor->addParser(new Parser\Operand());
+        $processor->addParser(new Parser\Arithmetic());
         $processor->addParser(new Parser\Identifier());
         $processor->addParser(new Parser\Literal());
         $processor->addParser(new Parser\FieldPath());
         $processor->addParser(new Parser\Expression());
-        $processor->addParser(new Parser\DefaultFunction());
+        $processor->addParser(new Parser\OrdinaryFunction());
         
         // Common expression parsers
         $processor->addParser(new Parser\From());

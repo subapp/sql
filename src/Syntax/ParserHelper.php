@@ -21,7 +21,7 @@ final class ParserHelper
      * @param integer $type
      * @return string
      */
-    public function renderToToken(LexerInterface $lexer, $type)
+    public function getStringToToken(LexerInterface $lexer, $type)
     {
         $expression = null;
 
@@ -34,7 +34,7 @@ final class ParserHelper
 
         $lexer->resetPeek();
 
-        return $expression;
+        return sprintf('[.. %s ..]', $expression);
     }
 
     /**

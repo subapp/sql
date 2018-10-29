@@ -23,20 +23,21 @@ class Variables extends MySQL\Parser\AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $selectExpression = new VarsExpression();
+        $variables = new VarsExpression();
         $parser = $this->getExpressionParser($processor);
 
-        $selectExpression->append($parser->parse($lexer, $processor));
+        $variables->append($parser->parse($lexer, $processor));
 
         while ($lexer->toToken(Lexer::T_COMMA)) {
-            $selectExpression->append($parser->parse($lexer, $processor));
+            $variables->append($parser->parse($lexer, $processor));
 
+            // aliases...
             if ($lexer->isNext(Lexer::T_IDENTIFIER)) {
                 $this->matchIf(Lexer::T_IDENTIFIER, $lexer);
             }
         }
         
-        return $selectExpression;
+        return $variables;
     }
     
 }

@@ -12,7 +12,7 @@ class Variables extends AbstractExpression
 {
 
     /**
-     * @var Collection|ExpressionInterface
+     * @var Collection|ExpressionInterface[]
      */
     private $expressions;
 
@@ -48,13 +48,21 @@ class Variables extends AbstractExpression
     {
         $this->expressions->clear();
     }
+    
+    /**
+     * @return Collection|ExpressionInterface[]
+     */
+    public function getExpressions()
+    {
+        return $this->expressions;
+    }
 
     /**
      * @return string
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.comma_separated_expression';
+        return 'sqlizer.variables';
     }
 
 }

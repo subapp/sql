@@ -1,1 +1,7 @@
-select id, 123, 0.777, "test", (2 + 3) * 1, name, email, cnt('test'), t0.id from `users` AS u, `permissions` P;
+select
+t0.name,
+sum(length(sum(s.name)) / count(s.id)),
+Sum(u.id) * 3,
+2 * Sum(users.balance),
+cnt('test'),
+t0.id from `users`

@@ -13,12 +13,13 @@ use Subapp\Sql\Represent\RendererInterface;
  */
 class Literal extends AbstractSqlizer
 {
-
+    
     /**
      * @param ExpressionInterface|LiteralExpression $expression
-     * @param RendererInterface $renderer
+     * @param RendererInterface                     $renderer
      *
      * @return string
+     * @throws \InvalidArgumentException
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {

@@ -25,11 +25,11 @@ abstract class AbstractMySQLParser extends AbstractParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|MySQL\Parser\DefaultFunction
+     * @return ParserInterface|MySQL\Parser\OrdinaryFunction
      */
-    public function getDefaultFunctionParser(ProcessorInterface $processor)
+    public function getOrdinaryFunctionParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.default_function');
+        return $processor->getParser('parser.ordinary_function');
     }
     
     /**
@@ -63,7 +63,7 @@ abstract class AbstractMySQLParser extends AbstractParser
      * @param ProcessorInterface $processor
      * @return ParserInterface|MySQL\Parser\Variables
      */
-    public function getSelectVarsParser(ProcessorInterface $processor)
+    public function getVariablesParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.variables');
     }
@@ -75,6 +75,24 @@ abstract class AbstractMySQLParser extends AbstractParser
     public function getExpressionParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.expression');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Arithmetic
+     */
+    public function getArithmeticParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.arithmetic');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Operand
+     */
+    public function getMathOperandParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.operand');
     }
     
 }
