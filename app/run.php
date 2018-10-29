@@ -44,8 +44,7 @@ echo "\n====== SELECT AST Render ======\n";
 echo $renderer->render($select);
 
 $query = new \Subapp\Sql\Ast\Statement\Select();
-$query->setFrom(new \Subapp\Sql\Ast\From());
-$query->getFrom()->setTable('images');
+$query->setPrimaryTable('test');
 
 echo "\n====== SELECT AST Render ======\n";
 echo $renderer->render($query);

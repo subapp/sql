@@ -10,17 +10,17 @@ class FieldPath extends AbstractExpression
 {
     
     /**
-     * @var string
+     * @var Identifier
      */
     private $table;
     
     /**
-     * @var string
+     * @var Identifier
      */
     private $field;
     
     /**
-     * @return string
+     * @return Identifier
      */
     public function getTable()
     {
@@ -28,15 +28,15 @@ class FieldPath extends AbstractExpression
     }
     
     /**
-     * @param string $table
+     * @param Identifier $table
      */
-    public function setTable($table)
+    public function setTable(Identifier $table)
     {
         $this->table = $table;
     }
     
     /**
-     * @return string
+     * @return Identifier
      */
     public function getField()
     {
@@ -44,9 +44,9 @@ class FieldPath extends AbstractExpression
     }
     
     /**
-     * @param string $field
+     * @param Identifier $field
      */
-    public function setField($field)
+    public function setField(Identifier $field)
     {
         $this->field = $field;
     }

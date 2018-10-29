@@ -1,1 +1,1 @@
-select id, name, email, cnt('test'), t0.id from `users` AS u, `permissions` P;
+select id, 123, 0.777, "test", (2 + 3) * 1, name, email, cnt('test'), t0.id from `users` AS u, `permissions` P;

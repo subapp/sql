@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Syntax\MySQL\Parser\Statement\Select;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\MySQL;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -17,7 +18,7 @@ class SelectExpression extends MySQL\Parser\AbstractMySQLParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return \Subapp\Sql\Ast\ExpressionInterface
+     * @return ExpressionInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

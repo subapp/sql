@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\FieldPath as FieldPathExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -17,7 +18,7 @@ class FieldPath extends AbstractMySQLParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return \Subapp\Sql\Ast\ExpressionInterface|FieldPathExpression
+     * @return ExpressionInterface|FieldPathExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
@@ -28,7 +29,7 @@ class FieldPath extends AbstractMySQLParser
         $field = $identifierParser->parse($lexer, $processor);
         
         $expression = new FieldPathExpression();
-    
+        
         $expression->setTable($table);
         $expression->setField($field);
         
