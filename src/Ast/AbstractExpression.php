@@ -18,7 +18,7 @@ abstract class AbstractExpression implements ExpressionInterface
      */
     public function getName()
     {
-        return $this->createName(static::class);
+        return $this->getUnderscore(static::class);
     }
     
 }

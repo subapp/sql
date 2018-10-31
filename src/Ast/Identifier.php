@@ -15,6 +15,15 @@ class Identifier extends AbstractExpression
     private $identifier;
     
     /**
+     * Identifier constructor.
+     * @param string $identifier
+     */
+    public function __construct($identifier = null)
+    {
+        $this->identifier = $identifier;
+    }
+    
+    /**
      * @return string
      */
     public function getIdentifier()

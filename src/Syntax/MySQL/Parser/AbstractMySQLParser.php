@@ -22,14 +22,23 @@ abstract class AbstractMySQLParser extends AbstractParser
     {
         return $processor->getParser('parser.identifier');
     }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\QuoteIdentifier
+     */
+    public function getQuoteIdentifierParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.quote_identifier');
+    }
 
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|MySQL\Parser\OrdinaryFunction
+     * @return ParserInterface|MySQL\Parser\SimpleFunc
      */
-    public function getOrdinaryFunctionParser(ProcessorInterface $processor)
+    public function getSimpleFuncParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.ordinary_function');
+        return $processor->getParser('parser.simple_func');
     }
     
     /**
@@ -61,11 +70,11 @@ abstract class AbstractMySQLParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|MySQL\Parser\Variables
+     * @return ParserInterface|MySQL\Parser\Arguments
      */
-    public function getVariablesParser(ProcessorInterface $processor)
+    public function getArgumentsParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.variables');
+        return $processor->getParser('parser.arguments');
     }
 
     /**
@@ -93,6 +102,15 @@ abstract class AbstractMySQLParser extends AbstractParser
     public function getMathOperandParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.operand');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Alias
+     */
+    public function getAliasParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.alias');
     }
     
 }

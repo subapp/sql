@@ -13,18 +13,18 @@ use Subapp\Sql\Represent\RendererInterface;
  */
 class Select extends AbstractSqlizer
 {
-    
+
     /**
-     * @param RendererInterface                                    $renderer
+     * @param RendererInterface $renderer
      * @param ExpressionInterface|SelectExpression $expression
      * @return string
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
         return sprintf('SELECT %s %s',
-            $renderer->render(
-                $expression->getExpression()),
-            $renderer->render($expression->getFrom()));
+            $renderer->render($expression->getArguments()),
+            $renderer->render($expression->getFrom())
+        );
     }
-    
+
 }

@@ -3,15 +3,15 @@
 namespace Subapp\Sql\Represent\MySQL\Sqlizer;
 
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Variables as VariablesExpression;
+use Subapp\Sql\Ast\Arguments as VariablesExpression;
 use Subapp\Sql\Represent\AbstractSqlizer;
 use Subapp\Sql\Represent\RendererInterface;
 
 /**
- * Class Variables
+ * Class Arguments
  * @package Subapp\Sql\Represent\MySQL\Sqlizer
  */
-class Variables extends AbstractSqlizer
+class Arguments extends AbstractSqlizer
 {
     
     /**

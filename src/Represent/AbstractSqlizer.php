@@ -18,7 +18,7 @@ abstract class AbstractSqlizer implements SqlizerInterface
      */
     public function getName()
     {
-        return $this->createName(static::class);
+        return $this->getUnderscore(static::class);
     }
     
 }

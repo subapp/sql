@@ -10,24 +10,33 @@ class From extends AbstractExpression
 {
     
     /**
-     * @var string
+     * @var ExpressionInterface
      */
-    private $table;
+    private $expression;
     
     /**
-     * @return string
+     * From constructor.
+     * @param ExpressionInterface|null $expression
      */
-    public function getTable()
+    public function __construct(ExpressionInterface $expression = null)
     {
-        return $this->table;
+        $this->expression = $expression;
     }
     
     /**
-     * @param string $table
+     * @return ExpressionInterface
      */
-    public function setTable($table)
+    public function getExpression()
     {
-        $this->table = $table;
+        return $this->expression;
+    }
+    
+    /**
+     * @param ExpressionInterface $expression
+     */
+    public function setExpression(ExpressionInterface $expression)
+    {
+        $this->expression = $expression;
     }
     
     /**

@@ -4,6 +4,7 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
@@ -21,16 +22,18 @@ class Operand extends AbstractMySQLParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $expression = null;
-        
+
+        // sequence of cases is important
         switch (true) {
-            case $this->isFunction($lexer):
-                $expression = $this->getOrdinaryFunctionParser($processor)->parse($lexer, $processor);
-                break;
-//            case $this->isMathExpression($lexer):
-//                $expression = $this->getArithmeticParser($processor)->parse($lexer, $processor);
-//                break;
             case $this->isLiteral($lexer):
                 $expression = $this->getLiteralParser($processor)->parse($lexer, $processor);
+                break;
+            case $this->isFunction($lexer):
+                $expression = $this->getSimpleFuncParser($processor)->parse($lexer, $processor);
+                break;
+            case $this->isMathExpression($lexer):
+                die($this->getStringToToken($lexer, Lexer::T_COMMA));
+//                $expression = $this->getArithmeticParser($processor)->parse($lexer, $processor);
                 break;
             default:
                 $this->throwSyntaxError($lexer, 'Function', 'MathExpression', 'Literal');

@@ -23,10 +23,12 @@ class MySQLRendererSetup implements RendererSetupInterface
         
         // common SQLizers
         $renderer->addSqlizer(new Sqlizer\Literal());
-        $renderer->addSqlizer(new Sqlizer\Variables());
+        $renderer->addSqlizer(new Sqlizer\Arguments());
         $renderer->addSqlizer(new Sqlizer\FieldPath());
-        $renderer->addSqlizer(new Sqlizer\OrdinaryFunction());
+        $renderer->addSqlizer(new Sqlizer\Alias());
+        $renderer->addSqlizer(new Sqlizer\SimpleFunction());
         $renderer->addSqlizer(new Sqlizer\Identifier());
+        $renderer->addSqlizer(new Sqlizer\QuoteIdentifier());
         $renderer->addSqlizer(new Sqlizer\Operand());
         $renderer->addSqlizer(new Sqlizer\Arithmetic());
     }

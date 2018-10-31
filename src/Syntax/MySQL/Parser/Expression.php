@@ -31,7 +31,7 @@ class Expression extends AbstractMySQLParser
                 break;
 
             case $this->isFunction($lexer):
-                $expression = $this->getOrdinaryFunctionParser($processor)->parse($lexer, $processor);
+                $expression = $this->getSimpleFuncParser($processor)->parse($lexer, $processor);
                 break;
                 
             case $this->isFieldPath($lexer):

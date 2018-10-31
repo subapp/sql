@@ -5,10 +5,10 @@ namespace Subapp\Sql\Ast;
 use Subapp\Collection\Collection;
 
 /**
- * Class Variables
+ * Class Arguments
  * @package Subapp\Sql\Ast
  */
-class Variables extends AbstractExpression
+class Arguments extends AbstractExpression
 {
 
     /**
@@ -34,11 +34,27 @@ class Variables extends AbstractExpression
     }
 
     /**
+     * @param $index
+     */
+    public function remove($index)
+    {
+        $this->expressions->remove($index);
+    }
+
+    /**
      * @param ExpressionInterface $expression
      */
     public function append(ExpressionInterface $expression)
     {
         $this->expressions->append($expression);
+    }
+
+    /**
+     * @param ExpressionInterface $expression
+     */
+    public function prepend(ExpressionInterface $expression)
+    {
+        $this->expressions->prepend($expression);
     }
 
     /**
@@ -62,7 +78,7 @@ class Variables extends AbstractExpression
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.variables';
+        return 'sqlizer.arguments';
     }
 
 }

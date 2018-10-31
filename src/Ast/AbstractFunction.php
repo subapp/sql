@@ -15,16 +15,16 @@ abstract class AbstractFunction extends AbstractExpression
     private $functionName;
     
     /**
-     * @var Variables
+     * @var Arguments
      */
-    private $variables;
+    private $arguments;
     
     /**
      * AbstractFunction constructor.
      */
     public function __construct()
     {
-        $this->variables = new Variables();
+        $this->arguments = new Arguments();
     }
     
     /**
@@ -44,19 +44,19 @@ abstract class AbstractFunction extends AbstractExpression
     }
     
     /**
-     * @return Variables
+     * @return Arguments
      */
-    public function getVariables()
+    public function getArguments()
     {
-        return $this->variables;
+        return $this->arguments;
     }
     
     /**
-     * @param Variables $variables
+     * @param Arguments $arguments
      */
-    public function setVariables(Variables $variables)
+    public function setArguments(Arguments $arguments)
     {
-        $this->variables = $variables;
+        $this->arguments = $arguments;
     }
     
     /**
@@ -65,7 +65,7 @@ abstract class AbstractFunction extends AbstractExpression
      */
     public function get($index)
     {
-        return $this->variables->get($index);
+        return $this->arguments->get($index);
     }
     
     /**
@@ -73,7 +73,7 @@ abstract class AbstractFunction extends AbstractExpression
      */
     public function append(ExpressionInterface $expression)
     {
-        $this->variables->append($expression);
+        $this->arguments->append($expression);
     }
     
     /**
@@ -81,7 +81,7 @@ abstract class AbstractFunction extends AbstractExpression
      */
     public function clear()
     {
-        $this->variables->clear();
+        $this->arguments->clear();
     }
     
 }

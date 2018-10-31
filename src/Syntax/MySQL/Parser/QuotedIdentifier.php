@@ -22,9 +22,9 @@ class QuotedIdentifier extends Identifier
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $this->match(Lexer::T_GRAVE_ACCENT, $lexer);
+        $this->shift(Lexer::T_GRAVE_ACCENT, $lexer);
         $identifier = parent::parse($lexer, $processor);
-        $this->match(Lexer::T_GRAVE_ACCENT, $lexer);
+        $this->shift(Lexer::T_GRAVE_ACCENT, $lexer);
         
         return $identifier;
     }

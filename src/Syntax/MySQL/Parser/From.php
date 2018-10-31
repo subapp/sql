@@ -19,16 +19,12 @@ class From extends AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $this->match(Lexer::T_FROM, $lexer);
-        $this->matchIf(Lexer::T_GRAVE_ACCENT, $lexer);
-        $this->match(Lexer::T_IDENTIFIER, $lexer);
+        $this->shift(Lexer::T_FROM, $lexer);
         
-        $expression = new Ast\From();
-        $expression->setTable($lexer->getTokenValue());
+        $parser = $this->isQuoteIdentifier($lexer)
+            ? $this->getQuoteIdentifierParser($processor) : $this->getIdentifierParser($processor);
         
-        $this->matchIf(Lexer::T_GRAVE_ACCENT, $lexer);
-        
-        return $expression;
+        return new Ast\From($parser->parse($lexer, $processor));
     }
     
 }

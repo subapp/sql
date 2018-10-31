@@ -18,9 +18,9 @@ class Select extends AbstractExpression
     private $from;
 
     /**
-     * @var Ast\Variables
+     * @var Ast\Arguments
      */
-    private $expression;
+    private $arguments;
     
     /**
      * @return Ast\From
@@ -43,25 +43,24 @@ class Select extends AbstractExpression
      */
     public function setPrimaryTable($table)
     {
-        $from = new Ast\From();
-        $from->setTable($table);
-        $this->setFrom($from);
+        $this->setFrom(new Ast\From());
+        $this->getFrom()->setExpression(new Ast\QuoteIdentifier($table));
     }
 
     /**
-     * @return Ast\Variables
+     * @return Ast\Arguments
      */
-    public function getExpression()
+    public function getArguments()
     {
-        return $this->expression;
+        return $this->arguments;
     }
 
     /**
-     * @param Ast\Variables $expression
+     * @param Ast\Arguments $arguments
      */
-    public function setExpression(Ast\Variables $expression)
+    public function setArguments(Ast\Arguments $arguments)
     {
-        $this->expression = $expression;
+        $this->arguments = $arguments;
     }
     
     /**

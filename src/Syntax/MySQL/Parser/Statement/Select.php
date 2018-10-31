@@ -24,9 +24,9 @@ class Select extends MySQL\Parser\AbstractMySQLParser
     {
         $select = new Ast\Statement\Select();
 
-        $expressions = $this->getVariablesParser($processor)->parse($lexer, $processor);
+        $expressions = $this->getArgumentsParser($processor)->parse($lexer, $processor);
 
-        $select->setExpression($expressions);
+        $select->setArguments($expressions);
 
         $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
 

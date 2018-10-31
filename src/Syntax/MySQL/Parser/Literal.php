@@ -39,7 +39,7 @@ class Literal extends AbstractMySQLParser
             $this->throwSyntaxError($lexer, $allowed);
         }
 
-        $this->match($token->getType(), $lexer);
+        $this->shift($token->getType(), $lexer);
 
         return new LiteralExpression($token->getToken(), Literal::MAP[$token->getType()]);
     }

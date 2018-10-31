@@ -13,7 +13,7 @@ trait ClassNameTrait
      * @param string $className
      * @return string
      */
-    public function createName($className)
+    public function getUnderscore($className)
     {
         $namespace = explode('\\', $className);
         

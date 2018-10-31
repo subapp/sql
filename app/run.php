@@ -42,10 +42,12 @@ try {
     $renderer->setup(new \Subapp\Sql\Represent\MySQL\MySQLRendererSetup());
     
     $select->setPrimaryTable('test');
-    $select->getExpression()->append(new Literal(3.14, Literal::STRING));
+    $select->getArguments()->append(new Literal(3.14, Literal::STRING));
     
     echo "\n====== SELECT AST Render ======\n";
     echo $renderer->render($select);
+    
+//    var_dump($select);
     
 //    $query = new \Subapp\Sql\Ast\Statement\Select();
 //    $query->setPrimaryTable('test');

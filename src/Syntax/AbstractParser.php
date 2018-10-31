@@ -30,11 +30,35 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isFieldPath(LexerInterface $lexer)
     {
-        $token = $lexer->peek();
-        $isFunction = ($token->is(Lexer::T_IDENTIFIER) && $lexer->peek()->is(Lexer::T_DOT));
+        $isIdentifier = ($this->isIdentifier($lexer) || $this->isQuoteIdentifier($lexer));
+        $isFieldPath = ($isIdentifier && $lexer->isTokenNearby(Lexer::T_DOT, 2));
+
         $lexer->resetPeek();
 
-        return $isFunction;
+        return $isFieldPath;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isIdentifier(LexerInterface $lexer)
+    {
+        $isIdentifier = ($lexer->peek()->is(Lexer::T_IDENTIFIER));
+        $lexer->resetPeek();
+
+        return $isIdentifier;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isQuoteIdentifier(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $isQuoteIdentifier = ($token->is(Lexer::T_GRAVE_ACCENT) && $this->isIdentifier($lexer));
+        $lexer->resetPeek();
+
+        return $isQuoteIdentifier;
     }
 
     /**
@@ -70,13 +94,33 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @inheritdoc
      */
-    public function isMathOperator(LexerInterface $lexer)
+    public function isPlainMathOperator(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isMath = in_array($token->getType(), [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_DIVIDE, Lexer::T_MULTIPLY,], true);
+        $isMath = in_array($token->getType(), [Lexer::T_PLUS, Lexer::T_MINUS,], true);
         $lexer->resetPeek();
 
         return $isMath;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isFactorMathOperator(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $isMath = in_array($token->getType(), [Lexer::T_DIVIDE, Lexer::T_MULTIPLY,], true);
+        $lexer->resetPeek();
+
+        return $isMath;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isMathOperator(LexerInterface $lexer)
+    {
+        return $this->isPlainMathOperator($lexer) || $this->isFactorMathOperator($lexer);
     }
 
     /**
@@ -89,6 +133,18 @@ abstract class AbstractParser implements ParserInterface
         $lexer->resetPeek();
 
         return $isFunction;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isAlias(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $isAlias = ($token->is(Lexer::T_IDENTIFIER) || $token->is(Lexer::T_AS));
+        $lexer->resetPeek();
+
+        return $isAlias;
     }
 
     /**
@@ -107,7 +163,7 @@ abstract class AbstractParser implements ParserInterface
      * @param integer $token
      * @param LexerInterface $lexer
      */
-    protected function match($token, LexerInterface $lexer)
+    public function shift($token, LexerInterface $lexer)
     {
         $lexer->toToken($token) || $this->throwSyntaxError($lexer, $token);
     }
@@ -116,9 +172,18 @@ abstract class AbstractParser implements ParserInterface
      * @param                $token
      * @param LexerInterface $lexer
      */
-    protected function matchIf($token, LexerInterface $lexer)
+    public function shiftIf($token, LexerInterface $lexer)
     {
         $lexer->toToken($token);
+    }
+
+    /**
+     * @param LexerInterface $lexer
+     * @param array $tokens
+     */
+    public function shiftAny(LexerInterface $lexer, array $tokens)
+    {
+        $lexer->toTokenAny($tokens) || $this->throwSyntaxError($lexer, ...$tokens);
     }
 
     /**
@@ -144,7 +209,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function getName()
     {
-        return $this->helper->createName(static::class);
+        return $this->helper->getUnderscore(static::class);
     }
 
 }

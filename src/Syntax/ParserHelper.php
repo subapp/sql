@@ -58,8 +58,8 @@ final class ParserHelper
         $position = $token ? $token->getPosition() : -1;
         $token = $token ? $token->getToken() : '[END OF LINE]';
         
-        throw new SyntaxErrorException(sprintf('Syntax error when parser "%s" work. Expected %s got "%s" at position %d',
-            $this->createName(get_class($parser)), $tokenType, $token, $position));
+        throw new SyntaxErrorException(sprintf('Syntax error. Parser [%s] expected: %s got "%s" at position %d',
+            $this->getUnderscore(get_class($parser)), $tokenType, $token, $position));
     }
     
 }

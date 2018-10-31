@@ -8,7 +8,7 @@ use Subapp\Sql\Ast\AbstractFunction;
  * Class Native
  * @package Subapp\Sql\Ast\Func
  */
-class Ordinary extends AbstractFunction
+class SimpleFunc extends AbstractFunction
 {
     
     /**
@@ -16,7 +16,7 @@ class Ordinary extends AbstractFunction
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.ordinary_function';
+        return 'sqlizer.simple_function';
     }
     
 }

@@ -7,6 +7,8 @@ use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Exception\SyntaxErrorException;
 
 /**
+ * Stateless Lexer Handler
+ *
  * Interface ParserInterface
  * @package Subapp\Sql\Syntax
  */
@@ -30,6 +32,24 @@ interface ParserInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * @param integer $token
+     * @param LexerInterface $lexer
+     */
+    public function shift($token, LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @param array $tokens
+     */
+    public function shiftAny(LexerInterface $lexer, array $tokens);
+
+    /**
+     * @param                $token
+     * @param LexerInterface $lexer
+     */
+    public function shiftIf($token, LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer
@@ -49,12 +69,34 @@ interface ParserInterface
      * @return boolean
      */
     public function isMathExpression(LexerInterface $lexer);
+    
+    /**
+     * @inheritdoc
+     */
+    public function isPlainMathOperator(LexerInterface $lexer);
+    
+    /**
+     * @inheritdoc
+     */
+    public function isFactorMathOperator(LexerInterface $lexer);
 
     /**
      * @param LexerInterface $lexer
      * @return boolean
      */
     public function isMathOperator(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return mixed
+     */
+    public function isIdentifier(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return mixed
+     */
+    public function isQuoteIdentifier(LexerInterface $lexer);
 
     /**
      * @param LexerInterface $lexer
@@ -67,6 +109,12 @@ interface ParserInterface
      * @return boolean
      */
     public function isFunction(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isAlias(LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer

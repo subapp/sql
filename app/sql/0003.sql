@@ -2,6 +2,7 @@ select
        s.id,
        s.name,
        "test" T,
+       (1 + 2 + 3),
        sum(length(sum(s.name)) / count(s.id)),
        ((5 + ((1 + 2) * 2)) * 10),
        (count(t0.id) - count(distinct t0.id)) AS delta,

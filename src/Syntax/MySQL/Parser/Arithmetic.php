@@ -25,24 +25,24 @@ class Arithmetic extends AbstractMySQLParser
         $parser = $this->getMathOperandParser($processor);
         
         $arithmetic = new ArithmeticExpression();
-        
-        $operandA = $parser->parse($lexer, $processor);
-        
-        if (null === $operandA) {
-            die($this->getStringToToken($lexer, Lexer::T_COMMA));
-        }
-        
-        $arithmetic->setOperandA($operandA);
+        $arithmetic->setOperandA($parser->parse($lexer, $processor));
         
         if (!$this->isMathOperator($lexer)) {
             $this->throwSyntaxError($lexer, '+', '-', '/', '*');
         }
     
-        $lexer->next();
-        $token = $lexer->getToken();
+        while ($this->isMathOperator($lexer)) {
+            $lexer->next();
+            $token = $lexer->getToken();
+            
+            var_dump($token);
+            var_dump($parser->parse($lexer, $processor));
+    
+//            $arithmetic->setOperator($token->getToken());
+//            $arithmetic->setOperandB($parser->parse($lexer, $processor));
+        }
         
-        $arithmetic->setOperator($token->getToken());
-        $arithmetic->setOperandB($parser->parse($lexer, $processor));
+        die();
         
         return $arithmetic;
     }

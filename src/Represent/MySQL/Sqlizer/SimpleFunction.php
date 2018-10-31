@@ -3,25 +3,26 @@
 namespace Subapp\Sql\Represent\MySQL\Sqlizer;
 
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\From as FromExpression;
+use Subapp\Sql\Ast\Func\SimpleFunc;
 use Subapp\Sql\Represent\AbstractSqlizer;
 use Subapp\Sql\Represent\RendererInterface;
 
 /**
- * Class From
+ * Class SimpleFunction
  * @package Subapp\Sql\Represent\MySQL\Sqlizer
  */
-class From extends AbstractSqlizer
+class SimpleFunction extends AbstractSqlizer
 {
     
     /**
+     * @param ExpressionInterface|SimpleFunc $expression
      * @param RendererInterface   $renderer
-     * @param ExpressionInterface|FromExpression $expression
      * @return string
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        return sprintf('FROM %s', $renderer->render($expression->getExpression()));
+        return sprintf('%s(%s)', strtoupper($renderer->render($expression->getFunctionName())),
+            $renderer->render($expression->getArguments()));
     }
     
 }

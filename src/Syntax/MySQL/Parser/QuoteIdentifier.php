@@ -4,30 +4,29 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Identifier as IdentifierExpression;
+use Subapp\Sql\Ast\QuoteIdentifier as QuoteIdentifierExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class Identifier
+ * Class QuotedIdentifier
  * @package Subapp\Sql\Syntax\MySQL\Parser
  */
-class Identifier extends AbstractMySQLParser
+class QuoteIdentifier extends Identifier
 {
     
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|IdentifierExpression
+     * @return ExpressionInterface|QuoteIdentifierExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $identifier = new IdentifierExpression();
-        $this->shift(Lexer::T_IDENTIFIER, $lexer);
+        $this->shift(Lexer::T_GRAVE_ACCENT, $lexer);
+        $identifier = parent::parse($lexer, $processor);
+        $this->shift(Lexer::T_GRAVE_ACCENT, $lexer);
         
-        $identifier->setIdentifier($lexer->getTokenValue());
-        
-        return $identifier;
+        return new QuoteIdentifierExpression($identifier);
     }
     
 }
