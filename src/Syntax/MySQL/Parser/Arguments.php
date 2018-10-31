@@ -3,7 +3,6 @@
 namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\Alias;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Arguments as ArgsExpression;
 use Subapp\Sql\Lexer\Lexer;
@@ -25,7 +24,7 @@ class Arguments extends MySQL\Parser\AbstractMySQLParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $variables = new ArgsExpression();
-        $parser = $this->getExpressionParser($processor);
+        $parser = $this->getComplexParser($processor);
 
         do {
             // parse any Expression comma-separated
@@ -34,12 +33,14 @@ class Arguments extends MySQL\Parser\AbstractMySQLParser
             if ($this->isAlias($lexer)) {
                 // store reference to object
                 $tmp = $expression;
-                
+               
                 // parse Alias expression
                 $expression = $this->getAliasParser($processor)->parse($lexer, $processor);
                 $expression->setExpression($tmp);
             }
-
+    
+            var_dump(get_class($expression));
+            
             $variables->append($expression);
         } while ($lexer->toToken(Lexer::T_COMMA));
         

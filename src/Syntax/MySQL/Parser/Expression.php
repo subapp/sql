@@ -21,32 +21,19 @@ class Expression extends AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $expression = null;
+        $parser = null;
 
-        /** @var Lexer $lexer */
-
+        var_dump($this->getStringToToken($lexer, Lexer::T_COMMA), $this->isFunction($lexer));
+        
         switch (true) {
-            case $this->isMathExpression($lexer):
-                $expression = $this->getArithmeticParser($processor)->parse($lexer, $processor);
-                break;
-
             case $this->isFunction($lexer):
-                $expression = $this->getSimpleFuncParser($processor)->parse($lexer, $processor);
+                $parser = $this->getFunctionParser($processor);
                 break;
-                
-            case $this->isFieldPath($lexer):
-                $expression = $this->getFieldPathParser($processor)->parse($lexer, $processor);
-                break;
-
-            case $this->isLiteral($lexer):
-                $expression = $this->getLiteralParser($processor)->parse($lexer, $processor);
-                break;
-
             default:
-                $this->throwSyntaxError($lexer, 'Literal', 'FieldPath', 'Function', 'MathExpression');
+                $parser = $this->getPrimaryParser($processor);
         }
 
-        return $expression;
+        return $parser->parse($lexer, $processor);
     }
 
 }

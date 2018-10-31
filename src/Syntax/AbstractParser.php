@@ -37,6 +37,14 @@ abstract class AbstractParser implements ParserInterface
 
         return $isFieldPath;
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isBraced(LexerInterface $lexer)
+    {
+        return $lexer->isNext(Lexer::T_OPEN_BRACE);
+    }
 
     /**
      * @inheritdoc
@@ -85,34 +93,8 @@ abstract class AbstractParser implements ParserInterface
         }
 
         $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
-        $isMathOperator = $this->isMathOperator($lexer);
-        $lexer->resetPeek();
 
-        return $isMathOperator;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isPlainMathOperator(LexerInterface $lexer)
-    {
-        $token = $lexer->peek();
-        $isMath = in_array($token->getType(), [Lexer::T_PLUS, Lexer::T_MINUS,], true);
-        $lexer->resetPeek();
-
-        return $isMath;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function isFactorMathOperator(LexerInterface $lexer)
-    {
-        $token = $lexer->peek();
-        $isMath = in_array($token->getType(), [Lexer::T_DIVIDE, Lexer::T_MULTIPLY,], true);
-        $lexer->resetPeek();
-
-        return $isMath;
+        return $this->isMathOperator($lexer);
     }
 
     /**
@@ -120,9 +102,12 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isMathOperator(LexerInterface $lexer)
     {
-        return $this->isPlainMathOperator($lexer) || $this->isFactorMathOperator($lexer);
-    }
+        $token = $lexer->peek();
+        $isMath = in_array($token->getType(), [Lexer::T_DIVIDE, Lexer::T_MULTIPLY, Lexer::T_PLUS, Lexer::T_MINUS,], true);
+        $lexer->resetPeek();
 
+        return $isMath;
+    }
     /**
      * @inheritdoc
      */
@@ -184,6 +169,15 @@ abstract class AbstractParser implements ParserInterface
     public function shiftAny(LexerInterface $lexer, array $tokens)
     {
         $lexer->toTokenAny($tokens) || $this->throwSyntaxError($lexer, ...$tokens);
+    }
+
+    /**
+     * @param LexerInterface $lexer
+     * @param array $tokens
+     */
+    public function shiftAnyIf(LexerInterface $lexer, array $tokens)
+    {
+        $lexer->toTokenAny($tokens);
     }
 
     /**

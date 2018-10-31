@@ -28,7 +28,7 @@ class Select extends MySQL\Parser\AbstractMySQLParser
 
         $select->setArguments($expressions);
 
-        $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
+//        $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
 
         return $select;
     }

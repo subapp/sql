@@ -4,6 +4,7 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\Operand as OperandExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -17,29 +18,23 @@ class Operand extends AbstractMySQLParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface
+     * @return ExpressionInterface|OperandExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
+        $parser = $this->isBraced($lexer)
+            ? $this->getArithmeticBraceParser($processor) : $this->getExpressionParser($processor);
         $expression = null;
-
-        // sequence of cases is important
-        switch (true) {
-            case $this->isLiteral($lexer):
-                $expression = $this->getLiteralParser($processor)->parse($lexer, $processor);
-                break;
-            case $this->isFunction($lexer):
-                $expression = $this->getSimpleFuncParser($processor)->parse($lexer, $processor);
-                break;
-            case $this->isMathExpression($lexer):
-                die($this->getStringToToken($lexer, Lexer::T_COMMA));
-//                $expression = $this->getArithmeticParser($processor)->parse($lexer, $processor);
-                break;
-            default:
-                $this->throwSyntaxError($lexer, 'Function', 'MathExpression', 'Literal');
-        }
+        $operator = OperandExpression::NONE;
         
-        return $expression;
+        if ($this->isMathOperator($lexer)) {
+            $this->shiftAny($lexer, [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE]);
+            $operator = $lexer->getToken()->getToken();
+        }
+
+        $expression = $parser->parse($lexer, $processor);
+    
+        return new OperandExpression($operator, $expression);
     }
     
 }

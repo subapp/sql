@@ -46,6 +46,12 @@ interface ParserInterface
     public function shiftAny(LexerInterface $lexer, array $tokens);
 
     /**
+     * @param LexerInterface $lexer
+     * @param array $tokens
+     */
+    public function shiftAnyIf(LexerInterface $lexer, array $tokens);
+
+    /**
      * @param                $token
      * @param LexerInterface $lexer
      */
@@ -69,16 +75,6 @@ interface ParserInterface
      * @return boolean
      */
     public function isMathExpression(LexerInterface $lexer);
-    
-    /**
-     * @inheritdoc
-     */
-    public function isPlainMathOperator(LexerInterface $lexer);
-    
-    /**
-     * @inheritdoc
-     */
-    public function isFactorMathOperator(LexerInterface $lexer);
 
     /**
      * @param LexerInterface $lexer
@@ -91,6 +87,12 @@ interface ParserInterface
      * @return mixed
      */
     public function isIdentifier(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return mixed
+     */
+    public function isBraced(LexerInterface $lexer);
 
     /**
      * @param LexerInterface $lexer

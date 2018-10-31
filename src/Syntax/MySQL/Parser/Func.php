@@ -12,7 +12,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  * Class DefaultFunction
  * @package Subapp\Sql\Syntax\MySQL\Parser
  */
-class SimpleFunc extends AbstractFunction
+class Func extends AbstractFunction
 {
 
     /**
@@ -27,11 +27,12 @@ class SimpleFunc extends AbstractFunction
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
 
         $function = new SimpleFunction();
-        
         $function->setFunctionName($name);
         $function->setArguments($this->getArgumentsParser($processor)->parse($lexer, $processor));
 
         $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
+
+        echo $name->getIdentifier() . PHP_EOL;
 
         return $function;
     }

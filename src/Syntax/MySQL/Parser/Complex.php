@@ -3,15 +3,14 @@
 namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\Arithmetic as ArithmeticExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class Arithmetic
+ * Class Complex
  * @package Subapp\Sql\Syntax\MySQL\Parser
  */
-class Arithmetic extends AbstractMySQLParser
+class Complex extends AbstractMySQLParser
 {
     
     /**
@@ -21,14 +20,17 @@ class Arithmetic extends AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->getOperandParser($processor);
-        $arithmetic = new ArithmeticExpression();
-
-        do {
-            $arithmetic->addOperand($parser->parse($lexer, $processor));
-        } while ($this->isMathOperator($lexer));
-        
-        return $arithmetic;
+        $parser = null;
+    
+        switch (true) {
+            case $this->isMathExpression($lexer):
+                $parser = $this->getArithmeticParser($processor);
+                break;
+            default:
+                $parser = $this->getExpressionParser($processor);
+        }
+    
+        return $parser->parse($lexer, $processor);
     }
     
 }

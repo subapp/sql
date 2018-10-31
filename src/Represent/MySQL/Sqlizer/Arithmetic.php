@@ -21,11 +21,13 @@ class Arithmetic extends AbstractSqlizer
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        return sprintf('(%s %s %s)',
-            $renderer->render($expression->getOperandA()),
-            $expression->getOperator(),
-            $renderer->render($expression->getOperandB())
-        );
+        $operands = [];
+
+        foreach ($expression->getOperands() as $operand) {
+            $operands[] = $renderer->render($operand);
+        }
+
+        return implode(' ', $operands);
     }
     
 }

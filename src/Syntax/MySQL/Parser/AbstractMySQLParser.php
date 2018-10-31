@@ -13,6 +13,15 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 abstract class AbstractMySQLParser extends AbstractParser
 {
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Primary
+     */
+    public function getPrimaryParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.primary');
+    }
     
     /**
      * @param ProcessorInterface $processor
@@ -34,11 +43,11 @@ abstract class AbstractMySQLParser extends AbstractParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|MySQL\Parser\SimpleFunc
+     * @return ParserInterface|MySQL\Parser\Func
      */
-    public function getSimpleFuncParser(ProcessorInterface $processor)
+    public function getFunctionParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.simple_func');
+        return $processor->getParser('parser.func');
     }
     
     /**
@@ -81,6 +90,15 @@ abstract class AbstractMySQLParser extends AbstractParser
      * @param ProcessorInterface $processor
      * @return ParserInterface|MySQL\Parser\Expression
      */
+    public function getComplexParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.complex');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Expression
+     */
     public function getExpressionParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.expression');
@@ -97,9 +115,18 @@ abstract class AbstractMySQLParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\ArithmeticBrace
+     */
+    public function getArithmeticBraceParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.arithmetic_brace');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
      * @return ParserInterface|MySQL\Parser\Operand
      */
-    public function getMathOperandParser(ProcessorInterface $processor)
+    public function getOperandParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.operand');
     }

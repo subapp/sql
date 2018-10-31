@@ -25,12 +25,12 @@ final class ParserHelper
     {
         $expression = null;
 
-        $token = $lexer->peek();
+        $token = $lexer->getToken();
 
-        while ($token && !$token->is($type)) {
+        do {
             $expression = sprintf('%s %s', $expression, $token->getToken());
             $token = $lexer->peek();
-        }
+        } while ($token && !$token->is($type));
 
         $lexer->resetPeek();
 
@@ -47,7 +47,7 @@ final class ParserHelper
     {
         /** @var Lexer $lexer */
         $tokenType = array_map(function ($type) use ($lexer) {
-            return is_integer($type) ? $lexer->getConstantName($type) : $type;
+            return is_integer($type) ? $lexer->getConstantName($type) : sprintf('"%s"', $type);
         }, $tokenType);
         
         $lastToken = array_pop($tokenType);
@@ -61,5 +61,5 @@ final class ParserHelper
         throw new SyntaxErrorException(sprintf('Syntax error. Parser [%s] expected: %s got "%s" at position %d',
             $this->getUnderscore(get_class($parser)), $tokenType, $token, $position));
     }
-    
+
 }

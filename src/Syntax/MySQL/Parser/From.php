@@ -23,7 +23,7 @@ class From extends AbstractMySQLParser
         
         $parser = $this->isQuoteIdentifier($lexer)
             ? $this->getQuoteIdentifierParser($processor) : $this->getIdentifierParser($processor);
-        
+
         return new Ast\From($parser->parse($lexer, $processor));
     }
     
