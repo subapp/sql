@@ -25,7 +25,7 @@ class Lexer extends AbstractSqlLexer
     protected function getPatterns()
     {
         return [
-            '[a-z0-9_\\\][a-z0-9_]*[a-z0-9_]*', // identifiers
+            '[a-z_][a-z0-9_]*[a-z0-9_]*', // identifiers
             '(?:[0-9]+(?:[\.][0-9]+)*)', // integers, floats
             '\'(?:[^\'])*\'', '"(?:[^"])*"', // quoted strings
         ];

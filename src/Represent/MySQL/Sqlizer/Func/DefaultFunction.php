@@ -1,21 +1,21 @@
 <?php
 
-namespace Subapp\Sql\Represent\MySQL\Sqlizer;
+namespace Subapp\Sql\Represent\MySQL\Sqlizer\Func;
 
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Func\SimpleFunc;
+use Subapp\Sql\Ast\Func\DefaultFunction as DefaultFunctionExpression;
 use Subapp\Sql\Represent\AbstractSqlizer;
 use Subapp\Sql\Represent\RendererInterface;
 
 /**
- * Class SimpleFunction
- * @package Subapp\Sql\Represent\MySQL\Sqlizer
+ * Class DefaultFunction
+ * @package Subapp\Sql\Represent\MySQL\Sqlizer\Func
  */
-class SimpleFunction extends AbstractSqlizer
+class DefaultFunction extends AbstractSqlizer
 {
     
     /**
-     * @param ExpressionInterface|SimpleFunc $expression
+     * @param ExpressionInterface|DefaultFunctionExpression $expression
      * @param RendererInterface   $renderer
      * @return string
      */

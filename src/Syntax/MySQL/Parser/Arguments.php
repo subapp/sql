@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Arguments as ArgsExpression;
+use Subapp\Sql\Ast\Variables as ArgsExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\MySQL;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -15,9 +15,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Arguments extends MySQL\Parser\AbstractMySQLParser
 {
-    
+
     /**
-     * @param LexerInterface     $lexer
+     * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
      * @return ExpressionInterface|ArgsExpression
      */
@@ -26,25 +26,13 @@ class Arguments extends MySQL\Parser\AbstractMySQLParser
         $variables = new ArgsExpression();
         $parser = $this->getComplexParser($processor);
 
-        do {
-            // parse any Expression comma-separated
-            $expression = $parser->parse($lexer, $processor);
+        if (!$lexer->isNext(Lexer::T_CLOSE_BRACE)) {
+            do {
+                $variables->append($parser->parse($lexer, $processor));
+            } while ($lexer->toToken(Lexer::T_COMMA));
+        }
 
-            if ($this->isAlias($lexer)) {
-                // store reference to object
-                $tmp = $expression;
-               
-                // parse Alias expression
-                $expression = $this->getAliasParser($processor)->parse($lexer, $processor);
-                $expression->setExpression($tmp);
-            }
-    
-            var_dump(get_class($expression));
-            
-            $variables->append($expression);
-        } while ($lexer->toToken(Lexer::T_COMMA));
-        
         return $variables;
     }
-    
+
 }

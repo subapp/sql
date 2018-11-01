@@ -90,9 +90,14 @@ abstract class AbstractParser implements ParserInterface
     {
         if ($this->isFunction($lexer) || $lexer->isNext(Lexer::T_OPEN_BRACE)) {
             $lexer->peek();
+        } elseif ($this->isFieldPath($lexer)) {
+            // @todo dirty hack...
+            $lexer->setPeek(2);
         }
 
-        $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
+        if (!$lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false)) {
+            $this->throwSyntaxError($lexer, Lexer::T_CLOSE_BRACE);
+        }
 
         return $this->isMathOperator($lexer);
     }
@@ -126,7 +131,7 @@ abstract class AbstractParser implements ParserInterface
     public function isAlias(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isAlias = ($token->is(Lexer::T_IDENTIFIER) || $token->is(Lexer::T_AS));
+        $isAlias = $token && ($token->is(Lexer::T_IDENTIFIER) || $token->is(Lexer::T_AS));
         $lexer->resetPeek();
 
         return $isAlias;
@@ -196,6 +201,16 @@ abstract class AbstractParser implements ParserInterface
     public function getStringToToken(LexerInterface $lexer, $type)
     {
         return $this->helper->getStringToToken($lexer, $type);
+    }
+
+    /**
+     * @param LexerInterface $lexer
+     * @param integer $length
+     * @return string
+     */
+    public function getStringLength(LexerInterface $lexer, $length)
+    {
+        return $this->helper->getStringLength($lexer, $length);
     }
 
     /**

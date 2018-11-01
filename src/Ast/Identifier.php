@@ -24,7 +24,7 @@ class Identifier extends AbstractExpression
     }
     
     /**
-     * @return string
+     * @return string|ExpressionInterface
      */
     public function getIdentifier()
     {
@@ -32,7 +32,7 @@ class Identifier extends AbstractExpression
     }
     
     /**
-     * @param string $identifier
+     * @param string|ExpressionInterface $identifier
      */
     public function setIdentifier($identifier)
     {

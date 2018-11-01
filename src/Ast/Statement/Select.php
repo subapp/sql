@@ -18,9 +18,9 @@ class Select extends AbstractExpression
     private $from;
 
     /**
-     * @var Ast\Arguments
+     * @var Ast\Variables
      */
-    private $arguments;
+    private $variables;
     
     /**
      * @return Ast\From
@@ -48,19 +48,19 @@ class Select extends AbstractExpression
     }
 
     /**
-     * @return Ast\Arguments
+     * @return Ast\Variables
      */
-    public function getArguments()
+    public function getVariables()
     {
-        return $this->arguments;
+        return $this->variables;
     }
 
     /**
-     * @param Ast\Arguments $arguments
+     * @param Ast\Variables $variables
      */
-    public function setArguments(Ast\Arguments $arguments)
+    public function setVariables(Ast\Variables $variables)
     {
-        $this->arguments = $arguments;
+        $this->variables = $variables;
     }
     
     /**

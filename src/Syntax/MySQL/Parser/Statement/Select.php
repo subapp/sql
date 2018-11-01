@@ -22,13 +22,14 @@ class Select extends MySQL\Parser\AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
+        $this->shiftIf(Lexer::T_SELECT, $lexer);
+
         $select = new Ast\Statement\Select();
 
-        $expressions = $this->getArgumentsParser($processor)->parse($lexer, $processor);
+        $expressions = $this->getVariablesParser($processor)->parse($lexer, $processor);
 
-        $select->setArguments($expressions);
-
-//        $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
+        $select->setVariables($expressions);
+        $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
 
         return $select;
     }

@@ -24,9 +24,34 @@ class Alias extends AbstractMySQLParser
     {
         $this->shiftIf(Lexer::T_AS, $lexer);
 
-        $identifier = $this->getIdentifierParser($processor)->parse($lexer, $processor);
+        $parser = null;
 
-        return new AliasExpression(null, $identifier);
+        switch (true) {
+            case $this->isIdentifier($lexer):
+                $parser = $this->getIdentifierParser($processor);
+                break;
+            case $lexer->isNext(Lexer::T_STRING):
+                $parser = $this->getLiteralParser($processor);
+                break;
+            default:
+                $this->throwSyntaxError($lexer, 'String', 'Identifier');
+        }
+
+        return new AliasExpression(null, $parser->parse($lexer, $processor));
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @param ExpressionInterface $expression
+     * @return AliasExpression|ExpressionInterface
+     */
+    public function wrapExpression(ProcessorInterface $processor, ExpressionInterface $expression)
+    {
+        $alias = $this->parse($processor->getLexer(), $processor);
+
+        $alias->setExpression($expression);
+
+        return $alias;
     }
 
 }

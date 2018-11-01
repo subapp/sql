@@ -27,7 +27,7 @@ class Arithmetic extends AbstractMySQLParser
         do {
             $arithmetic->addOperand($parser->parse($lexer, $processor));
         } while ($this->isMathOperator($lexer));
-        
+
         return $arithmetic;
     }
     

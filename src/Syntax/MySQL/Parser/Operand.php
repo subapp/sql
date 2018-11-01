@@ -22,11 +22,10 @@ class Operand extends AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->isBraced($lexer)
-            ? $this->getArithmeticBraceParser($processor) : $this->getExpressionParser($processor);
+        $parser = $this->getExpressionParser($processor);
         $expression = null;
         $operator = OperandExpression::NONE;
-        
+
         if ($this->isMathOperator($lexer)) {
             $this->shiftAny($lexer, [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE]);
             $operator = $lexer->getToken()->getToken();

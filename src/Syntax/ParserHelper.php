@@ -38,6 +38,27 @@ final class ParserHelper
     }
 
     /**
+     * @param LexerInterface $lexer
+     * @param integer $length
+     * @return string
+     */
+    public function getStringLength(LexerInterface $lexer, $length = 5)
+    {
+        $expression = null;
+
+        $token = $lexer->getToken();
+
+        do {
+            $expression = sprintf('%s %s', $expression, $token->getToken());
+            $token = $lexer->peek();
+        } while ($token && --$length > 0);
+
+        $lexer->resetPeek();
+
+        return sprintf('[.. %s ..]', $expression);
+    }
+
+    /**
      * @param ParserInterface $parser
      * @param LexerInterface  $lexer
      * @param integer         ...$tokenType

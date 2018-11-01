@@ -4,7 +4,6 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
@@ -28,7 +27,10 @@ class Primary extends AbstractMySQLParser
                 $parser = $this->getFieldPathParser($processor);
                 break;
             case $this->isIdentifier($lexer):
-                $parser = $this->getFieldPathParser($processor);
+                $parser = $this->getIdentifierParser($processor);
+                break;
+            case $this->isQuoteIdentifier($lexer):
+                $parser = $this->getQuoteIdentifierParser($processor);
                 break;
             case $this->isLiteral($lexer):
                 $parser = $this->getLiteralParser($processor);
@@ -37,7 +39,7 @@ class Primary extends AbstractMySQLParser
                 $parser = $this->getArithmeticParser($processor);
                 break;
             default:
-                $this->throwSyntaxError($lexer, 'Identifier', 'Literal', 'FieldPath', 'MathExpression');
+                $this->throwSyntaxError($lexer, 'Identifier', 'QuoteIdentifier', 'Literal', 'FieldPath', 'MathExpression');
         }
 
         return $parser->parse($lexer, $processor);

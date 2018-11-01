@@ -20,11 +20,30 @@ class From extends AbstractMySQLParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $this->shift(Lexer::T_FROM, $lexer);
-        
-        $parser = $this->isQuoteIdentifier($lexer)
-            ? $this->getQuoteIdentifierParser($processor) : $this->getIdentifierParser($processor);
 
-        return new Ast\From($parser->parse($lexer, $processor));
+        $parser = null;
+
+        switch (true) {
+            case $this->isIdentifier($lexer):
+                $parser = $this->getIdentifierParser($processor);
+                break;
+            case $this->isQuoteIdentifier($lexer):
+                $parser = $this->getQuoteIdentifierParser($processor);
+                break;
+            case $this->isSubSelect($lexer):
+                $parser = $this->getSubSelectParser($processor);
+                break;
+            default:
+                $this->throwSyntaxError($lexer, 'Identifier', 'QuoteIdentifier', 'SubSelect');
+        }
+
+        $expression = $parser->parse($lexer, $processor);
+
+        if ($this->isAlias($lexer)) {
+            $expression = $this->getAliasParser($processor)->wrapExpression($processor, $expression);
+        }
+
+        return new Ast\From($expression);
     }
     
 }

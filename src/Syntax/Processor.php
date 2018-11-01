@@ -85,8 +85,6 @@ final class Processor implements ProcessorInterface
     {
         $parser = $this->parsers->offsetGet($name);
 
-        echo sprintf(">>> %s\n", $name);
-
         if (!($parser instanceof ParserInterface)) {
             throw new \RuntimeException(sprintf('Unfortunately parser with name "%s" doesn\'t registered yet',
                 $name));

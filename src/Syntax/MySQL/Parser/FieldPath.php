@@ -25,6 +25,7 @@ class FieldPath extends AbstractMySQLParser
         $parser = $this->getIdentifierParser($processor);
         
         $table = $parser->parse($lexer, $processor);
+//        die($this->getStringLength($lexer, 10));
         $this->shift(Lexer::T_DOT, $lexer);
         $field = $parser->parse($lexer, $processor);
         

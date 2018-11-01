@@ -10,7 +10,7 @@ class Alias extends AbstractExpression
 {
 
     /**
-     * @var Identifier
+     * @var ExpressionInterface
      */
     private $alias;
 
@@ -23,16 +23,16 @@ class Alias extends AbstractExpression
      * Alias constructor.
      *
      * @param ExpressionInterface $expression
-     * @param Identifier $alias
+     * @param ExpressionInterface $alias
      */
-    public function __construct(ExpressionInterface $expression = null, Identifier $alias = null)
+    public function __construct(ExpressionInterface $expression = null, ExpressionInterface $alias = null)
     {
         $this->expression = $expression;
         $this->alias = $alias;
     }
 
     /**
-     * @return Identifier
+     * @return ExpressionInterface
      */
     public function getAlias()
     {
@@ -40,9 +40,9 @@ class Alias extends AbstractExpression
     }
 
     /**
-     * @param Identifier $alias
+     * @param ExpressionInterface $alias
      */
-    public function setAlias(Identifier $alias)
+    public function setAlias(ExpressionInterface $alias)
     {
         $this->alias = $alias;
     }

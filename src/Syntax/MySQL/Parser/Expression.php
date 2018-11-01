@@ -4,7 +4,6 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
@@ -23,9 +22,10 @@ class Expression extends AbstractMySQLParser
     {
         $parser = null;
 
-        var_dump($this->getStringToToken($lexer, Lexer::T_COMMA), $this->isFunction($lexer));
-        
         switch (true) {
+            case $this->isBraced($lexer):
+                $parser = $this->getEmbraceParser($processor);
+                break;
             case $this->isFunction($lexer):
                 $parser = $this->getFunctionParser($processor);
                 break;

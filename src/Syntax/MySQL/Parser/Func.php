@@ -4,37 +4,53 @@ namespace Subapp\Sql\Syntax\MySQL\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Func\SimpleFunc as SimpleFunction;
-use Subapp\Sql\Lexer\Lexer;
+use Subapp\Sql\Ast\Func\DefaultFunction;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class DefaultFunction
  * @package Subapp\Sql\Syntax\MySQL\Parser
  */
-class Func extends AbstractFunction
+class Func extends AbstractMySQLParser
 {
+
+    /**
+     * @var array
+     */
+    private $aggregateFunction = [
+        'COUNT', 'SUM', 'AVG', 'MAX', 'MIN',
+    ];
 
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|SimpleFunction
+     * @return ExpressionInterface|DefaultFunction
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $name = parent::parse($lexer, $processor);
+        $token = $lexer->peek();
+        $parser = null;
 
-        $this->shift(Lexer::T_OPEN_BRACE, $lexer);
+        $lexer->resetPeek();
 
-        $function = new SimpleFunction();
-        $function->setFunctionName($name);
-        $function->setArguments($this->getArgumentsParser($processor)->parse($lexer, $processor));
+        switch (true) {
+            case $this->isAggregateFunction($token->getToken()):
+                $parser = $this->getAggregateFunctionParser($processor);
+                break;
+            default:
+                $parser = $this->getDefaultFunctionParser($processor);
+        }
 
-        $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
+        return $parser->parse($lexer, $processor);
+    }
 
-        echo $name->getIdentifier() . PHP_EOL;
-
-        return $function;
+    /**
+     * @param string $name
+     * @return boolean
+     */
+    public function isAggregateFunction($name)
+    {
+        return in_array(strtoupper($name), $this->aggregateFunction, true);
     }
 
 }

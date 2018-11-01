@@ -1,6 +1,11 @@
 <?php
 
-namespace Subapp\Sql\Ast;
+namespace Subapp\Sql\Ast\Func;
+
+use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\Variables;
+use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\Identifier;
 
 /**
  * Class AbstractFunction
@@ -15,7 +20,7 @@ abstract class AbstractFunction extends AbstractExpression
     private $functionName;
     
     /**
-     * @var Arguments
+     * @var Variables
      */
     private $arguments;
     
@@ -24,7 +29,7 @@ abstract class AbstractFunction extends AbstractExpression
      */
     public function __construct()
     {
-        $this->arguments = new Arguments();
+        $this->arguments = new Variables();
     }
     
     /**
@@ -44,7 +49,7 @@ abstract class AbstractFunction extends AbstractExpression
     }
     
     /**
-     * @return Arguments
+     * @return Variables
      */
     public function getArguments()
     {
@@ -52,9 +57,9 @@ abstract class AbstractFunction extends AbstractExpression
     }
     
     /**
-     * @param Arguments $arguments
+     * @param Variables $arguments
      */
-    public function setArguments(Arguments $arguments)
+    public function setArguments(Variables $arguments)
     {
         $this->arguments = $arguments;
     }

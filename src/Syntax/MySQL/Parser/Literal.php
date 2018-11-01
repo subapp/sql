@@ -40,8 +40,6 @@ class Literal extends AbstractMySQLParser
         }
 
         $this->shift($token->getType(), $lexer);
-
-        var_dump("LITERAL: " . $token->getToken() . " " . $lexer->getLiteral($token->getType()));
         
         return new LiteralExpression($token->getToken(), Literal::MAP[$token->getType()]);
     }

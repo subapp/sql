@@ -26,6 +26,9 @@ class Complex extends AbstractMySQLParser
             case $this->isMathExpression($lexer):
                 $parser = $this->getArithmeticParser($processor);
                 break;
+            case $this->isSubSelect($lexer):
+                $parser = $this->getSubSelectParser($processor);
+                break;
             default:
                 $parser = $this->getExpressionParser($processor);
         }

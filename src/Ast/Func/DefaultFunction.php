@@ -2,13 +2,11 @@
 
 namespace Subapp\Sql\Ast\Func;
 
-use Subapp\Sql\Ast\AbstractFunction;
-
 /**
- * Class Native
+ * Class DefaultFunction
  * @package Subapp\Sql\Ast\Func
  */
-class SimpleFunc extends AbstractFunction
+class DefaultFunction extends AbstractFunction
 {
     
     /**
@@ -16,7 +14,7 @@ class SimpleFunc extends AbstractFunction
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.simple_function';
+        return 'func.default_function';
     }
     
 }

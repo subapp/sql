@@ -49,6 +49,24 @@ abstract class AbstractMySQLParser extends AbstractParser
     {
         return $processor->getParser('parser.func');
     }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\DefaultFunction
+     */
+    public function getDefaultFunctionParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.default_function');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\AggregateFunction
+     */
+    public function getAggregateFunctionParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.aggregate_function');
+    }
     
     /**
      * @param ProcessorInterface $processor
@@ -77,6 +95,15 @@ abstract class AbstractMySQLParser extends AbstractParser
         return $processor->getParser('parser.literal');
     }
     
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Variables
+     */
+    public function getVariablesParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.variables');
+    }
+
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|MySQL\Parser\Arguments
@@ -115,15 +142,6 @@ abstract class AbstractMySQLParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|MySQL\Parser\ArithmeticBrace
-     */
-    public function getArithmeticBraceParser(ProcessorInterface $processor)
-    {
-        return $processor->getParser('parser.arithmetic_brace');
-    }
-    
-    /**
-     * @param ProcessorInterface $processor
      * @return ParserInterface|MySQL\Parser\Operand
      */
     public function getOperandParser(ProcessorInterface $processor)
@@ -139,5 +157,23 @@ abstract class AbstractMySQLParser extends AbstractParser
     {
         return $processor->getParser('parser.alias');
     }
-    
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\Embrace
+     */
+    public function getEmbraceParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.embrace');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|MySQL\Parser\SubSelect
+     */
+    public function getSubSelectParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.sub_select');
+    }
+
 }

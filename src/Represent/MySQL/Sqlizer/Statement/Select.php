@@ -22,7 +22,7 @@ class Select extends AbstractSqlizer
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
         return sprintf('SELECT %s %s',
-            $renderer->render($expression->getArguments()),
+            $renderer->render($expression->getVariables()),
             $renderer->render($expression->getFrom())
         );
     }

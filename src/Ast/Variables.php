@@ -8,7 +8,7 @@ use Subapp\Collection\Collection;
  * Class Arguments
  * @package Subapp\Sql\Ast
  */
-class Arguments extends AbstractExpression
+class Variables extends AbstractExpression
 {
 
     /**
@@ -78,7 +78,7 @@ class Arguments extends AbstractExpression
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.arguments';
+        return 'sqlizer.variables';
     }
 
 }
