@@ -68,7 +68,7 @@ class Select extends AbstractExpression
      */
     public function getSqlizerName()
     {
-        return 'statement.select';
+        return 'sqlizer.select_statement';
     }
     
 }

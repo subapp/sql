@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Syntax\MySQL;
 
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
+use Subapp\Sql\Syntax\MySQL\Parser\SelectStatement;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
@@ -18,6 +19,8 @@ class MySQLParserSetup extends DefaultParserSetup
     public function setup(ProcessorInterface $processor)
     {
         parent::setup($processor);
+        
+        $processor->addParser(new SelectStatement());
     }
     
 }

@@ -17,11 +17,6 @@ class DefaultRendererSetup implements RendererSetupInterface
      */
     public function setup(RendererInterface $renderer)
     {
-        // statements
-        $renderer->addSqlizer(new Sqlizer\Statement\Select());
-        $renderer->addSqlizer(new Sqlizer\From());
-    
-        // common SQLizers
         $renderer->addSqlizer(new Sqlizer\Literal());
         $renderer->addSqlizer(new Sqlizer\Variables());
         $renderer->addSqlizer(new Sqlizer\FieldPath());
@@ -31,8 +26,6 @@ class DefaultRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Embrace());
         $renderer->addSqlizer(new Sqlizer\MathOperator());
         $renderer->addSqlizer(new Sqlizer\Arithmetic());
-    
-        // functions
         $renderer->addSqlizer(new Sqlizer\Func\DefaultFunction());
         $renderer->addSqlizer(new Sqlizer\Func\AggregateFunction());
     }

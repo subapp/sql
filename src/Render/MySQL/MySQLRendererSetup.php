@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\MySQL;
 
 use Subapp\Sql\Render\Common\DefaultRendererSetup;
-use Subapp\Sql\Render\Common\Sqlizer;
+use Subapp\Sql\Render\MySQL\Sqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
@@ -18,7 +18,10 @@ class MySQLRendererSetup extends DefaultRendererSetup
      */
     public function setup(RendererInterface $renderer)
     {
-        $renderer->addSqlizer(new Sqlizer\Select());
+        parent::setup($renderer);
+        
+        $renderer->addSqlizer(new Sqlizer\SelectStatement());
+        $renderer->addSqlizer(new Sqlizer\From());
     }
     
 }

@@ -30,6 +30,8 @@ class SelectStatement extends AbstractMySQLParser
         $select->setVariables($expressions);
         $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
 
+        var_dump($this->getStringLength($lexer, 10));
+        
         return $select;
     }
     

@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Render\Common\Sqlizer;
+namespace Subapp\Sql\Render\MySQL\Sqlizer;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Statement\Select as SelectExpression;
@@ -11,7 +11,7 @@ use Subapp\Sql\Render\RendererInterface;
  * Class Select
  * @package Subapp\Sql\Render\Common\Sqlizer\Statement
  */
-class Select extends AbstractSqlizer
+class SelectStatement extends AbstractSqlizer
 {
 
     /**
