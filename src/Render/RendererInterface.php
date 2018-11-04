@@ -1,20 +1,20 @@
 <?php
 
-namespace Subapp\Sql\Represent;
+namespace Subapp\Sql\Render;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Interface RendererInterface
- * @package Subapp\Sql\Represent
+ * @package Subapp\Sql\Render
  */
 interface RendererInterface
 {
     
     /**
-     * @param RendererSetupInterface $loader
+     * @param RendererSetupInterface $rendererSetup
      */
-    public function setup(RendererSetupInterface $loader);
+    public function setup(RendererSetupInterface $rendererSetup);
     
     /**
      * @param ExpressionInterface $expression

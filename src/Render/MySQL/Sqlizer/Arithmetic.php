@@ -1,15 +1,15 @@
 <?php
 
-namespace Subapp\Sql\Represent\MySQL\Sqlizer;
+namespace Subapp\Sql\Render\MySQL\Sqlizer;
 
 use Subapp\Sql\Ast\Arithmetic as ArithmeticExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Represent\AbstractSqlizer;
-use Subapp\Sql\Represent\RendererInterface;
+use Subapp\Sql\Render\AbstractSqlizer;
+use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class Arithmetic
- * @package Subapp\Sql\Represent\MySQL\Sqlizer
+ * @package Subapp\Sql\Render\MySQL\Sqlizer
  */
 class Arithmetic extends AbstractSqlizer
 {
@@ -21,13 +21,13 @@ class Arithmetic extends AbstractSqlizer
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        $operands = [];
+        $pieces = [];
 
-        foreach ($expression->getOperands() as $operand) {
-            $operands[] = $renderer->render($operand);
+        foreach ($expression->getCollection() as $expression) {
+            $pieces[] = $renderer->render($expression);
         }
 
-        return implode(' ', $operands);
+        return implode(' ', $pieces);
     }
     
 }

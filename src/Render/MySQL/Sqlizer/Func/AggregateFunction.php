@@ -1,15 +1,15 @@
 <?php
 
-namespace Subapp\Sql\Represent\MySQL\Sqlizer\Func;
+namespace Subapp\Sql\Render\MySQL\Sqlizer\Func;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Func\AggregateFunction as AggregateFunctionExpression;
-use Subapp\Sql\Represent\AbstractSqlizer;
-use Subapp\Sql\Represent\RendererInterface;
+use Subapp\Sql\Render\AbstractSqlizer;
+use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class AggregateFunction
- * @package Subapp\Sql\Represent\MySQL\Sqlizer\Func
+ * @package Subapp\Sql\Render\MySQL\Sqlizer\Func
  */
 class AggregateFunction extends AbstractSqlizer
 {

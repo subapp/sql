@@ -1,15 +1,15 @@
 <?php
 
-namespace Subapp\Sql\Represent\MySQL\Sqlizer;
+namespace Subapp\Sql\Render\MySQL\Sqlizer;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Literal as LiteralExpression;
-use Subapp\Sql\Represent\AbstractSqlizer;
-use Subapp\Sql\Represent\RendererInterface;
+use Subapp\Sql\Render\AbstractSqlizer;
+use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class Literal
- * @package Subapp\Sql\Represent\MySQL\Sqlizer
+ * @package Subapp\Sql\Render\MySQL\Sqlizer
  */
 class Literal extends AbstractSqlizer
 {

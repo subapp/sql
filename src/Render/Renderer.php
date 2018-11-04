@@ -1,13 +1,13 @@
 <?php
 
-namespace Subapp\Sql\Represent;
+namespace Subapp\Sql\Render;
 
 use Subapp\Collection\Collection;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Class Renderer
- * @package Subapp\Sql\Represent
+ * @package Subapp\Sql\Render
  */
 class Renderer implements RendererInterface
 {
@@ -26,11 +26,11 @@ class Renderer implements RendererInterface
     }
     
     /**
-     * @param RendererSetupInterface $loader
+     * @param RendererSetupInterface $rendererSetup
      */
-    public function setup(RendererSetupInterface $loader)
+    public function setup(RendererSetupInterface $rendererSetup)
     {
-        $loader->setup($this);
+        $rendererSetup->setup($this);
     }
     
     /**

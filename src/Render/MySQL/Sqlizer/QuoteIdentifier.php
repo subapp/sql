@@ -1,14 +1,14 @@
 <?php
 
-namespace Subapp\Sql\Represent\MySQL\Sqlizer;
+namespace Subapp\Sql\Render\MySQL\Sqlizer;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Identifier as IdentifierExpression;
-use Subapp\Sql\Represent\RendererInterface;
+use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class QuoteIdentifier
- * @package Subapp\Sql\Represent\MySQL\Sqlizer
+ * @package Subapp\Sql\Render\MySQL\Sqlizer
  */
 class QuoteIdentifier extends Identifier
 {

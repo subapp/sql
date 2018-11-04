@@ -26,7 +26,8 @@ $counter = 0;
 
 /** @var \Subapp\Lexer\TokenInterface $token */
 foreach ($lexer as $token) {
-    echo sprintf('%s("%s") ', $lexer->getConstantName($token->getType()), $token->getToken()) . PHP_EOL;
+    echo sprintf('%s("%s")%s', $lexer->getConstantName($token->getType()), $token->getToken(), "\t")
+        . ($counter++ % 5 === 0 ? PHP_EOL : null);
 }
 
 $lexer->rewind();
@@ -38,8 +39,8 @@ try {
     /** @var \Subapp\Sql\Ast\Statement\Select $select */
     $select = $processor->parse();
     
-    $renderer = new \Subapp\Sql\Represent\Renderer();
-    $renderer->setup(new \Subapp\Sql\Represent\MySQL\MySQLRendererSetup());
+    $renderer = new \Subapp\Sql\Render\Renderer();
+    $renderer->setup(new \Subapp\Sql\Render\MySQL\MySQLRendererSetup());
     
 //    $select->setPrimaryTable('test');
 //    $select->getVariables()->append(new Literal(3.14, Literal::STRING));

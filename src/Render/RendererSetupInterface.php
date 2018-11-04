@@ -1,10 +1,10 @@
 <?php
 
-namespace Subapp\Sql\Represent;
+namespace Subapp\Sql\Render;
 
 /**
  * Interface RendererSetupLoader
- * @package Subapp\Sql\Represent
+ * @package Subapp\Sql\Render
  */
 interface RendererSetupInterface
 {

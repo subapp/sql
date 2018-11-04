@@ -1,12 +1,12 @@
 <?php
 
-namespace Subapp\Sql\Represent;
+namespace Subapp\Sql\Render;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Interface SqlizerInterface
- * @package Subapp\Sql\Represent
+ * @package Subapp\Sql\Render
  */
 interface SqlizerInterface
 {

@@ -13,29 +13,40 @@ class Arithmetic extends AbstractExpression
 {
 
     /**
-     * @var Operand[]|CollectionInterface
+     * @var ExpressionInterface[]|CollectionInterface
      */
-    private $operands;
-
+    private $collection;
+    
+    /**
+     * Arithmetic constructor.
+     */
     public function __construct()
     {
-        $this->operands = new Collection([], Operand::class);
+        $this->collection = new Collection([], ExpressionInterface::class);
     }
 
     /**
-     * @param Operand $operand
+     * @param ExpressionInterface $expression
      */
-    public function addOperand(Operand $operand)
+    public function append(ExpressionInterface $expression)
     {
-        $this->operands->append($operand);
+        $this->collection->append($expression);
     }
 
     /**
-     * @return CollectionInterface|Operand[]
+     * @param ExpressionInterface $expression
      */
-    public function getOperands()
+    public function prepend(ExpressionInterface $expression)
     {
-        return $this->operands;
+        $this->collection->prepend($expression);
+    }
+
+    /**
+     * @return CollectionInterface|ExpressionInterface[]
+     */
+    public function getCollection()
+    {
+        return $this->collection;
     }
 
     /**

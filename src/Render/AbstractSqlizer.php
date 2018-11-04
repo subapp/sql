@@ -1,12 +1,12 @@
 <?php
 
-namespace Subapp\Sql\Represent;
+namespace Subapp\Sql\Render;
 
 use Subapp\Sql\Common\ClassNameTrait;
 
 /**
  * Class AbstractRepresent
- * @package Subapp\Sql\Represent
+ * @package Subapp\Sql\Render
  */
 abstract class AbstractSqlizer implements SqlizerInterface
 {

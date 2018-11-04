@@ -15,9 +15,9 @@ interface ProcessorInterface
 {
     
     /**
-     * @param ParserSetupInterface $loader
+     * @param ParserSetupInterface $parserSetup
      */
-    public function setup(ParserSetupInterface $loader);
+    public function setup(ParserSetupInterface $parserSetup);
     
     /**
      * @param ParserInterface $parser

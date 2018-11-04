@@ -44,11 +44,11 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @param ParserSetupInterface $loader
+     * @param ParserSetupInterface $parserSetup
      */
-    public function setup(ParserSetupInterface $loader)
+    public function setup(ParserSetupInterface $parserSetup)
     {
-        $loader->setup($this);
+        $parserSetup->setup($this);
     }
     
     /**
@@ -84,8 +84,6 @@ final class Processor implements ProcessorInterface
     public function getParser($name)
     {
         $parser = $this->parsers->offsetGet($name);
-
-        var_dump($name);
 
         if (!($parser instanceof ParserInterface)) {
             throw new \RuntimeException(sprintf('Unfortunately parser with name "%s" doesn\'t registered yet',

@@ -1,14 +1,14 @@
 <?php
 
-namespace Subapp\Sql\Represent\MySQL;
+namespace Subapp\Sql\Render\MySQL;
 
-use Subapp\Sql\Represent\MySQL\Sqlizer;
-use Subapp\Sql\Represent\RendererInterface;
-use Subapp\Sql\Represent\RendererSetupInterface;
+use Subapp\Sql\Render\MySQL\Sqlizer;
+use Subapp\Sql\Render\RendererInterface;
+use Subapp\Sql\Render\RendererSetupInterface;
 
 /**
  * Class MySQLRendererSetupLoader
- * @package Subapp\Sql\Represent\MySQL
+ * @package Subapp\Sql\Render\MySQL
  */
 class MySQLRendererSetup implements RendererSetupInterface
 {
@@ -30,7 +30,7 @@ class MySQLRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Identifier());
         $renderer->addSqlizer(new Sqlizer\QuoteIdentifier());
         $renderer->addSqlizer(new Sqlizer\Embrace());
-        $renderer->addSqlizer(new Sqlizer\Operand());
+        $renderer->addSqlizer(new Sqlizer\MathOperator());
         $renderer->addSqlizer(new Sqlizer\Arithmetic());
 
         // functions
