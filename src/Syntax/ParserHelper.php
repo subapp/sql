@@ -64,7 +64,7 @@ final class ParserHelper
      * @param integer         ...$tokenType
      * @throws SyntaxErrorException
      */
-    public function throwSyntaxError(ParserInterface $parser, LexerInterface $lexer, ...$tokenType)
+    public function throwSyntaxError(LexerInterface $lexer, $parser = null, ...$tokenType)
     {
         /** @var Lexer $lexer */
         $tokenType = array_map(function ($type) use ($lexer) {
@@ -78,9 +78,10 @@ final class ParserHelper
         $token = $lexer->peek();
         $position = $token ? $token->getPosition() : -1;
         $token = $token ? $token->getToken() : '[END OF LINE]';
+        $parserName = $parser ? $this->getUnderscore(get_class($parser)) : 'UNDEFINED';
         
         throw new SyntaxErrorException(sprintf('Syntax error. Parser [%s] expected: %s got "%s" at position %d',
-            $this->getUnderscore(get_class($parser)), $tokenType, $token, $position));
+            $parserName, $tokenType, $token, $position));
     }
 
 }

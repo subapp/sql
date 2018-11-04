@@ -217,7 +217,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function throwSyntaxError(LexerInterface $lexer, ...$tokenType)
     {
-        $this->helper->throwSyntaxError($this, $lexer, ...$tokenType);
+        $this->helper->throwSyntaxError($lexer, $this, ...$tokenType);
     }
 
     /**

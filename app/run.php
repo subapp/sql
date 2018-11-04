@@ -5,7 +5,7 @@ use Subapp\Sql\Lexer\Lexer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Math';
+$sqlVersion = 'SelectJoin';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 

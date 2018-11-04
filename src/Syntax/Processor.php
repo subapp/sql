@@ -32,6 +32,11 @@ final class Processor implements ProcessorInterface
     private $parsers;
     
     /**
+     * @var ParserHelper
+     */
+    private $helper;
+    
+    /**
      * Query constructor.
      * @param LexerInterface    $lexer
      * @param PlatformInterface $platform
@@ -41,6 +46,7 @@ final class Processor implements ProcessorInterface
         $this->parsers = new Collection([], ParserInterface::class);
         $this->lexer = $lexer;
         $this->platform = $platform;
+        $this->helper = new ParserHelper();
     }
     
     /**
@@ -101,8 +107,12 @@ final class Processor implements ProcessorInterface
     {
         $lexer = $this->getLexer();
         
+        
         // reset lexer to start
         $lexer->rewind();
+        
+        // statement name
+        $name = null;
         
         // determine which of statement will be parsed
         switch (true) {
@@ -113,11 +123,10 @@ final class Processor implements ProcessorInterface
             case ($lexer->isCurrent(Lexer::T_DELETE)):
                 $name = 'delete'; break;
             default:
-                throw new SyntaxErrorException(sprintf('Syntax error. Expected either SELECT, UPDATE or DELETE got "%s" at position %d',
-                    $lexer->getTokenValue(), $lexer->getTokenPosition()));
+                $this->helper->throwSyntaxError($lexer, null, Lexer::T_SELECT, Lexer::T_UPDATE, Lexer::T_DELETE);
         }
     
-        return $this->getParser("statement.{$name}")->parse($lexer, $this);
+        return $this->getParser("parser.{$name}_statement")->parse($lexer, $this);
     }
     
     /**
