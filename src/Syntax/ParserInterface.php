@@ -84,6 +84,18 @@ interface ParserInterface
 
     /**
      * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isPlainMathOperator(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isFactorMathOperator(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
      * @return mixed
      */
     public function isIdentifier(LexerInterface $lexer);

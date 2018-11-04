@@ -113,6 +113,33 @@ abstract class AbstractParser implements ParserInterface
 
         return $isMath;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function isPlainMathOperator(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $isMath = ($token->is(Lexer::T_PLUS) || $token->is(Lexer::T_MINUS));
+        $lexer->resetPeek();
+
+        return $isMath;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isFactorMathOperator(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $isMath = ($token->is(Lexer::T_DIVIDE) || $token->is(Lexer::T_MULTIPLY));
+        $lexer->resetPeek();
+
+        return $isMath;
+    }
+
+
+
     /**
      * @inheritdoc
      */

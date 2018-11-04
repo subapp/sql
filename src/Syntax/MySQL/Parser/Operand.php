@@ -22,18 +22,47 @@ class Operand extends AbstractMySQLParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->getExpressionParser($processor);
-        $expression = null;
+        return $this->parseFactor($lexer, $processor);
+    }
+
+    /**
+     * @param LexerInterface $lexer
+     * @param ProcessorInterface $processor
+     * @return \Subapp\Sql\Ast\Embrace|OperandExpression
+     */
+    public function parseFactor(LexerInterface $lexer, ProcessorInterface $processor)
+    {
+
+        if ($this->isFactorMathOperator($lexer)) {
+            $factor = new \Subapp\Sql\Ast\Arithmetic();
+
+            while ($this->isFactorMathOperator($lexer)) {
+                $this->shiftAnyIf($lexer, [Lexer::T_MULTIPLY, Lexer::T_DIVIDE]);
+                $expression = $this->parsePlain($lexer, $processor);
+                $factor->addOperand($expression);
+            };
+
+            return new OperandExpression('-', new \Subapp\Sql\Ast\Embrace($factor));
+        } else {
+            return $this->parsePlain($lexer, $processor);
+        }
+    }
+
+    /**
+     * @param LexerInterface $lexer
+     * @param ProcessorInterface $processor
+     * @return OperandExpression
+     */
+    public function parsePlain(LexerInterface $lexer, ProcessorInterface $processor)
+    {
         $operator = OperandExpression::NONE;
 
         if ($this->isMathOperator($lexer)) {
-            $this->shiftAny($lexer, [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE]);
-            $operator = $lexer->getToken()->getToken();
+            $this->shiftAnyIf($lexer, [Lexer::T_PLUS, Lexer::T_MINUS,]);
+            $operator = $lexer->getTokenValue();
         }
 
-        $expression = $parser->parse($lexer, $processor);
-    
-        return new OperandExpression($operator, $expression);
+        return new OperandExpression($operator, $this->getExpressionParser($processor)->parse($lexer, $processor));
     }
     
 }

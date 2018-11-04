@@ -1,4 +1,5 @@
 select
+1 + 2 + 3 * 5 + 1,
 user.id + 2 + t0.name As lala,
 Count(user_id),
 pi() pi,
