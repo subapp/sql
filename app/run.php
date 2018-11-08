@@ -5,7 +5,7 @@ use Subapp\Sql\Lexer\Lexer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'SelectWhere2';
+$sqlVersion = 'SelectWhere';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -18,19 +18,19 @@ echo PHP_EOL;
 //die(var_dump($lexer));
 
 echo "====== SQL ======\n";
-echo $sql;
+echo preg_replace('/\s+/ui', ' ', $sql);
 
 echo "\n====== Tokens ======\n";
 
 $counter = 0;
 
 /** @var \Subapp\Lexer\TokenInterface $token */
-foreach ($lexer as $token) {
-    echo sprintf('%s("%s")%s', $lexer->getConstantName($token->getType()), $token->getToken(), "\t")
-        . ($counter++ % 5 === 0 ? PHP_EOL : null);
-}
+//foreach ($lexer as $token) {
+//    echo sprintf('%s("%s")%s', $lexer->getConstantName($token->getType()), $token->getToken(), "\t")
+//        . ($counter++ % 5 === 0 ? PHP_EOL : null);
+//}
 
-//die;
+echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
 $lexer->rewind();
 
@@ -39,7 +39,9 @@ $processor->setup(new \Subapp\Sql\Syntax\MySQL\MySQLParserSetup());
 
 try {
     /** @var \Subapp\Sql\Ast\Statement\Select $select */
+    $time = microtime(true);
     $select = $processor->parse();
+    $parseTime = microtime(true) - $time;
     
     $renderer = new \Subapp\Sql\Render\Renderer();
     $renderer->setup(new \Subapp\Sql\Render\MySQL\MySQLRendererSetup());
@@ -48,9 +50,13 @@ try {
 //    $select->getVariables()->append(new Literal(3.14, Literal::STRING));
 
 //    var_dump($select);
-
+    $time = microtime(true);
     echo "\n====== SELECT AST Render ======\n";
     echo $renderer->render($select);
+    echo PHP_EOL;
+    echo sprintf('Render: %s', microtime(true) - $time);
+    echo PHP_EOL;
+    echo sprintf('Parser: %s', $parseTime);
 
 
 //    $query = new \Subapp\Sql\Ast\Statement\Select();

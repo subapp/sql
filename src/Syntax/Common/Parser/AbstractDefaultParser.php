@@ -193,5 +193,14 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser('condition.comparison');
     }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Condition\LogicOperator
+     */
+    public function getLogicOperatorParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('condition.logic_operator');
+    }
 
 }

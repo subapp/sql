@@ -2,14 +2,14 @@ select u.id
 from `users` u
 where
 
-(u.id < 100 And u.create >= 1000000)
+(u.id1 < 100 And u.create >= 1000000 aNd u.ia <= 100500)
 
-AND ( activities.orderby = 1
+|| ( activities.orderby = 1
               AND activities.starttime >= '2013-08-26 04:00:00'
               AND activities.endtime <= '2013-08-27 04:00:00' )
-              Or
+   Or
     u.login_cnt > (10 + 20 * sum(u.test) / 2 + 1)
-and
+anD
   u.id < 100 and u.create >= 1000000
   or
   (gateway like '%pay-gw%' and u.name like 'test')

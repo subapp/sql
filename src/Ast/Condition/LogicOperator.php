@@ -1,6 +1,8 @@
 <?php
 
-namespace Subapp\Sql\Ast;
+namespace Subapp\Sql\Ast\Condition;
+
+use Subapp\Sql\Ast\AbstractExpression;
 
 /**
  * Class LogicOperator
@@ -50,7 +52,7 @@ class LogicOperator extends AbstractExpression
     */
     public function getSqlizerName()
     {
-        return 'sqlizer.logic_operator';
+        return 'condition.logic_operator';
     }
 
 }

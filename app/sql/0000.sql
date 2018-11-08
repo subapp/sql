@@ -8,3 +8,4 @@ Sum(u.id) * 3,
 cnt('test'),
 
 t0.id from `users`
+where a > 2

@@ -33,14 +33,7 @@ class SelectStatement extends AbstractMySQLParser
         }
 
         if ($this->isWhere($lexer)) {
-            $parser = $this->getConditionParser($processor);
-    
-            // @todo temporary assertion
-            // need own AST Node
-            $this->shift(Lexer::T_WHERE, $lexer);
-            
-            $condition = $parser->parse($lexer, $processor);
-            var_dump($condition);
+            $select->setCondition((new Where())->parse($lexer, $processor));
         }
 
         return $select;

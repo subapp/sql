@@ -36,7 +36,7 @@ class Literal extends AbstractDefaultParser
         $isAllowed = (in_array($token->getType(), $allowed));
 
         if (!$isAllowed) {
-            $this->throwSyntaxError($lexer, $allowed);
+            $this->throwSyntaxError($lexer, ...$allowed);
         }
 
         $this->shift($token->getType(), $lexer);

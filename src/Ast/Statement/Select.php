@@ -21,8 +21,20 @@ class Select extends AbstractExpression
      * @var Ast\From
      */
     private $from;
-
-
+    
+    /**
+     * @var Ast\Collection
+     */
+    private $condition;
+    
+    /**
+     * Select constructor.
+     */
+    public function __construct()
+    {
+        $this->condition = new Ast\Collection();
+        $this->variables = new Ast\Variables();
+    }
     
     /**
      * @return Ast\From
@@ -63,6 +75,22 @@ class Select extends AbstractExpression
     public function setVariables(Ast\Variables $variables)
     {
         $this->variables = $variables;
+    }
+    
+    /**
+     * @param Ast\Collection $condition
+     */
+    public function setCondition(Ast\Collection $condition)
+    {
+        $this->condition = $condition;
+    }
+    
+    /**
+     * @return Ast\Collection
+     */
+    public function getCondition()
+    {
+        return $this->condition;
     }
     
     /**

@@ -35,7 +35,7 @@ class Precedence extends AbstractComparison
      */
     public function getSqlizerName()
     {
-        return 'condition.simple_cmp';
+        return 'condition.precedence';
     }
     
 }

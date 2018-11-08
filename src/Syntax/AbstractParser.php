@@ -255,8 +255,9 @@ abstract class AbstractParser implements ParserInterface
     public function isComparisonExpression(LexerInterface $lexer)
     {
         $this->peekBehindExpression($lexer);
+        $isComparison = $this->isComparisonOperator($lexer);
         
-        return $this->isComparisonOperator($lexer);
+        return $isComparison;
     }
     
     /**
@@ -327,12 +328,13 @@ abstract class AbstractParser implements ParserInterface
     {
         // if next token between
         $token = $lexer->peek();
-        $isBetween = $token && $token->is(Lexer::T_BETWEEN);
-        
-        // skip NOT token that can be before BETWEEN [NOT] ... AND ...
+    
+        // skip NOT token that can be before [NOT] BETWEEN ... AND ...
         if ($token->is(Lexer::T_NOT)) {
             $token = $lexer->peek();
         }
+        
+        $isBetween = $token && $token->is(Lexer::T_BETWEEN);
         
         $this->notEndOfLine($lexer, $token, Lexer::T_STRING, Lexer::T_NOT);
         
@@ -343,7 +345,31 @@ abstract class AbstractParser implements ParserInterface
     }
     
     /**
+     * @inheritdoc
+     */
+    public function isLike(LexerInterface $lexer)
+    {
+        // if next token between
+        $token = $lexer->peek();
+    
+        // skip NOT token that can be before [NOT] LIKE 'john%'
+        if ($token->is(Lexer::T_NOT)) {
+            $token = $lexer->peek();
+        }
+        
+        $isLike = $token && $token->is(Lexer::T_LIKE);
+    
+        $this->notEndOfLine($lexer, $token, Lexer::T_LIKE, Lexer::T_NOT);
+    
+        // reset peek position = 0
+        $lexer->resetPeek();
+    
+        return $isLike;
+    }
+    
+    /**
      * @param LexerInterface $lexer
+     * @return TokenInterface
      */
     public function peekBehindExpression(LexerInterface $lexer)
     {
@@ -357,8 +383,11 @@ abstract class AbstractParser implements ParserInterface
             $lexer->setPeek(2);
         }
     
-        $this->notEndOfLine($lexer,
-            $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false), Lexer::T_CLOSE_BRACE);
+        $token = $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
+        
+        $this->notEndOfLine($lexer, $token, Lexer::T_CLOSE_BRACE);
+        
+        return $token;
     }
     
     /**

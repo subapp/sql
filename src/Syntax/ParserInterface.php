@@ -98,6 +98,12 @@ interface ParserInterface
      * @param LexerInterface $lexer
      * @return boolean
      */
+    public function isLike(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
     public function isBetween(LexerInterface $lexer);
 
     /**

@@ -15,54 +15,54 @@ abstract class AbstractComparison extends AbstractExpression
     /**
      * @var ExpressionInterface
      */
-    private $expressionA;
+    private $left;
     
     /**
      * @var ExpressionInterface
      */
-    private $expressionB;
+    private $right;
     
     /**
      * AbstractComparison constructor.
-     * @param ExpressionInterface $expressionA
-     * @param ExpressionInterface $expressionB
+     * @param ExpressionInterface $left
+     * @param ExpressionInterface $right
      */
-    public function __construct(ExpressionInterface $expressionA = null, ExpressionInterface $expressionB = null)
+    public function __construct(ExpressionInterface $left = null, ExpressionInterface $right = null)
     {
-        $this->expressionA = $expressionA;
-        $this->expressionB = $expressionB;
+        $this->left     = $left;
+        $this->right    = $right;
     }
     
     /**
      * @return ExpressionInterface
      */
-    public function getExpressionA()
+    public function getLeft()
     {
-        return $this->expressionA;
+        return $this->left;
     }
     
     /**
-     * @param ExpressionInterface $expressionA
+     * @param ExpressionInterface $left
      */
-    public function setExpressionA(ExpressionInterface $expressionA)
+    public function setLeft(ExpressionInterface $left)
     {
-        $this->expressionA = $expressionA;
+        $this->left = $left;
     }
     
     /**
      * @return ExpressionInterface
      */
-    public function getExpressionB()
+    public function getRight()
     {
-        return $this->expressionB;
+        return $this->right;
     }
     
     /**
-     * @param ExpressionInterface $expressionB
+     * @param ExpressionInterface $right
      */
-    public function setExpressionB(ExpressionInterface $expressionB)
+    public function setRight(ExpressionInterface $right)
     {
-        $this->expressionB = $expressionB;
+        $this->right = $right;
     }
     
 }

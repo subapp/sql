@@ -13,7 +13,16 @@ class Collection extends BaseCollection implements ExpressionInterface
 {
 
     use ClassNameTrait;
-
+    
+    /**
+     * Collection constructor.
+     * @param array|ExpressionInterface[] $expressions
+     */
+    public function __construct(array $expressions = [])
+    {
+        parent::__construct($expressions, ExpressionInterface::class);
+    }
+    
     /**
      * @return string
      */

@@ -21,9 +21,10 @@ class SelectStatement extends AbstractSqlizer
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        return sprintf('SELECT %s %s',
+        return sprintf('SELECT %s %s WHERE %s',
             $renderer->render($expression->getVariables()),
-            $renderer->render($expression->getFrom())
+            $renderer->render($expression->getFrom()),
+            $renderer->render($expression->getCondition())
         );
     }
 
