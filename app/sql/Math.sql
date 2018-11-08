@@ -27,3 +27,4 @@ select
   sqrt((2 / 3) * rand(100)) * (123 + 777) / count(s.id) + sum(s.balance)
 
 from (Select 123 int_type, 1.23 float_type, 1 + 2 * 3 / (1 + 1) * 2 + 3 from innter_table) as t0;
+

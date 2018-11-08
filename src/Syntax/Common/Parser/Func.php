@@ -30,7 +30,6 @@ class Func extends AbstractDefaultParser
     {
         $token = $lexer->peek();
         $parser = null;
-
         $lexer->resetPeek();
 
         switch (true) {

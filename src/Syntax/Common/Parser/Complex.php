@@ -23,6 +23,9 @@ class Complex extends AbstractDefaultParser
         $parser = null;
     
         switch (true) {
+            case $this->isComparisonExpression($lexer):
+                $parser = $this->getComparisonParser($processor);
+                break;
             case $this->isMathExpression($lexer):
                 $parser = $this->getArithmeticParser($processor);
                 break;

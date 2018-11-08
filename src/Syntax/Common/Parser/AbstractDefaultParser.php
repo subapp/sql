@@ -167,4 +167,31 @@ abstract class AbstractDefaultParser extends AbstractParser
         return $processor->getParser('parser.sub_select');
     }
 
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Condition\Condition
+     */
+    public function getConditionParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('condition.condition');
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Condition\CmpOperator
+     */
+    public function getCmpOperatorParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('condition.cmp_operator');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Condition\Comparison
+     */
+    public function getComparisonParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('condition.comparison');
+    }
+
 }

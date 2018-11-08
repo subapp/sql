@@ -5,7 +5,7 @@ use Subapp\Sql\Lexer\Lexer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'SelectJoin';
+$sqlVersion = 'SelectWhere2';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -29,6 +29,8 @@ foreach ($lexer as $token) {
     echo sprintf('%s("%s")%s', $lexer->getConstantName($token->getType()), $token->getToken(), "\t")
         . ($counter++ % 5 === 0 ? PHP_EOL : null);
 }
+
+//die;
 
 $lexer->rewind();
 

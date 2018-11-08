@@ -13,74 +13,78 @@ abstract class AbstractSqlLexer extends AbstractLexer
 
     const T_UNKNOWN = 1;
 
-    const T_AT = 101;
-    const T_HASH = 102;
-    const T_EQ = 103;
-    const T_GT = 104;
-    const T_LT = 105;
-    const T_MINUS = 106;
-    const T_PLUS = 107;
-    const T_DIVIDE = 108;
-    const T_MULTIPLY = 109;
-    const T_DOT = 110;
-    const T_COMMA = 111;
-    const T_NEGATE = 112;
-    const T_QUESTION = 113;
-    const T_BACKSLASH = 114;
-    const T_VERTICAL_SLASH = 115;
-    const T_COLON = 116;
-    const T_SEMICOLON = 117;
-    const T_GRAVE_ACCENT = 118;
-    const T_OPEN_BRACE = 119;
-    const T_OPEN_CURLY_BRACE = 120;
-    const T_CLOSE_BRACE = 121;
-    const T_CLOSE_CURLY_BRACE = 122;
+    const T_AT = 1000;
+    const T_HASH = 1010;
+    const T_EQ = 1020;
+    const T_NE = 1030;
+    const T_GT = 1040;
+    const T_GE = 1050;
+    const T_LT = 1060;
+    const T_LE = 1070;
+    const T_MINUS = 1080;
+    const T_PLUS = 1090;
+    const T_DIVIDE = 1100;
+    const T_MULTIPLY = 1110;
+    const T_DOT = 1120;
+    const T_COMMA = 1130;
+    const T_NEGATE = 1140;
+    const T_QUESTION = 1150;
+    const T_BACKSLASH = 1160;
+    const T_VERTICAL_SLASH = 1170;
+    const T_AMPERSAND = 1180;
+    const T_COLON = 1190;
+    const T_SEMICOLON = 1200;
+    const T_GRAVE_ACCENT = 1210;
+    const T_OPEN_BRACE = 1220;
+    const T_OPEN_CURLY_BRACE = 1230;
+    const T_CLOSE_BRACE = 1240;
+    const T_CLOSE_CURLY_BRACE = 1250;
 
     const T_STRING = 500;
     const T_INT = 510;
     const T_FLOAT = 520;
+    
+    const T_ALL = 2000;
+    const T_AND = 2010;
+    const T_AS = 2020;
+    const T_ASC = 2030;
+    const T_BETWEEN = 2040;
+    const T_BY = 2050;
+    const T_DELAYED = 2060;
+    const T_DELETE = 2070;
+    const T_DESC = 2080;
+    const T_DISTINCT = 2090;
+    const T_EXPLAIN = 2100;
+    const T_FALSE = 2110;
+    const T_FROM = 2120;
+    const T_GROUP = 2130;
+    const T_HAVING = 2140;
+    const T_IGNORE = 2150;
+    const T_IN = 2160;
+    const T_INNER = 2170;
+    const T_INSERT = 2180;
+    const T_INTO = 2190;
+    const T_IS = 2200;
+    const T_JOIN = 2210;
+    const T_LEFT = 2220;
+    const T_LIKE = 2230;
+    const T_LIMIT = 2240;
+    const T_NOT = 2250;
+    const T_NULL = 2260;
+    const T_ON = 2270;
+    const T_OR = 2280;
+    const T_ORDER = 2290;
+    const T_OUTER = 2300;
+    const T_RIGHT = 2310;
+    const T_SELECT = 2320;
+    const T_STRAIGHT_JOIN = 2330;
+    const T_TABLE = 2340;
+    const T_TRUE = 2350;
+    const T_UPDATE = 2360;
+    const T_VALUES = 2370;
+    const T_WHERE = 2380;
+    const T_XOR = 2390;
 
-    const T_SELECT = 1000;
-    const T_UPDATE = 1010;
-    const T_INSERT = 1020;
-    const T_DELETE = 1030;
-    const T_FROM = 1032;
-    const T_TABLE = 1034;
-    const T_DISTINCT = 1040;
-    const T_HAVING = 1050;
-    const T_IN = 1060;
-    const T_DELAYED = 1070;
-    const T_IGNORE = 1080;
-    const T_INTO = 1090;
-    const T_STRAIGHT_JOIN = 1100;
-    const T_AS = 1110;
-    const T_INNER = 1120;
-    const T_LEFT = 1130;
-    const T_RIGHT = 1140;
-    const T_OUTER = 1150;
-    const T_JOIN = 1160;
-    const T_ON = 1170;
-    const T_NULL = 1180;
-    const T_VALUES = 1190;
-    const T_WHERE = 1200;
-    const T_OR = 1210;
-    const T_XOR = 1220;
-    const T_AND = 1230;
-    const T_BETWEEN = 1240;
-    const T_IS = 1250;
-    const T_LIKE = 1260;
-    const T_NOT = 1270;
-    const T_ALL = 1280;
-    const T_FALSE = 1290;
-    const T_TRUE = 1300;
-    const T_GROUP = 1310;
-    const T_BY = 1320;
-    const T_ORDER = 1330;
-    const T_ASC = 1340;
-    const T_DESC = 1350;
-    const T_LIMIT = 1360;
-
-    const T_EXPLAIN = 2000;
 
     const T_SQL_CALC_FOUND_ROWS = 3010;
     const T_SQL_BIG_RESULT = 3020;
@@ -95,8 +99,12 @@ abstract class AbstractSqlLexer extends AbstractLexer
         '@'     => AbstractSqlLexer::T_AT,
         '#'     => AbstractSqlLexer::T_HASH,
         '='     => AbstractSqlLexer::T_EQ,
+        '!='    => AbstractSqlLexer::T_NE,
+        '<>'    => AbstractSqlLexer::T_NE,
         '>'     => AbstractSqlLexer::T_GT,
+        '>='    => AbstractSqlLexer::T_GE,
         '<'     => AbstractSqlLexer::T_LT,
+        '<='    => AbstractSqlLexer::T_LE,
         '-'     => AbstractSqlLexer::T_MINUS,
         '+'     => AbstractSqlLexer::T_PLUS,
         '/'     => AbstractSqlLexer::T_DIVIDE,
@@ -107,6 +115,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
         '?'     => AbstractSqlLexer::T_QUESTION,
         '\\'    => AbstractSqlLexer::T_BACKSLASH,
         '|'     => AbstractSqlLexer::T_VERTICAL_SLASH,
+        '&'     => AbstractSqlLexer::T_AMPERSAND,
         ':'     => AbstractSqlLexer::T_COLON,
         ';'     => AbstractSqlLexer::T_SEMICOLON,
         '`'     => AbstractSqlLexer::T_GRAVE_ACCENT,
@@ -114,6 +123,9 @@ abstract class AbstractSqlLexer extends AbstractLexer
         '{'     => AbstractSqlLexer::T_OPEN_CURLY_BRACE,
         ')'     => AbstractSqlLexer::T_CLOSE_BRACE,
         '}'     => AbstractSqlLexer::T_CLOSE_CURLY_BRACE,
+        
+        '&&'    => AbstractSqlLexer::T_AND,
+        '||'    => AbstractSqlLexer::T_OR,
 
         'SELECT'        => AbstractSqlLexer::T_SELECT,
         'UPDATE'        => AbstractSqlLexer::T_UPDATE,

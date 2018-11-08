@@ -25,13 +25,24 @@ class SelectStatement extends AbstractMySQLParser
 
         $select = new Ast\Statement\Select();
 
-        $expressions = $this->getVariablesParser($processor)->parse($lexer, $processor);
-
-        $select->setVariables($expressions);
+        $select->setVariables($this->getVariablesParser($processor)->parse($lexer, $processor));
         $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
 
-        var_dump($this->getStringLength($lexer, 10));
-        
+        if ($this->isJoin($lexer)) {
+            // join...
+        }
+
+        if ($this->isWhere($lexer)) {
+            $parser = $this->getConditionParser($processor);
+    
+            // @todo temporary assertion
+            // need own AST Node
+            $this->shift(Lexer::T_WHERE, $lexer);
+            
+            $condition = $parser->parse($lexer, $processor);
+            var_dump($condition);
+        }
+
         return $select;
     }
     

@@ -11,16 +11,18 @@ use Subapp\Sql\Ast;
  */
 class Select extends AbstractExpression
 {
-    
-    /**
-     * @var Ast\From
-     */
-    private $from;
 
     /**
      * @var Ast\Variables
      */
     private $variables;
+
+    /**
+     * @var Ast\From
+     */
+    private $from;
+
+
     
     /**
      * @return Ast\From

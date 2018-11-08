@@ -80,6 +80,36 @@ interface ParserInterface
      * @param LexerInterface $lexer
      * @return boolean
      */
+    public function isComparisonExpression(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isComparisonOperator(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isIsNull(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isBetween(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isIn(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
     public function isMathOperator(LexerInterface $lexer);
 
     /**
@@ -135,5 +165,41 @@ interface ParserInterface
      * @return boolean
      */
     public function isSubSelect(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isJoin(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isWhere(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isLogicalOperator(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isLogicAnd(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isLogicOr(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isLogicXor(LexerInterface $lexer);
     
 }
