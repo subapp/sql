@@ -34,7 +34,10 @@ class DefaultRendererSetup implements RendererSetupInterface
         
         $renderer->addSqlizer(new Sqlizer\Condition\CmpOperator());
         $renderer->addSqlizer(new Sqlizer\Condition\LogicOperator());
-        $renderer->addSqlizer(new Sqlizer\Condition\Precedence());
+        $renderer->addSqlizer(new Sqlizer\Condition\Cmp());
+        $renderer->addSqlizer(new Sqlizer\Condition\IsNull());
+        $renderer->addSqlizer(new Sqlizer\Condition\Between());
+        $renderer->addSqlizer(new Sqlizer\Condition\In());
         $renderer->addSqlizer(new Sqlizer\Condition\Like());
         
     }

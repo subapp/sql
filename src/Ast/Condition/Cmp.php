@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Ast\Condition;
 
 /**
- * Class SimpleCmp
+ * Class Cmp
  * @package Subapp\Sql\Ast\Condition
  */
-class Precedence extends AbstractComparison
+class Cmp extends AbstractComparison
 {
     
     /**
@@ -35,7 +35,7 @@ class Precedence extends AbstractComparison
      */
     public function getSqlizerName()
     {
-        return 'condition.precedence';
+        return 'condition.cmp';
     }
     
 }

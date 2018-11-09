@@ -17,8 +17,7 @@ anD
   u.login_cnt > (10 + 20 * sum(u.test) / 2 + 1)
   and
   u.email is not null
-  and
-  u.name in (select n.id from `names` n where n.id > 100)
+
     AND activities.typeid NOT IN ( 5, 10, 11, 12, 19 )
     AND ( ( activities.orderby = 1
               AND activities.starttime >= '2013-08-26 04:00:00'
@@ -26,6 +25,6 @@ anD
             OR ( ( activities.orderby IS NULL
                      OR activities.orderby != 1 )
                    AND activities.activitydate = '2013-08-26' ) )
-&& 1 != 1 || 2 >= 1
+&& 1 != 1 || 2 >= 1 || u0.id not BETWEEN 10 and '2013-08-27 04:00:00'
 ORDER  BY activitytypes.orderby,
          activities.starttime

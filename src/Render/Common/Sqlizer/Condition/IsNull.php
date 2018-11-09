@@ -2,29 +2,28 @@
 
 namespace Subapp\Sql\Render\Common\Sqlizer\Condition;
 
-use Subapp\Sql\Ast\Condition\Precedence as PrecedenceExpression;
+use Subapp\Sql\Ast\Condition\IsNull as IsNullExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
- * Class Precedence
+ * Class IsNull
  * @package Subapp\Sql\Render\Common\Sqlizer\Condition
  */
-class Precedence extends AbstractSqlizer
+class IsNull extends AbstractSqlizer
 {
     
     /**
-     * @param ExpressionInterface|PrecedenceExpression $expression
-     * @param RendererInterface                        $renderer
+     * @param ExpressionInterface|IsNullExpression $expression
+     * @param RendererInterface                    $renderer
      * @return string
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        return sprintf('%s %s %s',
+        return sprintf('%s IS%sNULL',
             $renderer->render($expression->getLeft()),
-            $renderer->render($expression->getOperator()),
-            $renderer->render($expression->getRight()));
+            ($expression->isNot() ? ' NOT ' : ' '));
     }
     
 }

@@ -25,19 +25,37 @@ class Condition extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $collection = new Collection();
+        $logical = $this->getLogicOperatorParser($processor);
+        
+        do {
+            $collection->append(new Embrace($this->parseComparisonTerm($lexer, $processor)));
+    
+            $isLogicalOperator = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
+    
+            if ($isLogicalOperator) {
+                $collection->append($logical->parse($lexer, $processor));
+            }
+            
+        } while ($isLogicalOperator);
+        
+        return $collection;
+    }
+    
+    /**
+     * @param LexerInterface     $lexer
+     * @param ProcessorInterface $processor
+     * @return Collection
+     */
+    public function parseComparisonTerm(LexerInterface $lexer, ProcessorInterface $processor)
+    {
+        $collection = new Collection();
         $comparison = $this->getComparisonParser($processor);
         $logical = $this->getLogicOperatorParser($processor);
         
         do {
-            // [AND|OR|XOR] (u.id > 1)
-            if ($this->isLogicalOperator($lexer)) {
-                $collection->append($logical->parse($lexer, $processor));
-            }
-            
-            // ((a > 1 AND b < 1) or (a > 2 OR b < 4))
             if ($this->isBraced($lexer)) {
                 $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-                $expression = new Embrace($this->parse($lexer, $processor));
+                $expression = $this->parse($lexer, $processor);
                 $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
             } else {
                 $expression = $comparison->parse($lexer, $processor);
@@ -45,7 +63,12 @@ class Condition extends AbstractDefaultParser
             
             $collection->append($expression);
             
-        } while ($this->isLogicalOperator($lexer));
+            $isNext = $lexer->isNextAny([Lexer::T_AND]);
+    
+            if ($isNext) {
+                $collection->append($logical->parse($lexer, $processor));
+            }
+        } while ($isNext);
         
         return $collection;
     }

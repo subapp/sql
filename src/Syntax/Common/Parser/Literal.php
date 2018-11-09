@@ -27,7 +27,7 @@ class Literal extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface
+     * @return ExpressionInterface|LiteralExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

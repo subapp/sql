@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Ast\Condition;
 
 /**
- * Class Like
+ * Class In
  * @package Subapp\Sql\Ast\Condition
  */
-class Like extends AbstractIsNotComparison
+class In extends AbstractIsNotComparison
 {
     
     /**
@@ -14,7 +14,7 @@ class Like extends AbstractIsNotComparison
      */
     public function getSqlizerName()
     {
-        return 'condition.like';
+        return 'condition.in';
     }
     
 }

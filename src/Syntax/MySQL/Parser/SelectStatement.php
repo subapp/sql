@@ -29,7 +29,8 @@ class SelectStatement extends AbstractMySQLParser
         $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
 
         if ($this->isJoin($lexer)) {
-            // join...
+            $parser = $this->getJoinParser($processor);
+            var_dump($parser->parse($lexer, $processor));
         }
 
         if ($this->isWhere($lexer)) {

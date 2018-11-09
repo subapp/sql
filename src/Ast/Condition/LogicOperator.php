@@ -14,8 +14,6 @@ class LogicOperator extends AbstractExpression
     const AND = 'AND';
     const OR = 'OR';
     const XOR = 'XOR';
-    const IS = 'IS';
-    const NOT = 'NOT';
 
     /**
      * @var string

@@ -202,5 +202,14 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser('condition.logic_operator');
     }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Condition\LogicOperator
+     */
+    public function getJoinParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.join');
+    }
 
 }
