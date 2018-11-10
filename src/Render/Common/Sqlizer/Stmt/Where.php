@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\Common\Sqlizer\Stmt;
 
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Where as WhereExpression;
+use Subapp\Sql\Ast\Stmt\Where as WhereExpression;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -24,7 +24,7 @@ class Where extends AbstractSqlizer
         $collection = $expression->getCollection();
         $isNotEmpty = $collection && $collection->isNotEmpty();
         
-        return $isNotEmpty ? sprintf('WHERE %s', $renderer->render($collection)) : null;
+        return $isNotEmpty ? sprintf(' WHERE %s', $renderer->render($collection)) : null;
     }
     
 }

@@ -205,20 +205,20 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Join
+     * @return ParserInterface|Common\Parser\Stmt\Join
      */
     public function getJoinParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.join');
+        return $processor->getParser('stmt.join');
     }
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\JoinCollection
+     * @return ParserInterface|Common\Parser\Stmt\JoinCollection
      */
     public function getJoinCollectionParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.join_collection');
+        return $processor->getParser('stmt.join_collection');
     }
     
     /**

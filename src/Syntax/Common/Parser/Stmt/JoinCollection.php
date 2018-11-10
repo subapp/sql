@@ -1,11 +1,12 @@
 <?php
 
-namespace Subapp\Sql\Syntax\Common\Parser;
+namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Collection;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Join;
+use Subapp\Sql\Ast\Stmt\Join;
+use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**

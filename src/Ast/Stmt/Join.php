@@ -69,7 +69,7 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @return integer
+     * @return string
      */
     public function getJoinType()
     {
@@ -77,7 +77,7 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @param integer $joinType
+     * @param string $joinType
      */
     public function setJoinType($joinType)
     {

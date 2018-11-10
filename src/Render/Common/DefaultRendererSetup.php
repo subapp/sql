@@ -45,9 +45,11 @@ class DefaultRendererSetup implements RendererSetupInterface
     
         $renderer->addSqlizer(new Sqlizer\Stmt\SelectStatement());
         $renderer->addSqlizer(new Sqlizer\Stmt\From());
+        $renderer->addSqlizer(new Sqlizer\Stmt\Join());
         $renderer->addSqlizer(new Sqlizer\Stmt\Where());
         $renderer->addSqlizer(new Sqlizer\Stmt\GroupBy());
         $renderer->addSqlizer(new Sqlizer\Stmt\OrderBy());
+        $renderer->addSqlizer(new Sqlizer\Stmt\OrderByCollection());
         $renderer->addSqlizer(new Sqlizer\Stmt\Limit());
     }
     

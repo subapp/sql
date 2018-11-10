@@ -22,4 +22,12 @@ class OrderByCollection extends Arguments
         $this->setClassName(OrderBy::class);
     }
     
+    /**
+     * @return string
+     */
+    public function getSqlizerName()
+    {
+        return 'stmt.order_by_collection';
+    }
+    
 }
