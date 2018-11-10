@@ -1,17 +1,18 @@
 <?php
 
-namespace Subapp\Sql\Syntax\MySQL\Parser;
+namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast;
 use Subapp\Sql\Lexer\Lexer;
+use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class Select
  * @package Subapp\Sql\Syntax\MySQL\Parser\Statement
  */
-class SelectStatement extends AbstractMySQLParser
+class SelectStatement extends AbstractDefaultParser
 {
     
     /**
@@ -26,11 +27,11 @@ class SelectStatement extends AbstractMySQLParser
         $select = new Ast\Statement\Select();
 
         $select->setVariables($this->getVariablesParser($processor)->parse($lexer, $processor));
-        $select->setFrom($this->getFromParser($processor)->parse($lexer, $processor));
+        $select->setFrom($this->parseFromExpression($processor));
 
         if ($this->isJoin($lexer)) {
-            $parser = $this->getJoinParser($processor);
-            var_dump($parser->parse($lexer, $processor));
+            $parser = $this->getJoinCollectionParser($processor);
+            $select->setJoins($parser->parse($lexer, $processor));
         }
 
         if ($this->isWhere($lexer)) {
@@ -38,6 +39,15 @@ class SelectStatement extends AbstractMySQLParser
         }
 
         return $select;
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return Ast\ExpressionInterface|Ast\From
+     */
+    public function parseFromExpression(ProcessorInterface $processor)
+    {
+        return $processor->getParser('stmt.from')->parse($processor->getLexer(), $processor);
     }
     
 }

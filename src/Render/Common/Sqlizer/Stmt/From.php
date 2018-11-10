@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Render\MySQL\Sqlizer;
+namespace Subapp\Sql\Render\Common\Sqlizer\Stmt;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\From as FromExpression;
@@ -9,7 +9,7 @@ use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class From
- * @package Subapp\Sql\Render\MySQL\Sqlizer
+ * @package Subapp\Sql\Render\Common\Sqlizer\Stmt
  */
 class From extends AbstractSqlizer
 {

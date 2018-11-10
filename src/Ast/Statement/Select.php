@@ -25,6 +25,11 @@ class Select extends AbstractExpression
     /**
      * @var Ast\Collection
      */
+    private $joins;
+    
+    /**
+     * @var Ast\Where
+     */
     private $condition;
     
     /**
@@ -32,8 +37,9 @@ class Select extends AbstractExpression
      */
     public function __construct()
     {
-        $this->condition = new Ast\Collection();
         $this->variables = new Ast\Variables();
+        $this->joins = new Ast\Collection();
+        $this->condition = new Ast\Where();
     }
     
     /**
@@ -78,15 +84,31 @@ class Select extends AbstractExpression
     }
     
     /**
-     * @param Ast\Collection $condition
+     * @return Ast\Collection
      */
-    public function setCondition(Ast\Collection $condition)
+    public function getJoins()
+    {
+        return $this->joins;
+    }
+    
+    /**
+     * @param Ast\Collection $joins
+     */
+    public function setJoins(Ast\Collection $joins)
+    {
+        $this->joins = $joins;
+    }
+    
+    /**
+     * @param Ast\Where $condition
+     */
+    public function setCondition(Ast\Where $condition)
     {
         $this->condition = $condition;
     }
     
     /**
-     * @return Ast\Collection
+     * @return Ast\Where
      */
     public function getCondition()
     {
@@ -98,7 +120,7 @@ class Select extends AbstractExpression
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.select_statement';
+        return 'stmt.select_statement';
     }
     
 }

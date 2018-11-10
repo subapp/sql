@@ -5,7 +5,7 @@ use Subapp\Sql\Lexer\Lexer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Where';
+$sqlVersion = '0005';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -35,7 +35,7 @@ echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 $lexer->rewind();
 
 $processor = new \Subapp\Sql\Syntax\Processor($lexer, new Subapp\Sql\Platform\MySQLPlatform());
-$processor->setup(new \Subapp\Sql\Syntax\MySQL\MySQLParserSetup());
+$processor->setup(new \Subapp\Sql\Syntax\Common\DefaultParserSetup());
 
 try {
     /** @var \Subapp\Sql\Ast\Statement\Select $select */
@@ -43,8 +43,12 @@ try {
     $select = $processor->parse();
     $parseTime = microtime(true) - $time;
     
+    foreach ($select->getCondition()->getCollection() as $item) {
+        var_dump($item);
+    }
+    
     $renderer = new \Subapp\Sql\Render\Renderer();
-    $renderer->setup(new \Subapp\Sql\Render\MySQL\MySQLRendererSetup());
+    $renderer->setup(new \Subapp\Sql\Render\Common\DefaultRendererSetup());
     
 //    $select->setPrimaryTable('test');
 //    $select->getVariables()->append(new Literal(3.14, Literal::STRING));

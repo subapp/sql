@@ -21,7 +21,7 @@ class DefaultRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Literal());
         $renderer->addSqlizer(new Sqlizer\Variables());
         $renderer->addSqlizer(new Sqlizer\FieldPath());
-        $renderer->addSqlizer(new Sqlizer\Alias());
+        $renderer->addSqlizer(new Sqlizer\VariableDeclaration());
         $renderer->addSqlizer(new Sqlizer\Identifier());
         $renderer->addSqlizer(new Sqlizer\QuoteIdentifier());
         $renderer->addSqlizer(new Sqlizer\Embrace());
@@ -39,7 +39,10 @@ class DefaultRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Condition\Between());
         $renderer->addSqlizer(new Sqlizer\Condition\In());
         $renderer->addSqlizer(new Sqlizer\Condition\Like());
-        
+    
+        $renderer->addSqlizer(new Sqlizer\Stmt\SelectStatement());
+        $renderer->addSqlizer(new Sqlizer\Stmt\From());
+        $renderer->addSqlizer(new Sqlizer\Stmt\Where());
     }
     
 }

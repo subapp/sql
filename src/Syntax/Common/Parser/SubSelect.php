@@ -18,14 +18,14 @@ class SubSelect extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface
+     * @return ExpressionInterface|Embrace
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $embrace = new Embrace();
 
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-        $embrace->setInner($processor->getParser('parser.select_statement')->parse($lexer, $processor));
+        $embrace->setInner($processor->getParser('stmt.select_statement')->parse($lexer, $processor));
         $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
 
         return $embrace;

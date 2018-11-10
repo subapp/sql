@@ -44,7 +44,7 @@ class From extends AbstractExpression
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.from';
+        return 'stmt.from';
     }
     
 }

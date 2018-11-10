@@ -3,26 +3,26 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast;
-use Subapp\Sql\Lexer\Lexer;
+use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\VariableDeclaration as VariableDeclarationExpression;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class FromParser
- * @package Subapp\Sql\Syntax\Common\Parser\Common
+ * Class VariableDeclaration
+ * @package Subapp\Sql\Syntax\Common\Parser
  */
-class From extends AbstractDefaultParser
+class VariableDeclaration extends AbstractDefaultParser
 {
     
     /**
-     * @inheritdoc
+     * @param LexerInterface     $lexer
+     * @param ProcessorInterface $processor
+     * @return ExpressionInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $this->shift(Lexer::T_FROM, $lexer);
-
         $parser = null;
-
+    
         switch (true) {
             case $this->isIdentifier($lexer):
                 $parser = $this->getIdentifierParser($processor);
@@ -36,14 +36,14 @@ class From extends AbstractDefaultParser
             default:
                 $this->throwSyntaxError($lexer, 'Identifier', 'QuoteIdentifier', 'SubSelect');
         }
-
-        $expression = $parser->parse($lexer, $processor);
-
+    
+        $expression = new VariableDeclarationExpression($parser->parse($lexer, $processor));
+    
         if ($this->isAlias($lexer)) {
-            $expression = $this->getAliasParser($processor)->wrapExpression($processor, $expression);
+            $expression->setAlias($this->getAliasParser($processor)->parse($lexer, $processor));
         }
-
-        return new Ast\From($expression);
+        
+        return $expression;
     }
     
 }

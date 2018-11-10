@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Render\MySQL\Sqlizer;
+namespace Subapp\Sql\Render\Common\Sqlizer\Stmt;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Statement\Select as SelectExpression;
@@ -21,7 +21,7 @@ class SelectStatement extends AbstractSqlizer
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        return sprintf('SELECT %s %s WHERE %s',
+        return sprintf("SELECT %s %s \n\t%s",
             $renderer->render($expression->getVariables()),
             $renderer->render($expression->getFrom()),
             $renderer->render($expression->getCondition())

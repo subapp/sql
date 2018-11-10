@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Ast;
 
 /**
- * Class Alias
+ * Class VariableDeclaration
  * @package Subapp\Sql\Ast
  */
-class Alias extends AbstractExpression
+class VariableDeclaration extends AbstractExpression
 {
 
     /**
@@ -68,7 +68,7 @@ class Alias extends AbstractExpression
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.alias';
+        return 'sqlizer.variable_declaration';
     }
 
 }

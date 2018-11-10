@@ -2,6 +2,7 @@
 
 namespace Subapp\Sql\Syntax\Common;
 
+use Subapp\Sql\Syntax\Common\Parser;
 use Subapp\Sql\Syntax\ParserSetupInterface;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -32,14 +33,12 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Embrace());
         $processor->addParser(new Parser\Expression());
         $processor->addParser(new Parser\Primary());
+        $processor->addParser(new Parser\VariableDeclaration());
 
         // functions
         $processor->addParser(new Parser\Func());
         $processor->addParser(new Parser\AggregateFunction());
         $processor->addParser(new Parser\DefaultFunction());
-
-        // Common expression parsers
-        $processor->addParser(new Parser\From());
 
         // conditions
         $processor->addParser(new Parser\Condition\CmpOperator());
@@ -49,6 +48,12 @@ class DefaultParserSetup implements ParserSetupInterface
         
         // join
         $processor->addParser(new Parser\Join());
+        $processor->addParser(new Parser\JoinCollection());
+        
+        // join
+        $processor->addParser(new Parser\Stmt\SelectStatement());
+        $processor->addParser(new Parser\Stmt\From());
+        $processor->addParser(new Parser\Stmt\Where());
     }
     
 }

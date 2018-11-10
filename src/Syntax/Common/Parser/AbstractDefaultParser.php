@@ -67,15 +67,6 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser('parser.aggregate_function');
     }
-    
-    /**
-     * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\From
-     */
-    public function getFromParser(ProcessorInterface $processor)
-    {
-        return $processor->getParser('parser.from');
-    }
 
     /**
      * @param ProcessorInterface $processor
@@ -102,6 +93,15 @@ abstract class AbstractDefaultParser extends AbstractParser
     public function getVariablesParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.variables');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\VariableDeclaration
+     */
+    public function getVariableDeclarationParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.variable_declaration');
     }
 
     /**
@@ -205,11 +205,20 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Condition\LogicOperator
+     * @return ParserInterface|Common\Parser\Join
      */
     public function getJoinParser(ProcessorInterface $processor)
     {
         return $processor->getParser('parser.join');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\JoinCollection
+     */
+    public function getJoinCollectionParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.join_collection');
     }
 
 }

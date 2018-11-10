@@ -3,7 +3,9 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\Alias as AliasExpression;
+use Subapp\Sql\Ast\Identifier;
+use Subapp\Sql\Ast\Literal;
+use Subapp\Sql\Ast\QuoteIdentifier;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -18,7 +20,7 @@ class Alias extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|AliasExpression
+     * @return ExpressionInterface|Identifier|QuoteIdentifier|Literal
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
@@ -37,21 +39,7 @@ class Alias extends AbstractDefaultParser
                 $this->throwSyntaxError($lexer, 'String', 'Identifier');
         }
 
-        return new AliasExpression(null, $parser->parse($lexer, $processor));
-    }
-
-    /**
-     * @param ProcessorInterface $processor
-     * @param ExpressionInterface $expression
-     * @return AliasExpression|ExpressionInterface
-     */
-    public function wrapExpression(ProcessorInterface $processor, ExpressionInterface $expression)
-    {
-        $alias = $this->parse($processor->getLexer(), $processor);
-
-        $alias->setExpression($expression);
-
-        return $alias;
+        return $parser->parse($lexer, $processor);
     }
 
 }

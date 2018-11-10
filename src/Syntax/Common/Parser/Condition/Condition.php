@@ -28,7 +28,15 @@ class Condition extends AbstractDefaultParser
         $logical = $this->getLogicOperatorParser($processor);
         
         do {
-            $collection->append(new Embrace($this->parseComparisonTerm($lexer, $processor)));
+            
+            $expression = $this->parseComparisonTerm($lexer, $processor);
+            
+            // @todo some magic with braces
+            if ($collection->offsetExists(0) && $expression->offsetExists(1)) {
+                $expression = new Embrace($expression);
+            }
+            
+            $collection->append($expression);
     
             $isLogicalOperator = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
     

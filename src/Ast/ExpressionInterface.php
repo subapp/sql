@@ -14,9 +14,4 @@ interface ExpressionInterface
      */
     public function getSqlizerName();
     
-    /**
-     * @return string
-     */
-    public function getName();
-    
 }
