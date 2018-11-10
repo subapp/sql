@@ -220,5 +220,41 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser('parser.join_collection');
     }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Where
+     */
+    public function getWhereParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('stmt.where');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\OrderBy
+     */
+    public function getOrderByParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('stmt.order_by');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\GroupBy
+     */
+    public function getGroupByParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('stmt.group_by');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Limit
+     */
+    public function getLimitParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('stmt.limit');
+    }
 
 }

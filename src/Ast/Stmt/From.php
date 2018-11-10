@@ -1,6 +1,9 @@
 <?php
 
-namespace Subapp\Sql\Ast;
+namespace Subapp\Sql\Ast\Stmt;
+
+use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Class From

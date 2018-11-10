@@ -28,6 +28,10 @@ select
 
 from (Select 123 int_type, 1.23 float_type, 1 + 2 * 3 / (1 + 1) * 2 + 3 from innter_table) as t0
 where
+(a = 1 and b = 3 or c = 10 and d != 20)
+xor
+a <1 || b < 10 || z != 1 && b > 2 and c != 0 or d >=2 and a > 100 and c < 300 or f = 10 || e = 100
+&&
 (u.id1 < 100 And u.create >= 1000000 aNd u.ia <= 100500)
 || ( activities.orderby = 1
       AND activities.starttime >= '2013-08-26 04:00:00'

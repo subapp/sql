@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Class Term
@@ -11,26 +12,27 @@ use Subapp\Sql\Ast\AbstractExpression;
 class Term extends AbstractExpression
 {
     
-    const AND = 'AND';
-    const OR = 'OR';
-    const XOR = 'XOR';
-    
     /**
-     * @var string
+     * @var LogicOperator
      */
     private $operator;
+    
+    /**
+     * @var ExpressionInterface
+     */
+    private $expression;
     
     /**
      * Term constructor.
      * @param string $operator
      */
-    public function __construct($operator)
+    public function __construct($operator = null)
     {
         $this->operator = $operator;
     }
     
     /**
-     * @return string
+     * @return LogicOperator
      */
     public function getOperator()
     {
@@ -38,11 +40,27 @@ class Term extends AbstractExpression
     }
     
     /**
-     * @param string $operator
+     * @param LogicOperator $operator
      */
-    public function setOperator($operator)
+    public function setOperator(LogicOperator $operator)
     {
         $this->operator = $operator;
+    }
+    
+    /**
+     * @return ExpressionInterface
+     */
+    public function getExpression()
+    {
+        return $this->expression;
+    }
+    
+    /**
+     * @param ExpressionInterface $expression
+     */
+    public function setExpression(ExpressionInterface $expression)
+    {
+        $this->expression = $expression;
     }
     
     /**

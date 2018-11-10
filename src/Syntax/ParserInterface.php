@@ -183,6 +183,24 @@ interface ParserInterface
      * @return boolean
      */
     public function isWhere(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isOrderBy(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isGroupBy(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isLimit(LexerInterface $lexer);
 
     /**
      * @param LexerInterface $lexer

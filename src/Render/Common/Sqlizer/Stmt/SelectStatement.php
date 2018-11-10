@@ -3,13 +3,13 @@
 namespace Subapp\Sql\Render\Common\Sqlizer\Stmt;
 
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Statement\Select as SelectExpression;
+use Subapp\Sql\Ast\Stmt\Select as SelectExpression;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class Select
- * @package Subapp\Sql\Render\Common\Sqlizer\Statement
+ * @package Subapp\Sql\Render\Common\Sqlizer\Stmt
  */
 class SelectStatement extends AbstractSqlizer
 {
@@ -24,7 +24,7 @@ class SelectStatement extends AbstractSqlizer
         return sprintf("SELECT %s %s \n\t%s",
             $renderer->render($expression->getVariables()),
             $renderer->render($expression->getFrom()),
-            $renderer->render($expression->getCondition())
+            $renderer->render($expression->getWhere())
         );
     }
 

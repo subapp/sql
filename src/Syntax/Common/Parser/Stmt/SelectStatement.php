@@ -10,7 +10,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
  * Class Select
- * @package Subapp\Sql\Syntax\MySQL\Parser\Statement
+ * @package Subapp\Sql\Syntax\MySQL\Parser\Stmt
  */
 class SelectStatement extends AbstractDefaultParser
 {
@@ -18,13 +18,13 @@ class SelectStatement extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return \Subapp\Sql\Ast\ExpressionInterface|Ast\Statement\Select
+     * @return \Subapp\Sql\Ast\ExpressionInterface|Ast\Stmt\Select
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $this->shiftIf(Lexer::T_SELECT, $lexer);
 
-        $select = new Ast\Statement\Select();
+        $select = new Ast\Stmt\Select();
 
         $select->setVariables($this->getVariablesParser($processor)->parse($lexer, $processor));
         $select->setFrom($this->parseFromExpression($processor));
@@ -35,7 +35,11 @@ class SelectStatement extends AbstractDefaultParser
         }
 
         if ($this->isWhere($lexer)) {
-            $select->setCondition((new Where())->parse($lexer, $processor));
+            $select->setWhere((new Where())->parse($lexer, $processor));
+        }
+        
+        if ($this->isOrderBy($lexer)) {
+            $select->setOrderBy($this->getOrderByParser($processor)->parse($lexer, $processor));
         }
 
         return $select;

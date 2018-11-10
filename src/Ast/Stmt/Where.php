@@ -1,6 +1,8 @@
 <?php
 
-namespace Subapp\Sql\Ast;
+namespace Subapp\Sql\Ast\Stmt;
+
+use Subapp\Sql\Ast\Condition\TermCollection;
 
 /**
  * Class Where
@@ -10,12 +12,12 @@ class Where extends AbstractExpression
 {
     
     /**
-     * @var Collection
+     * @var TermCollection
      */
     private $collection;
     
     /**
-     * @return Collection
+     * @return TermCollection
      */
     public function getCollection()
     {
@@ -23,9 +25,9 @@ class Where extends AbstractExpression
     }
     
     /**
-     * @param Collection $collection
+     * @param TermCollection $collection
      */
-    public function setCollection(Collection $collection)
+    public function setCollection(TermCollection $collection)
     {
         $this->collection = $collection;
     }

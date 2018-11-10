@@ -50,10 +50,13 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Join());
         $processor->addParser(new Parser\JoinCollection());
         
-        // join
+        // stmt
         $processor->addParser(new Parser\Stmt\SelectStatement());
         $processor->addParser(new Parser\Stmt\From());
         $processor->addParser(new Parser\Stmt\Where());
+        $processor->addParser(new Parser\Stmt\OrderBy());
+        $processor->addParser(new Parser\Stmt\GroupBy());
+        $processor->addParser(new Parser\Stmt\Limit());
     }
     
 }

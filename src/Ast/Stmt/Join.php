@@ -1,6 +1,6 @@
 <?php
 
-namespace Subapp\Sql\Ast;
+namespace Subapp\Sql\Ast\Stmt;
 
 /**
  * Class Join
@@ -117,7 +117,7 @@ class Join extends AbstractExpression
      */
     public function getSqlizerName()
     {
-        return 'sqlizer.join';
+        return 'stmt.join';
     }
     
 }

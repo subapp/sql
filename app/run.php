@@ -1,11 +1,13 @@
 <?php
 
+use Subapp\Sql\Ast\Condition\Operator;
+use Subapp\Sql\Ast\Condition\TermCollection;
 use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Lexer\Lexer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = '0005';
+$sqlVersion = 'Sql1';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -38,13 +40,25 @@ $processor = new \Subapp\Sql\Syntax\Processor($lexer, new Subapp\Sql\Platform\My
 $processor->setup(new \Subapp\Sql\Syntax\Common\DefaultParserSetup());
 
 try {
-    /** @var \Subapp\Sql\Ast\Statement\Select $select */
+    /** @var \Subapp\Sql\Ast\Stmt\Select $select */
     $time = microtime(true);
     $select = $processor->parse();
     $parseTime = microtime(true) - $time;
     
-    foreach ($select->getCondition()->getCollection() as $item) {
-        var_dump($item);
+    /** @var \Subapp\Sql\Ast\Condition\Term $term */
+    foreach ($select->getWhere()->getCollection() as $term) {
+        var_dump($term);
+    
+        if ($term->getExpression() instanceof TermCollection) {
+        /** @var \Subapp\Sql\Ast\Condition\Term $item */
+            foreach ($term->getExpression() as $item) {
+//                var_dump($item);
+                /** @var \Subapp\Sql\Ast\Condition\Cmp $cmp */
+                $cmp = $item->getExpression();
+                $cmp->setOperator(new Operator(Operator::NE));
+            }
+        }
+        
     }
     
     $renderer = new \Subapp\Sql\Render\Renderer();
@@ -63,7 +77,7 @@ try {
     echo sprintf('Parser: %s', $parseTime);
 
 
-//    $query = new \Subapp\Sql\Ast\Statement\Select();
+//    $query = new \Subapp\Sql\Ast\Stmt\Select();
 //    $query->setPrimaryTable('test');
 //
 //    echo "\n====== SELECT AST Render ======\n";

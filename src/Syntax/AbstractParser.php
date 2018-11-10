@@ -199,6 +199,44 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @inheritdoc
      */
+    public function isOrderBy(LexerInterface $lexer)
+    {
+        $isOrderBy = $lexer->peek()->is(Lexer::T_ORDER);
+        $isOrderBy = $isOrderBy && $lexer->peek()->is(Lexer::T_BY);
+     
+        $lexer->resetPeek();
+        
+        return $isOrderBy;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isGroupBy(LexerInterface $lexer)
+    {
+        $isGroupBy = $lexer->peek()->is(Lexer::T_GROUP);
+        $isGroupBy = $isGroupBy && $lexer->peek()->is(Lexer::T_BY);
+    
+        $lexer->resetPeek();
+        
+        return $isGroupBy;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isLimit(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $isLimit = $token->is(Lexer::T_LIMIT);
+        $lexer->resetPeek();
+        
+        return $isLimit;
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public function isLogicalOperator(LexerInterface $lexer)
     {
         $token = $lexer->peek();
