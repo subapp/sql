@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Query Builder based on AST
@@ -20,16 +21,59 @@ class QueryBuilder
     public const STATE_CLEAN = 1;
     
     /**
-     * @var ExpressionInterface
-     */
-    private $ast;
-    
-    
-    
-    /**
      * QueryBuilder constructor.
      */
     public function __construct()
+    {
+    
+    }
+    
+    public function select()
+    {
+    
+    }
+    
+    public function delete()
+    {
+    
+    }
+    
+    public function update()
+    {
+    
+    }
+    
+    public function and()
+    {
+    
+    }
+    
+    public function or()
+    {
+    
+    }
+    
+    public function xor()
+    {
+    
+    }
+    
+    public function in()
+    {
+    
+    }
+    
+    public function between()
+    {
+    
+    }
+    
+    public function like()
+    {
+    
+    }
+    
+    public function isNull()
     {
     
     }

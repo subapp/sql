@@ -30,9 +30,7 @@ class Condition extends AbstractDefaultParser
         do {
             $term = new Term();
             $expression = $this->parseComparisonTerm($lexer, $processor);
-            
             $term->setExpression($expression);
-            
             $collection->append($term);
     
             $isLogicalOperator = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
@@ -41,7 +39,7 @@ class Condition extends AbstractDefaultParser
                 $term->setOperator($parser->parse($lexer, $processor));
             }
         } while ($isLogicalOperator);
-    
+        
         return $collection;
     }
     

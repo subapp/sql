@@ -23,7 +23,7 @@ class Arithmetic extends AbstractSqlizer
     {
         $pieces = [];
 
-        foreach ($expression->getCollection() as $expression) {
+        foreach ($expression as $expression) {
             $pieces[] = $renderer->render($expression);
         }
 

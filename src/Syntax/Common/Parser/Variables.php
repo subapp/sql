@@ -31,7 +31,8 @@ class Variables extends Common\Parser\AbstractDefaultParser
             $expression = new VariableDeclaration($parser->parse($lexer, $processor));
     
             if ($this->isAlias($lexer)) {
-                $expression->setAlias($this->getAliasParser($processor)->parse($lexer, $processor));
+                $alias = $this->getAliasParser($processor)->parse($lexer, $processor);
+                $expression->setAlias($alias);
             }
 
             $variables->append($expression);

@@ -56,7 +56,7 @@ class Arithmetic extends AbstractDefaultParser
             // fetch plain operator either + or -
             $token = $lexer->peek();
             
-            if ($token->is(Lexer::T_PLUS) || $token->is(Lexer::T_MINUS)) {
+            if ($token && ($token->is(Lexer::T_PLUS) || $token->is(Lexer::T_MINUS))) {
                 $arithmetic->append(new MathOperator($token->getToken()));
             }
     

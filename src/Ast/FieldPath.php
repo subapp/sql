@@ -20,6 +20,17 @@ class FieldPath extends AbstractExpression
     private $field;
     
     /**
+     * FieldPath constructor.
+     * @param Identifier $table
+     * @param Identifier $field
+     */
+    public function __construct(Identifier $table = null, Identifier $field = null)
+    {
+        $this->table = $table;
+        $this->field = $field;
+    }
+    
+    /**
      * @return Identifier
      */
     public function getTable()

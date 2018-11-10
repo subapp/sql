@@ -2,6 +2,7 @@
 
 namespace Subapp\Sql\Ast\Condition\Term;
 
+use Subapp\Sql\Ast\Condition\LogicOperator;
 use Subapp\Sql\Ast\Condition\Term;
 
 /**
@@ -16,7 +17,7 @@ class XorTerm extends Term
      */
     public function __construct()
     {
-        parent::__construct(Term::XOR);
+        parent::__construct(new LogicOperator(LogicOperator::XOR));
     }
     
 }

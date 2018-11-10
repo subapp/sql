@@ -24,11 +24,13 @@ class Term extends AbstractExpression
     
     /**
      * Term constructor.
-     * @param string $operator
+     * @param string                   $operator
+     * @param ExpressionInterface|null $expression
      */
-    public function __construct($operator = null)
+    public function __construct($operator = null, ExpressionInterface $expression = null)
     {
         $this->operator = $operator;
+        $this->expression = $expression;
     }
     
     /**
@@ -42,7 +44,7 @@ class Term extends AbstractExpression
     /**
      * @param LogicOperator $operator
      */
-    public function setOperator(LogicOperator $operator)
+    public function setOperator(LogicOperator $operator = null)
     {
         $this->operator = $operator;
     }

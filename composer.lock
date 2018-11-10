@@ -276,16 +276,16 @@
         },
         {
             "name": "subapp/lexer",
-            "version": "v2.0.13",
+            "version": "v2.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/subapp/lexer.git",
-                "reference": "83f8944968a01ba9ec38c417f123f966b7db339a"
+                "reference": "6c584e4cee6eb8f8a58e87ba809030dbe5941274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/subapp/lexer/zipball/83f8944968a01ba9ec38c417f123f966b7db339a",
-                "reference": "83f8944968a01ba9ec38c417f123f966b7db339a",
+                "url": "https://api.github.com/repos/subapp/lexer/zipball/6c584e4cee6eb8f8a58e87ba809030dbe5941274",
+                "reference": "6c584e4cee6eb8f8a58e87ba809030dbe5941274",
                 "shasum": ""
             },
             "require": {
@@ -311,11 +311,11 @@
             "keywords": [
                 "lexer"
             ],
-            "time": "2018-10-30T13:14:15+00:00"
+            "time": "2018-11-10T22:07:16+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -373,7 +373,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.17",
+            "version": "v3.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",

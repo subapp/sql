@@ -52,7 +52,8 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isIdentifier(LexerInterface $lexer)
     {
-        $isIdentifier = ($lexer->peek()->is(Lexer::T_IDENTIFIER));
+        $token = $lexer->peek();
+        $isIdentifier = ($token && $token->is(Lexer::T_IDENTIFIER));
         $lexer->resetPeek();
         
         return $isIdentifier;
@@ -64,7 +65,7 @@ abstract class AbstractParser implements ParserInterface
     public function isQuoteIdentifier(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isQuoteIdentifier = ($token->is(Lexer::T_GRAVE_ACCENT) && $this->isIdentifier($lexer));
+        $isQuoteIdentifier = ($token && $token->is(Lexer::T_GRAVE_ACCENT) && $this->isIdentifier($lexer));
         $lexer->resetPeek();
         
         return $isQuoteIdentifier;
@@ -78,7 +79,7 @@ abstract class AbstractParser implements ParserInterface
         $tokens = [Lexer::T_INT, Lexer::T_FLOAT, Lexer::T_STRING, Lexer::T_TRUE, Lexer::T_FALSE, Lexer::T_NULL,];
         
         $token = $lexer->peek();
-        $isLiteral = in_array($token->getType(), $tokens);
+        $isLiteral = ($token && in_array($token->getType(), $tokens));
         $lexer->resetPeek();
         
         return $isLiteral;
@@ -101,7 +102,7 @@ abstract class AbstractParser implements ParserInterface
     {
         $token = $lexer->peek();
         $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
-        $isMath = $token && in_array($token->getType(), $operators, true);
+        $isMath = ($token && in_array($token->getType(), $operators, true));
         
         $lexer->resetPeek();
         
@@ -114,7 +115,7 @@ abstract class AbstractParser implements ParserInterface
     public function isPlainMathOperator(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isMath = ($token->is(Lexer::T_PLUS) || $token->is(Lexer::T_MINUS));
+        $isMath = ($token && $token->is(Lexer::T_PLUS) || $token->is(Lexer::T_MINUS));
         $lexer->resetPeek();
         
         return $isMath;
@@ -126,7 +127,7 @@ abstract class AbstractParser implements ParserInterface
     public function isFactorMathOperator(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isMath = ($token->is(Lexer::T_DIVIDE) || $token->is(Lexer::T_MULTIPLY));
+        $isMath = ($token && ($token->is(Lexer::T_DIVIDE) || $token->is(Lexer::T_MULTIPLY)));
         $lexer->resetPeek();
         
         return $isMath;
@@ -138,7 +139,7 @@ abstract class AbstractParser implements ParserInterface
     public function isFunction(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isFunction = ($token->is(Lexer::T_IDENTIFIER) && $lexer->peek()->is(Lexer::T_OPEN_BRACE));
+        $isFunction = ($token && $token->is(Lexer::T_IDENTIFIER) && $lexer->peek()->is(Lexer::T_OPEN_BRACE));
         $lexer->resetPeek();
         
         return $isFunction;
@@ -161,7 +162,8 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isSubSelect(LexerInterface $lexer)
     {
-        $isSubSelect = ($lexer->peek()->is(Lexer::T_OPEN_BRACE) && $lexer->peek()->is(Lexer::T_SELECT));
+        $token = $lexer->peek();
+        $isSubSelect = ($token && $token->is(Lexer::T_OPEN_BRACE) && $lexer->peek()->is(Lexer::T_SELECT));
         
         $lexer->resetPeek();
         
