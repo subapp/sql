@@ -2,6 +2,10 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
+use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\Collection;
+use Subapp\Sql\Ast\ExpressionInterface;
+
 /**
  * Class Join
  * @package Subapp\Sql\Ast
@@ -89,11 +93,11 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @param Collection $onCondition
+     * @param Collection $collection
      */
-    public function setCondition(Collection $onCondition)
+    public function setCondition(Collection $collection)
     {
-        $this->condition = $onCondition;
+        $this->condition = $collection;
     }
     
     /**

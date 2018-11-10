@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Where as WhereExpression;
+use Subapp\Sql\Ast\Stmt\Where as WhereExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;

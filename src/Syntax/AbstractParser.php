@@ -178,7 +178,7 @@ abstract class AbstractParser implements ParserInterface
         }
         
         $token = $lexer->peek();
-        $isJoin = $token->is(Lexer::T_JOIN);
+        $isJoin = $token && $token->is(Lexer::T_JOIN);
         $lexer->resetPeek();
         
         return $isJoin;
@@ -190,7 +190,7 @@ abstract class AbstractParser implements ParserInterface
     public function isWhere(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isWhere = $token->is(Lexer::T_WHERE);
+        $isWhere = $token && $token->is(Lexer::T_WHERE);
         $lexer->resetPeek();
         
         return $isWhere;
@@ -201,7 +201,9 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isOrderBy(LexerInterface $lexer)
     {
-        $isOrderBy = $lexer->peek()->is(Lexer::T_ORDER);
+        $token = $lexer->peek();
+    
+        $isOrderBy = $token && $token->is(Lexer::T_ORDER);
         $isOrderBy = $isOrderBy && $lexer->peek()->is(Lexer::T_BY);
      
         $lexer->resetPeek();
@@ -214,7 +216,9 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isGroupBy(LexerInterface $lexer)
     {
-        $isGroupBy = $lexer->peek()->is(Lexer::T_GROUP);
+        $token = $lexer->peek();
+        
+        $isGroupBy = $token && $token->is(Lexer::T_GROUP);
         $isGroupBy = $isGroupBy && $lexer->peek()->is(Lexer::T_BY);
     
         $lexer->resetPeek();
@@ -228,7 +232,7 @@ abstract class AbstractParser implements ParserInterface
     public function isLimit(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isLimit = $token->is(Lexer::T_LIMIT);
+        $isLimit = $token && $token->is(Lexer::T_LIMIT);
         $lexer->resetPeek();
         
         return $isLimit;

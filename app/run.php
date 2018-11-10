@@ -44,22 +44,22 @@ try {
     $time = microtime(true);
     $select = $processor->parse();
     $parseTime = microtime(true) - $time;
-    
-    /** @var \Subapp\Sql\Ast\Condition\Term $term */
-    foreach ($select->getWhere()->getCollection() as $term) {
-        var_dump($term);
-    
-        if ($term->getExpression() instanceof TermCollection) {
-        /** @var \Subapp\Sql\Ast\Condition\Term $item */
-            foreach ($term->getExpression() as $item) {
-//                var_dump($item);
-                /** @var \Subapp\Sql\Ast\Condition\Cmp $cmp */
-                $cmp = $item->getExpression();
-                $cmp->setOperator(new Operator(Operator::NE));
-            }
-        }
-        
-    }
+//
+//    /** @var \Subapp\Sql\Ast\Condition\Term $term */
+//    foreach ($select->getWhere()->getCollection() as $term) {
+//        var_dump($term);
+//
+//        if ($term->getExpression() instanceof TermCollection) {
+//        /** @var \Subapp\Sql\Ast\Condition\Term $item */
+//            foreach ($term->getExpression() as $item) {
+////                var_dump($item);
+//                /** @var \Subapp\Sql\Ast\Condition\Cmp $cmp */
+//                $cmp = $item->getExpression();
+//                $cmp->setOperator(new Operator(Operator::NE));
+//            }
+//        }
+//
+//    }
     
     $renderer = new \Subapp\Sql\Render\Renderer();
     $renderer->setup(new \Subapp\Sql\Render\Common\DefaultRendererSetup());

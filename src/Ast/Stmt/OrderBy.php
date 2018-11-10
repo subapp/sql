@@ -31,7 +31,7 @@ class OrderBy extends AbstractExpression
      * @param ExpressionInterface $expression
      * @param string              $direction
      */
-    public function __construct(ExpressionInterface $expression, $direction = OrderBy::ASC)
+    public function __construct(ExpressionInterface $expression = null, $direction = OrderBy::ASC)
     {
         $this->expression = $expression;
         $this->direction = $direction;

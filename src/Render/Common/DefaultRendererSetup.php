@@ -19,7 +19,7 @@ class DefaultRendererSetup implements RendererSetupInterface
     public function setup(RendererInterface $renderer)
     {
         $renderer->addSqlizer(new Sqlizer\Literal());
-        $renderer->addSqlizer(new Sqlizer\Variables());
+        $renderer->addSqlizer(new Sqlizer\Arguments());
         $renderer->addSqlizer(new Sqlizer\FieldPath());
         $renderer->addSqlizer(new Sqlizer\VariableDeclaration());
         $renderer->addSqlizer(new Sqlizer\Identifier());
@@ -46,6 +46,9 @@ class DefaultRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Stmt\SelectStatement());
         $renderer->addSqlizer(new Sqlizer\Stmt\From());
         $renderer->addSqlizer(new Sqlizer\Stmt\Where());
+        $renderer->addSqlizer(new Sqlizer\Stmt\GroupBy());
+        $renderer->addSqlizer(new Sqlizer\Stmt\OrderBy());
+        $renderer->addSqlizer(new Sqlizer\Stmt\Limit());
     }
     
 }

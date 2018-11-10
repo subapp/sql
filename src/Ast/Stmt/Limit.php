@@ -2,6 +2,9 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
+use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\Literal;
+
 /**
  * Class Limit
  * @package Subapp\Sql\Ast

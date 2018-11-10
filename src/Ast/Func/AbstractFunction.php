@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Ast\Func;
 
 use Subapp\Sql\Ast\AbstractExpression;
-use Subapp\Sql\Ast\Variables;
+use Subapp\Sql\Ast\Arguments;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Identifier;
 
@@ -20,7 +20,7 @@ abstract class AbstractFunction extends AbstractExpression
     private $functionName;
     
     /**
-     * @var Variables
+     * @var Arguments
      */
     private $arguments;
     
@@ -29,7 +29,7 @@ abstract class AbstractFunction extends AbstractExpression
      */
     public function __construct()
     {
-        $this->arguments = new Variables();
+        $this->arguments = new Arguments();
     }
     
     /**
@@ -49,7 +49,7 @@ abstract class AbstractFunction extends AbstractExpression
     }
     
     /**
-     * @return Variables
+     * @return Arguments
      */
     public function getArguments()
     {
@@ -57,9 +57,9 @@ abstract class AbstractFunction extends AbstractExpression
     }
     
     /**
-     * @param Variables $arguments
+     * @param Arguments $arguments
      */
-    public function setArguments(Variables $arguments)
+    public function setArguments(Arguments $arguments)
     {
         $this->arguments = $arguments;
     }

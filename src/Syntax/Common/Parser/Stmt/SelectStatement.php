@@ -26,7 +26,7 @@ class SelectStatement extends AbstractDefaultParser
 
         $select = new Ast\Stmt\Select();
 
-        $select->setVariables($this->getVariablesParser($processor)->parse($lexer, $processor));
+        $select->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
         $select->setFrom($this->parseFromExpression($processor));
 
         if ($this->isJoin($lexer)) {
@@ -35,11 +35,19 @@ class SelectStatement extends AbstractDefaultParser
         }
 
         if ($this->isWhere($lexer)) {
-            $select->setWhere((new Where())->parse($lexer, $processor));
+            $select->setWhere($this->getWhereParser($processor)->parse($lexer, $processor));
+        }
+        
+        if ($this->isGroupBy($lexer)) {
+            $select->setGroupBy($this->getGroupByParser($processor)->parse($lexer, $processor));
         }
         
         if ($this->isOrderBy($lexer)) {
             $select->setOrderBy($this->getOrderByParser($processor)->parse($lexer, $processor));
+        }
+        
+        if ($this->isLimit($lexer)) {
+            $select->setLimit($this->getLimitParser($processor)->parse($lexer, $processor));
         }
 
         return $select;
@@ -47,7 +55,7 @@ class SelectStatement extends AbstractDefaultParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return Ast\ExpressionInterface|Ast\From
+     * @return Ast\ExpressionInterface|Ast\Stmt\From
      */
     public function parseFromExpression(ProcessorInterface $processor)
     {

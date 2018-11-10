@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Variables as ArgsExpression;
+use Subapp\Sql\Ast\Arguments as ArgsExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common;
 use Subapp\Sql\Syntax\ProcessorInterface;

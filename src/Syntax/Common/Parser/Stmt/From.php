@@ -22,7 +22,7 @@ class From extends AbstractDefaultParser
     {
         $this->shift(Lexer::T_FROM, $lexer);
 
-        return new Ast\From($this->getVariableDeclarationParser($processor)->parse($lexer, $processor));
+        return new Ast\Stmt\From($this->getVariableDeclarationParser($processor)->parse($lexer, $processor));
     }
     
 }

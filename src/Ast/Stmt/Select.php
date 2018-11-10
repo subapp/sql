@@ -13,9 +13,9 @@ class Select extends AbstractExpression
 {
 
     /**
-     * @var Ast\Variables
+     * @var Ast\Arguments
      */
-    private $variables;
+    private $arguments;
 
     /**
      * @var Ast\Stmt\From
@@ -52,10 +52,12 @@ class Select extends AbstractExpression
      */
     public function __construct()
     {
-        $this->variables = new Ast\Variables();
+        $this->arguments = new Ast\Arguments();
         $this->joins = new Ast\Collection();
         $this->where = new Ast\Stmt\Where();
+        $this->groupBy = new Ast\Stmt\GroupBy();
         $this->orderBy = new Ast\Stmt\OrderByCollection();
+        $this->limit = new Ast\Stmt\Limit();
     }
     
     /**
@@ -84,19 +86,19 @@ class Select extends AbstractExpression
     }
 
     /**
-     * @return Ast\Variables
+     * @return Ast\Arguments
      */
-    public function getVariables()
+    public function getArguments()
     {
-        return $this->variables;
+        return $this->arguments;
     }
 
     /**
-     * @param Ast\Variables $variables
+     * @param Ast\Arguments $arguments
      */
-    public function setVariables(Ast\Variables $variables)
+    public function setArguments(Ast\Arguments $arguments)
     {
-        $this->variables = $variables;
+        $this->arguments = $arguments;
     }
     
     /**

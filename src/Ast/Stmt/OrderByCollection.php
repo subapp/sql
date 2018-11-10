@@ -2,13 +2,13 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
-use Subapp\Sql\Ast\Collection;
+use Subapp\Sql\Ast\Arguments;
 
 /**
  * Class OrderByCollection
  * @package Subapp\Sql\Ast\Stmt
  */
-class OrderByCollection extends Collection
+class OrderByCollection extends Arguments
 {
     
     /**

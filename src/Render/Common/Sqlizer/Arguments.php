@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\Common\Sqlizer;
 
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Arguments as VariablesExpression;
+use Subapp\Sql\Ast\Arguments as ArgumentsExpression;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -15,7 +15,7 @@ class Arguments extends AbstractSqlizer
 {
     
     /**
-     * @param ExpressionInterface|VariablesExpression $expression
+     * @param ExpressionInterface|ArgumentsExpression $expression
      * @param RendererInterface                       $renderer
      * @return string
      */
@@ -23,8 +23,8 @@ class Arguments extends AbstractSqlizer
     {
         $expressions = [];
     
-        foreach ($expression->getExpressions() as $variable) {
-            $expressions[] = $renderer->render($variable);
+        foreach ($expression as $argument) {
+            $expressions[] = $renderer->render($argument);
         }
         
         return implode(', ', $expressions);

@@ -2,13 +2,13 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
-use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\Collection;
 
 /**
  * Class GroupBy
  * @package Subapp\Sql\Ast
  */
-class GroupBy extends AbstractExpression
+class GroupBy extends Collection
 {
     
     /**
