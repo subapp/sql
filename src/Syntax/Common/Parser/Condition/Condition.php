@@ -29,7 +29,6 @@ class Condition extends AbstractDefaultParser
 
         do {
             
-            // 
             $element = new Term();
             $expression = $this->parseComparisonTerm($lexer, $processor);
             $element->setExpression($expression);
@@ -65,6 +64,9 @@ class Condition extends AbstractDefaultParser
             if ($isNotMathExpression) {
                 
                 $lexer->setPeek(1);
+            
+                // @todo dirty hack for expression below
+                // (t0.cnt / 10 - 3) = sum(distinct u.cnt) || round(pi(), 2) = 3.14
                 
                 switch (true) {
                     case $this->isFieldPath($lexer):
