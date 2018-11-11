@@ -7,10 +7,10 @@ use Subapp\Sql\Render\Common\Sqlizer\Collection;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
- * Class TermCollection
+ * Class Conditions
  * @package Subapp\Sql\Render\Common\Sqlizer\Condition
  */
-class TermCollection extends Collection
+class Conditions extends Collection
 {
     
     /**
@@ -20,7 +20,7 @@ class TermCollection extends Collection
      */
     public function getSql(ExpressionInterface $collection, RendererInterface $renderer)
     {
-        return sprintf('(%s)', parent::getSql($collection, $renderer));
+        return sprintf('%s', parent::getSql($collection, $renderer));
     }
     
 }

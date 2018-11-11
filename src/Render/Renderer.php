@@ -81,7 +81,7 @@ class Renderer implements RendererInterface
      */
     public function render(ExpressionInterface $expression)
     {
-        return $this->getSqlizer($expression->getSqlizerName())->getSql($expression, $this);
+        return $this->getSqlizer($expression->getRendererName())->getSql($expression, $this);
     }
     
 }

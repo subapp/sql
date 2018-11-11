@@ -12,6 +12,6 @@ interface ExpressionInterface
     /**
      * @return string
      */
-    public function getSqlizerName();
+    public function getRendererName();
     
 }

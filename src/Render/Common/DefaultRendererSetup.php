@@ -41,7 +41,7 @@ class DefaultRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Condition\Like());
         
         $renderer->addSqlizer(new Sqlizer\Condition\Term());
-        $renderer->addSqlizer(new Sqlizer\Condition\TermCollection());
+        $renderer->addSqlizer(new Sqlizer\Condition\Conditions());
     
         $renderer->addSqlizer(new Sqlizer\Stmt\SelectStatement());
         $renderer->addSqlizer(new Sqlizer\Stmt\From());

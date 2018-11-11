@@ -15,11 +15,11 @@ class ExpressionBuilder
     /**
      * @param                         $operator
      * @param Ast\ExpressionInterface ...$terms
-     * @return Condition\TermCollection
+     * @return Condition\Conditions
      */
     public function terms($operator, ...$terms)
     {
-        $collection = new Condition\TermCollection();
+        $collection = new Condition\Conditions();
         $operator = $this->logic($operator);
         
         foreach ($terms as $term) {
@@ -35,7 +35,7 @@ class ExpressionBuilder
     
     /**
      * @param Ast\ExpressionInterface ...$terms
-     * @return Condition\TermCollection
+     * @return Condition\Conditions
      */
     public function and(...$terms)
     {
@@ -44,7 +44,7 @@ class ExpressionBuilder
     
     /**
      * @param Ast\ExpressionInterface ...$terms
-     * @return Condition\TermCollection
+     * @return Condition\Conditions
      */
     public function or(...$terms)
     {
@@ -53,7 +53,7 @@ class ExpressionBuilder
     
     /**
      * @param Ast\ExpressionInterface ...$terms
-     * @return Condition\TermCollection
+     * @return Condition\Conditions
      */
     public function xor(...$terms)
     {

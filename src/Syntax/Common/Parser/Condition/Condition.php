@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser\Condition;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Condition\Term;
-use Subapp\Sql\Ast\Condition\TermCollection;
+use Subapp\Sql\Ast\Condition\Conditions;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
@@ -20,11 +20,11 @@ class Condition extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|TermCollection
+     * @return ExpressionInterface|Conditions
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $collection = new TermCollection();
+        $collection = new Conditions();
         $parser = $this->getLogicOperatorParser($processor);
         
         do {
@@ -46,11 +46,11 @@ class Condition extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return TermCollection
+     * @return Conditions
      */
     public function parseComparisonTerm(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $collection = new TermCollection();
+        $collection = new Conditions();
         $comparison = $this->getComparisonParser($processor);
         $logical = $this->getLogicOperatorParser($processor);
         

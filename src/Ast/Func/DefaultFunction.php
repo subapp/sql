@@ -12,7 +12,7 @@ class DefaultFunction extends AbstractFunction
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'func.default_function';
     }

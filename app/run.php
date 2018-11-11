@@ -1,7 +1,7 @@
 <?php
 
 use Subapp\Sql\Ast\Condition\Operator;
-use Subapp\Sql\Ast\Condition\TermCollection;
+use Subapp\Sql\Ast\Condition\Conditions;
 use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Ast\MathOperator;
 use Subapp\Sql\Lexer\Lexer;

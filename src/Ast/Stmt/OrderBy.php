@@ -72,7 +72,7 @@ class OrderBy extends AbstractExpression
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'stmt.order_by';
     }

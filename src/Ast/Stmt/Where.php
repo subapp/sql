@@ -2,41 +2,19 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
-use Subapp\Sql\Ast\AbstractExpression;
-use Subapp\Sql\Ast\Condition\TermCollection;
+use Subapp\Sql\Ast\Condition\Conditions;
 
 /**
  * Class Where
  * @package Subapp\Sql\Ast
  */
-class Where extends AbstractExpression
+class Where extends Conditions
 {
-    
-    /**
-     * @var TermCollection
-     */
-    private $collection;
-    
-    /**
-     * @return TermCollection
-     */
-    public function getCollection()
-    {
-        return $this->collection;
-    }
-    
-    /**
-     * @param TermCollection $collection
-     */
-    public function setCollection(TermCollection $collection)
-    {
-        $this->collection = $collection;
-    }
     
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'stmt.where';
     }

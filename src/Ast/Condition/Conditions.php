@@ -5,10 +5,10 @@ namespace Subapp\Sql\Ast\Condition;
 use Subapp\Sql\Ast\Collection;
 
 /**
- * Class TermCollection
+ * Class Conditions
  * @package Subapp\Sql\Ast\Condition
  */
-class TermCollection extends Collection
+class Conditions extends Collection
 {
     
     /**
@@ -25,9 +25,9 @@ class TermCollection extends Collection
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
-        return 'condition.term_collection';
+        return 'condition.conditions';
     }
     
 }

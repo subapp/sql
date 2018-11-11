@@ -56,7 +56,7 @@ class Between extends AbstractIsNotComparison
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'condition.between';
     }

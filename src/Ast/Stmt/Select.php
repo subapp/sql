@@ -23,7 +23,7 @@ class Select extends AbstractExpression
     private $from;
     
     /**
-     * @var Ast\Condition\TermCollection
+     * @var Ast\Condition\Conditions
      */
     private $joins;
     
@@ -181,10 +181,12 @@ class Select extends AbstractExpression
         $this->limit = $limit;
     }
     
+    
+    
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'stmt.select_statement';
     }

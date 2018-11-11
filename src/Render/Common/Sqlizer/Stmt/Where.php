@@ -4,14 +4,14 @@ namespace Subapp\Sql\Render\Common\Sqlizer\Stmt;
 
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Stmt\Where as WhereExpression;
-use Subapp\Sql\Render\AbstractSqlizer;
+use Subapp\Sql\Render\Common\Sqlizer\Condition\Conditions;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class Where
  * @package Subapp\Sql\Render\Common\Sqlizer\Stmt
  */
-class Where extends AbstractSqlizer
+class Where extends Conditions
 {
     
     /**
@@ -22,9 +22,9 @@ class Where extends AbstractSqlizer
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
         $collection = $expression->getCollection();
-        $isNotEmpty = $collection && $collection->isNotEmpty();
+        $exists = $collection && $collection->exists();
         
-        return $isNotEmpty ? sprintf(' WHERE %s', $renderer->render($collection)) : null;
+        return $exists ? sprintf(' WHERE %s', parent::getSql($collection, $renderer)) : null;
     }
     
 }

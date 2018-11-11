@@ -45,7 +45,7 @@ class From extends AbstractExpression
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'stmt.from';
     }

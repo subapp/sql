@@ -27,6 +27,8 @@ class Where extends AbstractDefaultParser
 
         $where = new WhereExpression();
         $collection = $this->getConditionParser($processor)->parse($lexer, $processor);
+        
+        // @todo hardcore wrap conditions into where
         $where->setCollection($collection);
 
         return $where;

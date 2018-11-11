@@ -48,7 +48,7 @@ class MathOperator extends AbstractExpression
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'sqlizer.math_operator';
     }

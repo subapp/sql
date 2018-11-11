@@ -14,7 +14,7 @@ class GroupBy extends Collection
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'stmt.group_by';
     }

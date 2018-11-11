@@ -12,7 +12,7 @@ class Arguments extends Collection
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'sqlizer.arguments';
     }

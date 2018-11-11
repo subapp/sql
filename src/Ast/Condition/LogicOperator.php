@@ -48,7 +48,7 @@ class LogicOperator extends AbstractExpression
     /**
      * @inheritdoc
     */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'condition.logic_operator';
     }

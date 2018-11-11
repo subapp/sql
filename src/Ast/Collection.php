@@ -3,7 +3,6 @@
 namespace Subapp\Sql\Ast;
 
 use Subapp\Collection\Collection as BaseCollection;
-use Subapp\Sql\Common\ClassNameTrait;
 
 /**
  * Class Collection
@@ -11,8 +10,6 @@ use Subapp\Sql\Common\ClassNameTrait;
  */
 class Collection extends BaseCollection implements ExpressionInterface
 {
-
-    use ClassNameTrait;
     
     /**
      * Collection constructor.
@@ -26,17 +23,9 @@ class Collection extends BaseCollection implements ExpressionInterface
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'sqlizer.collection';
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getUnderscore(static::class);
     }
 
 }

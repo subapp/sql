@@ -25,7 +25,7 @@ class OrderByCollection extends Arguments
     /**
      * @return string
      */
-    public function getSqlizerName()
+    public function getRendererName()
     {
         return 'stmt.order_by_collection';
     }

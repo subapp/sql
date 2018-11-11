@@ -9,6 +9,7 @@
   "type": "library",
   "require": {
     "php": ">=7.2",
+    "ext-json": "*",
     "subapp/lexer": "~2.0",
     "subapp/cache": "~1.0",
     "subapp/collection": "~1.1"
