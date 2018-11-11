@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\VariableDeclaration;
+use Subapp\Sql\Ast\Variable;
 use Subapp\Sql\Ast\Arguments;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common;
@@ -28,7 +28,7 @@ class Variables extends Common\Parser\AbstractDefaultParser
         $parser = $this->getComplexParser($processor);
 
         do {
-            $expression = new VariableDeclaration($parser->parse($lexer, $processor));
+            $expression = new Variable($parser->parse($lexer, $processor));
     
             if ($this->isAlias($lexer)) {
                 $alias = $this->getAliasParser($processor)->parse($lexer, $processor);

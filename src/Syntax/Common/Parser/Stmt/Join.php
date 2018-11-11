@@ -41,7 +41,7 @@ class Join extends AbstractDefaultParser
         
         $this->shift(Lexer::T_JOIN, $lexer);
         
-        $join->setLeft($this->getVariableDeclarationParser($processor)->parse($lexer, $processor));
+        $join->setLeft($this->getVariableParser($processor)->parse($lexer, $processor));
         
         switch (true) {
             case $lexer->toToken(Lexer::T_ON):

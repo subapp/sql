@@ -106,11 +106,11 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\VariableDeclaration
+     * @return ParserInterface|Common\Parser\Variable
      */
-    public function getVariableDeclarationParser(ProcessorInterface $processor)
+    public function getVariableParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.variable_declaration');
+        return $processor->getParser('parser.variable');
     }
 
     /**
@@ -223,11 +223,11 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Stmt\JoinCollection
+     * @return ParserInterface|Common\Parser\Stmt\JoinItems
      */
-    public function getJoinCollectionParser(ProcessorInterface $processor)
+    public function getJoinItemsParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('stmt.join_collection');
+        return $processor->getParser('stmt.join_items');
     }
     
     /**

@@ -129,7 +129,7 @@ final class Processor implements ProcessorInterface
                 $this->helper->throwSyntaxError($lexer, null, Lexer::T_SELECT, Lexer::T_UPDATE, Lexer::T_DELETE);
         }
     
-        return $this->getParser("stmt.{$name}_statement")->parse($lexer, $this);
+        return $this->getParser("stmt.{$name}")->parse($lexer, $this);
     }
     
     /**

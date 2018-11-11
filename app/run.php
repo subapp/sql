@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = '0001';
+$sqlVersion = 'Sql1';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -36,7 +36,7 @@ $counter = 0;
 
 echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
-$eb = new \Subapp\Sql\Query\NodeBuilder();
+
 
 $lexer->rewind();
 
@@ -69,13 +69,34 @@ try {
     /** @var Conditions $conditions */
     $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');
     
+    $node = new \Subapp\Sql\Query\NodeBuilder();
+    $node->setRecognizer($recognizer);
+    
+    $qb = new \Subapp\Sql\Query\QueryBuilder($node);
+    
+    $qb->select($node->string("test"), 'uid');
+    
+    $conditions = $node->and(
+        $node->eq(1, 2),
+        $node->ge(2, 'count(Distinct U.id)'),
+        $node->ne(3, 4),
+        $node->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
+        $node->or(
+            '(u.id + 1 * 2) > sum(Distinct U.cnt)',
+            $node->between('U.create', '2017', '2016'),
+            $node->isNull('U.updated')
+        )
+    );
+    
     var_dump(
-        $renderer->render($recognized)
+        $renderer->render($recognized),
+        $renderer->render($conditions),
+        $renderer->render($node->or($conditions, $node->eq(1, 10)))
     );
     
 //    var_dump(
-//        $renderer->render($eb->false()),
-//        $renderer->render($eb->and($eb->eq(1, 2), $eb->eq(3.14, $eb->arithmetic(22, MathOperator::DIVIDE, 7))))
+//        $renderer->render($node->false()),
+//        $renderer->render($node->and($node->eq(1, 2), $node->eq(3.14, $node->arithmetic(22, MathOperator::DIVIDE, 7))))
 //    );
     
     echo "\n\n\n";

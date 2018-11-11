@@ -22,7 +22,8 @@ class FieldPath extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->getIdentifierParser($processor);
+        $parser = $this->isQuoteIdentifier($lexer)
+            ? $this->getQuoteIdentifierParser($processor) : $this->getIdentifierParser($processor);
         
         $table = $parser->parse($lexer, $processor);
         $this->shift(Lexer::T_DOT, $lexer);

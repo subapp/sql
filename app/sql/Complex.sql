@@ -10,6 +10,12 @@ select
   1.23 float_type from innter_table) as sub_id, sqrt((2 / 3) * rand(100)) * (123 + 777) / count(s.id) + sum(s.balance)
 
 from (Select 123 int_type, 1.23 float_type, 1 + 2 * 3 / (1 + 1) * 2 + 3 from innter_table) as t0
+
+Inner join tableName t0 ON (t.id / 1 - 2) > sum(Distinct U.cnt) and 1 > 2
+Right join tableName t0 ON (t0.id != t1.subId || t1.id not in (5, 10, 20))
+Left join tableName t0 Using(t0.id, t1.subId)
+
+
 left join tableName t0 ON (t0.id != t1.subId or t1.id not in (5, 10, 20))
 left join tableName t0 Using(t0.id, t1.subId)
 left join

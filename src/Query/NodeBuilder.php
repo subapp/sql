@@ -4,6 +4,7 @@ namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast\Condition;
 use Subapp\Sql\Ast;
+use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Class ExpressionBuilder
@@ -11,6 +12,36 @@ use Subapp\Sql\Ast;
  */
 class NodeBuilder
 {
+    
+    /**
+     * @var Recognizer
+     */
+    private $recognizer;
+    
+    /**
+     * @param $sql
+     * @return ExpressionInterface
+     */
+    public function recognize($sql)
+    {
+        switch (true) {
+            case ($sql instanceOf ExpressionInterface):
+                return $sql;
+            
+            case is_numeric($sql):
+                $isFloat = (strpos($sql, '.') !== false);
+                return $this->literal($sql, $isFloat ? Ast\Literal::FLOAT : Ast\Literal::INT);
+            
+            case is_array($sql):
+                $sql = array_map(function ($value) {
+                    return $this->recognize($value);
+                }, $sql);
+                return $this->arguments(...$sql);
+            
+            default:
+                return $this->recognizer->recognize($sql);
+        }
+    }
     
     /**
      * @param                         $operator
@@ -23,7 +54,7 @@ class NodeBuilder
         $operator = $this->logic($operator);
         
         foreach ($terms as $term) {
-            $collection->append(new Condition\Term($operator, $term));
+            $collection->append(new Condition\Term($operator, $this->recognize($term)));
         }
         
         /** @var Condition\Term $last */
@@ -60,49 +91,96 @@ class NodeBuilder
         return $this->terms(Condition\LogicOperator:: XOR, ...$terms);
     }
     
-    public function term($x, $operator, $y)
+    /**
+     * @param $x
+     * @param $operator
+     * @param $y
+     * @return Condition\Cmp
+     */
+    public function comparison($x, $operator, $y)
     {
-        return new Condition\Cmp($x, $this->cmp($operator), $y);
+        return new Condition\Cmp($this->recognize($x), $this->cmp($operator), $this->recognize($y));
     }
     
+    /**
+     * @param $x
+     * @param $y
+     * @return Condition\Cmp
+     */
     public function eq($x, $y)
     {
-        return $this->term($x, Condition\Operator::EQ, $y);
+        return $this->comparison($x, Condition\Operator::EQ, $y);
     }
     
+    /**
+     * @param $x
+     * @param $y
+     * @return Condition\Cmp
+     */
     public function ne($x, $y)
     {
-    
+        return $this->comparison($x, Condition\Operator::NE, $y);
     }
     
+    /**
+     * @param $x
+     * @param $y
+     * @return Condition\Cmp
+     */
     public function gt($x, $y)
     {
-    
+        return $this->comparison($x, Condition\Operator::GT, $y);
     }
     
+    /**
+     * @param $x
+     * @param $y
+     * @return Condition\Cmp
+     */
     public function ge($x, $y)
     {
-    
+        return $this->comparison($x, Condition\Operator::GE, $y);
     }
     
+    /**
+     * @param $x
+     * @param $y
+     * @return Condition\Cmp
+     */
     public function lt($x, $y)
     {
-    
+        return $this->comparison($x, Condition\Operator::LT, $y);
     }
     
+    /**
+     * @param $x
+     * @param $y
+     * @return Condition\Cmp
+     */
     public function le($x, $y)
     {
-    
+        return $this->comparison($x, Condition\Operator::LE, $y);
     }
     
+    /**
+     * @param         $x
+     * @param         $in
+     * @param boolean $not
+     * @return Condition\In
+     */
     public function in($x, $in, $not = false)
     {
-    
+        return new Condition\In($not, $this->recognize($x), $this->recognize($in));
     }
     
+    /**
+     * @param         $x
+     * @param boolean $not
+     * @return Condition\IsNull
+     */
     public function isNull($x, $not = false)
     {
-    
+        return new Condition\IsNull($not, $this->recognize($x));
     }
     
     /**
@@ -113,10 +191,10 @@ class NodeBuilder
      */
     public function between($left, $a, $b)
     {
-        $between = new Condition\Between(false, $left);
+        $between = new Condition\Between(false, $this->recognize($left));
         
-        $between->setBetweenA($this->literal($a));
-        $between->setBetweenB($this->literal($b));
+        $between->setBetweenA($this->string($a));
+        $between->setBetweenB($this->string($b));
         
         return $between;
     }
@@ -150,6 +228,15 @@ class NodeBuilder
     }
     
     /**
+     * @param ExpressionInterface ...$values
+     * @return Ast\Arguments
+     */
+    public function arguments(ExpressionInterface ...$values)
+    {
+        return new Ast\Arguments($values);
+    }
+    
+    /**
      * @param string $value
      * @param int    $type
      * @return Ast\Literal
@@ -157,6 +244,15 @@ class NodeBuilder
     public function literal($value, $type = Ast\Literal::STRING)
     {
         return new Ast\Literal($value, $type);
+    }
+    
+    /**
+     * @param string $value
+     * @return Ast\Literal
+     */
+    public function string($value)
+    {
+        return $this->literal($value);
     }
     
     /**
@@ -236,7 +332,7 @@ class NodeBuilder
     public function arithmetic($x, $operator, $y)
     {
         $arithmetic = new Ast\Arithmetic();
-    
+        
         $arithmetic->append($this->int($x));
         $arithmetic->append($this->math($operator));
         $arithmetic->append($this->int($y));
@@ -278,6 +374,22 @@ class NodeBuilder
     public function raw($string)
     {
         return new Ast\Raw($string);
+    }
+    
+    /**
+     * @return Recognizer
+     */
+    public function getRecognizer()
+    {
+        return $this->recognizer;
+    }
+    
+    /**
+     * @param Recognizer $recognizer
+     */
+    public function setRecognizer(Recognizer $recognizer)
+    {
+        $this->recognizer = $recognizer;
     }
     
 }

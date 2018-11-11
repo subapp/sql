@@ -25,7 +25,7 @@ class SubSelect extends AbstractDefaultParser
         $embrace = new Embrace();
 
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-        $embrace->setInner($processor->getParser('stmt.select_statement')->parse($lexer, $processor));
+        $embrace->setInner($processor->getParser('stmt.select')->parse($lexer, $processor));
         $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
 
         return $embrace;

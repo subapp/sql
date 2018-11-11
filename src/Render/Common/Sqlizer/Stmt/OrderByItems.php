@@ -8,10 +8,10 @@ use Subapp\Sql\Render\Common\Sqlizer\Arguments;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
- * Class OrderByCollection
+ * Class OrderByItems
  * @package Subapp\Sql\Render\Common\Sqlizer\Stmt
  */
-class OrderByCollection extends Arguments
+class OrderByItems extends Arguments
 {
     
     /**

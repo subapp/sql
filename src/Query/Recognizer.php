@@ -17,7 +17,6 @@ class Recognizer
     const NORMAL = 'parser.expression';
     const PRIMARY = 'parser.primary';
     
-    
     /**
      * @var ProcessorInterface
      */

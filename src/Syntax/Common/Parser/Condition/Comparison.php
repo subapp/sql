@@ -27,13 +27,18 @@ class Comparison extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $left = $this->getExpressionParser($processor)->parse($lexer, $processor);
         
+        if ($this->isMathExpression($lexer)) {
+            $left = $this->getArithmeticParser($processor)->parse($lexer, $processor);
+        } else {
+            $left = $this->getExpressionParser($processor)->parse($lexer, $processor);
+        }
+
         switch (true) {
             
             // t0.id > 1 AND t0.id < 2 AND ...
             case $this->isComparisonOperator($lexer):
-                $complex = $this->getComplexParser($processor);
+                $complex = $this->getExpressionParser($processor);
                 $operator = $this->getCmpOperatorParser($processor);
                 $cmp = new Cmp();
                 
@@ -103,7 +108,7 @@ class Comparison extends AbstractDefaultParser
                 return $isNull;
             
             default:
-                $this->throwSyntaxError($lexer, 'Precedence', 'Like', 'IsNull', 'In', 'Between');
+                $this->throwSyntaxError($lexer, 'Cmp', 'Like', 'IsNull', 'In', 'Between');
         }
         
         return null;

@@ -5,7 +5,7 @@ namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Stmt\OrderBy as OrderByItem;
-use Subapp\Sql\Ast\Stmt\OrderByCollection;
+use Subapp\Sql\Ast\Stmt\OrderByItems;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -20,12 +20,12 @@ class OrderBy extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|OrderByCollection
+     * @return ExpressionInterface|OrderByItems
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $parser = $this->getExpressionParser($processor);
-        $collection = new OrderByCollection();
+        $collection = new OrderByItems();
         
         $this->shift(Lexer::T_ORDER, $lexer);
         $this->shift(Lexer::T_BY, $lexer);

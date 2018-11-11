@@ -8,7 +8,7 @@ use Subapp\Sql\Ast\Arguments;
  * Class OrderByCollection
  * @package Subapp\Sql\Ast\Stmt
  */
-class OrderByCollection extends Arguments
+class OrderByItems extends Arguments
 {
     
     /**
@@ -27,7 +27,7 @@ class OrderByCollection extends Arguments
      */
     public function getRendererName()
     {
-        return 'stmt.order_by_collection';
+        return 'stmt.order_by_items';
     }
     
 }

@@ -26,19 +26,23 @@ class Condition extends AbstractDefaultParser
     {
         $collection = new Conditions();
         $parser = $this->getLogicOperatorParser($processor);
-        
+
         do {
-            $term = new Term();
+            
+            // 
+            $element = new Term();
             $expression = $this->parseComparisonTerm($lexer, $processor);
-            $term->setExpression($expression);
-            $collection->append($term);
-    
-            $isLogicalOperator = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
-    
-            if ($isLogicalOperator) {
-                $term->setOperator($parser->parse($lexer, $processor));
+            $element->setExpression($expression);
+            
+            $collection->append($element);
+            
+            $satisfied = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
+            
+            if ($satisfied) {
+                $element->setOperator($parser->parse($lexer, $processor));
             }
-        } while ($isLogicalOperator);
+            
+        } while ($satisfied);
         
         return $collection;
     }
@@ -50,33 +54,54 @@ class Condition extends AbstractDefaultParser
      */
     public function parseComparisonTerm(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $collection = new Conditions();
+        $conditions = new Conditions();
         $comparison = $this->getComparisonParser($processor);
         $logical = $this->getLogicOperatorParser($processor);
         
         do {
-            $term = new Term();
             
-            if ($this->isBraced($lexer)) {
+            $isNotMathExpression = $this->isBraced($lexer);
+    
+            if ($isNotMathExpression) {
+                
+                $lexer->setPeek(1);
+                
+                switch (true) {
+                    case $this->isFieldPath($lexer):
+                        $lexer->setPeek(4);
+                        $isNotMathExpression = !$this->isMathOperator($lexer);
+                        break;
+                    case $this->isLiteral($lexer):
+                        $lexer->setPeek(2);
+                        $isNotMathExpression = !$this->isMathOperator($lexer);
+                        break;
+                }
+            }
+            
+            $isNotMathExpression = $isNotMathExpression && !$this->isMathOperator($lexer);
+
+            if ($isNotMathExpression) {
                 $this->shift(Lexer::T_OPEN_BRACE, $lexer);
                 $expression = $this->parse($lexer, $processor);
                 $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
             } else {
                 $expression = $comparison->parse($lexer, $processor);
             }
-    
-            $term->setExpression($expression);
             
-            $collection->append($term);
+            $element = new Term(null, $expression);
+            $conditions->append($element);
             
-            $isNext = $lexer->isNextAny([Lexer::T_AND]);
-    
-            if ($isNext) {
-                $term->setOperator($logical->parse($lexer, $processor));
+            
+            // need in loop
+            $satisfied = $lexer->isNextAny([Lexer::T_AND]);
+            
+            if ($satisfied) {
+                $element->setOperator($logical->parse($lexer, $processor));
             }
-        } while ($isNext);
+            
+        } while ($satisfied);
         
-        return $collection;
+        return $conditions;
     }
     
 }

@@ -21,8 +21,15 @@ class From extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $this->shift(Lexer::T_FROM, $lexer);
+        
+        $from = new Ast\Stmt\From();
+        $parser = $this->getVariableParser($processor);
+        
+        do {
+            $from->append($parser->parse($lexer, $processor));
+        } while($lexer->toToken(Lexer::T_COMMA));
 
-        return new Ast\Stmt\From($this->getVariableDeclarationParser($processor)->parse($lexer, $processor));
+        return $from;
     }
     
 }

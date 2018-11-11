@@ -22,7 +22,7 @@ class DefaultRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Parameter());
         $renderer->addSqlizer(new Sqlizer\Arguments());
         $renderer->addSqlizer(new Sqlizer\FieldPath());
-        $renderer->addSqlizer(new Sqlizer\VariableDeclaration());
+        $renderer->addSqlizer(new Sqlizer\Variable());
         $renderer->addSqlizer(new Sqlizer\Identifier());
         $renderer->addSqlizer(new Sqlizer\Raw());
         $renderer->addSqlizer(new Sqlizer\QuoteIdentifier());
@@ -45,13 +45,14 @@ class DefaultRendererSetup implements RendererSetupInterface
         $renderer->addSqlizer(new Sqlizer\Condition\Term());
         $renderer->addSqlizer(new Sqlizer\Condition\Conditions());
     
-        $renderer->addSqlizer(new Sqlizer\Stmt\SelectStatement());
+        $renderer->addSqlizer(new Sqlizer\Stmt\Select());
         $renderer->addSqlizer(new Sqlizer\Stmt\From());
         $renderer->addSqlizer(new Sqlizer\Stmt\Join());
+        $renderer->addSqlizer(new Sqlizer\Stmt\JoinItems());
         $renderer->addSqlizer(new Sqlizer\Stmt\Where());
         $renderer->addSqlizer(new Sqlizer\Stmt\GroupBy());
         $renderer->addSqlizer(new Sqlizer\Stmt\OrderBy());
-        $renderer->addSqlizer(new Sqlizer\Stmt\OrderByCollection());
+        $renderer->addSqlizer(new Sqlizer\Stmt\OrderByItems());
         $renderer->addSqlizer(new Sqlizer\Stmt\Limit());
     }
     

@@ -34,7 +34,7 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Embrace());
         $processor->addParser(new Parser\Expression());
         $processor->addParser(new Parser\Primary());
-        $processor->addParser(new Parser\VariableDeclaration());
+        $processor->addParser(new Parser\Variable());
 
         // functions
         $processor->addParser(new Parser\Func());
@@ -48,9 +48,9 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Condition\Comparison());
         
         // stmt
-        $processor->addParser(new Parser\Stmt\SelectStatement());
+        $processor->addParser(new Parser\Stmt\Select());
         $processor->addParser(new Parser\Stmt\Join());
-        $processor->addParser(new Parser\Stmt\JoinCollection());
+        $processor->addParser(new Parser\Stmt\JoinItems());
         $processor->addParser(new Parser\Stmt\From());
         $processor->addParser(new Parser\Stmt\Where());
         $processor->addParser(new Parser\Stmt\OrderBy());

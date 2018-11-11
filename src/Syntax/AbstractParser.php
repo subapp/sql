@@ -32,7 +32,9 @@ abstract class AbstractParser implements ParserInterface
     public function isFieldPath(LexerInterface $lexer)
     {
         $isIdentifier = ($this->isIdentifier($lexer) || $this->isQuoteIdentifier($lexer));
-        $isFieldPath = ($isIdentifier && $lexer->isTokenNearby(Lexer::T_DOT, 2));
+        
+        // trying to reach [`u`.id] Lexer::T_DOT token that located after quoted identifier
+        $isFieldPath = ($isIdentifier && $lexer->isTokenNearby(Lexer::T_DOT, 4));
         
         $lexer->resetPeek();
         
@@ -102,7 +104,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isMathExpression(LexerInterface $lexer)
     {
-        $this->peekBehindExpression($lexer);
+        $this->peekBeyondExpression($lexer);
         
         return $this->isMathOperator($lexer);
     }
@@ -310,7 +312,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isComparisonExpression(LexerInterface $lexer)
     {
-        $this->peekBehindExpression($lexer);
+        $this->peekBeyondExpression($lexer);
         $isComparison = $this->isComparisonOperator($lexer);
         
         return $isComparison;
@@ -321,7 +323,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isExtraComparisonExpression(LexerInterface $lexer)
     {
-        $this->peekBehindExpression($lexer);
+        $this->peekBeyondExpression($lexer);
         $isComparison = $this->isExtraComparisonOperator($lexer);
         
         return $isComparison;
@@ -452,12 +454,12 @@ abstract class AbstractParser implements ParserInterface
      * @param LexerInterface $lexer
      * @return TokenInterface
      */
-    public function peekBehindExpression(LexerInterface $lexer)
+    public function peekBeyondExpression(LexerInterface $lexer)
     {
         // peek behind expressions
         // func(u.id) + 1 or (1 + 2) < 4
         // for catch logical or arithmetic operators
-        if ($this->isFunction($lexer) || $lexer->isNext(Lexer::T_OPEN_BRACE)) {
+        if ($this->isFunction($lexer) || $this->isBraced($lexer)) {
             $lexer->peek();
         } elseif ($this->isFieldPath($lexer)) {
             // @todo dirty hack for peek behind [u.id] expression

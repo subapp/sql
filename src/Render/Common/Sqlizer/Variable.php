@@ -2,20 +2,20 @@
 
 namespace Subapp\Sql\Render\Common\Sqlizer;
 
-use Subapp\Sql\Ast\VariableDeclaration as VariableDeclarationExpression;
+use Subapp\Sql\Ast\Variable as VariableExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
- * Class Alias
+ * Class Variable
  * @package Subapp\Sql\Render\Common\Sqlizer
  */
-class VariableDeclaration extends AbstractSqlizer
+class Variable extends AbstractSqlizer
 {
 
     /**
-     * @param ExpressionInterface|VariableDeclarationExpression $expression
+     * @param ExpressionInterface|VariableExpression $expression
      * @param RendererInterface                                 $renderer
      * @return string
      */

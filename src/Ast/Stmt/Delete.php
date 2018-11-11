@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 /**
- * Class Select
+ * Class Delete
  * @package Subapp\Sql\Ast\Stmt
  */
-class Select extends AbstractCommonStmt
+class Delete extends AbstractCommonStmt
 {
     
     /**
@@ -14,7 +14,7 @@ class Select extends AbstractCommonStmt
      */
     public function getRendererName()
     {
-        return 'stmt.select';
+        return 'stmt.delete';
     }
     
 }

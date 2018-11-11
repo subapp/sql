@@ -23,16 +23,25 @@ class Complex extends AbstractDefaultParser
         $parser = null;
     
         switch (true) {
+            
+            // and, &&, or, ||, xor
+            // like, in(), is not null, between, etc.
+            case $this->isExtraComparisonExpression($lexer):
+            case $this->isComparisonExpression($lexer):
+                $parser = $this->getConditionParser($processor);
+                break;
+                
+            // (t0.id + 10 / 2) * PI()
             case $this->isMathExpression($lexer):
                 $parser = $this->getArithmeticParser($processor);
                 break;
-            case $this->isComparisonExpression($lexer):
-            case $this->isExtraComparisonExpression($lexer):
-                $parser = $this->getConditionParser($processor);
-                break;
+                
+            // (select id from table0)
             case $this->isSubSelect($lexer):
                 $parser = $this->getSubSelectParser($processor);
                 break;
+                
+            // Embrace, Function, Primary
             default:
                 $parser = $this->getExpressionParser($processor);
         }

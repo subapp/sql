@@ -12,7 +12,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  * Class Select
  * @package Subapp\Sql\Syntax\MySQL\Parser\Stmt
  */
-class SelectStatement extends AbstractDefaultParser
+class Select extends AbstractDefaultParser
 {
     
     /**
@@ -22,34 +22,40 @@ class SelectStatement extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
+        // If lexer was executed as lexer->tokenize(sql, FALSE) - (without unshifting within blank token)
+        // that means next token is NOT SELECT
         $this->shiftIf(Lexer::T_SELECT, $lexer);
 
-        $select = new Ast\Stmt\Select();
-
-        $select->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
-        $select->setFrom($this->parseFromExpression($processor));
+        $root = new Ast\Root();
+    
+        $root->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
+        $root->setFrom($this->parseFromExpression($processor));
 
         if ($this->isJoin($lexer)) {
-            $parser = $this->getJoinCollectionParser($processor);
-            $select->setJoins($parser->parse($lexer, $processor));
+            $parser = $this->getJoinItemsParser($processor);
+            $root->setJoins($parser->parse($lexer, $processor));
         }
 
         if ($this->isWhere($lexer)) {
-            $select->setWhere($this->getWhereParser($processor)->parse($lexer, $processor));
+            $root->setWhere($this->getWhereParser($processor)->parse($lexer, $processor));
         }
         
         if ($this->isGroupBy($lexer)) {
-            $select->setGroupBy($this->getGroupByParser($processor)->parse($lexer, $processor));
+            $root->setGroupBy($this->getGroupByParser($processor)->parse($lexer, $processor));
         }
         
         if ($this->isOrderBy($lexer)) {
-            $select->setOrderBy($this->getOrderByParser($processor)->parse($lexer, $processor));
+            $root->setOrderBy($this->getOrderByParser($processor)->parse($lexer, $processor));
         }
         
         if ($this->isLimit($lexer)) {
-            $select->setLimit($this->getLimitParser($processor)->parse($lexer, $processor));
+            $root->setLimit($this->getLimitParser($processor)->parse($lexer, $processor));
         }
 
+        $select = new Ast\Stmt\Select();
+        
+        $select->setRoot($root);
+        
         return $select;
     }
     

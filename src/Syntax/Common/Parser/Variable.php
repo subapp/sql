@@ -4,14 +4,14 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\VariableDeclaration as VariableDeclarationExpression;
+use Subapp\Sql\Ast\Variable as VariableExpression;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class VariableDeclaration
+ * Class Variable
  * @package Subapp\Sql\Syntax\Common\Parser
  */
-class VariableDeclaration extends AbstractDefaultParser
+class Variable extends AbstractDefaultParser
 {
     
     /**
@@ -37,7 +37,7 @@ class VariableDeclaration extends AbstractDefaultParser
                 $this->throwSyntaxError($lexer, 'Identifier', 'QuoteIdentifier', 'SubSelect');
         }
     
-        $expression = new VariableDeclarationExpression($parser->parse($lexer, $processor));
+        $expression = new VariableExpression($parser->parse($lexer, $processor));
     
         if ($this->isAlias($lexer)) {
             $expression->setAlias($this->getAliasParser($processor)->parse($lexer, $processor));
