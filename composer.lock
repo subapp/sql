@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5dcb5f1c8d37121c7e9435d5c29e3e65",
+    "content-hash": "1511b0b4bbca6ff0b24e7ce20a0f3c6d",
     "packages": [
         {
             "name": "league/flysystem",
@@ -234,16 +234,16 @@
         },
         {
             "name": "subapp/collection",
-            "version": "v1.1.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/subapp/collection.git",
-                "reference": "1d74938500633dc904f87a567f5fefd1c4c429a5"
+                "reference": "d993f56b418805dc40f4b53ad16f9e3b3800a5f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/subapp/collection/zipball/1d74938500633dc904f87a567f5fefd1c4c429a5",
-                "reference": "1d74938500633dc904f87a567f5fefd1c4c429a5",
+                "url": "https://api.github.com/repos/subapp/collection/zipball/d993f56b418805dc40f4b53ad16f9e3b3800a5f2",
+                "reference": "d993f56b418805dc40f4b53ad16f9e3b3800a5f2",
                 "shasum": ""
             },
             "require": {
@@ -272,7 +272,7 @@
                 "collection",
                 "php collection"
             ],
-            "time": "2018-09-23T15:05:47+00:00"
+            "time": "2018-11-11T09:54:15+00:00"
         },
         {
             "name": "subapp/lexer",
@@ -438,7 +438,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "ext-json": "*"
     },
     "platform-dev": []
 }

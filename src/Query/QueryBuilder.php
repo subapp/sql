@@ -2,11 +2,10 @@
 
 namespace Subapp\Sql\Query;
 
-use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Render\RendererInterface;
-
 /**
- * Query Builder based on AST
+ * Query Builder (Facade) based on AST
+ *  - use Recognizer for parsing short-part sql
+ *  - with compliance fluent interface
  *
  * Class QueryBuilder
  * @package Subapp\Sql\Query
@@ -21,26 +20,52 @@ class QueryBuilder
     public const STATE_CLEAN = 1;
     
     /**
+     * @var NodeBuilder
+     */
+    private $nb;
+    
+    /**
+     * @var integer
+     */
+    private $state = QueryBuilder::STATE_CLEAN;
+    
+    /**
+     * @var integer
+     */
+    private $type = QueryBuilder::SELECT;
+    
+    /**
+     * @var Recognizer
+     */
+    private $recognizer;
+    
+    /**
      * QueryBuilder constructor.
      */
     public function __construct()
     {
-    
+        $this->nb = new NodeBuilder();
     }
     
     public function select()
     {
-    
+        $this->type = QueryBuilder::SELECT;
+        
+        return $this;
     }
     
     public function delete()
     {
+        $this->type = QueryBuilder::DELETE;
     
+        return $this;
     }
     
     public function update()
     {
+        $this->type = QueryBuilder::UPDATE;
     
+        return $this;
     }
     
     public function and()
@@ -76,6 +101,54 @@ class QueryBuilder
     public function isNull()
     {
     
+    }
+    
+    /**
+     * @return int
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+    
+    /**
+     * @param int $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+    
+    /**
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+    
+    /**
+     * @return Recognizer
+     */
+    public function getRecognizer()
+    {
+        return $this->recognizer;
+    }
+    
+    /**
+     * @param Recognizer $recognizer
+     */
+    public function setRecognizer(Recognizer $recognizer)
+    {
+        $this->recognizer = $recognizer;
     }
     
 }

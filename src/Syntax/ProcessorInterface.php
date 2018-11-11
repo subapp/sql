@@ -36,9 +36,14 @@ interface ProcessorInterface
     public function hasParser($name);
     
     /**
+     * @return void
+     */
+    public function cleanParsers();
+    
+    /**
      * @param $name
      * @return ParserInterface
-     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function getParser($name);
     
@@ -61,5 +66,10 @@ interface ProcessorInterface
      * @return CollectionInterface|ParserInterface[]
      */
     public function getParsers();
+    
+    /**
+     * @param LexerInterface $lexer
+     */
+    public function setLexer(LexerInterface $lexer);
     
 }

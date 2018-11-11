@@ -88,6 +88,18 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @inheritdoc
      */
+    public function isParameter(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $isParameter = ($token && ($token->is(Lexer::T_QUESTION) || $token->is(Lexer::T_COLON)));
+        $lexer->resetPeek();
+    
+        return $isParameter;
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public function isMathExpression(LexerInterface $lexer)
     {
         $this->peekBehindExpression($lexer);
@@ -307,15 +319,40 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @inheritdoc
      */
+    public function isExtraComparisonExpression(LexerInterface $lexer)
+    {
+        $this->peekBehindExpression($lexer);
+        $isComparison = $this->isExtraComparisonOperator($lexer);
+        
+        return $isComparison;
+    }
+    
+    /**
+     * @inheritdoc
+     */
     public function isComparisonOperator(LexerInterface $lexer)
     {
         $token = $lexer->peek();
         $comparators = [Lexer::T_EQ, Lexer::T_NE, Lexer::T_GT, Lexer::T_GE, Lexer::T_LT, Lexer::T_LE,];
-        $isCmp = $token && in_array($token->getType(), $comparators);
+        $isComparison = $token && in_array($token->getType(), $comparators);
         
         $lexer->resetPeek();
         
-        return $isCmp;
+        return $isComparison;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isExtraComparisonOperator(LexerInterface $lexer)
+    {
+        $token = $lexer->peek();
+        $comparators = [Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_IN, Lexer::T_IS, Lexer::T_LIKE,];
+        $isComparison = $token && in_array($token->getType(), $comparators);
+
+        $lexer->resetPeek();
+        
+        return $isComparison;
     }
     
     /**

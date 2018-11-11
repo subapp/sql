@@ -22,12 +22,4 @@ class Conditions extends Collection
         $this->setClassName(Term::class);
     }
     
-    /**
-     * @return string
-     */
-    public function getRendererName()
-    {
-        return 'condition.conditions';
-    }
-    
 }

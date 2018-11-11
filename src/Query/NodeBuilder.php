@@ -9,7 +9,7 @@ use Subapp\Sql\Ast;
  * Class ExpressionBuilder
  * @package Subapp\Sql\Query
  */
-class ExpressionBuilder
+class NodeBuilder
 {
     
     /**
@@ -60,13 +60,14 @@ class ExpressionBuilder
         return $this->terms(Condition\LogicOperator:: XOR, ...$terms);
     }
     
+    public function term($x, $operator, $y)
+    {
+        return new Condition\Cmp($x, $this->cmp($operator), $y);
+    }
+    
     public function eq($x, $y)
     {
-        return new Condition\Cmp(
-            is_scalar($x) ? $this->literal($x) : $x,
-            $this->cmp(Condition\Operator::EQ),
-            is_scalar($y) ? $this->literal($y) : $y
-        );
+        return $this->term($x, Condition\Operator::EQ, $y);
     }
     
     public function ne($x, $y)
@@ -121,13 +122,31 @@ class ExpressionBuilder
     }
     
     /**
-     * @param string $table
      * @param string $field
+     * @return Ast\Identifier
+     */
+    public function field($field)
+    {
+        return $this->identifier($field);
+    }
+    
+    /**
+     * @param string $table
+     * @return Ast\Identifier
+     */
+    public function table($table)
+    {
+        return $this->identifier($table);
+    }
+    
+    /**
+     * @param $table
+     * @param $field
      * @return Ast\FieldPath
      */
-    public function field($table, $field)
+    public function path($table, $field)
     {
-        return new Ast\FieldPath($this->identifier($table), $this->identifier($field));
+        return new Ast\FieldPath($this->table($table), $this->field($field));
     }
     
     /**
@@ -192,6 +211,23 @@ class ExpressionBuilder
     }
     
     /**
+     * @param string $name
+     * @return Ast\Parameter
+     */
+    public function named($name)
+    {
+        return new Ast\Parameter(Ast\Parameter::NAMED, $name);
+    }
+    
+    /**
+     * @return Ast\Parameter
+     */
+    public function unnamed()
+    {
+        return new Ast\Parameter();
+    }
+    
+    /**
      * @param $x
      * @param $operator
      * @param $y
@@ -235,18 +271,13 @@ class ExpressionBuilder
         return new Ast\MathOperator($operator);
     }
     
-    public function isLiteral($value)
-    {
-    
-    }
-    
     /**
-     * @param $expression
-     * @return boolean
+     * @param $string
+     * @return Ast\Raw
      */
-    public function isExpression($expression)
+    public function raw($string)
     {
-        return ($expression instanceof Ast\ExpressionInterface);
+        return new Ast\Raw($string);
     }
     
 }

@@ -85,6 +85,15 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser('parser.literal');
     }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Parameter
+     */
+    public function getParameterParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.parameter');
+    }
     
     /**
      * @param ProcessorInterface $processor

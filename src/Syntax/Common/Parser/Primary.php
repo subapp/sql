@@ -26,6 +26,9 @@ class Primary extends AbstractDefaultParser
             case $this->isFieldPath($lexer):
                 $parser = $this->getFieldPathParser($processor);
                 break;
+            case $this->isParameter($lexer):
+                $parser = $this->getParameterParser($processor);
+                break;
             case $this->isIdentifier($lexer):
                 $parser = $this->getIdentifierParser($processor);
                 break;

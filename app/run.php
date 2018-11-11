@@ -5,6 +5,7 @@ use Subapp\Sql\Ast\Condition\Conditions;
 use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Ast\MathOperator;
 use Subapp\Sql\Lexer\Lexer;
+use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
@@ -35,7 +36,7 @@ $counter = 0;
 
 echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
-$eb = new \Subapp\Sql\Query\ExpressionBuilder();
+$eb = new \Subapp\Sql\Query\NodeBuilder();
 
 $lexer->rewind();
 
@@ -48,7 +49,7 @@ try {
     $select = $processor->parse();
     $parseTime = microtime(true) - $time;
 
-    var_dump($select);
+//    var_dump($select);
     
     $renderer = new \Subapp\Sql\Render\Renderer();
     $renderer->setup(new \Subapp\Sql\Render\Common\DefaultRendererSetup());
@@ -62,18 +63,20 @@ try {
     echo sprintf('Parser: %s', $parseTime);
     echo PHP_EOL;
     
-    $lexer = new Lexer();
+    $processor->setLexer(new Lexer());
+    $recognizer = new Recognizer($processor, Recognizer::DIFFICULT);
     
-    $lexer->tokenize('6 + 1', true);
-    
-    $parser = new \Subapp\Sql\Syntax\Common\Parser\Complex();
-    
-    var_dump($renderer->render($parser->parse($lexer, $processor)));
+    /** @var Conditions $conditions */
+    $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');
     
     var_dump(
-        $renderer->render($eb->false()),
-        $renderer->render($eb->and($eb->eq(1, 2), $eb->eq(3.14, $eb->arithmetic(22, MathOperator::DIVIDE, 7))))
+        $renderer->render($recognized)
     );
+    
+//    var_dump(
+//        $renderer->render($eb->false()),
+//        $renderer->render($eb->and($eb->eq(1, 2), $eb->eq(3.14, $eb->arithmetic(22, MathOperator::DIVIDE, 7))))
+//    );
     
     echo "\n\n\n";
     

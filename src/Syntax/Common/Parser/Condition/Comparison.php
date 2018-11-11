@@ -27,19 +27,19 @@ class Comparison extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->getExpressionParser($processor);
-        $left = $parser->parse($lexer, $processor);
+        $left = $this->getExpressionParser($processor)->parse($lexer, $processor);
         
         switch (true) {
             
             // t0.id > 1 AND t0.id < 2 AND ...
             case $this->isComparisonOperator($lexer):
+                $complex = $this->getComplexParser($processor);
                 $operator = $this->getCmpOperatorParser($processor);
                 $cmp = new Cmp();
                 
                 $cmp->setLeft($left);
                 $cmp->setOperator($operator->parse($lexer, $processor));
-                $cmp->setRight($parser->parse($lexer, $processor));
+                $cmp->setRight($complex->parse($lexer, $processor));
                 
                 return $cmp;
             

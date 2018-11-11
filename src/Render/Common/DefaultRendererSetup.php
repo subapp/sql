@@ -19,10 +19,12 @@ class DefaultRendererSetup implements RendererSetupInterface
     public function setup(RendererInterface $renderer)
     {
         $renderer->addSqlizer(new Sqlizer\Literal());
+        $renderer->addSqlizer(new Sqlizer\Parameter());
         $renderer->addSqlizer(new Sqlizer\Arguments());
         $renderer->addSqlizer(new Sqlizer\FieldPath());
         $renderer->addSqlizer(new Sqlizer\VariableDeclaration());
         $renderer->addSqlizer(new Sqlizer\Identifier());
+        $renderer->addSqlizer(new Sqlizer\Raw());
         $renderer->addSqlizer(new Sqlizer\QuoteIdentifier());
         $renderer->addSqlizer(new Sqlizer\Embrace());
         $renderer->addSqlizer(new Sqlizer\MathOperator());

@@ -50,7 +50,7 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @param ParserSetupInterface $parserSetup
+     * @inheritdoc
      */
     public function setup(ParserSetupInterface $parserSetup)
     {
@@ -58,7 +58,7 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @param ParserInterface $parser
+     * @inheritdoc
      */
     public function addParser(ParserInterface $parser)
     {
@@ -66,7 +66,7 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @param $name
+     * @inheritdoc
      */
     public function removeParser($name)
     {
@@ -74,8 +74,7 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @param $name
-     * @return boolean
+     * @inheritdoc
      */
     public function hasParser($name)
     {
@@ -83,9 +82,7 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @param $name
-     * @return ParserInterface
-     * @throws \RuntimeException
+     * @inheritdoc
      */
     public function getParser($name)
     {
@@ -100,13 +97,19 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @return \Subapp\Sql\Ast\ExpressionInterface
-     * @throws SyntaxErrorException
+     * @inheritdoc
+     */
+    public function cleanParsers()
+    {
+        $this->parsers->clear();
+    }
+    
+    /**
+     * @inheritdoc
      */
     public function parse()
     {
         $lexer = $this->getLexer();
-        
         
         // reset lexer to start
         $lexer->rewind();
@@ -130,7 +133,7 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @return LexerInterface
+     * @inheritdoc
      */
     public function getLexer()
     {
@@ -138,7 +141,15 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @return PlatformInterface
+     * @inheritdoc
+     */
+    public function setLexer(LexerInterface $lexer)
+    {
+        $this->lexer = $lexer;
+    }
+    
+    /**
+     * @inheritdoc
      */
     public function getPlatform()
     {
@@ -146,7 +157,7 @@ final class Processor implements ProcessorInterface
     }
     
     /**
-     * @return CollectionInterface|ParserInterface[]
+     * @inheritdoc
      */
     public function getParsers()
     {

@@ -26,10 +26,10 @@ class Where extends AbstractDefaultParser
         $this->shift(Lexer::T_WHERE, $lexer);
 
         $where = new WhereExpression();
-        $collection = $this->getConditionParser($processor)->parse($lexer, $processor);
+        $conditions = $this->getConditionParser($processor)->parse($lexer, $processor);
         
         // @todo hardcore wrap conditions into where
-        $where->setCollection($collection);
+        $where->setBatch($conditions->toArray());
 
         return $where;
     }

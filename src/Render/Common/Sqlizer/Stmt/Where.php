@@ -21,10 +21,7 @@ class Where extends Conditions
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        $collection = $expression->getCollection();
-        $exists = $collection && $collection->exists();
-        
-        return $exists ? sprintf(' WHERE %s', parent::getSql($collection, $renderer)) : null;
+        return $expression->exists() ? sprintf(' WHERE %s', parent::getSql($expression, $renderer)) : null;
     }
     
 }
