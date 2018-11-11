@@ -67,6 +67,7 @@ class Condition extends AbstractDefaultParser
             
                 // @todo dirty hack for expression below
                 // (t0.cnt / 10 - 3) = sum(distinct u.cnt) || round(pi(), 2) = 3.14
+                // !!! need in most elegant solution
                 
                 switch (true) {
                     case $this->isFieldPath($lexer):
