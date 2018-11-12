@@ -26,7 +26,7 @@ class Collection extends AbstractSqlizer
         foreach ($collection as $expression) {
             $pieces[] = $renderer->render($expression);
         }
-        
+
         return implode(' ', $pieces);
     }
     

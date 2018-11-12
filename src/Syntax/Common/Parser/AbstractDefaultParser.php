@@ -34,6 +34,15 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Star
+     */
+    public function getStarParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.star');
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\QuoteIdentifier
      */
     public function getQuoteIdentifierParser(ProcessorInterface $processor)

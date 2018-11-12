@@ -27,12 +27,7 @@ class Comparison extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        
-        if ($this->isMathExpression($lexer)) {
-            $left = $this->getArithmeticParser($processor)->parse($lexer, $processor);
-        } else {
-            $left = $this->getExpressionParser($processor)->parse($lexer, $processor);
-        }
+        $left = $this->getComplexParser($processor)->parse($lexer, $processor);
 
         switch (true) {
             
@@ -66,9 +61,9 @@ class Comparison extends AbstractDefaultParser
                 $between = new Between($lexer->toToken(Lexer::T_NOT));
                 
                 $this->shift(Lexer::T_BETWEEN, $lexer);
-                $between->setBetweenA($literal->parse($lexer, $processor));
+                $between->setA($literal->parse($lexer, $processor));
                 $this->shift(Lexer::T_AND, $lexer);
-                $between->setBetweenB($literal->parse($lexer, $processor));
+                $between->setB($literal->parse($lexer, $processor));
                 
                 $between->setLeft($left);
                 
@@ -108,6 +103,7 @@ class Comparison extends AbstractDefaultParser
                 return $isNull;
             
             default:
+                die('DIE: ' . $this->getStringLength($lexer, 10));
                 $this->throwSyntaxError($lexer, 'Cmp', 'Like', 'IsNull', 'In', 'Between');
         }
         

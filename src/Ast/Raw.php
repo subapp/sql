@@ -42,7 +42,7 @@ class Raw extends AbstractExpression
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'sqlizer.raw';
     }

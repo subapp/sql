@@ -48,7 +48,7 @@ class LogicOperator extends AbstractExpression
     /**
      * @inheritdoc
     */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'condition.logic_operator';
     }

@@ -12,7 +12,7 @@ class QuoteIdentifier extends Identifier
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'sqlizer.quote_identifier';
     }

@@ -25,7 +25,7 @@ class OrderByItems extends Arguments
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'stmt.order_by_items';
     }

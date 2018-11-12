@@ -1,3 +1,5 @@
 select
-Count(user_id)
+*,
+`users`.*,
+Count(user_id) cnt
 from `users`

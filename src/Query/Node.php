@@ -7,10 +7,10 @@ use Subapp\Sql\Ast;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
- * Class ExpressionBuilder
+ * Class Node
  * @package Subapp\Sql\Query
  */
-class NodeBuilder
+class Node
 {
     
     /**
@@ -31,6 +31,9 @@ class NodeBuilder
             case is_numeric($sql):
                 $isFloat = (strpos($sql, '.') !== false);
                 return $this->literal($sql, $isFloat ? Ast\Literal::FLOAT : Ast\Literal::INT);
+            
+            case is_string($sql) && preg_match('/^[\w\d]+$/i', $sql):
+                return $this->identifier($sql);
             
             case is_array($sql):
                 $sql = array_map(function ($value) {
@@ -193,8 +196,8 @@ class NodeBuilder
     {
         $between = new Condition\Between(false, $this->recognize($left));
         
-        $between->setBetweenA($this->string($a));
-        $between->setBetweenB($this->string($b));
+        $between->setA($this->string($a));
+        $between->setB($this->string($b));
         
         return $between;
     }
@@ -234,6 +237,22 @@ class NodeBuilder
     public function arguments(ExpressionInterface ...$values)
     {
         return new Ast\Arguments($values);
+    }
+    
+    /**
+     * @param string|ExpressionInterface $var
+     * @param null                       $alias
+     * @return Ast\Variable
+     */
+    public function variable($var, $alias = null)
+    {
+        $variable = new Ast\Variable($this->recognize($var));
+        
+        if ($alias !== null) {
+            $variable->setAlias(new Ast\Identifier($alias));
+        }
+        
+        return $variable;
     }
     
     /**
@@ -333,9 +352,9 @@ class NodeBuilder
     {
         $arithmetic = new Ast\Arithmetic();
         
-        $arithmetic->append($this->int($x));
+        $arithmetic->append($this->recognize($x));
         $arithmetic->append($this->math($operator));
-        $arithmetic->append($this->int($y));
+        $arithmetic->append($this->recognize($y));
         
         return $arithmetic;
     }

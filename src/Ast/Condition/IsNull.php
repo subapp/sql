@@ -12,7 +12,7 @@ class IsNull extends AbstractIsNotComparison
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'condition.is_null';
     }

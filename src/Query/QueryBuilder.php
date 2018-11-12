@@ -26,9 +26,9 @@ class QueryBuilder
     public const STATE_CLEAN = 1;
     
     /**
-     * @var NodeBuilder
+     * @var Node
      */
-    private $nodeBuilder;
+    private $node;
     
     /**
      * @var integer
@@ -47,26 +47,27 @@ class QueryBuilder
     
     /**
      * QueryBuilder constructor.
-     * @param NodeBuilder $nodeBuilder
+     * @param Node $nodeBuilder
      */
-    public function __construct(NodeBuilder $nodeBuilder)
+    public function __construct(Node $nodeBuilder)
     {
-        $this->nodeBuilder = $nodeBuilder;
+        $this->node = $nodeBuilder;
         $this->root = new Ast\Root();
     }
     
     /**
+     * @param string|Ast\ExpressionInterface $select
+     * @param null|string                    $alias
      * @return $this
      */
     public function select($select, $alias = null)
     {
         $this->type = QueryBuilder::SELECT;
+    
+        $variable = $this->node->variable($select, $alias);
         
-        $ast = $this->getNodeBuilder()->recognize($select);
-        
-        $variable = new Ast\Variable($ast, new Ast\Identifier($alias));
-        
-        var_dump($variable);
+        $this->root->getFrom()->append($variable);
+        $this->root->getArguments()->append(new Ast\Star());
         
         return $this;
     }
@@ -77,7 +78,7 @@ class QueryBuilder
     public function delete()
     {
         $this->type = QueryBuilder::DELETE;
-    
+        
         return $this;
     }
     
@@ -87,7 +88,7 @@ class QueryBuilder
     public function update()
     {
         $this->type = QueryBuilder::UPDATE;
-    
+        
         return $this;
     }
     
@@ -100,10 +101,10 @@ class QueryBuilder
     }
     
     /**
-     * @param AbstractComparison $comparison
+     * @param Ast\ExpressionInterface|string $comparison
      * @return $this
      */
-    public function and(AbstractComparison $comparison)
+    public function and($comparison)
     {
         $this->root->getWhere()->append(new Ast\Condition\Term\ANDTerm($comparison));
         
@@ -163,7 +164,7 @@ class QueryBuilder
                 throw new UnsupportedException(sprintf('Cannot create AST node for type: "%s"',
                     $this->getType()));
         }
-    
+        
         $ast->setRoot($this->root);
         
         return $ast;
@@ -179,23 +180,22 @@ class QueryBuilder
     }
     
     
-    
     /**
-     * @return NodeBuilder
+     * @return Node
      */
-    public function getNodeBuilder()
+    public function getNode()
     {
-        return $this->nodeBuilder;
+        return $this->node;
     }
     
     /**
      * Alias: $this->getNodeBuilder(): Query\NodeBuilder
      *
-     * @return NodeBuilder
+     * @return Node
      */
     public function node()
     {
-        return $this->getNodeBuilder();
+        return $this->getNode();
     }
     
     /**
@@ -204,6 +204,14 @@ class QueryBuilder
     public function getRoot()
     {
         return $this->root;
+    }
+    
+    /**
+     * @param Ast\Root $root
+     */
+    public function setRoot(Ast\Root $root)
+    {
+        $this->root = $root;
     }
     
     /**

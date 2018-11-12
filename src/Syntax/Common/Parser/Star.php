@@ -4,27 +4,27 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Ast\Identifier as IdentifierExpression;
+use Subapp\Sql\Ast\Star as StarExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class Identifier
+ * Class Star
  * @package Subapp\Sql\Syntax\Common\Parser
  */
-class Identifier extends AbstractDefaultParser
+class Star extends AbstractDefaultParser
 {
     
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|IdentifierExpression
+     * @return ExpressionInterface|StarExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $this->shift(Lexer::T_IDENTIFIER, $lexer);
+        $this->shift(Lexer::T_MULTIPLY, $lexer);
         
-        return new IdentifierExpression($lexer->getTokenValue());
+        return new StarExpression();
     }
     
 }

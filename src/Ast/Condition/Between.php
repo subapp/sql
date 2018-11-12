@@ -14,49 +14,49 @@ class Between extends AbstractIsNotComparison
     /**
      * @var Literal
      */
-    private $betweenA;
+    private $a;
     
     /**
      * @var Literal
      */
-    private $betweenB;
+    private $b;
     
     /**
      * @return Literal
      */
-    public function getBetweenA()
+    public function getA()
     {
-        return $this->betweenA;
+        return $this->a;
     }
     
     /**
-     * @param Literal $betweenA
+     * @param Literal $a
      */
-    public function setBetweenA(Literal $betweenA)
+    public function setA(Literal $a)
     {
-        $this->betweenA = $betweenA;
+        $this->a = $a;
     }
     
     /**
      * @return Literal
      */
-    public function getBetweenB()
+    public function getB()
     {
-        return $this->betweenB;
+        return $this->b;
     }
     
     /**
-     * @param Literal $betweenB
+     * @param Literal $b
      */
-    public function setBetweenB(Literal $betweenB)
+    public function setB(Literal $b)
     {
-        $this->betweenB = $betweenB;
+        $this->b = $b;
     }
     
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'condition.between';
     }

@@ -23,7 +23,7 @@ class Term extends AbstractSqlizer
     {
         $operator = $expression->getOperator() ?
             sprintf(' %s', $renderer->render($expression->getOperator())) : null;
-        
+
         return sprintf('%s%s',
             $renderer->render($expression->getExpression()), $operator);
     }

@@ -25,7 +25,7 @@ class JoinItems extends Collection
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'stmt.join_items';
     }

@@ -12,7 +12,7 @@ class DefaultFunction extends AbstractFunction
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'func.default_function';
     }

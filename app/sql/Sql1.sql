@@ -1,10 +1,17 @@
-select t0.id,
-(u.id  + 1 + 2 * 3)
+select
+u.id  + 1 + 2 * 3
  from test t0
 
 Right join tableName t0 ON (t0.id <= t1.subId || t1.id >= 1) And 1 = 1
-Inner join tableName t0 ON (t0.cnt / 10 - 3) = sum(distinct u.cnt) || round(pi(), 2) = 3.14
+Inner join tableName t0 ON (t0.cnt / 10 - 3) + 1 = sum(distinct u.cnt) || round(pi(), 2) = 3.14 &&  (t0.cnt / 10) + 3
+       = SUM(DISTINCT u.cnt)
 Left join tableName t0 Using(t0.id, t1.subId)
+INNER JOIN tableName AS t0 ON (
+
+      t0.cnt / 10 + 3 >= SUM(DISTINCT u.cnt)
+      OR ROUND(PI(), 2) = 3.14
+
+  )
 left join
 (
     select a.CategoryID, b.CategoryName, avg(a.UnitPrice) as planned_unit_price

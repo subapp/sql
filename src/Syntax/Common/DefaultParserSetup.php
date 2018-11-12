@@ -26,6 +26,7 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Arithmetic());
         $processor->addParser(new Parser\Identifier());
         $processor->addParser(new Parser\QuoteIdentifier());
+        $processor->addParser(new Parser\Star());
         $processor->addParser(new Parser\Alias());
         $processor->addParser(new Parser\Literal());
         $processor->addParser(new Parser\Parameter());

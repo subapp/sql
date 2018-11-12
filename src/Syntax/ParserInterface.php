@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Syntax;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Lexer\TokenInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Exception\SyntaxErrorException;
 
@@ -138,6 +139,12 @@ interface ParserInterface
     
     /**
      * @param LexerInterface $lexer
+     * @return bool
+     */
+    public function isNotMathExpression(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
      * @return boolean
      */
     public function isPlainMathOperator(LexerInterface $lexer);
@@ -150,15 +157,21 @@ interface ParserInterface
     
     /**
      * @param LexerInterface $lexer
-     * @return mixed
+     * @return boolean
      */
     public function isIdentifier(LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isStar(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
      * @return mixed
      */
-    public function isBraced(LexerInterface $lexer);
+    public function isOpenBrace(LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer
@@ -243,5 +256,54 @@ interface ParserInterface
      * @return boolean
      */
     public function isLogicXor(LexerInterface $lexer);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @param integer ...$tokens
+     * @return boolean
+     */
+    public function isTokenBetweenBraces(LexerInterface $lexer, ...$tokens);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @param integer ...$tokens
+     * @return boolean
+     */
+    public function isTokenBehindBraces(LexerInterface $lexer, ...$tokens);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @param integer ...$tokens
+     * @return boolean
+     */
+    public function isTokenBehindExpression(LexerInterface $lexer, ...$tokens);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @param integer          ...$tokens
+     * @return boolean
+     */
+    public function isPeekToken(LexerInterface $lexer, ...$tokens);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @param integer          ...$tokens
+     * @return boolean
+     */
+    public function isPeekSequence(LexerInterface $lexer, ...$tokens);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @param array          $needed
+     * @param array          $against
+     * @return boolean
+     */
+    public function isPeekAgainst(LexerInterface $lexer, array $needed, array $against);
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return TokenInterface
+     */
+    public function peekBeyondExpression(LexerInterface $lexer);
     
 }

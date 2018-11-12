@@ -42,7 +42,7 @@ class Identifier extends AbstractExpression
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'sqlizer.identifier';
     }

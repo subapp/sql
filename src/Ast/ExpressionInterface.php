@@ -12,6 +12,6 @@ interface ExpressionInterface
     /**
      * @return string
      */
-    public function getRendererName();
+    public function getRenderer();
     
 }

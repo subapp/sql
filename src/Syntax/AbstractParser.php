@@ -44,9 +44,9 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @inheritdoc
      */
-    public function isBraced(LexerInterface $lexer)
+    public function isOpenBrace(LexerInterface $lexer, $resetPeek = true)
     {
-        return $lexer->isNext(Lexer::T_OPEN_BRACE);
+        return $this->isPeekToken($lexer, $resetPeek, Lexer::T_OPEN_BRACE);
     }
     
     /**
@@ -59,6 +59,14 @@ abstract class AbstractParser implements ParserInterface
         $lexer->resetPeek();
         
         return $isIdentifier;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isStar(LexerInterface $lexer, $resetPeek = true)
+    {
+        return $this->isPeekToken($lexer, $resetPeek, Lexer::T_MULTIPLY);
     }
     
     /**
@@ -95,18 +103,8 @@ abstract class AbstractParser implements ParserInterface
         $token = $lexer->peek();
         $isParameter = ($token && ($token->is(Lexer::T_QUESTION) || $token->is(Lexer::T_COLON)));
         $lexer->resetPeek();
-    
-        return $isParameter;
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function isMathExpression(LexerInterface $lexer)
-    {
-        $this->peekBeyondExpression($lexer);
         
-        return $this->isMathOperator($lexer);
+        return $isParameter;
     }
     
     /**
@@ -115,12 +113,108 @@ abstract class AbstractParser implements ParserInterface
     public function isMathOperator(LexerInterface $lexer)
     {
         $token = $lexer->peek();
+        
         $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
         $isMath = ($token && in_array($token->getType(), $operators, true));
         
         $lexer->resetPeek();
         
         return $isMath;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isMathExpression(LexerInterface $lexer)
+    {
+        $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
+        
+        $isMathExpression = (
+            $this->isTokenBehindBraces($lexer, true, ...$operators) ||
+            $this->isTokenBehindExpression($lexer, true, ...$operators) ||
+            $this->isTokenBetweenBraces($lexer, true, ...$operators)
+        );
+        
+        return $isMathExpression;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isNotMathExpression(LexerInterface $lexer)
+    {
+        return !$this->isMathExpression($lexer);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isTokenBehindBraces(LexerInterface $lexer, ...$tokens)
+    {
+        $isSatisfied = false;
+        
+        if ($this->isOpenBrace($lexer)) {
+            $isSatisfied = $this->isTokenBehindExpression($lexer, false, ...$tokens);
+        }
+        
+        $lexer->resetPeek();
+        
+        return $isSatisfied;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isTokenBetweenBraces(LexerInterface $lexer, ...$tokens)
+    {
+        $isSatisfied = false;
+        
+        if ($this->isOpenBrace($lexer)) {
+            $lexer->peek();
+            $isSatisfied = $this->isTokenBehindExpression($lexer, false, ...$tokens);
+        }
+        
+        $lexer->resetPeek();
+        
+        return $isSatisfied;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isTokenBehindExpression(LexerInterface $lexer, $resetPeek = true, ...$tokens)
+    {
+        $peekValue = $lexer->getPeek();
+        
+        // if expression starts with: (a + 1) / 3
+        $isOpenBrace = $this->isPeekToken($lexer, false, Lexer::T_OPEN_BRACE);
+        $lexer->setPeek($peekValue);
+        
+        // if expression starts with: u.id / 22
+        $isFieldPath = $this->isFieldPath($lexer);
+        $lexer->setPeek($peekValue);
+        
+        // if expression starts with: 22 / 7
+        $isLiteral = $this->isLiteral($lexer);
+        $lexer->setPeek($peekValue);
+        
+        if ($isOpenBrace) {
+            $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
+        } elseif ($isFieldPath) {
+            $lexer->increasePeek(3);
+        } elseif ($isLiteral) {
+            $lexer->increasePeek(1);
+        }
+        
+        $token = $lexer->peek();
+        
+        if ($resetPeek) {
+            $lexer->resetPeek();
+        }
+        
+        $tokenType = $token ? $token->getType() : Lexer::T_UNDEFINED;
+        
+        return ($token && in_array($tokenType, $tokens, true));
     }
     
     /**
@@ -153,7 +247,8 @@ abstract class AbstractParser implements ParserInterface
     public function isFunction(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-        $isFunction = ($token && $token->is(Lexer::T_IDENTIFIER) && $lexer->peek()->is(Lexer::T_OPEN_BRACE));
+        $isFunction = ($token && $token->is(Lexer::T_IDENTIFIER)
+            && ($token = $lexer->peek()) && $token->is(Lexer::T_OPEN_BRACE));
         $lexer->resetPeek();
         
         return $isFunction;
@@ -218,10 +313,10 @@ abstract class AbstractParser implements ParserInterface
     public function isOrderBy(LexerInterface $lexer)
     {
         $token = $lexer->peek();
-    
+        
         $isOrderBy = $token && $token->is(Lexer::T_ORDER);
         $isOrderBy = $isOrderBy && $lexer->peek()->is(Lexer::T_BY);
-     
+        
         $lexer->resetPeek();
         
         return $isOrderBy;
@@ -236,7 +331,7 @@ abstract class AbstractParser implements ParserInterface
         
         $isGroupBy = $token && $token->is(Lexer::T_GROUP);
         $isGroupBy = $isGroupBy && $lexer->peek()->is(Lexer::T_BY);
-    
+        
         $lexer->resetPeek();
         
         return $isGroupBy;
@@ -351,7 +446,7 @@ abstract class AbstractParser implements ParserInterface
         $token = $lexer->peek();
         $comparators = [Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_IN, Lexer::T_IS, Lexer::T_LIKE,];
         $isComparison = $token && in_array($token->getType(), $comparators);
-
+        
         $lexer->resetPeek();
         
         return $isComparison;
@@ -368,7 +463,7 @@ abstract class AbstractParser implements ParserInterface
         if ($token->is(Lexer::T_NOT)) {
             $token = $lexer->peek();
         }
-    
+        
         $this->notEndOfLine($lexer, $token, Lexer::T_IN);
         
         $isIn = $token->is(Lexer::T_IN);
@@ -411,7 +506,7 @@ abstract class AbstractParser implements ParserInterface
     {
         // if next token between
         $token = $lexer->peek();
-    
+        
         // skip NOT token that can be before [NOT] BETWEEN ... AND ...
         if ($token->is(Lexer::T_NOT)) {
             $token = $lexer->peek();
@@ -434,38 +529,83 @@ abstract class AbstractParser implements ParserInterface
     {
         // if next token between
         $token = $lexer->peek();
-    
+        
         // skip NOT token that can be before [NOT] LIKE 'john%'
         if ($token->is(Lexer::T_NOT)) {
             $token = $lexer->peek();
         }
         
         $isLike = $token && $token->is(Lexer::T_LIKE);
-    
+        
         $this->notEndOfLine($lexer, $token, Lexer::T_LIKE, Lexer::T_NOT);
-    
+        
         // reset peek position = 0
         $lexer->resetPeek();
-    
+        
         return $isLike;
     }
     
     /**
-     * @param LexerInterface $lexer
-     * @return TokenInterface
+     * @inheritdoc
+     */
+    public function isPeekToken(LexerInterface $lexer, $resetPeek = true, ...$tokens)
+    {
+        $token = $lexer->peek();
+        $isSatisfied = ($token && in_array($token->getType(), $tokens, true));
+        
+        if ($resetPeek) {
+            $lexer->resetPeek();
+        }
+        
+        return $isSatisfied;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isPeekSequence(LexerInterface $lexer, ...$tokens)
+    {
+        $isSatisfied = true;
+        
+        foreach ($tokens as $tokenType) {
+            $token = $lexer->peek();
+            $isSatisfied = ($isSatisfied && $token && $token->is($tokenType));
+        }
+        
+        $lexer->resetPeek();
+        
+        return $isSatisfied;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isPeekAgainst(LexerInterface $lexer, array $needed, array $against)
+    {
+        $isFounded = false;
+        
+        while (($token = $lexer->peek()) && !$isFounded && !in_array($token->getType(), $against, true)) {
+            $isFounded = in_array($token->getType(), $needed, true);
+        }
+        
+        return $isFounded;
+    }
+    
+    /**
+     * @inheritdoc
      */
     public function peekBeyondExpression(LexerInterface $lexer)
     {
         // peek behind expressions
         // func(u.id) + 1 or (1 + 2) < 4
         // for catch logical or arithmetic operators
-        if ($this->isFunction($lexer) || $this->isBraced($lexer)) {
+        if ($this->isFunction($lexer) || $this->isOpenBrace($lexer)) {
             $lexer->peek();
         } elseif ($this->isFieldPath($lexer)) {
             // @todo dirty hack for peek behind [u.id] expression
             $lexer->setPeek(2);
         }
-    
+        
         $token = $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
         
         $this->notEndOfLine($lexer, $token, Lexer::T_CLOSE_BRACE);

@@ -69,26 +69,33 @@ try {
     /** @var Conditions $conditions */
     $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');
     
-    $node = new \Subapp\Sql\Query\NodeBuilder();
+    $node = new \Subapp\Sql\Query\Node();
     $node->setRecognizer($recognizer);
     
     $qb = new \Subapp\Sql\Query\QueryBuilder($node);
     
-    $qb->select($node->string("test"), 'uid');
+    $qb->select('users', 'uid');
+    
+    $qb->and($node->in('users.id', [1, 2, 3]));
     
     $conditions = $node->and(
         $node->eq(1, 2),
-        $node->ge(2, 'count(Distinct U.id)'),
+//        $node->ge(2, 'count(Distinct U.id)'),
         $node->ne(3, 4),
-        $node->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
+//        $node->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
         $node->or(
-            '(u.id + 1 * 2) > sum(Distinct U.cnt)',
+//            '(u.id + 1 * 2) > sum(Distinct U.cnt)',
             $node->between('U.create', '2017', '2016'),
             $node->isNull('U.updated')
         )
     );
     
+//    var_dump($conditions);
+    
+    $qb->and($node->or($conditions));
+    
     var_dump(
+        $qb->getQuery($renderer),
         $renderer->render($recognized),
         $renderer->render($conditions),
         $renderer->render($node->or($conditions, $node->eq(1, 10)))

@@ -52,6 +52,7 @@ class Root extends AbstractExpression
      */
     public function __construct()
     {
+        $this->from = new Ast\Stmt\From();
         $this->arguments = new Ast\Arguments();
         $this->joins = new Ast\Collection();
         $this->where = new Ast\Stmt\Where();
@@ -176,7 +177,7 @@ class Root extends AbstractExpression
     /**
      * @throws UnsupportedException
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         throw new UnsupportedException('The root AST node cannot be rendered. Its purpose is to preserve common nodes.');
     }

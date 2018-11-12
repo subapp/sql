@@ -51,7 +51,7 @@ class Operator extends AbstractExpression
     /**
      * @inheritdoc
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'condition.cmp_operator';
     }

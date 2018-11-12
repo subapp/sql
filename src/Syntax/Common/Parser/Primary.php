@@ -23,6 +23,9 @@ class Primary extends AbstractDefaultParser
         $parser = null;
 
         switch (true) {
+            case $this->isStar($lexer):
+                $parser = $this->getStarParser($processor);
+                break;
             case $this->isFieldPath($lexer):
                 $parser = $this->getFieldPathParser($processor);
                 break;

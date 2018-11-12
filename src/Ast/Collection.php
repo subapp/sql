@@ -23,7 +23,7 @@ class Collection extends BaseCollection implements ExpressionInterface
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'sqlizer.collection';
     }

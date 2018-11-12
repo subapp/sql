@@ -1,4 +1,4 @@
-select y.CategoryID, 
+select y.CategoryID,
     y.CategoryName,
     round(x.actual_unit_price, 2) as "Actual Avg Unit Price",
     round(y.planned_unit_price, 2) as "Would-Like Avg Unit Price"

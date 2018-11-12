@@ -24,8 +24,8 @@ class Between extends AbstractSqlizer
         return sprintf('%s%sBETWEEN %s AND %s',
             $renderer->render($expression->getLeft()),
             ($expression->isNot() ? ' NOT ' : ' '),
-            $renderer->render($expression->getBetweenA()),
-            $renderer->render($expression->getBetweenB()));
+            $renderer->render($expression->getA()),
+            $renderer->render($expression->getB()));
     }
     
 }

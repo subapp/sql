@@ -14,7 +14,7 @@ class Where extends Conditions
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'stmt.where';
     }

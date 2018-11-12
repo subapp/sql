@@ -27,7 +27,9 @@ class FieldPath extends AbstractDefaultParser
         
         $table = $parser->parse($lexer, $processor);
         $this->shift(Lexer::T_DOT, $lexer);
-        $field = $parser->parse($lexer, $processor);
+        $field = $this->isStar($lexer)
+            ? $this->getStarParser($processor)->parse($lexer, $processor)
+            : $parser->parse($lexer, $processor);
         
         $expression = new FieldPathExpression();
         

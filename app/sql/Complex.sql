@@ -11,9 +11,16 @@ select
 
 from (Select 123 int_type, 1.23 float_type, 1 + 2 * 3 / (1 + 1) * 2 + 3 from innter_table) as t0
 
-Inner join tableName t0 ON (t.id / 1 - 2) > sum(Distinct U.cnt) and 1 > 2
-Right join tableName t0 ON (t0.id != t1.subId || t1.id not in (5, 10, 20))
+Right join tableName t0 ON (t0.id <= t1.subId || t1.id >= 1) And 1 = 1
+Inner join tableName t0 ON (t0.cnt / 10 - 3) = sum(distinct u.cnt) || round(pi(), 2) = 3.14
 Left join tableName t0 Using(t0.id, t1.subId)
+left join
+(
+    select a.CategoryID, b.CategoryName, avg(a.UnitPrice) as planned_unit_price
+    from products
+    order By 1 desc
+    limit 1
+) as y on x.CategoryID = y.CategoryID
 
 
 left join tableName t0 ON (t0.id != t1.subId or t1.id not in (5, 10, 20))

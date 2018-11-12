@@ -27,7 +27,7 @@ class Select extends AbstractDefaultParser
         $this->shiftIf(Lexer::T_SELECT, $lexer);
 
         $root = new Ast\Root();
-    
+
         $root->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
         $root->setFrom($this->parseFromExpression($processor));
 

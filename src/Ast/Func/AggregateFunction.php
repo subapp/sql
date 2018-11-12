@@ -44,7 +44,7 @@ class AggregateFunction extends AbstractFunction
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'func.aggregate_function';
     }

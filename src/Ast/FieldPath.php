@@ -65,7 +65,7 @@ class FieldPath extends AbstractExpression
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'sqlizer.field_path';
     }

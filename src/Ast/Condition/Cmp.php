@@ -48,7 +48,7 @@ class Cmp extends AbstractComparison
     /**
      * @return string
      */
-    public function getRendererName()
+    public function getRenderer()
     {
         return 'condition.cmp';
     }

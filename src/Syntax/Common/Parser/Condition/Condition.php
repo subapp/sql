@@ -26,7 +26,7 @@ class Condition extends AbstractDefaultParser
     {
         $collection = new Conditions();
         $parser = $this->getLogicOperatorParser($processor);
-
+        
         do {
             
             $element = new Term();
@@ -56,34 +56,15 @@ class Condition extends AbstractDefaultParser
         $conditions = new Conditions();
         $comparison = $this->getComparisonParser($processor);
         $logical = $this->getLogicOperatorParser($processor);
+    
+        $operators = [Lexer::T_EQ, Lexer::T_NE, Lexer::T_GT, Lexer::T_GE, Lexer::T_LT, Lexer::T_LE, Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_IN, Lexer::T_IS, Lexer::T_LIKE,];
         
         do {
             
-            $isNotMathExpression = $this->isBraced($lexer);
-    
-            if ($isNotMathExpression) {
-                
-                $lexer->setPeek(1);
+            $difficultExpression = $this->isPeekAgainst($lexer, $operators, [Lexer::T_CLOSE_BRACE]);
+            $isJustBrace = ($this->isNotMathExpression($lexer) || $difficultExpression);
             
-                // @todo dirty hack for expression below
-                // (t0.cnt / 10 - 3) = sum(distinct u.cnt) || round(pi(), 2) = 3.14
-                // !!! need in most elegant solution
-                
-                switch (true) {
-                    case $this->isFieldPath($lexer):
-                        $lexer->setPeek(4);
-                        $isNotMathExpression = !$this->isMathOperator($lexer);
-                        break;
-                    case $this->isLiteral($lexer):
-                        $lexer->setPeek(2);
-                        $isNotMathExpression = !$this->isMathOperator($lexer);
-                        break;
-                }
-            }
-            
-            $isNotMathExpression = $isNotMathExpression && !$this->isMathOperator($lexer);
-
-            if ($isNotMathExpression) {
+            if ($this->isOpenBrace($lexer) && $isJustBrace) {
                 $this->shift(Lexer::T_OPEN_BRACE, $lexer);
                 $expression = $this->parse($lexer, $processor);
                 $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
@@ -93,7 +74,6 @@ class Condition extends AbstractDefaultParser
             
             $element = new Term(null, $expression);
             $conditions->append($element);
-            
             
             // need in loop
             $satisfied = $lexer->isNextAny([Lexer::T_AND]);
