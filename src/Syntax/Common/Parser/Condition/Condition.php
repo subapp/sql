@@ -62,7 +62,7 @@ class Condition extends AbstractDefaultParser
         do {
             
             $difficultExpression = $this->isPeekAgainst($lexer, $operators, [Lexer::T_CLOSE_BRACE]);
-            $isJustBrace = ($this->isNotMathExpression($lexer) || $difficultExpression);
+            $isJustBrace = ($this->isNotMathExpression($lexer) || !$difficultExpression);
             
             if ($this->isOpenBrace($lexer) && $isJustBrace) {
                 $this->shift(Lexer::T_OPEN_BRACE, $lexer);

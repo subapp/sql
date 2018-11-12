@@ -190,6 +190,10 @@ abstract class AbstractParser implements ParserInterface
         $isOpenBrace = $this->isPeekToken($lexer, false, Lexer::T_OPEN_BRACE);
         $lexer->setPeek($peekValue);
         
+        // if expression starts with: (Cos(a + 1) / 3)
+        $isFunction = $this->isFunction($lexer);
+        $lexer->setPeek($peekValue);
+        
         // if expression starts with: u.id / 22
         $isFieldPath = $this->isFieldPath($lexer);
         $lexer->setPeek($peekValue);
@@ -200,6 +204,9 @@ abstract class AbstractParser implements ParserInterface
         
         if ($isOpenBrace) {
             $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
+        } elseif ($isFunction) {
+            $lexer->increasePeek(1);
+            $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
         } elseif ($isFieldPath) {
             $lexer->increasePeek(3);
         } elseif ($isLiteral) {
@@ -207,7 +214,7 @@ abstract class AbstractParser implements ParserInterface
         }
         
         $token = $lexer->peek();
-        
+
         if ($resetPeek) {
             $lexer->resetPeek();
         }

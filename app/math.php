@@ -11,7 +11,7 @@ use Subapp\Sql\Syntax\Processor;
 include_once __DIR__ . '/../vendor/autoload.php';
 
 $lexer = new Lexer();
-$math = '(t0.cnt / 10 + 3 = SUM(DISTINCT u.cnt))';
+$math = '(COUNT(s.id) + SQRT(12)) A';
 $lexer->tokenize($math, true);
 
 $lexer->rewind();
@@ -23,7 +23,7 @@ $renderer = new Renderer();
 $renderer->setup(new DefaultRendererSetup());
 
 $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
-$parser = new Condition();
+$parser = new \Subapp\Sql\Syntax\Common\Parser\Arithmetic();
 
 var_dump([
     'isTokenBetweenBraces' => $parser->isTokenBetweenBraces($lexer, true, ...$operators),
