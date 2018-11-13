@@ -47,8 +47,6 @@ class Complex extends AbstractDefaultParser
                 $parser = $this->getExpressionParser($processor);
         }
 
-        var_dump(get_class($parser));
-
         return $parser->parse($lexer, $processor);
     }
     

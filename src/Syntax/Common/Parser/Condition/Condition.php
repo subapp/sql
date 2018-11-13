@@ -18,84 +18,105 @@ use Subapp\Sql\Syntax\ProcessorInterface;
 class Condition extends AbstractDefaultParser
 {
     
-    /**
-     * @param LexerInterface     $lexer
-     * @param ProcessorInterface $processor
-     * @return ExpressionInterface|Conditions
-     */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
+        return $this->and($processor);
+    }
+    
+    public function recognize(ProcessorInterface $processor)
+    {
+        $lexer = $processor->getLexer();
+        
+        $isOpenBrace = $this->isOpenBrace($lexer);
+        $isLogical = $this->isLogicalExpression($lexer);
+        $isComparison = $this->isComparisonExpression($lexer);
+        $isMath = $this->isMathExpression($lexer);
+        
+        var_dump([
+            $isOpenBrace,
+            $isLogical,
+            $isComparison,
+            $isMath,
+        ]);
+        
+        $uncover = $this->getUncoverParser($processor);
+        
+        $expression = null;
+        
+        switch (true) {
+            case ($isOpenBrace && ($isLogical || $isComparison || $isMath)):
+                // uncover braces and run $this->parse();
+                $expression = $uncover->uncover($this, $processor);
+                break;
+            case (!$isOpenBrace && ($isComparison || $isMath)):
+                $expression = $this->comparison($processor);
+                break;
+            default:
+                $this->throwSyntaxError($lexer,
+                    'OpenBrace', 'MathExpression', 'ComparisonExpression', 'LogicalExpression');
+        }
+        
+        return $expression;
+    }
+    
+    public function and(ProcessorInterface $processor)
+    {
+        $lexer = $processor->getLexer();
         $collection = new Conditions();
-
-        $parser = $this->getLogicOperatorParser($processor);
+        $operator = $this->getLogicOperatorParser($processor);
         
         do {
+            /** @var Term $expression */
+            $expression = $this->or($processor);
             
-            $element = new Term();
-            $expression = $this->parseComparisonTerm($lexer, $processor);
-            $element->setExpression($expression);
-            
-            $collection->append($element);
-            
-            $hasOperator = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
-            
-            if ($hasOperator) {
-                $element->setOperator($parser->parse($lexer, $processor));
+            if ($expression instanceof Conditions) {
+                $expression = new Term(null, $expression);
             }
             
-        } while ($hasOperator);
+            $isOperator = $this->isLogicAnd($lexer);
+            
+            if ($isOperator) {
+                $expression->setOperator($operator->parse($lexer, $processor));
+            }
+            
+            $collection->append($expression);
+        } while ($isOperator);
         
         return $collection;
     }
     
-    /**
-     * @param LexerInterface     $lexer
-     * @param ProcessorInterface $processor
-     * @return Conditions
-     */
-    public function parseComparisonTerm(LexerInterface $lexer, ProcessorInterface $processor)
+    public function or(ProcessorInterface $processor)
     {
-        $conditions = new Conditions();
-        $comparison = $this->getComparisonParser($processor);
-        $logical = $this->getLogicOperatorParser($processor);
-
-        $operators = [
-            Lexer::T_EQ, Lexer::T_NE, Lexer::T_GT, Lexer::T_GE, Lexer::T_LT, Lexer::T_LE, // primary
-            Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_IN, Lexer::T_IS, Lexer::T_LIKE, // special
-        ];
+        $lexer = $processor->getLexer();
+        $collection = new Conditions();
+        $operator = $this->getLogicOperatorParser($processor);
         
         do {
+            $expression = $this->term($processor);
+            $isOperator = $this->isLogicOr($lexer) || $this->isLogicXor($lexer);
             
-            $difficultExpression = $this->isPeekAgainst($lexer, $operators, [Lexer::T_CLOSE_BRACE]);
-            $isNotMathExpression = $this->isNotMathExpression($lexer);
-            $isJustBrace = ($isNotMathExpression or $difficultExpression);
-
-//            if ($this->isOpenBrace($lexer) && $isJustBrace) {
-//                $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-//                $expression = $this->parse($lexer, $processor);
-//                $expression = $uncover->uncoverWith($comparison, $processor);
-
-//                var_dump($expression);
-
-//                $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
-//            } else {
-//
-                $expression = $comparison->parse($lexer, $processor);
-//            }
-            
-            $element = new Term(null, $expression);
-            $conditions->append($element);
-            
-            // need in loop
-            $hasOperator = $lexer->isNextAny([Lexer::T_AND]);
-            
-            if ($hasOperator) {
-                $element->setOperator($logical->parse($lexer, $processor));
+            if ($isOperator) {
+                $expression->setOperator($operator->parse($lexer, $processor));
             }
             
-        } while ($hasOperator);
+            $collection->append($expression);
+        } while ($isOperator);
         
-        return $conditions;
+        // if just one expression was reached then return just it, otherwise conditions (collection)
+        return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);
+    }
+    
+    public function term(ProcessorInterface $processor)
+    {
+        return new Term(null, $this->recognize($processor));
+    }
+    
+    public function comparison(ProcessorInterface $processor)
+    {
+        $comparison = $this->getComparisonParser($processor);
+        $expression = $comparison->parse($processor->getLexer(), $processor);
+        
+        return $expression;
     }
     
 }

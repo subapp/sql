@@ -21,7 +21,7 @@ class Conditions extends Collection
      */
     public function getSql(ExpressionInterface $collection, RendererInterface $renderer)
     {
-        return sprintf('%s', parent::getSql($collection, $renderer));
+        return sprintf('(%s)', parent::getSql($collection, $renderer));
     }
     
 }

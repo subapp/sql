@@ -218,6 +218,10 @@ abstract class AbstractParser implements ParserInterface
         $isLiteral = $this->isLiteral($lexer);
         $lexer->setPeek($peekValue);
         
+        // if expression starts with: ID
+        $isIdentifier = $this->isIdentifier($lexer);
+        $lexer->setPeek($peekValue);
+        
         if ($isOpenBrace || $isFunction) {
             if ($isFunction) {
                 $lexer->increasePeek(1);
@@ -225,7 +229,7 @@ abstract class AbstractParser implements ParserInterface
             $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
         } elseif ($isFieldPath) {
             $lexer->increasePeek(3);
-        } elseif ($isLiteral) {
+        } elseif ($isLiteral || $isIdentifier) {
             $lexer->increasePeek(1);
         }
         
@@ -391,12 +395,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isLogicAnd(LexerInterface $lexer)
     {
-        $token = $lexer->peek();
-        $isAnd = $token->is(Lexer::T_AND);
-        
-        $lexer->resetPeek();
-        
-        return $isAnd;
+        return $this->isPeekToken($lexer, true, Lexer::T_AND);
     }
     
     /**
@@ -404,12 +403,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isLogicOr(LexerInterface $lexer)
     {
-        $token = $lexer->peek();
-        $isOr = $token->is(Lexer::T_OR);
-        
-        $lexer->resetPeek();
-        
-        return $isOr;
+        return $this->isPeekToken($lexer, true, Lexer::T_OR);
     }
     
     /**
@@ -417,12 +411,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isLogicXor(LexerInterface $lexer)
     {
-        $token = $lexer->peek();
-        $isXor = $token->is(Lexer::T_XOR);
-        
-        $lexer->resetPeek();
-        
-        return $isXor;
+        return $this->isPeekToken($lexer, true, Lexer::T_XOR);
     }
     
     /**
@@ -430,22 +419,17 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isComparisonExpression(LexerInterface $lexer)
     {
-        $this->peekBeyondExpression($lexer);
-
-        $isComparison = $this->isComparisonOperator($lexer);
-        
-        return $isComparison;
-    }
+        $operators = [
+            Lexer::T_EQ, Lexer::T_NE, Lexer::T_GT, Lexer::T_GE, Lexer::T_LT, Lexer::T_LE, // primary
+            Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_IN, Lexer::T_IS, Lexer::T_LIKE, // special
+        ];
     
-    /**
-     * @inheritdoc
-     */
-    public function isExtraComparisonExpression(LexerInterface $lexer)
-    {
-        $this->peekBeyondExpression($lexer);
-
-        $isComparison = $this->isExtraComparisonOperator($lexer);
-        
+        $isComparison = (
+            $this->isTokenBehindBraces($lexer, true, ...$operators)
+            || $this->isTokenBehindExpression($lexer, true, ...$operators)
+            || $this->isTokenBetweenBraces($lexer, true, ...$operators)
+        );
+    
         return $isComparison;
     }
     

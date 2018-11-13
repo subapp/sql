@@ -11,7 +11,6 @@ use Subapp\Sql\Ast\Condition\Cmp;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
-use Subapp\Sql\Syntax\Common\Parser\Uncover;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
@@ -28,21 +27,22 @@ class Comparison extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
+        // parse left part of conditional expression
+        // (Count(*) / 22) != 100
         $complex = $this->getComplexParser($processor);
-
         $left = $complex->parse($lexer, $processor);
 
         switch (true) {
             
             // t0.id > 1 AND t0.id < 2 AND ...
             case $this->isComparisonOperator($lexer):
-                $complex = $this->getExpressionParser($processor);
                 $operator = $this->getCmpOperatorParser($processor);
+                $expression = $this->getExpressionParser($processor);
                 $cmp = new Cmp();
                 
                 $cmp->setLeft($left);
                 $cmp->setOperator($operator->parse($lexer, $processor));
-                $cmp->setRight($complex->parse($lexer, $processor));
+                $cmp->setRight($expression->parse($lexer, $processor));
                 
                 return $cmp;
             
