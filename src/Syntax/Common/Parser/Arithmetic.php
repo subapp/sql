@@ -31,7 +31,7 @@ class Arithmetic extends AbstractDefaultParser
             
             // parse math expression
             $expression = $parser->parse($lexer, $processor);
-        
+
             // collect / and * operands
             if ($this->isFactorMathOperator($lexer)) {
                 $inner = new ArithmeticExpression();

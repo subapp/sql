@@ -275,4 +275,13 @@ abstract class AbstractDefaultParser extends AbstractParser
         return $processor->getParser('stmt.limit');
     }
 
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Uncover
+     */
+    public function getUncoverParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.uncover');
+    }
+
 }

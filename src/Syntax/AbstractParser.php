@@ -130,12 +130,28 @@ abstract class AbstractParser implements ParserInterface
         $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
         
         $isMathExpression = (
+            $this->isTokenBehindBraces($lexer, true, ...$operators)
+            || $this->isTokenBehindExpression($lexer, true, ...$operators)
+            || $this->isTokenBetweenBraces($lexer, true, ...$operators)
+        );
+        
+        return $isMathExpression;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function isLogicalExpression(LexerInterface $lexer)
+    {
+        $operators = [Lexer::T_AND, Lexer::T_OR, Lexer::T_XOR,];
+
+        $isLogicalExpression = (
             $this->isTokenBehindBraces($lexer, true, ...$operators) ||
             $this->isTokenBehindExpression($lexer, true, ...$operators) ||
             $this->isTokenBetweenBraces($lexer, true, ...$operators)
         );
-        
-        return $isMathExpression;
+
+        return $isLogicalExpression;
     }
     
     /**
@@ -415,6 +431,7 @@ abstract class AbstractParser implements ParserInterface
     public function isComparisonExpression(LexerInterface $lexer)
     {
         $this->peekBeyondExpression($lexer);
+
         $isComparison = $this->isComparisonOperator($lexer);
         
         return $isComparison;
@@ -426,6 +443,7 @@ abstract class AbstractParser implements ParserInterface
     public function isExtraComparisonExpression(LexerInterface $lexer)
     {
         $this->peekBeyondExpression($lexer);
+
         $isComparison = $this->isExtraComparisonOperator($lexer);
         
         return $isComparison;
@@ -649,6 +667,28 @@ abstract class AbstractParser implements ParserInterface
     public function shiftIf($token, LexerInterface $lexer)
     {
         $lexer->toToken($token);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function shiftUntil($token, LexerInterface $lexer)
+    {
+        $occurrences = 0;
+
+        while ($lexer->toToken($token)) {
+            $occurrences++;
+        }
+
+        return $occurrences;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function shiftForNTimes($occurrences, LexerInterface $lexer)
+    {
+        while ($occurrences-- > 0 && $lexer->next());
     }
     
     /**

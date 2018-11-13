@@ -10,7 +10,7 @@ use Subapp\Sql\Syntax\Processor;
 include_once __DIR__ . '/../vendor/autoload.php';
 
 $lexer = new Lexer();
-$math = '(t0.cnt / 10 + 3 > 1)';
+$math = '((((u.id * 1 * 2)))) > SUM(DISTINCT U.cnt)';
 $lexer->tokenize($math, true);
 
 $lexer->rewind();
@@ -29,6 +29,7 @@ var_dump([
     'isTokenBehindBraces' => $parser->isTokenBehindBraces($lexer, true, ...$operators),
     'isTokenBehindExpression' => $parser->isTokenBehindExpression($lexer, true, ...$operators),
     'isMathExpression' => $parser->isMathExpression($lexer),
+    'isLogicalExpression' => $parser->isLogicalExpression($lexer),
 //    $parser->parse($lexer, $processor),
     $renderer->render($parser->parse($lexer, $processor)),
 ]);

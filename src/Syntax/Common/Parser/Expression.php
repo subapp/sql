@@ -23,9 +23,9 @@ class Expression extends AbstractDefaultParser
         $parser = null;
 
         switch (true) {
-            case $this->isOpenBrace($lexer):
-                $parser = $this->getEmbraceParser($processor);
-                break;
+//            case $this->isOpenBrace($lexer):
+//                $parser = $this->getUncoverParser($processor);
+//                break;
             case $this->isFunction($lexer):
                 $parser = $this->getFunctionParser($processor);
                 break;

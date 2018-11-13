@@ -37,6 +37,9 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Primary());
         $processor->addParser(new Parser\Variable());
 
+        // helpers
+        $processor->addParser(new Parser\Uncover());
+
         // functions
         $processor->addParser(new Parser\Func());
         $processor->addParser(new Parser\AggregateFunction());

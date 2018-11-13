@@ -21,9 +21,7 @@ class Conditions extends Collection
      */
     public function getSql(ExpressionInterface $collection, RendererInterface $renderer)
     {
-        $sql = $collection->count() > 1 ? '(%s)' : '%s';
-
-        return sprintf($sql, parent::getSql($collection, $renderer));
+        return sprintf('%s', parent::getSql($collection, $renderer));
     }
     
 }

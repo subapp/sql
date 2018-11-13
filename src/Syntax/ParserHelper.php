@@ -46,11 +46,9 @@ final class ParserHelper
     {
         $expression = null;
 
-        $token = $lexer->getToken();
-
         do {
-            $expression = sprintf('%s %s', $expression, $token->getToken());
             $token = $lexer->peek();
+            $expression = sprintf('%s %s', $expression, $token->getToken());
         } while ($token && --$length > 0);
 
         $lexer->resetPeek();

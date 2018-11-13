@@ -57,6 +57,20 @@ interface ParserInterface
      * @param LexerInterface $lexer
      */
     public function shiftIf($token, LexerInterface $lexer);
+
+    /**
+     * @param $token
+     * @param LexerInterface $lexer
+     * @return integer
+     */
+    public function shiftUntil($token, LexerInterface $lexer);
+
+    /**
+     * @param integer $occurrences
+     * @param LexerInterface $lexer
+     * @return void
+     */
+    public function shiftForNTimes($occurrences, LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer
@@ -82,6 +96,12 @@ interface ParserInterface
      * @return boolean
      */
     public function isMathExpression(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isLogicalExpression(LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer

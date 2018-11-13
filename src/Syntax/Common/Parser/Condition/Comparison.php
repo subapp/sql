@@ -11,6 +11,7 @@ use Subapp\Sql\Ast\Condition\Cmp;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
+use Subapp\Sql\Syntax\Common\Parser\Uncover;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
@@ -27,7 +28,14 @@ class Comparison extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $left = $this->getComplexParser($processor)->parse($lexer, $processor);
+        $complex = $this->getComplexParser($processor);
+        $uncover = $this->getUncoverParser($processor);
+
+        var_dump('>>>> uncover');
+        $left = $uncover->uncover($complex, $processor);
+        var_dump('<<<< uncover');
+        die(var_dump($left));
+//        $left = $complex->parse($lexer, $processor);
 
         switch (true) {
             
@@ -103,6 +111,7 @@ class Comparison extends AbstractDefaultParser
                 return $isNull;
             
             default:
+                var_dump($this->getStringLength($lexer, 10));
                 $this->throwSyntaxError($lexer, 'Cmp', 'Like', 'IsNull', 'In', 'Between');
         }
         
