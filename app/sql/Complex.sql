@@ -16,7 +16,9 @@ select
 from (Select 123 int_type, 1.23 float_type, 1 + 2 * 3 / (1 + 1) * 2 + 3 from innter_table) as t0
 
 Right join tableName t0 ON (t0.id <= t1.subId || t1.id >= 1) And 1 = 1
+
 Inner join tableName t0 ON (t0.cnt / 10 - 3) = sum(distinct u.cnt) || round(pi(), 2) = 3.14
+
 Left join tableName t0 Using(t0.id, t1.subId)
 left join
 (
@@ -36,7 +38,7 @@ left join
     where
 (a = 1 and b = 3 or c = 10 and d != 20)
 xor
-a <1 || b < 10 || z != 1 && b > 2 and c != 0 or d >=2 and a > 100 and c < 300 or f = 10 || e = 100
+a <>1 || b < 10 || z != 1 && b > 2 and c != 0 or d >=2 and a > 100 and c < 300 or f = 10 || e = 100
 || i in(select u.id from users u) and b in(1, 2, 3, 4, 5)
     order By 1 desc
 
@@ -45,7 +47,7 @@ a <1 || b < 10 || z != 1 && b > 2 and c != 0 or d >=2 and a > 100 and c < 300 or
 where
 (a = 1 and b = 3 or c = 10 and d != 20)
 xor
-a <1 || b < 10 || z != 1 && b > 2 and c != 0 or d >=2 and a > 100 and c < 300 or f = 10 || e = 100
+a <1 || b < 10 || z != 1 && b > 2 and c != 0 or d >= 2 and a > 100 and c < 300 or f = 10 || e = 100
 &&
 (u.id1 < 100 And u.create >= 1000000 aNd u.ia <= 100500)
 || ( activities.orderby = 1

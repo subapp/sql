@@ -103,7 +103,6 @@ class Comparison extends AbstractDefaultParser
                 return $isNull;
             
             default:
-                die('DIE: ' . $this->getStringLength($lexer, 10));
                 $this->throwSyntaxError($lexer, 'Cmp', 'Like', 'IsNull', 'In', 'Between');
         }
         

@@ -4,30 +4,23 @@ namespace Subapp\Sql\Render\Common\Sqlizer;
 
 use Subapp\Sql\Ast\Arithmetic as ArithmeticExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class Arithmetic
  * @package Subapp\Sql\Render\Common\Sqlizer
  */
-class Arithmetic extends AbstractSqlizer
+class Arithmetic extends Collection
 {
     
     /**
-     * @param ExpressionInterface|ArithmeticExpression $expression
+     * @param ExpressionInterface|ArithmeticExpression $collection
      * @param RendererInterface                        $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(ExpressionInterface $collection, RendererInterface $renderer)
     {
-        $pieces = [];
-
-        foreach ($expression as $expression) {
-            $pieces[] = $renderer->render($expression);
-        }
-
-        return implode(' ', $pieces);
+        return sprintf('(%s)', parent::getSql($collection, $renderer));
     }
     
 }

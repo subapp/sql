@@ -4,6 +4,7 @@ namespace Subapp\Sql\Render\Common\Sqlizer;
 
 use Subapp\Sql\Ast\Embrace as EmbraceExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\Stmt\Select;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -21,7 +22,9 @@ class Embrace extends AbstractSqlizer
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        return sprintf('(%s)', $renderer->render($expression->getInner()));
+        $template = ($expression->getInner() instanceof Select) ? '(%s)' : '%s';
+        
+        return sprintf($template, $renderer->render($expression->getInner()));
     }
 
 }

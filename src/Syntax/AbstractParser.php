@@ -202,10 +202,10 @@ abstract class AbstractParser implements ParserInterface
         $isLiteral = $this->isLiteral($lexer);
         $lexer->setPeek($peekValue);
         
-        if ($isOpenBrace) {
-            $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
-        } elseif ($isFunction) {
-            $lexer->increasePeek(1);
+        if ($isOpenBrace || $isFunction) {
+            if ($isFunction) {
+                $lexer->increasePeek(1);
+            }
             $lexer->peekBeyond(Lexer::T_OPEN_BRACE, Lexer::T_CLOSE_BRACE, false);
         } elseif ($isFieldPath) {
             $lexer->increasePeek(3);

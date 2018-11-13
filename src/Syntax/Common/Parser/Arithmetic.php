@@ -47,7 +47,7 @@ class Arithmetic extends AbstractDefaultParser
                 };
             
                 // wrap into embrace expression
-                $expression = new Embrace($inner);
+                $expression = $inner;
             }
         
             // append wrapped or raw literal expression

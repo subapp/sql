@@ -35,13 +35,13 @@ class Condition extends AbstractDefaultParser
             
             $collection->append($element);
             
-            $satisfied = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
+            $hasOperator = $lexer->isNextAny([Lexer::T_OR, Lexer::T_XOR,]);
             
-            if ($satisfied) {
+            if ($hasOperator) {
                 $element->setOperator($parser->parse($lexer, $processor));
             }
             
-        } while ($satisfied);
+        } while ($hasOperator);
         
         return $collection;
     }
@@ -57,13 +57,17 @@ class Condition extends AbstractDefaultParser
         $comparison = $this->getComparisonParser($processor);
         $logical = $this->getLogicOperatorParser($processor);
     
-        $operators = [Lexer::T_EQ, Lexer::T_NE, Lexer::T_GT, Lexer::T_GE, Lexer::T_LT, Lexer::T_LE, Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_IN, Lexer::T_IS, Lexer::T_LIKE,];
+        $operators = [
+            Lexer::T_EQ, Lexer::T_NE, Lexer::T_GT, Lexer::T_GE, Lexer::T_LT, Lexer::T_LE, // primary
+            Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_IN, Lexer::T_IS, Lexer::T_LIKE, // special
+        ];
         
         do {
             
             $difficultExpression = $this->isPeekAgainst($lexer, $operators, [Lexer::T_CLOSE_BRACE]);
-            $isJustBrace = ($this->isNotMathExpression($lexer) || !$difficultExpression);
-            
+            $isNotMathExpression = $this->isNotMathExpression($lexer);
+            $isJustBrace = ($isNotMathExpression or $difficultExpression);
+
             if ($this->isOpenBrace($lexer) && $isJustBrace) {
                 $this->shift(Lexer::T_OPEN_BRACE, $lexer);
                 $expression = $this->parse($lexer, $processor);
@@ -76,13 +80,13 @@ class Condition extends AbstractDefaultParser
             $conditions->append($element);
             
             // need in loop
-            $satisfied = $lexer->isNextAny([Lexer::T_AND]);
+            $hasOperator = $lexer->isNextAny([Lexer::T_AND]);
             
-            if ($satisfied) {
+            if ($hasOperator) {
                 $element->setOperator($logical->parse($lexer, $processor));
             }
             
-        } while ($satisfied);
+        } while ($hasOperator);
         
         return $conditions;
     }

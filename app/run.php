@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Complex';
+$sqlVersion = 'Test01';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -80,6 +80,7 @@ try {
     
     $conditions = $node->and(
         $node->eq(1, 2),
+        $recognized,
 //        $node->ge(2, 'count(Distinct U.id)'),
         $node->ne(3, 4),
 //        $node->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
