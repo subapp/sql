@@ -56,7 +56,6 @@ class Condition extends AbstractDefaultParser
     public function parseComparisonTerm(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $conditions = new Conditions();
-        $uncover = $this->getUncoverParser($processor);
         $comparison = $this->getComparisonParser($processor);
         $logical = $this->getLogicOperatorParser($processor);
 

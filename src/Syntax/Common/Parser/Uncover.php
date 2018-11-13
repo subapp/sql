@@ -22,7 +22,7 @@ class Uncover extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        return $this->uncover($this->getExpressionParser($processor), $processor);
+        return $this->uncover($this->getComplexParser($processor), $processor);
     }
 
     /**
@@ -33,14 +33,8 @@ class Uncover extends AbstractDefaultParser
     public function uncover(ParserInterface $parser, ProcessorInterface $processor)
     {
         $lexer = $processor->getLexer();
-        $expression = null;
 
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-
-        if ($this->isOpenBrace($lexer)) {
-            $this->uncover($parser, $processor);
-        }
-var_dump($this->getStringLength($lexer, 10));
         $expression = $parser->parse($lexer, $processor);
         $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
 

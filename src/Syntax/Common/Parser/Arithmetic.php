@@ -45,7 +45,7 @@ class Arithmetic extends AbstractDefaultParser
                     $expression = $parser->parse($lexer, $processor);
                     $inner->append($expression);
                 };
-            
+
                 // wrap into embrace expression
                 $expression = $inner;
             }
@@ -55,7 +55,7 @@ class Arithmetic extends AbstractDefaultParser
             
             // fetch plain operator either + or -
             $token = $lexer->peek();
-            
+
             if ($token && ($token->is(Lexer::T_PLUS) || $token->is(Lexer::T_MINUS))) {
                 $arithmetic->append(new MathOperator($token->getToken()));
             }
@@ -64,7 +64,7 @@ class Arithmetic extends AbstractDefaultParser
             $lexer->resetPeek();
             
         } while($this->isMathOperator($lexer) && $lexer->next());
-        
+
         return $arithmetic;
     }
     

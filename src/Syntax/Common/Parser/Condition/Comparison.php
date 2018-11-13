@@ -29,13 +29,8 @@ class Comparison extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $complex = $this->getComplexParser($processor);
-        $uncover = $this->getUncoverParser($processor);
 
-        var_dump('>>>> uncover');
-        $left = $uncover->uncover($complex, $processor);
-        var_dump('<<<< uncover');
-        die(var_dump($left));
-//        $left = $complex->parse($lexer, $processor);
+        $left = $complex->parse($lexer, $processor);
 
         switch (true) {
             
