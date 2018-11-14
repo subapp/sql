@@ -4,7 +4,6 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Arithmetic as ArithmeticExpression;
-use Subapp\Sql\Ast\Embrace;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\MathOperator;
 use Subapp\Sql\Lexer\Lexer;

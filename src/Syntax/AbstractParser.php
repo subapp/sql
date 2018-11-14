@@ -17,7 +17,20 @@ abstract class AbstractParser implements ParserInterface
      * @var ParserHelper
      */
     private $helper;
-    
+
+    const MATH_TOKENS = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
+    const LOGICAL_TOKENS = [Lexer::T_AND, Lexer::T_OR, Lexer::T_XOR,];
+    const CMP_TOKENS = [
+        // primary
+        Lexer::T_EQ, Lexer::T_NE,
+        Lexer::T_GT, Lexer::T_GE,
+        Lexer::T_LT, Lexer::T_LE,
+        // special
+        Lexer::T_IN, Lexer::T_IS,
+        Lexer::T_NOT, Lexer::T_LIKE,
+        Lexer::T_BETWEEN,
+    ];
+
     /**
      * AbstractParser constructor.
      */

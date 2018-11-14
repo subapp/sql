@@ -8,7 +8,7 @@ namespace Subapp\Sql\Ast;
  */
 class Arithmetic extends Collection
 {
-    
+
     /**
      * @return string
      */

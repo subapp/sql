@@ -10,6 +10,27 @@ use Subapp\Collection\Collection as BaseCollection;
  */
 class Collection extends BaseCollection implements ExpressionInterface
 {
+
+    /**
+     * @var boolean
+     */
+    private $isBraced = false;
+
+    /**
+     * @return bool
+     */
+    public function isBraced()
+    {
+        return $this->isBraced;
+    }
+
+    /**
+     * @param boolean $isBraced
+     */
+    public function setIsBraced($isBraced)
+    {
+        $this->isBraced = $isBraced;
+    }
     
     /**
      * Collection constructor.

@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Test01';
+$sqlVersion = 'Rendered';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -22,7 +22,7 @@ echo PHP_EOL;
 //die(var_dump($lexer));
 
 echo "====== SQL ======\n";
-echo preg_replace('/\s+/ui', ' ', $sql);
+echo $sql;
 
 echo "\n====== Tokens ======\n";
 
@@ -57,6 +57,7 @@ try {
     $time = microtime(true);
     echo "\n====== SELECT AST Render ======\n";
     echo $renderer->render($select);
+    echo ($renderer->render($select) == $sql) ? 'Equal' : 'Not';
     echo PHP_EOL;
     echo sprintf('Render: %s', microtime(true) - $time);
     echo PHP_EOL;
