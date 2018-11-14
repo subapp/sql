@@ -32,12 +32,12 @@ class Condition extends AbstractDefaultParser
         $isComparison = $this->isComparisonExpression($lexer);
         $isMath = $this->isMathExpression($lexer);
         
-        var_dump([
+/*        var_dump([
             $isOpenBrace,
             $isLogical,
             $isComparison,
             $isMath,
-        ]);
+        ]);*/
         
         $uncover = $this->getUncoverParser($processor);
         

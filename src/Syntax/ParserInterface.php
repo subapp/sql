@@ -270,27 +270,54 @@ interface ParserInterface
      * @return boolean
      */
     public function isLogicXor(LexerInterface $lexer);
-    
+
     /**
      * @param LexerInterface $lexer
+     * @param boolean $reset
      * @param integer ...$tokens
      * @return boolean
      */
-    public function isTokenBetweenBraces(LexerInterface $lexer, ...$tokens);
-    
+    public function isTokenBetweenBraces(LexerInterface $lexer, $reset = true, ...$tokens);
+
     /**
      * @param LexerInterface $lexer
+     * @param boolean $reset
      * @param integer ...$tokens
      * @return boolean
      */
-    public function isTokenBehindBraces(LexerInterface $lexer, ...$tokens);
-    
+    public function isTokenBehindBraces(LexerInterface $lexer, $reset = true, ...$tokens);
+
     /**
      * @param LexerInterface $lexer
+     * @param boolean $reset
      * @param integer ...$tokens
      * @return boolean
      */
-    public function isTokenBehindExpression(LexerInterface $lexer, ...$tokens);
+    public function isTokenBehindFunction(LexerInterface $lexer, $reset = true, ...$tokens);
+
+    /**
+     * @param LexerInterface $lexer
+     * @param boolean $reset
+     * @param integer ...$tokens
+     * @return boolean
+     */
+    public function isTokenBehindFieldIdentifier(LexerInterface $lexer, $reset = true, ...$tokens);
+
+    /**
+     * @param LexerInterface $lexer
+     * @param boolean $reset
+     * @param integer ...$tokens
+     * @return boolean
+     */
+    public function isTokenBehindLiteral(LexerInterface $lexer, $reset = true, ...$tokens);
+
+    /**
+     * @param LexerInterface $lexer
+     * @param boolean $reset
+     * @param integer ...$tokens
+     * @return boolean
+     */
+    public function isTokenBehindExpression(LexerInterface $lexer, $reset = true, ...$tokens);
     
     /**
      * @param LexerInterface $lexer
@@ -313,11 +340,25 @@ interface ParserInterface
      * @return boolean
      */
     public function isPeekAgainst(LexerInterface $lexer, array $needed, array $against);
-    
+
     /**
      * @param LexerInterface $lexer
-     * @return TokenInterface
      */
-    public function peekBeyondExpression(LexerInterface $lexer);
+    public function peekBehindFunction(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     */
+    public function peekBehindBraces(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     */
+    public function peekBehindFieldIdentifier(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     */
+    public function peekBehindLiteral(LexerInterface $lexer);
     
 }
