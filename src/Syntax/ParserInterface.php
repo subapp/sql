@@ -3,7 +3,6 @@
 namespace Subapp\Sql\Syntax;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Lexer\TokenInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Exception\SyntaxErrorException;
 

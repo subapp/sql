@@ -2,8 +2,8 @@
 
 namespace Subapp\Sql\Render\Common\Sqlizer;
 
-use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Arguments as ArgumentsExpression;
+use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 

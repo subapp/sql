@@ -5,7 +5,6 @@ namespace Subapp\Sql\Syntax;
 use Subapp\Collection\Collection;
 use Subapp\Collection\CollectionInterface;
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Exception\SyntaxErrorException;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Platform\PlatformInterface;
 

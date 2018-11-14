@@ -2,7 +2,6 @@
 
 namespace Subapp\Sql\Query;
 
-use Subapp\Sql\Ast\Condition\AbstractComparison;
 use Subapp\Sql\Ast;
 use Subapp\Sql\Exception\UnsupportedException;
 use Subapp\Sql\Render\RendererInterface;

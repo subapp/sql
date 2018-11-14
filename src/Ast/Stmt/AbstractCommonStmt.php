@@ -2,8 +2,8 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
-use Subapp\Sql\Ast\AbstractExpression;
 use Subapp\Sql\Ast;
+use Subapp\Sql\Ast\AbstractExpression;
 
 /**
  * Class AbstractCommonStmt

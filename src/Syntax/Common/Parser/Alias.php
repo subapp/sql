@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Identifier;
 use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Ast\QuoteIdentifier;
-use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 

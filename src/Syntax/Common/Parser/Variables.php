@@ -3,9 +3,9 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\Arguments;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Ast\Variable;
-use Subapp\Sql\Ast\Arguments;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common;
 use Subapp\Sql\Syntax\ProcessorInterface;

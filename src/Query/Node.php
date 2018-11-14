@@ -2,8 +2,8 @@
 
 namespace Subapp\Sql\Query;
 
-use Subapp\Sql\Ast\Condition;
 use Subapp\Sql\Ast;
+use Subapp\Sql\Ast\Condition;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**

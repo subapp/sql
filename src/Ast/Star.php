@@ -2,8 +2,6 @@
 
 namespace Subapp\Sql\Ast;
 
-use Subapp\Sql\Lexer\Lexer;
-
 /**
  * Class Star
  * @package Subapp\Sql\Ast
