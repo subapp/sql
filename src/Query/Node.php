@@ -12,12 +12,12 @@ use Subapp\Sql\Ast\ExpressionInterface;
  */
 class Node
 {
-    
+
     /**
      * @var Recognizer
      */
     private $recognizer;
-    
+
     /**
      * @param $sql
      * @return ExpressionInterface
@@ -27,25 +27,31 @@ class Node
         switch (true) {
             case ($sql instanceOf ExpressionInterface):
                 return $sql;
-            
+
+            case is_null($sql):
+                return $this->null();
+
+            case is_bool($sql):
+                return $this->boolean($sql);
+
             case is_numeric($sql):
                 $isFloat = (strpos($sql, '.') !== false);
                 return $this->literal($sql, $isFloat ? Ast\Literal::FLOAT : Ast\Literal::INT);
-            
+
             case is_string($sql) && preg_match('/^[\w\d]+$/i', $sql):
                 return $this->identifier($sql);
-            
+
             case is_array($sql):
                 $sql = array_map(function ($value) {
                     return $this->recognize($value);
                 }, $sql);
                 return $this->arguments(...$sql);
-            
+
             default:
                 return $this->recognizer->recognize($sql);
         }
     }
-    
+
     /**
      * @param                         $operator
      * @param Ast\ExpressionInterface ...$terms
@@ -55,18 +61,18 @@ class Node
     {
         $collection = new Condition\Conditions();
         $operator = $this->logic($operator);
-        
+
         foreach ($terms as $term) {
             $collection->append(new Condition\Term($operator, $this->recognize($term)));
         }
-        
+
         /** @var Condition\Term $last */
         $last = $collection->get($collection->count() - 1);
         $last->setOperator(null);
-        
+
         return $collection;
     }
-    
+
     /**
      * @param Ast\ExpressionInterface ...$terms
      * @return Condition\Conditions
@@ -75,7 +81,7 @@ class Node
     {
         return $this->terms(Condition\LogicOperator:: AND, ...$terms);
     }
-    
+
     /**
      * @param Ast\ExpressionInterface ...$terms
      * @return Condition\Conditions
@@ -84,7 +90,7 @@ class Node
     {
         return $this->terms(Condition\LogicOperator:: OR, ...$terms);
     }
-    
+
     /**
      * @param Ast\ExpressionInterface ...$terms
      * @return Condition\Conditions
@@ -93,7 +99,7 @@ class Node
     {
         return $this->terms(Condition\LogicOperator:: XOR, ...$terms);
     }
-    
+
     /**
      * @param $x
      * @param $operator
@@ -104,7 +110,7 @@ class Node
     {
         return new Condition\Cmp($this->recognize($x), $this->cmp($operator), $this->recognize($y));
     }
-    
+
     /**
      * @param $x
      * @param $y
@@ -114,7 +120,7 @@ class Node
     {
         return $this->comparison($x, Condition\Operator::EQ, $y);
     }
-    
+
     /**
      * @param $x
      * @param $y
@@ -124,7 +130,7 @@ class Node
     {
         return $this->comparison($x, Condition\Operator::NE, $y);
     }
-    
+
     /**
      * @param $x
      * @param $y
@@ -134,7 +140,7 @@ class Node
     {
         return $this->comparison($x, Condition\Operator::GT, $y);
     }
-    
+
     /**
      * @param $x
      * @param $y
@@ -144,7 +150,7 @@ class Node
     {
         return $this->comparison($x, Condition\Operator::GE, $y);
     }
-    
+
     /**
      * @param $x
      * @param $y
@@ -154,7 +160,7 @@ class Node
     {
         return $this->comparison($x, Condition\Operator::LT, $y);
     }
-    
+
     /**
      * @param $x
      * @param $y
@@ -164,7 +170,7 @@ class Node
     {
         return $this->comparison($x, Condition\Operator::LE, $y);
     }
-    
+
     /**
      * @param         $x
      * @param         $in
@@ -175,7 +181,7 @@ class Node
     {
         return new Condition\In($not, $this->recognize($x), $this->recognize($in));
     }
-    
+
     /**
      * @param         $x
      * @param boolean $not
@@ -185,7 +191,7 @@ class Node
     {
         return new Condition\IsNull($not, $this->recognize($x));
     }
-    
+
     /**
      * @param        $left
      * @param string $a
@@ -195,13 +201,13 @@ class Node
     public function between($left, $a, $b)
     {
         $between = new Condition\Between(false, $this->recognize($left));
-        
+
         $between->setA($this->string($a));
         $between->setB($this->string($b));
-        
+
         return $between;
     }
-    
+
     /**
      * @param string $field
      * @return Ast\Identifier
@@ -210,7 +216,7 @@ class Node
     {
         return $this->identifier($field);
     }
-    
+
     /**
      * @param string $table
      * @return Ast\Identifier
@@ -219,7 +225,7 @@ class Node
     {
         return $this->identifier($table);
     }
-    
+
     /**
      * @param $table
      * @param $field
@@ -229,7 +235,7 @@ class Node
     {
         return new Ast\FieldPath($this->table($table), $this->field($field));
     }
-    
+
     /**
      * @param ExpressionInterface ...$values
      * @return Ast\Arguments
@@ -238,33 +244,33 @@ class Node
     {
         return new Ast\Arguments($values);
     }
-    
+
     /**
      * @param string|ExpressionInterface $var
-     * @param null                       $alias
+     * @param null $alias
      * @return Ast\Variable
      */
     public function variable($var, $alias = null)
     {
         $variable = new Ast\Variable($this->recognize($var));
-        
+
         if ($alias !== null) {
             $variable->setAlias(new Ast\Identifier($alias));
         }
-        
+
         return $variable;
     }
-    
+
     /**
      * @param string $value
-     * @param int    $type
+     * @param int $type
      * @return Ast\Literal
      */
     public function literal($value, $type = Ast\Literal::STRING)
     {
         return new Ast\Literal($value, $type);
     }
-    
+
     /**
      * @param string $value
      * @return Ast\Literal
@@ -273,7 +279,7 @@ class Node
     {
         return $this->literal($value);
     }
-    
+
     /**
      * @param $value
      * @return Ast\Literal
@@ -282,7 +288,7 @@ class Node
     {
         return $this->literal((float)$value, Ast\Literal::FLOAT);
     }
-    
+
     /**
      * @param $value
      * @return Ast\Literal
@@ -291,23 +297,32 @@ class Node
     {
         return $this->literal((integer)$value, Ast\Literal::INT);
     }
-    
+
+    /**
+     * @param boolean $value
+     * @return Ast\Literal
+     */
+    public function boolean($value)
+    {
+        return $this->literal((boolean)$value, Ast\Literal::BOOLEAN);
+    }
+
     /**
      * @return Ast\Literal
      */
     public function true()
     {
-        return $this->literal(true, Ast\Literal::BOOLEAN);
+        return $this->boolean(true);
     }
-    
+
     /**
      * @return Ast\Literal
      */
     public function false()
     {
-        return $this->literal(false, Ast\Literal::BOOLEAN);
+        return $this->boolean(false);
     }
-    
+
     /**
      * @return Ast\Literal
      */
@@ -315,7 +330,7 @@ class Node
     {
         return $this->literal(null, Ast\Literal::NULL);
     }
-    
+
     /**
      * @param string $identifier
      * @return Ast\Identifier
@@ -324,7 +339,7 @@ class Node
     {
         return new Ast\Identifier($identifier);
     }
-    
+
     /**
      * @param string $name
      * @return Ast\Parameter
@@ -333,7 +348,7 @@ class Node
     {
         return new Ast\Parameter(Ast\Parameter::NAMED, $name);
     }
-    
+
     /**
      * @return Ast\Parameter
      */
@@ -341,7 +356,7 @@ class Node
     {
         return new Ast\Parameter();
     }
-    
+
     /**
      * @param $x
      * @param $operator
@@ -351,14 +366,14 @@ class Node
     public function arithmetic($x, $operator, $y)
     {
         $arithmetic = new Ast\Arithmetic();
-        
+
         $arithmetic->append($this->recognize($x));
         $arithmetic->append($this->math($operator));
         $arithmetic->append($this->recognize($y));
-        
+
         return $arithmetic;
     }
-    
+
     /**
      * @param string $operator
      * @return Condition\Operator
@@ -367,7 +382,7 @@ class Node
     {
         return new Condition\Operator($operator);
     }
-    
+
     /**
      * @param string $operator
      * @return Condition\LogicOperator
@@ -376,7 +391,7 @@ class Node
     {
         return new Condition\LogicOperator($operator);
     }
-    
+
     /**
      * @param $operator
      * @return Ast\MathOperator
@@ -385,7 +400,7 @@ class Node
     {
         return new Ast\MathOperator($operator);
     }
-    
+
     /**
      * @param $string
      * @return Ast\Raw
@@ -394,7 +409,7 @@ class Node
     {
         return new Ast\Raw($string);
     }
-    
+
     /**
      * @return Recognizer
      */
@@ -402,7 +417,7 @@ class Node
     {
         return $this->recognizer;
     }
-    
+
     /**
      * @param Recognizer $recognizer
      */
@@ -410,5 +425,5 @@ class Node
     {
         $this->recognizer = $recognizer;
     }
-    
+
 }

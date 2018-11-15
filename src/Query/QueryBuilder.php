@@ -105,8 +105,11 @@ class QueryBuilder
      */
     public function and($comparison)
     {
-        $this->root->getWhere()->append(new Ast\Condition\Term\ANDTerm($comparison));
-        
+        $where = $this->root->getWhere();
+
+        $where->append(new Ast\Condition\Term\ANDTerm($comparison));
+        $where->get($where->count() - 1)->setOperator(null);
+
         return $this;
     }
     

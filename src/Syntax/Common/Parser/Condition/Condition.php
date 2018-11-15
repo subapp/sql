@@ -3,8 +3,8 @@
 namespace Subapp\Sql\Syntax\Common\Parser\Condition;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\Condition\Term;
 use Subapp\Sql\Ast\Condition\Conditions;
+use Subapp\Sql\Ast\Condition\Term;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;

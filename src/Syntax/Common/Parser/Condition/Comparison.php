@@ -4,10 +4,10 @@ namespace Subapp\Sql\Syntax\Common\Parser\Condition;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Condition\Between;
+use Subapp\Sql\Ast\Condition\Cmp;
 use Subapp\Sql\Ast\Condition\In;
 use Subapp\Sql\Ast\Condition\IsNull;
 use Subapp\Sql\Ast\Condition\Like;
-use Subapp\Sql\Ast\Condition\Cmp;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
