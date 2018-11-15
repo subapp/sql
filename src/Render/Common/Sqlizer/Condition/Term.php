@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Sqlizer\Condition;
 
-use Subapp\Sql\Ast\Condition\Term as TermExpression;
+use Subapp\Sql\Ast\Condition\Condition as TermExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;

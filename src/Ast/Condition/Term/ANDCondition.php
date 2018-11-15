@@ -3,24 +3,24 @@
 namespace Subapp\Sql\Ast\Condition\Term;
 
 use Subapp\Sql\Ast\Condition\LogicOperator;
-use Subapp\Sql\Ast\Condition\Term;
+use Subapp\Sql\Ast\Condition\Condition;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
- * Class XORTerm
+ * Class ANDTerm
  * @package Subapp\Sql\Ast\Condition\Term
  */
-class XORTerm extends Term
+class ANDCondition extends Condition
 {
     
     /**
-     * XORTerm constructor.
+     * ANDTerm constructor.
      *
      * @param ExpressionInterface $expression
      */
     public function __construct(ExpressionInterface $expression)
     {
-        parent::__construct(new LogicOperator(LogicOperator::XOR), $expression);
+        parent::__construct(new LogicOperator(LogicOperator::AND), $expression);
     }
     
 }

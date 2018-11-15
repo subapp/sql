@@ -3,14 +3,14 @@
 namespace Subapp\Sql\Ast\Condition\Term;
 
 use Subapp\Sql\Ast\Condition\LogicOperator;
-use Subapp\Sql\Ast\Condition\Term;
+use Subapp\Sql\Ast\Condition\Condition;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Class ORTerm
  * @package Subapp\Sql\Ast\Condition\Term
  */
-class ORTerm extends Term
+class ORCondition extends Condition
 {
     
     /**

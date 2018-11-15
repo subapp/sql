@@ -4,17 +4,17 @@ namespace Subapp\Sql\Syntax\Common\Parser\Condition;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Condition\Conditions;
-use Subapp\Sql\Ast\Condition\Term;
+use Subapp\Sql\Ast\Condition\Condition;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class Condition
+ * Class Conditional
  * @package Subapp\Sql\Syntax\Common\Parser
  */
-class Condition extends AbstractDefaultParser
+class Conditional extends AbstractDefaultParser
 {
 
     /**
@@ -67,7 +67,7 @@ class Condition extends AbstractDefaultParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return Term|Conditions
+     * @return Condition|Conditions
      */
     public function and(ProcessorInterface $processor)
     {
@@ -76,11 +76,11 @@ class Condition extends AbstractDefaultParser
         $operator = $this->getLogicOperatorParser($processor);
 
         do {
-            /** @var Term $expression */
+            /** @var Condition $expression */
             $expression = $this->or($processor);
 
             if ($expression instanceof Conditions) {
-                $expression = new Term(null, $expression);
+                $expression = new Condition(null, $expression);
             }
 
             $isOperator = $this->isLogicAnd($lexer);
@@ -98,7 +98,7 @@ class Condition extends AbstractDefaultParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return Term|Conditions
+     * @return Condition|Conditions
      */
     public function or(ProcessorInterface $processor)
     {
@@ -125,11 +125,11 @@ class Condition extends AbstractDefaultParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return Term
+     * @return Condition
      */
     public function term(ProcessorInterface $processor)
     {
-        return new Term(null, $this->recognize($processor));
+        return new Condition(null, $this->recognize($processor));
     }
 
     /**

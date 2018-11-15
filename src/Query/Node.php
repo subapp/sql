@@ -5,6 +5,7 @@ namespace Subapp\Sql\Query;
 use Subapp\Sql\Ast;
 use Subapp\Sql\Ast\Condition;
 use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Exception\UnsupportedException;
 
 /**
  * Class Node
@@ -17,10 +18,11 @@ class Node
      * @var Recognizer
      */
     private $recognizer;
-
+    
     /**
      * @param $sql
      * @return ExpressionInterface
+     * @throws UnsupportedException
      */
     public function recognize($sql)
     {
@@ -46,6 +48,10 @@ class Node
                     return $this->recognize($value);
                 }, $sql);
                 return $this->arguments(...$sql);
+                
+            case is_object($sql):
+                throw new UnsupportedException(sprintf('Object recognizing able only for "%s" but "%s" passed',
+                    ExpressionInterface::class, get_class($sql)));
 
             default:
                 return $this->recognizer->recognize($sql);
@@ -57,20 +63,30 @@ class Node
      * @param Ast\ExpressionInterface ...$terms
      * @return Condition\Conditions
      */
-    public function terms($operator, ...$terms)
+    public function conditions($operator, ...$terms)
     {
         $collection = new Condition\Conditions();
         $operator = $this->logic($operator);
 
         foreach ($terms as $term) {
-            $collection->append(new Condition\Term($operator, $this->recognize($term)));
+            $collection->append(new Condition\Condition($operator, $this->recognize($term)));
         }
 
-        /** @var Condition\Term $last */
+        /** @var Condition\Condition $last */
         $last = $collection->get($collection->count() - 1);
         $last->setOperator(null);
 
         return $collection;
+    }
+    
+    /**
+     * @param $operator
+     * @param $e
+     * @return Condition\Condition
+     */
+    public function condition($operator, $e)
+    {
+        return new Condition\Condition($this->logic($operator), $this->recognize($e));
     }
 
     /**
@@ -79,7 +95,7 @@ class Node
      */
     public function and(...$terms)
     {
-        return $this->terms(Condition\LogicOperator:: AND, ...$terms);
+        return $this->conditions(Condition\LogicOperator:: AND, ...$terms);
     }
 
     /**
@@ -88,7 +104,7 @@ class Node
      */
     public function or(...$terms)
     {
-        return $this->terms(Condition\LogicOperator:: OR, ...$terms);
+        return $this->conditions(Condition\LogicOperator:: OR, ...$terms);
     }
 
     /**
@@ -97,7 +113,7 @@ class Node
      */
     public function xor(...$terms)
     {
-        return $this->terms(Condition\LogicOperator:: XOR, ...$terms);
+        return $this->conditions(Condition\LogicOperator:: XOR, ...$terms);
     }
 
     /**

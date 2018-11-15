@@ -13,9 +13,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
 class Recognizer
 {
     
-    const DIFFICULT = 'parser.complex';
-    const NORMAL = 'parser.expression';
-    const PRIMARY = 'parser.primary';
+    const COMMON     = 'parser.common';
+    const EXPRESSION = 'parser.expression';
+    const PRIMARY    = 'parser.primary';
     
     /**
      * @var ProcessorInterface
@@ -32,7 +32,7 @@ class Recognizer
      * @param ProcessorInterface $processor
      * @param string             $rootParser
      */
-    public function __construct(ProcessorInterface $processor, $rootParser = Recognizer::NORMAL)
+    public function __construct(ProcessorInterface $processor, $rootParser = Recognizer::EXPRESSION)
     {
         $this->processor = $processor;
         $this->rootParser = $rootParser;

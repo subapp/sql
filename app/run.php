@@ -65,7 +65,7 @@ try {
     echo PHP_EOL;
     
     $processor->setLexer(new Lexer());
-    $recognizer = new Recognizer($processor, Recognizer::DIFFICULT);
+    $recognizer = new Recognizer($processor, Recognizer::COMMON);
     
     /** @var Conditions $conditions */
     $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');

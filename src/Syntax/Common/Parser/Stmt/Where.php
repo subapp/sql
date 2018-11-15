@@ -26,7 +26,7 @@ class Where extends AbstractDefaultParser
         $this->shift(Lexer::T_WHERE, $lexer);
 
         $where = new WhereExpression();
-        $conditions = $this->getConditionParser($processor)->parse($lexer, $processor);
+        $conditions = $this->getConditionalParser($processor)->parse($lexer, $processor);
         
         // @todo hardcore wrap conditions into where
         $where->setBatch($conditions->toArray());

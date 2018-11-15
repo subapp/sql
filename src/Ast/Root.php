@@ -173,6 +173,61 @@ class Root extends AbstractExpression
         $this->limit = $limit;
     }
     
+    /**
+     * @return Stmt\From
+     */
+    public function from()
+    {
+        return $this->getFrom();
+    }
+    
+    /**
+     * @return Arguments
+     */
+    public function arguments()
+    {
+        return $this->getArguments();
+    }
+    
+    /**
+     * @return Collection
+     */
+    public function joins()
+    {
+        return $this->getJoins();
+    }
+    
+    /**
+     * @return Stmt\Where
+     */
+    public function where()
+    {
+        return $this->getWhere();
+    }
+    
+    /**
+     * @return Stmt\GroupBy
+     */
+    public function groupBy()
+    {
+        return $this->getGroupBy();
+    }
+    
+    /**
+     * @return Stmt\OrderByItems
+     */
+    public function orderBy()
+    {
+        return $this->getOrderBy();
+    }
+    
+    /**
+     * @return Stmt\Limit
+     */
+    public function limit()
+    {
+        return $this->getLimit();
+    }
     
     /**
      * @throws UnsupportedException

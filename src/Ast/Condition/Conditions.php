@@ -19,7 +19,7 @@ class Conditions extends Collection
     {
         parent::__construct($expressions);
         
-        $this->setClassName(Term::class);
+        $this->setClassName(Condition::class);
     }
     
     /**

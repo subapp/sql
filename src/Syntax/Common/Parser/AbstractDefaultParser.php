@@ -13,7 +13,16 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 abstract class AbstractDefaultParser extends AbstractParser
 {
-
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Common
+     */
+    public function getCommonParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser('parser.common');
+    }
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Primary
@@ -187,11 +196,11 @@ abstract class AbstractDefaultParser extends AbstractParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Condition\Condition
+     * @return ParserInterface|Common\Parser\Condition\Conditional
      */
-    public function getConditionParser(ProcessorInterface $processor)
+    public function getConditionalParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('condition.condition');
+        return $processor->getParser('condition.conditional');
     }
 
     /**

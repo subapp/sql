@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
+use Subapp\Sql\Exception\QueryExpression;
 use Subapp\Sql\Exception\UnsupportedException;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -62,7 +63,7 @@ class QueryBuilder
     public function select($select, $alias = null)
     {
         $this->type = QueryBuilder::SELECT;
-    
+        
         $variable = $this->node->variable($select, $alias);
         
         $this->root->getFrom()->append($variable);
@@ -92,11 +93,28 @@ class QueryBuilder
     }
     
     /**
-     *
+     * @return $this
+     * @throws QueryExpression
      */
-    public function where()
+    public function where($e)
     {
-    
+        $where = $this->root->where();
+        
+        $conditions = $this->node()->recognize($e);
+        
+        if ($conditions instanceof Ast\Condition\AbstractComparison) {
+            $conditions = $this->node()->conditions(null, $conditions);
+        }
+        
+        if (!($conditions instanceof Ast\Condition\Conditions)) {
+            throw new QueryExpression(sprintf(
+                'Method $qb->where(); accept either string (conditional) or object(Conditions) expression. Passed: "%s"',
+                    get_class($conditions)));
+        }
+        
+        $where->setBatch($conditions->toArray());
+        
+        return $this;
     }
     
     /**
@@ -106,10 +124,10 @@ class QueryBuilder
     public function and($comparison)
     {
         $where = $this->root->getWhere();
-
-        $where->append(new Ast\Condition\Term\ANDTerm($comparison));
+        
+        $where->append(new Ast\Condition\Term\ANDCondition($comparison));
         $where->get($where->count() - 1)->setOperator(null);
-
+        
         return $this;
     }
     

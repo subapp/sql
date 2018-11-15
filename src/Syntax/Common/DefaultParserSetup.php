@@ -18,7 +18,7 @@ class DefaultParserSetup implements ParserSetupInterface
      */
     public function setup(ProcessorInterface $processor)
     {
-        // Base expressions parser
+        // base expressions parser
         $processor->addParser(new Parser\Variables());
         $processor->addParser(new Parser\SubSelect());
         $processor->addParser(new Parser\Arguments());
@@ -31,11 +31,14 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Literal());
         $processor->addParser(new Parser\Parameter());
         $processor->addParser(new Parser\FieldPath());
-        $processor->addParser(new Parser\Complex());
         $processor->addParser(new Parser\Embrace());
-        $processor->addParser(new Parser\Expression());
         $processor->addParser(new Parser\Primary());
         $processor->addParser(new Parser\Variable());
+        
+        // complex parsers
+        $processor->addParser(new Parser\Complex());
+        $processor->addParser(new Parser\Expression());
+        $processor->addParser(new Parser\Common());
 
         // helpers
         $processor->addParser(new Parser\Uncover());
@@ -48,7 +51,7 @@ class DefaultParserSetup implements ParserSetupInterface
         // conditions
         $processor->addParser(new Parser\Condition\CmpOperator());
         $processor->addParser(new Parser\Condition\LogicOperator());
-        $processor->addParser(new Parser\Condition\Condition());
+        $processor->addParser(new Parser\Condition\Conditional());
         $processor->addParser(new Parser\Condition\Comparison());
         
         // stmt

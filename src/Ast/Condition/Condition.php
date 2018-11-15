@@ -6,10 +6,10 @@ use Subapp\Sql\Ast\AbstractExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
- * Class Term
+ * Class Condition
  * @package Subapp\Sql\Ast\Condition
  */
-class Term extends AbstractExpression
+class Condition extends AbstractExpression
 {
     
     /**

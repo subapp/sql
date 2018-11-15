@@ -46,7 +46,7 @@ class Join extends AbstractDefaultParser
         switch (true) {
             case $lexer->toToken(Lexer::T_ON):
                 $join->setConditionType(JoinExpression::CONDITION_ON);
-                $join->setCondition($this->getConditionParser($processor)->parse($lexer, $processor));
+                $join->setCondition($this->getConditionalParser($processor)->parse($lexer, $processor));
                 break;
             case $lexer->toToken(Lexer::T_USING):
                 $join->setConditionType(JoinExpression::CONDITION_USING);
