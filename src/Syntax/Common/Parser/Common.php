@@ -21,9 +21,15 @@ class Common extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $parser = $this->getComplexParser($processor);
-        
-        if ($this->isComparisonExpression($lexer)) {
-            $parser = $this->getConditionalParser($processor);
+
+        switch (true) {
+            case $this->isComparisonExpression($lexer):
+                $parser = $this->getConditionalParser($processor);
+                break;
+            case $this->isExpressionWithComma($lexer):
+            case $this->isExpressionWithAlias($lexer):
+                $parser = $this->getVariablesParser($processor);
+                break;
         }
         
         return $parser->parse($lexer, $processor);

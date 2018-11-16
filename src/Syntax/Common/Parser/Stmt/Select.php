@@ -22,7 +22,7 @@ class Select extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        // If lexer was executed as lexer->tokenize(sql, FALSE) - (without unshifting within blank token)
+        // If lexer was executed like lexer->tokenize(sql, FALSE) - (without unshifting within blank token)
         // that means next token is NOT SELECT
         $this->shiftIf(Lexer::T_SELECT, $lexer);
 
@@ -52,10 +52,12 @@ class Select extends AbstractDefaultParser
             $root->setLimit($this->getLimitParser($processor)->parse($lexer, $processor));
         }
 
+        $root->setSemicolon($lexer->toToken(Lexer::T_SEMICOLON));
+
         $select = new Ast\Stmt\Select();
-        
+
         $select->setRoot($root);
-        
+
         return $select;
     }
     

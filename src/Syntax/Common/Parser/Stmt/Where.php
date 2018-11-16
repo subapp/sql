@@ -29,7 +29,7 @@ class Where extends AbstractDefaultParser
         $conditions = $this->getConditionalParser($processor)->parse($lexer, $processor);
         
         // @todo hardcore wrap conditions into where
-        $where->setBatch($conditions->toArray());
+        $where->asBatch($conditions->toArray());
 
         return $where;
     }

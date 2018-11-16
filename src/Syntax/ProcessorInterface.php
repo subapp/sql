@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Syntax;
 
-use Subapp\Collection\CollectionInterface;
+use Subapp\Sql\Common\CollectionInterface;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Platform\PlatformInterface;

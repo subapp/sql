@@ -11,7 +11,7 @@ use Subapp\Sql\Ast\AbstractExpression;
  */
 abstract class AbstractCommonStmt extends AbstractExpression
 {
-    
+
     /**
      * @var Ast\Root
      */
@@ -159,6 +159,14 @@ abstract class AbstractCommonStmt extends AbstractExpression
     public function setLimit(Ast\Stmt\Limit $limit)
     {
         $this->root->setLimit($limit);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSemicolon()
+    {
+        return $this->root->isSemicolon();
     }
     
 }

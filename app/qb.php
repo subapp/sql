@@ -26,14 +26,26 @@ $recognizer = new Recognizer($processor, Recognizer::COMMON);
 $node = new Node();
 $node->setRecognizer($recognizer);
 
+/**
+ * SELECT
+ *  U.id,
+ *  U.created,
+ *  COUNT(DISTINCT U.ip) AS uniqueIP,
+ *  NULLIF(U.updated, UPDATED_AT) AS BooleanValue
+ * FROM
+ *  (SELECT * FROM users) AS U
+ * WHERE
+ *  U.id BETWEEN 1 AND 1000 b < 10;
+ */
+
 $qb = new QueryBuilder($node);
+$qb->from('(select * from users)', 'U');
+$qb->select('U.id, U.created, Count(Distinct U.ip) uniqueIP', 'NullIf(U.updated, UPDATED_AT) As BooleanValue');
 
-$qb->select('users', 'uid');
+$qb->where('count(a.id) > 1 and b < 10');
+$qb->and('U.id Between 1 And 1000');
 
-//$qb->where('count(a.id) > 1 and b < 10');
-//$qb->where('count(a.id)');
-//$qb->where('count(a.id) > 1 and b < 10');
-$qb->where($node->in('users.id', [1, 2, 3]));
+//$qb->where($node->in('users.id', [1, 2, 3]));
 
 //$qb->and($node->in('users.id', [1, 2, 3]));
 //
@@ -49,5 +61,5 @@ $qb->where($node->in('users.id', [1, 2, 3]));
 //
 //$qb->and($conditions);
 
-echo $renderer->render($qb->getAstNode()) . PHP_EOL;
+echo $renderer->render($qb->getAst()) . PHP_EOL;
 //echo $renderer->render($conditions) . PHP_EOL;

@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Ast;
 
-use Subapp\Collection\Collection as BaseCollection;
+use Subapp\Sql\Common\Collection as BaseCollection;
 
 /**
  * Class Collection
@@ -38,7 +38,9 @@ class Collection extends BaseCollection implements ExpressionInterface
      */
     public function __construct(array $expressions = [])
     {
-        parent::__construct($expressions, ExpressionInterface::class);
+        parent::__construct($expressions);
+
+        $this->setClass(ExpressionInterface::class);
     }
     
     /**

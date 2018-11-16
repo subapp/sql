@@ -18,7 +18,7 @@ class Node
      * @var Recognizer
      */
     private $recognizer;
-    
+
     /**
      * @param $sql
      * @return ExpressionInterface
@@ -48,7 +48,7 @@ class Node
                     return $this->recognize($value);
                 }, $sql);
                 return $this->arguments(...$sql);
-                
+
             case is_object($sql):
                 throw new UnsupportedException(sprintf('Object recognizing able only for "%s" but "%s" passed',
                     ExpressionInterface::class, get_class($sql)));
@@ -78,7 +78,7 @@ class Node
 
         return $collection;
     }
-    
+
     /**
      * @param $operator
      * @param $e
@@ -256,7 +256,7 @@ class Node
      * @param ExpressionInterface ...$values
      * @return Ast\Arguments
      */
-    public function arguments(ExpressionInterface ...$values)
+    public function arguments(...$values)
     {
         return new Ast\Arguments($values);
     }

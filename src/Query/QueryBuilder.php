@@ -54,21 +54,31 @@ class QueryBuilder
         $this->node = $nodeBuilder;
         $this->root = new Ast\Root();
     }
-    
+
     /**
-     * @param string|Ast\ExpressionInterface $select
-     * @param null|string                    $alias
+     * @param string|Ast\ExpressionInterface ...$variables
      * @return $this
      */
-    public function select($select, $alias = null)
+    public function select(...$variables)
     {
         $this->type = QueryBuilder::SELECT;
+
+        $this->root->setArguments($this->node->recognize($variables));
         
-        $variable = $this->node->variable($select, $alias);
-        
-        $this->root->getFrom()->append($variable);
-        $this->root->getArguments()->append(new Ast\Star());
-        
+        return $this;
+    }
+
+    /**
+     * @param $source
+     * @param $alias
+     * @return $this
+     */
+    public function from($source, $alias)
+    {
+        $variable = $this->node->variable($source, $alias);
+
+        $this->root->setFrom(new Ast\Stmt\From($variable));
+
         return $this;
     }
     
@@ -91,28 +101,33 @@ class QueryBuilder
         
         return $this;
     }
-    
+
     /**
+     * @param string|Ast\Condition\AbstractComparison $e
+     * @param boolean $append
      * @return $this
      * @throws QueryExpression
      */
-    public function where($e)
+    public function where($e, $append = false)
     {
         $where = $this->root->where();
-        
+
         $conditions = $this->node()->recognize($e);
-        
         if ($conditions instanceof Ast\Condition\AbstractComparison) {
             $conditions = $this->node()->conditions(null, $conditions);
         }
         
         if (!($conditions instanceof Ast\Condition\Conditions)) {
             throw new QueryExpression(sprintf(
-                'Method $qb->where(); accept either string (conditional) or object(Conditions) expression. Passed: "%s"',
+                'Method $qb->where(); accept either conditional-string or Object(Ast\Condition\Conditions) expression but "%s" passed',
                     get_class($conditions)));
         }
         
-        $where->setBatch($conditions->toArray());
+        $where->asBatch($conditions->toArray());
+
+        // remove logical operator from last-one condition
+        // to avoid: (a > 1) AND (b < 2) AND
+        $where->offsetGet($where->count() - 1)->setOperator(null);
         
         return $this;
     }
@@ -123,11 +138,9 @@ class QueryBuilder
      */
     public function and($comparison)
     {
-        $where = $this->root->getWhere();
-        
-        $where->append(new Ast\Condition\Term\ANDCondition($comparison));
-        $where->get($where->count() - 1)->setOperator(null);
-        
+        var_dump($this->getNode()->and($comparison)); die;
+        $this->getRoot()->getWhere()->append($this->getNode()->and($comparison));
+
         return $this;
     }
     
@@ -165,7 +178,7 @@ class QueryBuilder
      * @return Ast\Stmt\Delete|Ast\Stmt\Select|Ast\Stmt\Update
      * @throws UnsupportedException
      */
-    public function getAstNode()
+    public function getAst()
     {
         /** @var Ast\Stmt\Select|Ast\Stmt\Delete|Ast\Stmt\Update $ast */
         $ast = null;
@@ -196,7 +209,7 @@ class QueryBuilder
      */
     public function getQuery(RendererInterface $renderer)
     {
-        return $renderer->render($this->getAstNode());
+        return $renderer->render($this->getAst());
     }
     
     

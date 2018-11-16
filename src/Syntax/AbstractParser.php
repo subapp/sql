@@ -479,6 +479,21 @@ abstract class AbstractParser implements ParserInterface
         return $isLike;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function isExpressionWithAlias(LexerInterface $lexer)
+    {
+        return $this->isTokenBehindExpression($lexer, true, Lexer::T_IDENTIFIER, Lexer::T_AS);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isExpressionWithComma(LexerInterface $lexer)
+    {
+        return $this->isTokenBehindExpression($lexer, true, Lexer::T_COMMA);
+    }
 
     /**
      * @inheritdoc
@@ -556,9 +571,12 @@ abstract class AbstractParser implements ParserInterface
     {
         $hasToken = (
             $this->isTokenBehindLiteral($lexer, $resetPeek, ...$tokens)
-            || $this->isTokenBehindFieldIdentifier($lexer, $resetPeek, ...$tokens)
-            || $this->isTokenBehindFunction($lexer, $resetPeek, ...$tokens)
-            || $this->isTokenBehindBraces($lexer, $resetPeek, ...$tokens)
+                ||
+            $this->isTokenBehindFieldIdentifier($lexer, $resetPeek, ...$tokens)
+                ||
+            $this->isTokenBehindFunction($lexer, $resetPeek, ...$tokens)
+                ||
+            $this->isTokenBehindBraces($lexer, $resetPeek, ...$tokens)
         );
 
         return $hasToken;

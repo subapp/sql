@@ -19,7 +19,7 @@ class OrderByItems extends Arguments
     {
         parent::__construct($expressions);
         
-        $this->setClassName(OrderBy::class);
+        $this->setClass(OrderBy::class);
     }
     
     /**

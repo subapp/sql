@@ -21,7 +21,7 @@ class Where extends Conditions
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        return $expression->exists() ? sprintf(' WHERE %s', parent::getSql($expression, $renderer)) : null;
+        return $expression->isNotEmpty() ? sprintf(' WHERE %s', parent::getSql($expression, $renderer)) : null;
     }
     
 }

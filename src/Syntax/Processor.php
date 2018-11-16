@@ -2,8 +2,8 @@
 
 namespace Subapp\Sql\Syntax;
 
-use Subapp\Collection\Collection;
-use Subapp\Collection\CollectionInterface;
+use Subapp\Sql\Common\Collection;
+use Subapp\Sql\Common\CollectionInterface;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Platform\PlatformInterface;

@@ -113,6 +113,18 @@ interface ParserInterface
      * @return boolean
      */
     public function isComparisonOperator(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isExpressionWithAlias(LexerInterface $lexer);
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isExpressionWithComma(LexerInterface $lexer);
     
     /**
      * @param LexerInterface $lexer

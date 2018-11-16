@@ -31,6 +31,11 @@ class Root extends AbstractExpression
      * @var Ast\Stmt\Where
      */
     private $where;
+
+    /**
+     * @var Ast\Stmt\Having
+     */
+    private $having;
     
     /**
      * @var Ast\Stmt\OrderByItems
@@ -46,7 +51,12 @@ class Root extends AbstractExpression
      * @var Ast\Stmt\Limit
      */
     private $limit;
-    
+
+    /**
+     * @var boolean
+     */
+    private $semicolon = false;
+
     /**
      * Select constructor.
      */
@@ -58,6 +68,7 @@ class Root extends AbstractExpression
         $this->where = new Ast\Stmt\Where();
         $this->groupBy = new Ast\Stmt\GroupBy();
         $this->orderBy = new Ast\Stmt\OrderByItems();
+        $this->having = new Ast\Stmt\Having();
         $this->limit = new Ast\Stmt\Limit();
     }
     
@@ -123,6 +134,22 @@ class Root extends AbstractExpression
     public function getWhere()
     {
         return $this->where;
+    }
+
+    /**
+     * @return Stmt\Having
+     */
+    public function getHaving()
+    {
+        return $this->having;
+    }
+
+    /**
+     * @param Stmt\Having $having
+     */
+    public function setHaving(Stmt\Having $having)
+    {
+        $this->having = $having;
     }
     
     /**
@@ -204,6 +231,14 @@ class Root extends AbstractExpression
     {
         return $this->getWhere();
     }
+
+    /**
+     * @return Stmt\Having
+     */
+    public function having()
+    {
+        return $this->getHaving();
+    }
     
     /**
      * @return Stmt\GroupBy
@@ -227,6 +262,22 @@ class Root extends AbstractExpression
     public function limit()
     {
         return $this->getLimit();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSemicolon()
+    {
+        return $this->semicolon;
+    }
+
+    /**
+     * @param boolean $semicolon
+     */
+    public function setSemicolon($semicolon)
+    {
+        $this->semicolon = $semicolon;
     }
     
     /**

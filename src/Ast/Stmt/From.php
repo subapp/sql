@@ -18,7 +18,7 @@ class From extends Arguments
      */
     public function __construct(...$expressions)
     {
-        $this->setClassName(Variable::class);
+        $this->setClass(Variable::class);
         
         parent::__construct($expressions);
     }

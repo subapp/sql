@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render;
 
-use Subapp\Collection\Collection;
+use Subapp\Sql\Common\Collection;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
@@ -22,7 +22,8 @@ class Renderer implements RendererInterface
      */
     public function __construct()
     {
-        $this->sqlizers = new Collection([], SqlizerInterface::class);
+        $this->sqlizers = new Collection();
+        $this->sqlizers->setClass(SqlizerInterface::class);
     }
     
     /**

@@ -52,7 +52,7 @@ $renderer = new Renderer();
 $renderer->setup(new DefaultRendererSetup());
 
 $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
-$parser = new \Subapp\Sql\Syntax\Common\Parser\Condition\Condition();
+$parser = new \Subapp\Sql\Syntax\Common\Parser\Condition\Conditional();
 
 $math = new \Subapp\Sql\Syntax\Common\Parser\Arithmetic();
 
