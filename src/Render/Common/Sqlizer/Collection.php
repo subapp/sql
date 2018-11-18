@@ -22,12 +22,13 @@ class Collection extends AbstractSqlizer
     public function getSql(ExpressionInterface $collection, RendererInterface $renderer)
     {
         $pieces = [];
+        $separator = $collection->getSeparator();
         
         foreach ($collection as $expression) {
             $pieces[] = $renderer->render($expression);
         }
 
-        return implode(' ', $pieces);
+        return implode($separator, $pieces);
     }
     
 }

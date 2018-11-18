@@ -208,10 +208,10 @@ class Collection implements CollectionInterface, JsonSerializable
     /**
      * @inheritdoc
      */
-    public function asBatch(array $elements): void
+    public function asBatch(array $elements, bool $append = false): void
     {
         foreach ($elements as $index => $element) {
-            $this->offsetSet($index, $element);
+            $this->offsetSet($append ? null : $index, $element);
         }
     }
 

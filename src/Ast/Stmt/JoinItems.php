@@ -19,7 +19,7 @@ class JoinItems extends Collection
     {
         parent::__construct($expressions);
         
-        $this->setClassName(Join::class);
+        $this->setClass(Join::class);
     }
     
     /**

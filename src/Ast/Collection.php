@@ -15,6 +15,11 @@ class Collection extends BaseCollection implements ExpressionInterface
      * @var boolean
      */
     private $isBraced = false;
+    
+    /**
+     * @var string
+     */
+    private $separator = "\x20"; // space char by default
 
     /**
      * @return bool
@@ -41,6 +46,22 @@ class Collection extends BaseCollection implements ExpressionInterface
         parent::__construct($expressions);
 
         $this->setClass(ExpressionInterface::class);
+    }
+    
+    /**
+     * @return string
+     */
+    public function getSeparator()
+    {
+        return $this->separator;
+    }
+    
+    /**
+     * @param string $separator
+     */
+    public function setSeparator($separator)
+    {
+        $this->separator = $separator;
     }
     
     /**

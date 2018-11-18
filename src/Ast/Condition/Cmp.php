@@ -8,7 +8,7 @@ use Subapp\Sql\Ast\ExpressionInterface;
  * Class Cmp
  * @package Subapp\Sql\Ast\Condition
  */
-class Cmp extends AbstractComparison
+class Cmp extends AbstractPredicate
 {
     
     /**

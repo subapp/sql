@@ -6,10 +6,10 @@ use Subapp\Sql\Ast\AbstractExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
- * Class AbstractComparison
+ * Class AbstractPredicate
  * @package Subapp\Sql\Ast\Condition
  */
-abstract class AbstractComparison extends AbstractExpression
+abstract class AbstractPredicate extends AbstractExpression
 {
     
     /**

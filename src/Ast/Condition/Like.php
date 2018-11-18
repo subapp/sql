@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast\Condition;
  * Class Like
  * @package Subapp\Sql\Ast\Condition
  */
-class Like extends AbstractIsNotComparison
+class Like extends AbstractIsNotPredicate
 {
     
     /**

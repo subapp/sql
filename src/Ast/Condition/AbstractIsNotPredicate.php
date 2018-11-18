@@ -8,7 +8,7 @@ use Subapp\Sql\Ast\ExpressionInterface;
  * Class AbstractIsNotComparison
  * @package Subapp\Sql\Ast\Condition
  */
-abstract class AbstractIsNotComparison extends AbstractComparison
+abstract class AbstractIsNotPredicate extends AbstractPredicate
 {
     
     /**

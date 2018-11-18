@@ -27,6 +27,7 @@ class Select extends AbstractSqlizer
             $renderer->render($expression->getJoins()),
             $renderer->render($expression->getWhere()),
             $renderer->render($expression->getGroupBy()),
+            $renderer->render($expression->getHaving()),
             $renderer->render($expression->getOrderBy()),
             $renderer->render($expression->getLimit()),
             $expression->isSemicolon() ? "\n;" : null

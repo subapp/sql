@@ -26,28 +26,32 @@ $recognizer = new Recognizer($processor, Recognizer::COMMON);
 $node = new Node();
 $node->setRecognizer($recognizer);
 
-/**
- * SELECT
- *  U.id,
- *  U.created,
- *  COUNT(DISTINCT U.ip) AS uniqueIP,
- *  NULLIF(U.updated, UPDATED_AT) AS BooleanValue
- * FROM
- *  (SELECT * FROM users) AS U
- * WHERE
- *  U.id BETWEEN 1 AND 1000 b < 10;
- */
-
 $qb = new QueryBuilder($node);
-$qb->from('(select * from users)', 'U');
-$qb->select('U.id, U.created, Count(Distinct U.ip) uniqueIP', 'NullIf(U.updated, UPDATED_AT) As BooleanValue');
+$qb->from('Users', 'U');
+$qb->select('users.id uid, test.id', 'test.created dt');
 
+//$qb->where('count(a.id) > 1 and b < 10');
+//$qb->where('count(a.id)');
 $qb->where('count(a.id) > 1 and b < 10');
-$qb->and('U.id Between 1 And 1000');
+$qb->where($node->in('users.id', [1, 2, 3]), false);
 
-//$qb->where($node->in('users.id', [1, 2, 3]));
 
-//$qb->and($node->in('users.id', [1, 2, 3]));
+$c = $node->or(
+    $node->eq(1, 2),
+    $node->ge(1, 2)
+);
+
+$qb->join('user', 'U2', 'U.id = U2.id');
+
+$qb->join('user', 'U2', 'U.id, U2.id');
+
+//$qb->having($c);
+
+$qb->where($c, false);
+
+$c->add($node->ne(1, 'u.id'));
+
+$c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 //
 //$conditions = $node->and(
 //    $node->eq(1, 2),
@@ -61,5 +65,8 @@ $qb->and('U.id Between 1 And 1000');
 //
 //$qb->and($conditions);
 
+//var_dump($qb);
+
 echo $renderer->render($qb->getAst()) . PHP_EOL;
 //echo $renderer->render($conditions) . PHP_EOL;
+

@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\Collection;
+use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
  * Class Conditions
@@ -12,14 +13,37 @@ class Conditions extends Collection
 {
     
     /**
-     * TermCollection constructor.
-     * @param array $expressions
+     * @var LogicOperator
      */
-    public function __construct($expressions = [])
+    private $operator;
+    
+    /**
+     * TermCollection constructor.
+     * @param array  $expressions
+     * @param string $operator
+     */
+    public function __construct($expressions = [], $operator = LogicOperator::AND)
     {
         parent::__construct($expressions);
         
-        $this->setClass(Condition::class);
+        $this->setClass(ExpressionInterface::class);
+        $this->setOperator($operator);
+    }
+    
+    /**
+     * @return LogicOperator
+     */
+    public function getOperator()
+    {
+        return $this->operator;
+    }
+    
+    /**
+     * @param string|LogicOperator $operator
+     */
+    public function setOperator($operator)
+    {
+        $this->operator = ($operator instanceOf LogicOperator) ? $operator : new LogicOperator($operator);
     }
     
     /**

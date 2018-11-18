@@ -100,11 +100,12 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * @param $value
      */
     public function prepend($value): void;
-
+    
     /**
      * @param array $elements
+     * @param boolean  $append
      */
-    public function asBatch(array $elements): void;
+    public function asBatch(array $elements, bool $append = false): void;
 
     /**
      * @return array

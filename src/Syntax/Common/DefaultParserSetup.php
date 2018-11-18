@@ -52,7 +52,7 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Condition\CmpOperator());
         $processor->addParser(new Parser\Condition\LogicOperator());
         $processor->addParser(new Parser\Condition\Conditional());
-        $processor->addParser(new Parser\Condition\Comparison());
+        $processor->addParser(new Parser\Condition\Predicate());
         
         // stmt
         $processor->addParser(new Parser\Stmt\Select());

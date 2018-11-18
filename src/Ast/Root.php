@@ -64,11 +64,11 @@ class Root extends AbstractExpression
     {
         $this->from = new Ast\Stmt\From();
         $this->arguments = new Ast\Arguments();
-        $this->joins = new Ast\Collection();
+        $this->joins = new Ast\Stmt\JoinItems();
         $this->where = new Ast\Stmt\Where();
         $this->groupBy = new Ast\Stmt\GroupBy();
-        $this->orderBy = new Ast\Stmt\OrderByItems();
         $this->having = new Ast\Stmt\Having();
+        $this->orderBy = new Ast\Stmt\OrderByItems();
         $this->limit = new Ast\Stmt\Limit();
     }
     

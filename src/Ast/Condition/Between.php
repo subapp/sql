@@ -8,7 +8,7 @@ use Subapp\Sql\Ast\Literal;
  * Class Between
  * @package Subapp\Sql\Ast\Condition
  */
-class Between extends AbstractIsNotComparison
+class Between extends AbstractIsNotPredicate
 {
     
     /**

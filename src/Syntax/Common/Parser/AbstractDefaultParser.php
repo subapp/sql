@@ -214,11 +214,11 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Condition\Comparison
+     * @return ParserInterface|Common\Parser\Condition\Predicate
      */
-    public function getComparisonParser(ProcessorInterface $processor)
+    public function getPredicateParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('condition.comparison');
+        return $processor->getParser('condition.predicate');
     }
     
     /**

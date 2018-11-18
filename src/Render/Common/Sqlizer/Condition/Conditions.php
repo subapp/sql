@@ -21,6 +21,10 @@ class Conditions extends Collection
      */
     public function getSql(ExpressionInterface $collection, RendererInterface $renderer)
     {
+        $operator = $renderer->render($collection->getOperator());
+        
+        $collection->setSeparator(sprintf("\x20%s\x20", $operator));
+        
         return sprintf($collection->isBraced() ? '(%s)' : '%s', parent::getSql($collection, $renderer));
     }
     

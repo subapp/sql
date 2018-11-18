@@ -138,6 +138,22 @@ abstract class AbstractCommonStmt extends AbstractExpression
     }
     
     /**
+     * @param Having $having
+     */
+    public function setHaving(Ast\Stmt\Having $having)
+    {
+        return $this->root->setHaving($having);
+    }
+    
+    /**
+     * @return Having
+     */
+    public function getHaving()
+    {
+        return $this->root->getHaving();
+    }
+    
+    /**
      * @param Ast\Stmt\GroupBy $groupBy
      */
     public function setGroupBy(Ast\Stmt\GroupBy $groupBy)

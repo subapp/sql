@@ -4,14 +4,13 @@ namespace Subapp\Sql\Render\Common\Sqlizer;
 
 use Subapp\Sql\Ast\Arguments as ArgumentsExpression;
 use Subapp\Sql\Ast\ExpressionInterface;
-use Subapp\Sql\Render\AbstractSqlizer;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
  * Class Arguments
  * @package Subapp\Sql\Render\Common\Sqlizer
  */
-class Arguments extends AbstractSqlizer
+class Arguments extends Collection
 {
     
     /**
@@ -21,13 +20,10 @@ class Arguments extends AbstractSqlizer
      */
     public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
     {
-        $expressions = [];
-    
-        foreach ($expression as $argument) {
-            $expressions[] = $renderer->render($argument);
-        }
+        // ', ' - comma-separated
+        $expression->setSeparator("\x2c\x20");
         
-        return implode(', ', $expressions);
+        return parent::getSql($expression, $renderer);
     }
     
 }

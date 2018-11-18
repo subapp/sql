@@ -14,10 +14,10 @@ use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class Comparison
+ * Class Predicate
  * @package Subapp\Sql\Syntax\Common\Parser\Condition
  */
-class Comparison extends AbstractDefaultParser
+class Predicate extends AbstractDefaultParser
 {
 
     /**

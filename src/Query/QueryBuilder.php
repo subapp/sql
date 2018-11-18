@@ -3,7 +3,6 @@
 namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
-use Subapp\Sql\Exception\QueryExpression;
 use Subapp\Sql\Exception\UnsupportedException;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -33,11 +32,6 @@ class QueryBuilder
     /**
      * @var integer
      */
-    private $state = QueryBuilder::STATE_CLEAN;
-    
-    /**
-     * @var integer
-     */
     private $type = QueryBuilder::SELECT;
     
     /**
@@ -54,7 +48,7 @@ class QueryBuilder
         $this->node = $nodeBuilder;
         $this->root = new Ast\Root();
     }
-
+    
     /**
      * @param string|Ast\ExpressionInterface ...$variables
      * @return $this
@@ -62,12 +56,12 @@ class QueryBuilder
     public function select(...$variables)
     {
         $this->type = QueryBuilder::SELECT;
-
+        
         $this->root->setArguments($this->node->recognize($variables));
         
         return $this;
     }
-
+    
     /**
      * @param $source
      * @param $alias
@@ -76,9 +70,9 @@ class QueryBuilder
     public function from($source, $alias)
     {
         $variable = $this->node->variable($source, $alias);
-
+        
         $this->root->setFrom(new Ast\Stmt\From($variable));
-
+        
         return $this;
     }
     
@@ -101,77 +95,75 @@ class QueryBuilder
         
         return $this;
     }
-
+    
     /**
-     * @param string|Ast\Condition\AbstractComparison $e
-     * @param boolean $append
+     * @param string|Ast\Condition\AbstractPredicate $e
+     * @param boolean                                $clear
      * @return $this
-     * @throws QueryExpression
      */
-    public function where($e, $append = false)
+    public function where($e, $clear = true)
     {
-        $where = $this->root->where();
-
-        $conditions = $this->node()->recognize($e);
-        if ($conditions instanceof Ast\Condition\AbstractComparison) {
-            $conditions = $this->node()->conditions(null, $conditions);
-        }
+        return $this->condition($this->root->where(), $e, $clear);
+    }
+    
+    /**
+     * @param string|Ast\Condition\AbstractPredicate $e
+     * @param boolean                                $clear
+     * @return $this
+     */
+    public function having($e, $clear = true)
+    {
+        return $this->condition($this->root->having(), $e, $clear);
+    }
+    
+    /**
+     * @param string                         $table
+     * @param string                         $a
+     * @param string|Ast\ExpressionInterface $condition
+     * @param string                         $type
+     * @return $this
+     */
+    public function join($table, $a, $condition, $type = Ast\Stmt\Join::INNER)
+    {
+        $join = new Ast\Stmt\Join($type);
+        $node = $this->getNode();
         
-        if (!($conditions instanceof Ast\Condition\Conditions)) {
-            throw new QueryExpression(sprintf(
-                'Method $qb->where(); accept either conditional-string or Object(Ast\Condition\Conditions) expression but "%s" passed',
-                    get_class($conditions)));
-        }
+        $this->root->getJoins()->append($join);
         
-        $where->asBatch($conditions->toArray());
+        $condition = $node->recognize($condition);
 
-        // remove logical operator from last-one condition
-        // to avoid: (a > 1) AND (b < 2) AND
-        $where->offsetGet($where->count() - 1)->setOperator(null);
+        $join->setLeft($node->path($table, $a));
+        $join->setConditionType(($condition instanceof Ast\Arguments) ? Ast\Stmt\Join::USING : Ast\Stmt\Join::ON);
+        $join->setCondition($condition);
         
         return $this;
     }
     
     /**
-     * @param Ast\ExpressionInterface|string $comparison
+     * @param Ast\Condition\Conditions       $conditions
+     * @param Ast\ExpressionInterface|string $e
+     * @param bool                           $clear
      * @return $this
      */
-    public function and($comparison)
+    private function condition(Ast\Condition\Conditions $conditions, $e, $clear = true)
     {
-        var_dump($this->getNode()->and($comparison)); die;
-        $this->getRoot()->getWhere()->append($this->getNode()->and($comparison));
-
+        $outer = $conditions->getOperator();
+        
+        $predicates = $this->node()->recognize($e);
+        
+        if ($predicates instanceof Ast\Condition\Conditions) {
+            $inner = $predicates->getOperator();
+            $ifGreaterThanOne = ($predicates->count() > 1);
+            $predicates->setIsBraced(!($outer->getOperator() == $inner->getOperator()) && $ifGreaterThanOne);
+        }
+        
+        if ($clear) {
+            $conditions->clear();
+        }
+        
+        $conditions->append($predicates);
+        
         return $this;
-    }
-    
-    public function or()
-    {
-    
-    }
-    
-    public function xor()
-    {
-    
-    }
-    
-    public function in()
-    {
-    
-    }
-    
-    public function between()
-    {
-    
-    }
-    
-    public function like()
-    {
-    
-    }
-    
-    public function isNull()
-    {
-    
     }
     
     /**

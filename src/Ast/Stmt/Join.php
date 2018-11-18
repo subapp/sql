@@ -3,7 +3,6 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\AbstractExpression;
-use Subapp\Sql\Ast\Collection;
 use Subapp\Sql\Ast\ExpressionInterface;
 
 /**
@@ -13,14 +12,14 @@ use Subapp\Sql\Ast\ExpressionInterface;
 class Join extends AbstractExpression
 {
     
-    const INNER = 'INNER';
-    const LEFT = 'LEFT';
-    const RIGHT = 'RIGHT';
-    const CROSS = 'CROSS';
+    const INNER         = 'INNER';
+    const LEFT          = 'LEFT';
+    const RIGHT         = 'RIGHT';
+    const CROSS         = 'CROSS';
     const STRAIGHT_JOIN = 'STRAIGHT_JOIN';
     
-    const CONDITION_ON = 'ON';
-    const CONDITION_USING = 'USING';
+    const ON    = 'ON';
+    const USING = 'USING';
     
     /**
      * @var ExpressionInterface
@@ -28,7 +27,7 @@ class Join extends AbstractExpression
     private $left;
     
     /**
-     * @var Collection
+     * @var ExpressionInterface
      */
     private $condition;
     
@@ -49,7 +48,7 @@ class Join extends AbstractExpression
     public function __construct($joinType = Join::INNER)
     {
         $this->joinType = $joinType;
-        $this->conditionType = Join::CONDITION_ON;
+        $this->conditionType = Join::ON;
     }
     
     /**
@@ -85,7 +84,7 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @return Collection
+     * @return ExpressionInterface
      */
     public function getCondition()
     {
@@ -93,9 +92,9 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @param Collection $collection
+     * @param ExpressionInterface $collection
      */
-    public function setCondition(Collection $collection)
+    public function setCondition(ExpressionInterface $collection)
     {
         $this->condition = $collection;
     }

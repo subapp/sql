@@ -3,8 +3,9 @@
 namespace Subapp\Sql\Syntax\Common\Parser\Condition;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\Condition\AbstractPredicate;
 use Subapp\Sql\Ast\Condition\Conditions;
-use Subapp\Sql\Ast\Condition\Condition;
+use Subapp\Sql\Ast\Condition\LogicOperator;
 use Subapp\Sql\Ast\ExpressionInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
@@ -20,7 +21,7 @@ class Conditional extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return mixed|null|Conditions|ExpressionInterface
+     * @return Conditions|AbstractPredicate
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
@@ -29,7 +30,7 @@ class Conditional extends AbstractDefaultParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return null|ExpressionInterface
+     * @return Conditions|AbstractPredicate
      */
     public function recognize(ProcessorInterface $processor)
     {
@@ -47,11 +48,12 @@ class Conditional extends AbstractDefaultParser
         $perhapsEndOfCondition = (!$isComparisonBehindBraces && !$isMathBehindBraces && $isOpenBrace);
         $ifNeedOnUncovering = ($perhapsEndOfCondition || $isLogicalBehindBraces || $isInsideNestedBraces);
 
-
+        /** @var Conditions|AbstractPredicate $expression */
         $expression = null;
 
         switch (true) {
             /**
+             * @todo for ugly and difficult conditional expressions
              * if expression in nested braces
              * @example: ((((a > 1))) and b > 10) or (a > 1 and ...) or (a + 1 > 1 and ...)
              */
@@ -59,7 +61,7 @@ class Conditional extends AbstractDefaultParser
                 $expression = $uncover->uncover($this, $processor);
                 break;
             default:
-                $expression = $this->comparison($processor);
+                $expression = $this->predicate($processor);
         }
 
         return $expression;
@@ -67,57 +69,18 @@ class Conditional extends AbstractDefaultParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return Condition|Conditions
+     * @return AbstractPredicate|Conditions
      */
     public function and(ProcessorInterface $processor)
     {
         $lexer = $processor->getLexer();
         $collection = new Conditions();
-        $operator = $this->getLogicOperatorParser($processor);
+        
+        $collection->setOperator(LogicOperator::AND);
 
         do {
-            /** @var Condition $expression */
-            $expression = $this->or($processor);
-
-            if ($expression instanceof Conditions) {
-                $expression = new Condition(null, $expression);
-            }
-
-            $isOperator = $this->isLogicAnd($lexer);
-
-            if ($isOperator) {
-                $expression->setOperator($operator->parse($lexer, $processor));
-            }
-
-            $collection->append($expression);
-        } while ($isOperator);
-
-        // if just one expression was reached then return just it, otherwise conditions (collection)
-        return $collection;
-    }
-
-    /**
-     * @param ProcessorInterface $processor
-     * @return Condition|Conditions
-     */
-    public function or(ProcessorInterface $processor)
-    {
-        $lexer = $processor->getLexer();
-        $collection = new Conditions();
-        $operator = $this->getLogicOperatorParser($processor);
-
-        do {
-            $expression = $this->term($processor);
-            $isOperator = $this->isLogicOr($lexer) || $this->isLogicXor($lexer);
-
-            if ($isOperator) {
-                $expression->setOperator($operator->parse($lexer, $processor));
-            }
-
-            $collection->append($expression);
-        } while ($isOperator);
-
-        $collection->setIsBraced(true);
+            $collection->append($this->or($processor));
+        } while ($lexer->toToken(Lexer::T_AND));
 
         // if just one expression was reached then return just it, otherwise conditions (collection)
         return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);
@@ -125,21 +88,54 @@ class Conditional extends AbstractDefaultParser
 
     /**
      * @param ProcessorInterface $processor
-     * @return Condition
+     * @return AbstractPredicate|Conditions
      */
-    public function term(ProcessorInterface $processor)
+    public function or(ProcessorInterface $processor)
     {
-        return new Condition(null, $this->recognize($processor));
-    }
+        $lexer = $processor->getLexer();
+        $collection = new Conditions();
 
+        $collection->setOperator(LogicOperator::OR);
+        
+        do {
+            $collection->append($this->xor($processor));
+        } while ($lexer->toToken(Lexer::T_OR));
+
+        $collection->setIsBraced(true);
+
+        // if just one expression was reached then return just it, otherwise conditions (collection)
+        return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return AbstractPredicate|Conditions
+     */
+    public function xor(ProcessorInterface $processor)
+    {
+        $lexer = $processor->getLexer();
+        $collection = new Conditions();
+        
+        $collection->setOperator(LogicOperator::XOR);
+        
+        do {
+            $collection->append($this->recognize($processor));
+        } while ($lexer->toToken(Lexer::T_XOR));
+        
+        $collection->setIsBraced(true);
+        
+        // if just one expression was reached then return just it, otherwise conditions (collection)
+        return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);
+    }
+    
     /**
      * @param ProcessorInterface $processor
      * @return ExpressionInterface
      */
-    public function comparison(ProcessorInterface $processor)
+    public function predicate(ProcessorInterface $processor)
     {
-        $comparison = $this->getComparisonParser($processor);
-        $expression = $comparison->parse($processor->getLexer(), $processor);
+        $predicate = $this->getPredicateParser($processor);
+        $expression = $predicate->parse($processor->getLexer(), $processor);
 
         return $expression;
     }
