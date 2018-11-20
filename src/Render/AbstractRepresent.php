@@ -8,7 +8,7 @@ use Subapp\Sql\Common\ClassNameTrait;
  * Class AbstractRepresent
  * @package Subapp\Sql\Render
  */
-abstract class AbstractRepresent implements SqlizerInterface
+abstract class AbstractRepresent implements RepresentInterface
 {
     
     use ClassNameTrait;

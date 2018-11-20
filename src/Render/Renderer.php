@@ -13,7 +13,7 @@ class Renderer implements RendererInterface
 {
     
     /**
-     * @var Collection|SqlizerInterface[]
+     * @var Collection|RepresentInterface[]
      */
     private $sqlizers;
     
@@ -23,7 +23,7 @@ class Renderer implements RendererInterface
     public function __construct()
     {
         $this->sqlizers = new Collection();
-        $this->sqlizers->setClass(SqlizerInterface::class);
+        $this->sqlizers->setClass(RepresentInterface::class);
     }
     
     /**
@@ -35,9 +35,9 @@ class Renderer implements RendererInterface
     }
     
     /**
-     * @param SqlizerInterface $sqlizer
+     * @param RepresentInterface $sqlizer
      */
-    public function addSqlizer(SqlizerInterface $sqlizer)
+    public function addRepresent(RepresentInterface $sqlizer)
     {
         $this->sqlizers->offsetSet($sqlizer->getName(), $sqlizer);
     }
@@ -61,14 +61,14 @@ class Renderer implements RendererInterface
     
     /**
      * @param string $name
-     * @return SqlizerInterface
+     * @return RepresentInterface
      * @throws \RuntimeException
      */
     public function getSqlizer($name)
     {
         $sqlizer = $this->sqlizers->offsetGet($name);
     
-        if (!($sqlizer instanceof SqlizerInterface)) {
+        if (!($sqlizer instanceof RepresentInterface)) {
             throw new \RuntimeException(sprintf('Render cannot be performed because such sqlizer "%s"  doesn\'t exist',
                 $name));
         }

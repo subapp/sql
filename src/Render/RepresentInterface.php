@@ -8,7 +8,7 @@ use Subapp\Sql\Ast\ExpressionInterface;
  * Interface SqlizerInterface
  * @package Subapp\Sql\Render
  */
-interface SqlizerInterface
+interface RepresentInterface
 {
 
     /**

@@ -18,42 +18,42 @@ class DefaultRendererSetup implements RendererSetupInterface
      */
     public function setup(RendererInterface $renderer)
     {
-        $renderer->addSqlizer(new Represent\Literal());
-        $renderer->addSqlizer(new Represent\Parameter());
-        $renderer->addSqlizer(new Represent\Arguments());
-        $renderer->addSqlizer(new Represent\FieldPath());
-        $renderer->addSqlizer(new Represent\Variable());
-        $renderer->addSqlizer(new Represent\Identifier());
-        $renderer->addSqlizer(new Represent\Raw());
-        $renderer->addSqlizer(new Represent\QuoteIdentifier());
-        $renderer->addSqlizer(new Represent\Embrace());
-        $renderer->addSqlizer(new Represent\MathOperator());
-        $renderer->addSqlizer(new Represent\Arithmetic());
-        $renderer->addSqlizer(new Represent\Collection());
+        $renderer->addRepresent(new Represent\Literal());
+        $renderer->addRepresent(new Represent\Parameter());
+        $renderer->addRepresent(new Represent\Arguments());
+        $renderer->addRepresent(new Represent\FieldPath());
+        $renderer->addRepresent(new Represent\Variable());
+        $renderer->addRepresent(new Represent\Identifier());
+        $renderer->addRepresent(new Represent\Raw());
+        $renderer->addRepresent(new Represent\QuoteIdentifier());
+        $renderer->addRepresent(new Represent\Embrace());
+        $renderer->addRepresent(new Represent\MathOperator());
+        $renderer->addRepresent(new Represent\Arithmetic());
+        $renderer->addRepresent(new Represent\Collection());
         
-        $renderer->addSqlizer(new Represent\Func\DefaultFunction());
-        $renderer->addSqlizer(new Represent\Func\AggregateFunction());
+        $renderer->addRepresent(new Represent\Func\DefaultFunction());
+        $renderer->addRepresent(new Represent\Func\AggregateFunction());
         
-        $renderer->addSqlizer(new Represent\Condition\CmpOperator());
-        $renderer->addSqlizer(new Represent\Condition\LogicOperator());
-        $renderer->addSqlizer(new Represent\Condition\Cmp());
-        $renderer->addSqlizer(new Represent\Condition\IsNull());
-        $renderer->addSqlizer(new Represent\Condition\Between());
-        $renderer->addSqlizer(new Represent\Condition\In());
-        $renderer->addSqlizer(new Represent\Condition\Like());
+        $renderer->addRepresent(new Represent\Condition\CmpOperator());
+        $renderer->addRepresent(new Represent\Condition\LogicOperator());
+        $renderer->addRepresent(new Represent\Condition\Cmp());
+        $renderer->addRepresent(new Represent\Condition\IsNull());
+        $renderer->addRepresent(new Represent\Condition\Between());
+        $renderer->addRepresent(new Represent\Condition\In());
+        $renderer->addRepresent(new Represent\Condition\Like());
         
-        $renderer->addSqlizer(new Represent\Condition\Conditions());
+        $renderer->addRepresent(new Represent\Condition\Conditions());
     
-        $renderer->addSqlizer(new Represent\Stmt\Select());
-        $renderer->addSqlizer(new Represent\Stmt\From());
-        $renderer->addSqlizer(new Represent\Stmt\Join());
-        $renderer->addSqlizer(new Represent\Stmt\JoinItems());
-        $renderer->addSqlizer(new Represent\Stmt\Where());
-        $renderer->addSqlizer(new Represent\Stmt\Having());
-        $renderer->addSqlizer(new Represent\Stmt\GroupBy());
-        $renderer->addSqlizer(new Represent\Stmt\OrderBy());
-        $renderer->addSqlizer(new Represent\Stmt\OrderByItems());
-        $renderer->addSqlizer(new Represent\Stmt\Limit());
+        $renderer->addRepresent(new Represent\Stmt\Select());
+        $renderer->addRepresent(new Represent\Stmt\From());
+        $renderer->addRepresent(new Represent\Stmt\Join());
+        $renderer->addRepresent(new Represent\Stmt\JoinItems());
+        $renderer->addRepresent(new Represent\Stmt\Where());
+        $renderer->addRepresent(new Represent\Stmt\Having());
+        $renderer->addRepresent(new Represent\Stmt\GroupBy());
+        $renderer->addRepresent(new Represent\Stmt\OrderBy());
+        $renderer->addRepresent(new Represent\Stmt\OrderByItems());
+        $renderer->addRepresent(new Represent\Stmt\Limit());
     }
     
 }

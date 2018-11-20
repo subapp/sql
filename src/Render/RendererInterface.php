@@ -23,9 +23,9 @@ interface RendererInterface
     public function render(ExpressionInterface $expression);
     
     /**
-     * @param SqlizerInterface $sqlizer
+     * @param RepresentInterface $sqlizer
      */
-    public function addSqlizer(SqlizerInterface $sqlizer);
+    public function addRepresent(RepresentInterface $sqlizer);
     
     /**
      * @param string $name
@@ -40,7 +40,7 @@ interface RendererInterface
     
     /**
      * @param string $name
-     * @return SqlizerInterface
+     * @return RepresentInterface
      */
     public function getSqlizer($name);
 
