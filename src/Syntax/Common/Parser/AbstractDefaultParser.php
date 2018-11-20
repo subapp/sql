@@ -18,9 +18,10 @@ abstract class AbstractDefaultParser extends AbstractParser
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Common
      */
+    
     public function getCommonParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.common');
+        return $processor->getParser(self::PARSER_COMMON);
     }
     
     /**
@@ -29,7 +30,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getPrimaryParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.primary');
+        return $processor->getParser(self::PARSER_PRIMARY);
     }
     
     /**
@@ -38,7 +39,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getIdentifierParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.identifier');
+        return $processor->getParser(self::PARSER_IDENTIFIER);
     }
     
     /**
@@ -47,7 +48,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getStarParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.star');
+        return $processor->getParser(self::PARSER_STAR);
     }
     
     /**
@@ -56,7 +57,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getQuoteIdentifierParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.quote_identifier');
+        return $processor->getParser(self::PARSER_QUOTE_IDENTIFIER);
     }
 
     /**
@@ -65,7 +66,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getFunctionParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.func');
+        return $processor->getParser(self::PARSER_FUNC);
     }
 
     /**
@@ -74,7 +75,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getDefaultFunctionParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.default_function');
+        return $processor->getParser(self::PARSER_DEFAULT_FUNCTION);
     }
 
     /**
@@ -83,7 +84,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getAggregateFunctionParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.aggregate_function');
+        return $processor->getParser(self::PARSER_AGGREGATE_FUNCTION);
     }
 
     /**
@@ -92,7 +93,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getFieldPathParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.field_path');
+        return $processor->getParser(self::PARSER_FIELD_PATH);
     }
 
     /**
@@ -101,7 +102,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getLiteralParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.literal');
+        return $processor->getParser(self::PARSER_LITERAL);
     }
 
     /**
@@ -110,7 +111,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getParameterParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.parameter');
+        return $processor->getParser(self::PARSER_PARAMETER);
     }
     
     /**
@@ -119,7 +120,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getVariablesParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.variables');
+        return $processor->getParser(self::PARSER_VARIABLES);
     }
     
     /**
@@ -128,7 +129,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getVariableParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.variable');
+        return $processor->getParser(self::PARSER_VARIABLE);
     }
 
     /**
@@ -137,7 +138,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getArgumentsParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.arguments');
+        return $processor->getParser(self::PARSER_ARGUMENTS);
     }
 
     /**
@@ -146,7 +147,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getComplexParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.complex');
+        return $processor->getParser(self::PARSER_COMPLEX);
     }
 
     /**
@@ -155,7 +156,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getExpressionParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.expression');
+        return $processor->getParser(self::PARSER_EXPRESSION);
     }
 
     /**
@@ -164,7 +165,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getArithmeticParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.arithmetic');
+        return $processor->getParser(self::PARSER_ARITHMETIC);
     }
     
     /**
@@ -173,7 +174,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getAliasParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.alias');
+        return $processor->getParser(self::PARSER_ALIAS);
     }
 
     /**
@@ -182,7 +183,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getEmbraceParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.embrace');
+        return $processor->getParser(self::PARSER_EMBRACE);
     }
 
     /**
@@ -191,7 +192,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getSubSelectParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.sub_select');
+        return $processor->getParser(self::PARSER_SUB_SELECT);
     }
 
     /**
@@ -200,7 +201,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getConditionalParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('condition.conditional');
+        return $processor->getParser(self::PARSER_CONDITION_CONDITIONAL);
     }
 
     /**
@@ -209,7 +210,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getCmpOperatorParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('condition.cmp_operator');
+        return $processor->getParser(self::PARSER_CONDITION_CMP_OPERATOR);
     }
     
     /**
@@ -218,7 +219,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getPredicateParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('condition.predicate');
+        return $processor->getParser(self::PARSER_CONDITION_PREDICATE);
     }
     
     /**
@@ -227,7 +228,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getLogicOperatorParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('condition.logic_operator');
+        return $processor->getParser(self::PARSER_CONDITION_LOGIC_OPERATOR);
     }
     
     /**
@@ -236,7 +237,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getJoinParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('stmt.join');
+        return $processor->getParser(self::PARSER_STMT_JOIN);
     }
     
     /**
@@ -245,7 +246,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getJoinItemsParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('stmt.join_items');
+        return $processor->getParser(self::PARSER_STMT_JOIN_ITEMS);
     }
     
     /**
@@ -254,7 +255,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getWhereParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('stmt.where');
+        return $processor->getParser(self::PARSER_STMT_WHERE);
     }
     
     /**
@@ -263,7 +264,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getOrderByParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('stmt.order_by');
+        return $processor->getParser(self::PARSER_STMT_ORDER_BY);
     }
     
     /**
@@ -272,7 +273,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getGroupByParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('stmt.group_by');
+        return $processor->getParser(self::PARSER_STMT_GROUP_BY);
     }
     
     /**
@@ -281,7 +282,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getLimitParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('stmt.limit');
+        return $processor->getParser(self::PARSER_STMT_LIMIT);
     }
 
     /**
@@ -290,7 +291,7 @@ abstract class AbstractDefaultParser extends AbstractParser
      */
     public function getUncoverParser(ProcessorInterface $processor)
     {
-        return $processor->getParser('parser.uncover');
+        return $processor->getParser(self::PARSER_UNCOVER);
     }
 
 }

@@ -4,6 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
@@ -20,14 +21,22 @@ class Common extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
+        $isConditional = $this->isComparisonExpression($lexer);
+        $isCommaSeparated = $this->isExpressionWithComma($lexer);
+        $isVarsLikeOrderBy = $this->isTokenBehindExpression($lexer, true, Lexer::T_ASC, Lexer::T_DESC);
+        $isVarsWithAlias = $this->isExpressionWithAlias($lexer);
+        
         $parser = $this->getComplexParser($processor);
 
         switch (true) {
-            case $this->isComparisonExpression($lexer):
+            case $isConditional:
                 $parser = $this->getConditionalParser($processor);
                 break;
-            case $this->isExpressionWithComma($lexer):
-            case $this->isExpressionWithAlias($lexer):
+            case $isVarsLikeOrderBy:
+                $parser = $this->getOrderByParser($processor);
+                break;
+            case $isVarsWithAlias:
+            case $isCommaSeparated:
                 $parser = $this->getVariablesParser($processor);
                 break;
         }

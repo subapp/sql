@@ -310,9 +310,9 @@ class Collection implements CollectionInterface, JsonSerializable
     /**
      * @inheritdoc
      */
-    public function map(Closure $func)
+    public function map(Closure $closure)
     {
-        return $this->createFrom(array_map($func, $this->elements));
+        return $this->createFrom(array_map($closure, $this->elements));
     }
 
     /**

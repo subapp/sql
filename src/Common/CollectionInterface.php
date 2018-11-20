@@ -156,10 +156,10 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
     public function forAll(Closure $predicate): bool;
 
     /**
-     * @param Closure $func
+     * @param Closure $closure
      * @return CollectionInterface
      */
-    public function map(Closure $func);
+    public function map(Closure $closure);
 
     /**
      * @param Closure $predicate

@@ -21,9 +21,6 @@ class QueryBuilder
     public const DELETE = 2;
     public const UPDATE = 4;
     
-    public const STATE_DIRTY = 0;
-    public const STATE_CLEAN = 1;
-    
     /**
      * @var Node
      */
@@ -57,7 +54,9 @@ class QueryBuilder
     {
         $this->type = QueryBuilder::SELECT;
         
-        $this->root->setArguments($this->node->recognize($variables));
+        /** @var Ast\Arguments $variables */
+        $variables = $this->node->recognize($variables);
+        $this->root->setArguments($variables);
         
         return $this;
     }
@@ -117,29 +116,6 @@ class QueryBuilder
     }
     
     /**
-     * @param string                         $table
-     * @param string                         $a
-     * @param string|Ast\ExpressionInterface $condition
-     * @param string                         $type
-     * @return $this
-     */
-    public function join($table, $a, $condition, $type = Ast\Stmt\Join::INNER)
-    {
-        $join = new Ast\Stmt\Join($type);
-        $node = $this->getNode();
-        
-        $this->root->getJoins()->append($join);
-        
-        $condition = $node->recognize($condition);
-
-        $join->setLeft($node->path($table, $a));
-        $join->setConditionType(($condition instanceof Ast\Arguments) ? Ast\Stmt\Join::USING : Ast\Stmt\Join::ON);
-        $join->setCondition($condition);
-        
-        return $this;
-    }
-    
-    /**
      * @param Ast\Condition\Conditions       $conditions
      * @param Ast\ExpressionInterface|string $e
      * @param bool                           $clear
@@ -162,6 +138,106 @@ class QueryBuilder
         }
         
         $conditions->append($predicates);
+        
+        return $this;
+    }
+    
+    /**
+     * @param $table
+     * @param $a
+     * @param $condition
+     * @return QueryBuilder
+     */
+    public function crossJoin($table, $a, $condition)
+    {
+        return $this->join($table, $a, $condition, Ast\Stmt\Join::CROSS);
+    }
+    
+    /**
+     * @param string                         $table
+     * @param string                         $a
+     * @param string|Ast\ExpressionInterface $condition
+     * @return QueryBuilder
+     */
+    public function rightJoin($table, $a, $condition)
+    {
+        return $this->join($table, $a, $condition, Ast\Stmt\Join::RIGHT);
+    }
+    
+    /**
+     * @param string                         $table
+     * @param string                         $a
+     * @param string|Ast\ExpressionInterface $condition
+     * @return QueryBuilder
+     */
+    public function leftJoin($table, $a, $condition)
+    {
+        return $this->join($table, $a, $condition, Ast\Stmt\Join::LEFT);
+    }
+    
+    /**
+     * @param string                         $table
+     * @param string                         $a
+     * @param string|Ast\ExpressionInterface $condition
+     * @return QueryBuilder
+     */
+    public function innerJoin($table, $a, $condition)
+    {
+        return $this->join($table, $a, $condition, Ast\Stmt\Join::INNER);
+    }
+    
+    /**
+     * @param string                         $table
+     * @param string                         $a
+     * @param string|Ast\ExpressionInterface $condition
+     * @param string                         $type
+     * @return $this
+     */
+    public function join($table, $a, $condition, $type = Ast\Stmt\Join::INNER)
+    {
+        $join = new Ast\Stmt\Join($type);
+        $node = $this->getNode();
+        
+        $this->root->getJoins()->append($join);
+        
+        $condition = $node->recognize($condition);
+        
+        $join->setLeft($node->path($table, $a));
+        $join->setConditionType(($condition instanceof Ast\Arguments) ? Ast\Stmt\Join::USING : Ast\Stmt\Join::ON);
+        $join->setCondition($condition);
+        
+        return $this;
+    }
+    
+    /**
+     * @param string|Ast\ExpressionInterface ...$variables
+     * @return $this
+     */
+    public function group(...$variables)
+    {
+        /** @var Ast\Arguments $variables */
+        $variables = $this->node->recognize($variables);
+        $this->root->groupBy()->asBatch($variables->toArray());
+        
+        return $this;
+    }
+    
+    /**
+     * @param string|Ast\ExpressionInterface ...$arguments
+     * @return $this
+     */
+    public function order(...$arguments)
+    {
+        $orderByNode = $this->root->orderBy();
+        
+        /** @var Ast\Arguments $arguments */
+        $arguments = $this->node->recognize($arguments);
+    
+        // @todo perhaps exist most elegant solution
+        $arguments->forAll(function($index, Ast\Stmt\OrderByItems $collection) use ($orderByNode) {
+            $orderByNode->asBatch($collection->toArray(), true);
+            return true;
+        });
         
         return $this;
     }
@@ -237,22 +313,6 @@ class QueryBuilder
     public function setRoot(Ast\Root $root)
     {
         $this->root = $root;
-    }
-    
-    /**
-     * @return int
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-    
-    /**
-     * @param int $state
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
     }
     
     /**

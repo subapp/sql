@@ -73,7 +73,7 @@ class Literal extends AbstractExpression
      */
     public function getRenderer()
     {
-        return 'sqlizer.literal';
+        return 'represent.literal';
     }
 
 }

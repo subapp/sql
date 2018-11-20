@@ -14,7 +14,7 @@ class Arithmetic extends Collection
      */
     public function getRenderer()
     {
-        return 'sqlizer.arithmetic';
+        return 'represent.arithmetic';
     }
 
 }

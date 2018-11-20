@@ -11,22 +11,22 @@ use Subapp\Sql\Exception\UnsupportedException;
  */
 class Root extends AbstractExpression
 {
-    
+
     /**
      * @var Ast\Arguments
      */
     private $arguments;
-    
+
     /**
      * @var Ast\Stmt\From
      */
     private $from;
-    
+
     /**
      * @var Ast\Condition\Conditions
      */
     private $joins;
-    
+
     /**
      * @var Ast\Stmt\Where
      */
@@ -36,17 +36,17 @@ class Root extends AbstractExpression
      * @var Ast\Stmt\Having
      */
     private $having;
-    
+
     /**
      * @var Ast\Stmt\OrderByItems
      */
     private $orderBy;
-    
+
     /**
      * @var Ast\Stmt\GroupBy
      */
     private $groupBy;
-    
+
     /**
      * @var Ast\Stmt\Limit
      */
@@ -71,7 +71,7 @@ class Root extends AbstractExpression
         $this->orderBy = new Ast\Stmt\OrderByItems();
         $this->limit = new Ast\Stmt\Limit();
     }
-    
+
     /**
      * @return Ast\Stmt\From
      */
@@ -79,7 +79,7 @@ class Root extends AbstractExpression
     {
         return $this->from;
     }
-    
+
     /**
      * @param Ast\Stmt\From $from
      */
@@ -87,7 +87,7 @@ class Root extends AbstractExpression
     {
         $this->from = $from;
     }
-    
+
     /**
      * @return Ast\Arguments
      */
@@ -95,7 +95,7 @@ class Root extends AbstractExpression
     {
         return $this->arguments;
     }
-    
+
     /**
      * @param Ast\Arguments $arguments
      */
@@ -103,7 +103,7 @@ class Root extends AbstractExpression
     {
         $this->arguments = $arguments;
     }
-    
+
     /**
      * @return Ast\Collection
      */
@@ -111,7 +111,7 @@ class Root extends AbstractExpression
     {
         return $this->joins;
     }
-    
+
     /**
      * @param Ast\Collection $joins
      */
@@ -119,7 +119,7 @@ class Root extends AbstractExpression
     {
         $this->joins = $joins;
     }
-    
+
     /**
      * @param Ast\Stmt\Where $where
      */
@@ -127,7 +127,7 @@ class Root extends AbstractExpression
     {
         $this->where = $where;
     }
-    
+
     /**
      * @return Ast\Stmt\Where
      */
@@ -151,7 +151,7 @@ class Root extends AbstractExpression
     {
         $this->having = $having;
     }
-    
+
     /**
      * @return Ast\Stmt\OrderByItems
      */
@@ -159,7 +159,7 @@ class Root extends AbstractExpression
     {
         return $this->orderBy;
     }
-    
+
     /**
      * @param Ast\Stmt\OrderByItems $orderByCollection
      */
@@ -167,7 +167,7 @@ class Root extends AbstractExpression
     {
         $this->orderBy = $orderByCollection;
     }
-    
+
     /**
      * @return Ast\Stmt\GroupBy
      */
@@ -175,7 +175,7 @@ class Root extends AbstractExpression
     {
         return $this->groupBy;
     }
-    
+
     /**
      * @param Ast\Stmt\GroupBy $groupBy
      */
@@ -183,7 +183,7 @@ class Root extends AbstractExpression
     {
         $this->groupBy = $groupBy;
     }
-    
+
     /**
      * @return Ast\Stmt\Limit
      */
@@ -191,7 +191,7 @@ class Root extends AbstractExpression
     {
         return $this->limit;
     }
-    
+
     /**
      * @param Ast\Stmt\Limit $limit
      */
@@ -199,7 +199,7 @@ class Root extends AbstractExpression
     {
         $this->limit = $limit;
     }
-    
+
     /**
      * @return Stmt\From
      */
@@ -207,7 +207,7 @@ class Root extends AbstractExpression
     {
         return $this->getFrom();
     }
-    
+
     /**
      * @return Arguments
      */
@@ -215,7 +215,7 @@ class Root extends AbstractExpression
     {
         return $this->getArguments();
     }
-    
+
     /**
      * @return Collection
      */
@@ -223,7 +223,7 @@ class Root extends AbstractExpression
     {
         return $this->getJoins();
     }
-    
+
     /**
      * @return Stmt\Where
      */
@@ -239,7 +239,7 @@ class Root extends AbstractExpression
     {
         return $this->getHaving();
     }
-    
+
     /**
      * @return Stmt\GroupBy
      */
@@ -247,7 +247,7 @@ class Root extends AbstractExpression
     {
         return $this->getGroupBy();
     }
-    
+
     /**
      * @return Stmt\OrderByItems
      */
@@ -255,7 +255,7 @@ class Root extends AbstractExpression
     {
         return $this->getOrderBy();
     }
-    
+
     /**
      * @return Stmt\Limit
      */
@@ -279,7 +279,7 @@ class Root extends AbstractExpression
     {
         $this->semicolon = $semicolon;
     }
-    
+
     /**
      * @throws UnsupportedException
      */
@@ -287,5 +287,5 @@ class Root extends AbstractExpression
     {
         throw new UnsupportedException('The root AST node cannot be rendered. Its purpose is to preserve common nodes.');
     }
-    
+
 }

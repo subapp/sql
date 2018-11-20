@@ -50,7 +50,7 @@ class MathOperator extends AbstractExpression
      */
     public function getRenderer()
     {
-        return 'sqlizer.math_operator';
+        return 'represent.math_operator';
     }
     
 }

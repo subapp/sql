@@ -2,6 +2,7 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Common\ClassNameTrait;
 use Subapp\Sql\Common\Collection as BaseCollection;
 
 /**
@@ -10,6 +11,8 @@ use Subapp\Sql\Common\Collection as BaseCollection;
  */
 class Collection extends BaseCollection implements ExpressionInterface
 {
+
+    use ClassNameTrait;
 
     /**
      * @var boolean
@@ -69,7 +72,15 @@ class Collection extends BaseCollection implements ExpressionInterface
      */
     public function getRenderer()
     {
-        return 'sqlizer.collection';
+        return 'represent.collection';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNodeName()
+    {
+        return $this->getUnderscore(static::class);
     }
 
 }

@@ -15,11 +15,37 @@ use Subapp\Sql\Exception\SyntaxErrorException;
 interface ParserInterface
 {
     
-    const SELECT_STATEMENT_PARSER = 'statement.select';
-    const UPDATE_STATEMENT_PARSER = 'statement.update';
-    const DELETE_STATEMENT_PARSER = 'statement.delete';
-    
-    const EXPRESSION_FROM_PARSER = 'parser.from';
+    const PARSER_AGGREGATE_FUNCTION       = 'parser.aggregate_function';
+    const PARSER_ALIAS                    = 'parser.alias';
+    const PARSER_ARGUMENTS                = 'parser.arguments';
+    const PARSER_ARITHMETIC               = 'parser.arithmetic';
+    const PARSER_COMMON                   = 'parser.common';
+    const PARSER_COMPLEX                  = 'parser.complex';
+    const PARSER_CONDITION_CMP_OPERATOR   = 'condition.cmp_operator';
+    const PARSER_CONDITION_CONDITIONAL    = 'condition.conditional';
+    const PARSER_CONDITION_LOGIC_OPERATOR = 'condition.logic_operator';
+    const PARSER_CONDITION_PREDICATE      = 'condition.predicate';
+    const PARSER_DEFAULT_FUNCTION         = 'parser.default_function';
+    const PARSER_EMBRACE                  = 'parser.embrace';
+    const PARSER_EXPRESSION               = 'parser.expression';
+    const PARSER_FIELD_PATH               = 'parser.field_path';
+    const PARSER_FUNC                     = 'parser.func';
+    const PARSER_IDENTIFIER               = 'parser.identifier';
+    const PARSER_LITERAL                  = 'parser.literal';
+    const PARSER_PARAMETER                = 'parser.parameter';
+    const PARSER_PRIMARY                  = 'parser.primary';
+    const PARSER_QUOTE_IDENTIFIER         = 'parser.quote_identifier';
+    const PARSER_STAR                     = 'parser.star';
+    const PARSER_STMT_GROUP_BY            = 'stmt.group_by';
+    const PARSER_STMT_JOIN                = 'stmt.join';
+    const PARSER_STMT_JOIN_ITEMS          = 'stmt.join_items';
+    const PARSER_STMT_LIMIT               = 'stmt.limit';
+    const PARSER_STMT_ORDER_BY            = 'stmt.order_by';
+    const PARSER_STMT_WHERE               = 'stmt.where';
+    const PARSER_SUB_SELECT               = 'parser.sub_select';
+    const PARSER_UNCOVER                  = 'parser.uncover';
+    const PARSER_VARIABLE                 = 'parser.variable';
+    const PARSER_VARIABLES                = 'parser.variables';
     
     /**
      * @param LexerInterface     $lexer
@@ -56,16 +82,16 @@ interface ParserInterface
      * @param LexerInterface $lexer
      */
     public function shiftIf($token, LexerInterface $lexer);
-
+    
     /**
-     * @param $token
+     * @param                $token
      * @param LexerInterface $lexer
      * @return integer
      */
     public function shiftUntil($token, LexerInterface $lexer);
-
+    
     /**
-     * @param integer $occurrences
+     * @param integer        $occurrences
      * @param LexerInterface $lexer
      * @return void
      */
@@ -95,7 +121,7 @@ interface ParserInterface
      * @return boolean
      */
     public function isMathExpression(LexerInterface $lexer);
-
+    
     /**
      * @param LexerInterface $lexer
      * @return boolean
@@ -113,13 +139,13 @@ interface ParserInterface
      * @return boolean
      */
     public function isComparisonOperator(LexerInterface $lexer);
-
+    
     /**
      * @param LexerInterface $lexer
      * @return boolean
      */
     public function isExpressionWithAlias(LexerInterface $lexer);
-
+    
     /**
      * @param LexerInterface $lexer
      * @return boolean
@@ -281,65 +307,65 @@ interface ParserInterface
      * @return boolean
      */
     public function isLogicXor(LexerInterface $lexer);
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param boolean $reset
-     * @param integer ...$tokens
+     * @param boolean        $reset
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isTokenBetweenBraces(LexerInterface $lexer, $reset = true, ...$tokens);
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param boolean $reset
-     * @param integer ...$tokens
+     * @param boolean        $reset
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isTokenBehindBraces(LexerInterface $lexer, $reset = true, ...$tokens);
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param boolean $reset
-     * @param integer ...$tokens
+     * @param boolean        $reset
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isTokenBehindFunction(LexerInterface $lexer, $reset = true, ...$tokens);
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param boolean $reset
-     * @param integer ...$tokens
+     * @param boolean        $reset
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isTokenBehindFieldIdentifier(LexerInterface $lexer, $reset = true, ...$tokens);
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param boolean $reset
-     * @param integer ...$tokens
+     * @param boolean        $reset
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isTokenBehindLiteral(LexerInterface $lexer, $reset = true, ...$tokens);
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param boolean $reset
-     * @param integer ...$tokens
+     * @param boolean        $reset
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isTokenBehindExpression(LexerInterface $lexer, $reset = true, ...$tokens);
     
     /**
      * @param LexerInterface $lexer
-     * @param integer          ...$tokens
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isPeekToken(LexerInterface $lexer, ...$tokens);
     
     /**
      * @param LexerInterface $lexer
-     * @param integer          ...$tokens
+     * @param integer        ...$tokens
      * @return boolean
      */
     public function isPeekSequence(LexerInterface $lexer, ...$tokens);
@@ -351,22 +377,22 @@ interface ParserInterface
      * @return boolean
      */
     public function isPeekAgainst(LexerInterface $lexer, array $needed, array $against);
-
+    
     /**
      * @param LexerInterface $lexer
      */
     public function peekBehindFunction(LexerInterface $lexer);
-
+    
     /**
      * @param LexerInterface $lexer
      */
     public function peekBehindBraces(LexerInterface $lexer);
-
+    
     /**
      * @param LexerInterface $lexer
      */
     public function peekBehindFieldIdentifier(LexerInterface $lexer);
-
+    
     /**
      * @param LexerInterface $lexer
      */

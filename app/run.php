@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Rendered';
+$sqlVersion = 'Complex';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -53,7 +53,19 @@ try {
     
     $renderer = new \Subapp\Sql\Render\Renderer();
     $renderer->setup(new \Subapp\Sql\Render\Common\DefaultRendererSetup());
-
+    
+    $processor->setLexer(new Lexer());
+    $recognizer = new Recognizer($processor, Recognizer::COMMON);
+    
+    $node = new \Subapp\Sql\Query\Node();
+    $node->setRecognizer($recognizer);
+    
+    $qb = new \Subapp\Sql\Query\QueryBuilder($node);
+    
+    $qb->setRoot($select->getRoot());
+    
+    $qb->crossJoin('asd', 'aa', 'aa.id');
+    
     $time = microtime(true);
     echo "\n====== SELECT AST Render ======\n";
     echo $renderer->render($select);
@@ -64,20 +76,10 @@ try {
     echo sprintf('Parser: %s', $parseTime);
     echo PHP_EOL;
     
-    $processor->setLexer(new Lexer());
-    $recognizer = new Recognizer($processor, Recognizer::COMMON);
+    
     
     /** @var Conditions $conditions */
     $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');
-    
-    $node = new \Subapp\Sql\Query\Node();
-    $node->setRecognizer($recognizer);
-    
-    $qb = new \Subapp\Sql\Query\QueryBuilder($node);
-    
-    $qb->select('users', 'uid');
-    
-    $qb->and($node->in('users.id', [1, 2, 3]));
     
     $conditions = $node->and(
         $node->eq(1, 2),

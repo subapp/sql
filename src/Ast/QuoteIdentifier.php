@@ -14,7 +14,7 @@ class QuoteIdentifier extends Identifier
      */
     public function getRenderer()
     {
-        return 'sqlizer.quote_identifier';
+        return 'represent.quote_identifier';
     }
     
 }

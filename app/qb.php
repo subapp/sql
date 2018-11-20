@@ -16,7 +16,7 @@ $renderer = new Renderer();
 $renderer->setup(new DefaultRendererSetup());
 
 $lexer = new Lexer();
-$processor = new Processor($lexer, new MySQLPlatform());
+$processor = new Processor($lexer);
 
 $processor->setup(new DefaultParserSetup());
 $processor->setLexer(new Lexer());
@@ -45,9 +45,11 @@ $qb->join('user', 'U2', 'U.id = U2.id');
 
 $qb->join('user', 'U2', 'U.id, U2.id');
 
-//$qb->having($c);
+$qb->having($c);
 
 $qb->where($c, false);
+
+$qb->group('a.id, u.id')->order('a.id asc, b.id desc, rand()', 'a.test desc');
 
 $c->add($node->ne(1, 'u.id'));
 

@@ -58,11 +58,6 @@ interface ProcessorInterface
     public function getLexer();
     
     /**
-     * @return PlatformInterface
-     */
-    public function getPlatform();
-    
-    /**
      * @return CollectionInterface|ParserInterface[]
      */
     public function getParsers();

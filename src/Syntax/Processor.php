@@ -6,7 +6,6 @@ use Subapp\Sql\Common\Collection;
 use Subapp\Sql\Common\CollectionInterface;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Platform\PlatformInterface;
 
 /**
  * Class ParserProcessor
@@ -21,11 +20,6 @@ final class Processor implements ProcessorInterface
     private $lexer;
     
     /**
-     * @var PlatformInterface
-     */
-    private $platform;
-    
-    /**
      * @var CollectionInterface|ParserInterface[]
      */
     private $parsers;
@@ -38,14 +32,14 @@ final class Processor implements ProcessorInterface
     /**
      * Query constructor.
      * @param LexerInterface    $lexer
-     * @param PlatformInterface $platform
      */
-    public function __construct(LexerInterface $lexer, PlatformInterface $platform)
+    public function __construct(LexerInterface $lexer)
     {
-        $this->parsers = new Collection([], ParserInterface::class);
+        $this->parsers = new Collection();
         $this->lexer = $lexer;
-        $this->platform = $platform;
         $this->helper = new ParserHelper();
+    
+        $this->parsers->setClass(ParserInterface::class);
     }
     
     /**
@@ -145,14 +139,6 @@ final class Processor implements ProcessorInterface
     public function setLexer(LexerInterface $lexer)
     {
         $this->lexer = $lexer;
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function getPlatform()
-    {
-        return $this->platform;
     }
     
     /**

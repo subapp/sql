@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common;
 
-use Subapp\Sql\Render\Common\Sqlizer;
+use Subapp\Sql\Render\Common\Represent;
 use Subapp\Sql\Render\RendererInterface;
 use Subapp\Sql\Render\RendererSetupInterface;
 
@@ -18,42 +18,42 @@ class DefaultRendererSetup implements RendererSetupInterface
      */
     public function setup(RendererInterface $renderer)
     {
-        $renderer->addSqlizer(new Sqlizer\Literal());
-        $renderer->addSqlizer(new Sqlizer\Parameter());
-        $renderer->addSqlizer(new Sqlizer\Arguments());
-        $renderer->addSqlizer(new Sqlizer\FieldPath());
-        $renderer->addSqlizer(new Sqlizer\Variable());
-        $renderer->addSqlizer(new Sqlizer\Identifier());
-        $renderer->addSqlizer(new Sqlizer\Raw());
-        $renderer->addSqlizer(new Sqlizer\QuoteIdentifier());
-        $renderer->addSqlizer(new Sqlizer\Embrace());
-        $renderer->addSqlizer(new Sqlizer\MathOperator());
-        $renderer->addSqlizer(new Sqlizer\Arithmetic());
-        $renderer->addSqlizer(new Sqlizer\Collection());
+        $renderer->addSqlizer(new Represent\Literal());
+        $renderer->addSqlizer(new Represent\Parameter());
+        $renderer->addSqlizer(new Represent\Arguments());
+        $renderer->addSqlizer(new Represent\FieldPath());
+        $renderer->addSqlizer(new Represent\Variable());
+        $renderer->addSqlizer(new Represent\Identifier());
+        $renderer->addSqlizer(new Represent\Raw());
+        $renderer->addSqlizer(new Represent\QuoteIdentifier());
+        $renderer->addSqlizer(new Represent\Embrace());
+        $renderer->addSqlizer(new Represent\MathOperator());
+        $renderer->addSqlizer(new Represent\Arithmetic());
+        $renderer->addSqlizer(new Represent\Collection());
         
-        $renderer->addSqlizer(new Sqlizer\Func\DefaultFunction());
-        $renderer->addSqlizer(new Sqlizer\Func\AggregateFunction());
+        $renderer->addSqlizer(new Represent\Func\DefaultFunction());
+        $renderer->addSqlizer(new Represent\Func\AggregateFunction());
         
-        $renderer->addSqlizer(new Sqlizer\Condition\CmpOperator());
-        $renderer->addSqlizer(new Sqlizer\Condition\LogicOperator());
-        $renderer->addSqlizer(new Sqlizer\Condition\Cmp());
-        $renderer->addSqlizer(new Sqlizer\Condition\IsNull());
-        $renderer->addSqlizer(new Sqlizer\Condition\Between());
-        $renderer->addSqlizer(new Sqlizer\Condition\In());
-        $renderer->addSqlizer(new Sqlizer\Condition\Like());
+        $renderer->addSqlizer(new Represent\Condition\CmpOperator());
+        $renderer->addSqlizer(new Represent\Condition\LogicOperator());
+        $renderer->addSqlizer(new Represent\Condition\Cmp());
+        $renderer->addSqlizer(new Represent\Condition\IsNull());
+        $renderer->addSqlizer(new Represent\Condition\Between());
+        $renderer->addSqlizer(new Represent\Condition\In());
+        $renderer->addSqlizer(new Represent\Condition\Like());
         
-        $renderer->addSqlizer(new Sqlizer\Condition\Conditions());
+        $renderer->addSqlizer(new Represent\Condition\Conditions());
     
-        $renderer->addSqlizer(new Sqlizer\Stmt\Select());
-        $renderer->addSqlizer(new Sqlizer\Stmt\From());
-        $renderer->addSqlizer(new Sqlizer\Stmt\Join());
-        $renderer->addSqlizer(new Sqlizer\Stmt\JoinItems());
-        $renderer->addSqlizer(new Sqlizer\Stmt\Where());
-        $renderer->addSqlizer(new Sqlizer\Stmt\Having());
-        $renderer->addSqlizer(new Sqlizer\Stmt\GroupBy());
-        $renderer->addSqlizer(new Sqlizer\Stmt\OrderBy());
-        $renderer->addSqlizer(new Sqlizer\Stmt\OrderByItems());
-        $renderer->addSqlizer(new Sqlizer\Stmt\Limit());
+        $renderer->addSqlizer(new Represent\Stmt\Select());
+        $renderer->addSqlizer(new Represent\Stmt\From());
+        $renderer->addSqlizer(new Represent\Stmt\Join());
+        $renderer->addSqlizer(new Represent\Stmt\JoinItems());
+        $renderer->addSqlizer(new Represent\Stmt\Where());
+        $renderer->addSqlizer(new Represent\Stmt\Having());
+        $renderer->addSqlizer(new Represent\Stmt\GroupBy());
+        $renderer->addSqlizer(new Represent\Stmt\OrderBy());
+        $renderer->addSqlizer(new Represent\Stmt\OrderByItems());
+        $renderer->addSqlizer(new Represent\Stmt\Limit());
     }
     
 }

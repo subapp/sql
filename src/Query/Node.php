@@ -20,6 +20,15 @@ class Node
     private $recognizer;
     
     /**
+     * Node constructor.
+     * @param Recognizer $recognizer
+     */
+    public function __construct(Recognizer $recognizer = null)
+    {
+        $this->recognizer = $recognizer;
+    }
+    
+    /**
      * @param $sql
      * @return ExpressionInterface
      * @throws UnsupportedException

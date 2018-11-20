@@ -86,7 +86,7 @@ class Parameter extends AbstractExpression
      */
     public function getRenderer()
     {
-        return 'sqlizer.parameter';
+        return 'represent.parameter';
     }
     
 }

@@ -44,7 +44,7 @@ class Identifier extends AbstractExpression
      */
     public function getRenderer()
     {
-        return 'sqlizer.identifier';
+        return 'represent.identifier';
     }
     
 }

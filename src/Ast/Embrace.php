@@ -44,7 +44,7 @@ class Embrace extends AbstractExpression
      */
     public function getRenderer()
     {
-        return 'sqlizer.embrace';
+        return 'represent.embrace';
     }
 
 }
