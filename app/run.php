@@ -51,8 +51,8 @@ try {
 
 //    var_dump($select);
     
-    $renderer = new \Subapp\Sql\Render\Renderer();
-    $renderer->setup(new \Subapp\Sql\Render\Common\DefaultRendererSetup());
+    $renderer = new \Subapp\Sql\Representer\Representer();
+    $renderer->setup(new \Subapp\Sql\Representer\Common\DefaultRepresenterSetup());
     
     $processor->setLexer(new Lexer());
     $recognizer = new Recognizer($processor, Recognizer::COMMON);
@@ -67,11 +67,11 @@ try {
     $qb->crossJoin('asd', 'aa', 'aa.id');
     
     $time = microtime(true);
-    echo "\n====== SELECT AST Render ======\n";
-    echo $renderer->render($select);
-    echo ($renderer->render($select) == $sql) ? 'Equal' : 'Not';
+    echo "\n====== SELECT AST Representer ======\n";
+    echo $renderer->toSql($select);
+    echo ($renderer->toSql($select) == $sql) ? 'Equal' : 'Not';
     echo PHP_EOL;
-    echo sprintf('Render: %s', microtime(true) - $time);
+    echo sprintf('Representer: %s', microtime(true) - $time);
     echo PHP_EOL;
     echo sprintf('Parser: %s', $parseTime);
     echo PHP_EOL;
@@ -100,9 +100,9 @@ try {
     
     var_dump(
         $qb->getQuery($renderer),
-        $renderer->render($recognized),
-        $renderer->render($conditions),
-        $renderer->render($node->or($conditions, $node->eq(1, 10)))
+        $renderer->toSql($recognized),
+        $renderer->toSql($conditions),
+        $renderer->toSql($node->or($conditions, $node->eq(1, 10)))
     );
     
 //    var_dump(

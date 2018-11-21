@@ -72,7 +72,7 @@ class Collection extends BaseCollection implements NodeInterface
      */
     public function getRenderer()
     {
-        return 'represent.collection';
+        return 'converter.collection';
     }
 
     /**

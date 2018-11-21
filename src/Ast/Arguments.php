@@ -14,7 +14,7 @@ class Arguments extends Collection
      */
     public function getRenderer()
     {
-        return 'represent.arguments';
+        return 'converter.arguments';
     }
 
 }

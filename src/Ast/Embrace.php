@@ -44,7 +44,7 @@ class Embrace extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.embrace';
+        return 'converter.embrace';
     }
 
 }

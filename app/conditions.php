@@ -2,8 +2,8 @@
 
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Platform\MySQLPlatform;
-use Subapp\Sql\Render\Common\DefaultRendererSetup;
-use Subapp\Sql\Render\Renderer;
+use Subapp\Sql\Representer\Common\DefaultRepresenterSetup;
+use Subapp\Sql\Representer\Representer;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\Processor;
 
@@ -48,8 +48,8 @@ $conditions = [
 $processor = new Processor($lexer, new MySQLPlatform());
 $processor->setup(new DefaultParserSetup());
 
-$renderer = new Renderer();
-$renderer->setup(new DefaultRendererSetup());
+$renderer = new Representer();
+$renderer->setup(new DefaultRepresenterSetup());
 
 $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
 $parser = new \Subapp\Sql\Syntax\Common\Parser\Condition\Conditional();
@@ -61,7 +61,7 @@ foreach ($conditions as $expression) {
     $lexer->tokenize($expression, true);
     $lexer->rewind();
 
-    echo sprintf("raw: %s; rendered: %s;\n", $expression, $renderer->render($parser->parse($lexer, $processor)));
+    echo sprintf("raw: %s; rendered: %s;\n", $expression, $renderer->toSql($parser->parse($lexer, $processor)));
     
     /*var_dump([
         'isTokenBetweenBraces' => $parser->isTokenBetweenBraces($lexer, true, ...$operators),

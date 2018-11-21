@@ -68,7 +68,7 @@ class Variable extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.variable';
+        return 'converter.variable';
     }
 
 }

@@ -67,7 +67,7 @@ class FieldPath extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.field_path';
+        return 'converter.field_path';
     }
     
 }

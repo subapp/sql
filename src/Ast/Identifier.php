@@ -44,7 +44,7 @@ class Identifier extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.identifier';
+        return 'converter.identifier';
     }
     
 }

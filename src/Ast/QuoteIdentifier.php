@@ -14,7 +14,7 @@ class QuoteIdentifier extends Identifier
      */
     public function getRenderer()
     {
-        return 'represent.quote_identifier';
+        return 'converter.quote_identifier';
     }
     
 }

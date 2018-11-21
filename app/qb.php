@@ -5,15 +5,15 @@ use Subapp\Sql\Platform\MySQLPlatform;
 use Subapp\Sql\Query\Node;
 use Subapp\Sql\Query\QueryBuilder;
 use Subapp\Sql\Query\Recognizer;
-use Subapp\Sql\Render\Common\DefaultRendererSetup;
-use Subapp\Sql\Render\Renderer;
+use Subapp\Sql\Representer\Common\DefaultRepresenterSetup;
+use Subapp\Sql\Representer\Representer;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\Processor;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$renderer = new Renderer();
-$renderer->setup(new DefaultRendererSetup());
+$renderer = new Representer();
+$renderer->setup(new DefaultRepresenterSetup());
 
 $lexer = new Lexer();
 $processor = new Processor($lexer);
@@ -69,7 +69,7 @@ $c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 
 //var_dump($qb);
 
-echo $renderer->render($qb->getAst()) . PHP_EOL;
+echo $renderer->toSql($qb->getAst()) . PHP_EOL;
 var_dump(
     json_encode($renderer->toArray($qb->getAst()))
 );

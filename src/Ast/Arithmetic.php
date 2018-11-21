@@ -14,7 +14,7 @@ class Arithmetic extends Collection
      */
     public function getRenderer()
     {
-        return 'represent.arithmetic';
+        return 'converter.arithmetic';
     }
 
 }

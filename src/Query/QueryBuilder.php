@@ -4,7 +4,7 @@ namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
 use Subapp\Sql\Exception\UnsupportedException;
-use Subapp\Sql\Render\RendererInterface;
+use Subapp\Sql\Representer\RepresenterInterface;
 
 /**
  * Query Builder (Facade) based on AST
@@ -272,12 +272,12 @@ class QueryBuilder
     }
     
     /**
-     * @param RendererInterface $renderer
+     * @param RepresenterInterface $renderer
      * @return string
      */
-    public function getQuery(RendererInterface $renderer)
+    public function getQuery(RepresenterInterface $renderer)
     {
-        return $renderer->render($this->getAst());
+        return $renderer->toSql($this->getAst());
     }
     
     

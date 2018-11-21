@@ -86,7 +86,7 @@ class Parameter extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.parameter';
+        return 'converter.parameter';
     }
     
 }

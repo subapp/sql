@@ -73,7 +73,7 @@ class Literal extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.literal';
+        return 'converter.literal';
     }
 
 }

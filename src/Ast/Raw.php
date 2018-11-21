@@ -44,7 +44,7 @@ class Raw extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.raw';
+        return 'converter.raw';
     }
     
 }

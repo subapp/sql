@@ -50,7 +50,7 @@ class MathOperator extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'represent.math_operator';
+        return 'converter.math_operator';
     }
     
 }
