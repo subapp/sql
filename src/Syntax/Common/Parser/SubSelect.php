@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Embrace;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -18,7 +18,7 @@ class SubSelect extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|Embrace
+     * @return NodeInterface|Embrace
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

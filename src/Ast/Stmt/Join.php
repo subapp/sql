@@ -2,14 +2,14 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
-use Subapp\Sql\Ast\AbstractExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\AbstractNode;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Class Join
  * @package Subapp\Sql\Ast
  */
-class Join extends AbstractExpression
+class Join extends AbstractNode
 {
     
     const INNER         = 'INNER';
@@ -22,12 +22,12 @@ class Join extends AbstractExpression
     const USING = 'USING';
     
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $left;
     
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $condition;
     
@@ -52,7 +52,7 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getLeft()
     {
@@ -60,9 +60,9 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @param ExpressionInterface $left
+     * @param NodeInterface $left
      */
-    public function setLeft(ExpressionInterface $left)
+    public function setLeft(NodeInterface $left)
     {
         $this->left = $left;
     }
@@ -84,7 +84,7 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getCondition()
     {
@@ -92,9 +92,9 @@ class Join extends AbstractExpression
     }
     
     /**
-     * @param ExpressionInterface $collection
+     * @param NodeInterface $collection
      */
-    public function setCondition(ExpressionInterface $collection)
+    public function setCondition(NodeInterface $collection)
     {
         $this->condition = $collection;
     }

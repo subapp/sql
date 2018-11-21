@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Arguments;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Variable;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common;
@@ -20,7 +20,7 @@ class Variables extends Common\Parser\AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|Arguments
+     * @return NodeInterface|Arguments
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

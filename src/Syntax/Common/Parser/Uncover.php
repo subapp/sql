@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ParserInterface;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -18,7 +18,7 @@ class Uncover extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
@@ -28,7 +28,7 @@ class Uncover extends AbstractDefaultParser
     /**
      * @param ParserInterface $parser
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function uncover(ParserInterface $parser, ProcessorInterface $processor)
     {

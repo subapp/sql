@@ -2,13 +2,13 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
-use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\AbstractNode;
 
 /**
  * Class LogicOperator
  * @package Subapp\Sql\Ast
  */
-class LogicOperator extends AbstractExpression
+class LogicOperator extends AbstractNode
 {
 
     const AND = 'AND';

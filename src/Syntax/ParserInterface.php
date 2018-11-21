@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Syntax;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Exception\SyntaxErrorException;
 
 /**
@@ -50,7 +50,7 @@ interface ParserInterface
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor);
     

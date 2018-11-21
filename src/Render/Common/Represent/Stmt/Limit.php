@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent\Stmt;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Ast\Stmt\Limit as LimitExpression;
 use Subapp\Sql\Render\AbstractRepresent;
@@ -16,14 +16,14 @@ class Limit extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|LimitExpression $expression
+     * @param NodeInterface|LimitExpression $node
      * @param RendererInterface                   $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        $offset = $expression->getOffset();
-        $length = $expression->getLength();
+        $offset = $node->getOffset();
+        $length = $node->getLength();
         
         switch (true) {
             case ($length instanceOf Literal && !($offset instanceOf Literal)):
@@ -34,5 +34,26 @@ class Limit extends AbstractRepresent
     
         return null;
     }
-    
+
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|LimitExpression $node
+     */
+    public function toArray(NodeInterface $node, RendererInterface $renderer)
+    {
+        return [
+            'offset' => $node->getOffset(),
+            'length' => $node->getLength(),
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $values, RendererInterface $renderer)
+    {
+        // TODO: Implement fromArray() method.
+    }
+
 }

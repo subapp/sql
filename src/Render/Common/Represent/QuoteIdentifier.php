@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Identifier as IdentifierExpression;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -14,13 +14,13 @@ class QuoteIdentifier extends Identifier
 {
     
     /**
-     * @param ExpressionInterface|IdentifierExpression $expression
+     * @param NodeInterface|IdentifierExpression $node
      * @param RendererInterface   $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        return sprintf('`%s`', parent::getSql($expression->getIdentifier(), $renderer));
+        return sprintf('`%s`', parent::getSql($node->getIdentifier(), $renderer));
     }
     
 }

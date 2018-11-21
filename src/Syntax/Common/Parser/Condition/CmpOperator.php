@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser\Condition;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Condition\Operator as CmpOperatorExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -28,7 +28,7 @@ class CmpOperator extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return CmpOperatorExpression|ExpressionInterface
+     * @return CmpOperatorExpression|NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

@@ -18,7 +18,7 @@ class Select extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return \Subapp\Sql\Ast\ExpressionInterface|Ast\Stmt\Select
+     * @return \Subapp\Sql\Ast\NodeInterface|Ast\Stmt\Select
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
@@ -63,7 +63,7 @@ class Select extends AbstractDefaultParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return Ast\ExpressionInterface|Ast\Stmt\From
+     * @return Ast\NodeInterface|Ast\Stmt\From
      */
     public function parseFromExpression(ProcessorInterface $processor)
     {

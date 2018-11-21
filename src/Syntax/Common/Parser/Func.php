@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Func\DefaultFunction;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -24,7 +24,7 @@ class Func extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|DefaultFunction
+     * @return NodeInterface|DefaultFunction
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

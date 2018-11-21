@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Query;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Syntax\ParserInterface;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -80,7 +80,7 @@ class Recognizer
     
     /**
      * @param string $sql
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function recognize($sql)
     {

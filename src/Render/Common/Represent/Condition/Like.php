@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\Common\Represent\Condition;
 
 use Subapp\Sql\Ast\Condition\Like as LikeExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -15,16 +15,16 @@ class Like extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|LikeExpression $expression
+     * @param NodeInterface|LikeExpression $node
      * @param RendererInterface                  $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
         return sprintf('%s%s LIKE %s',
-            $renderer->render($expression->getLeft()),
-            ($expression->isNot() ? ' NOT' : null),
-            $renderer->render($expression->getRight()));
+            $renderer->render($node->getLeft()),
+            ($node->isNot() ? ' NOT' : null),
+            $renderer->render($node->getRight()));
     }
     
 }

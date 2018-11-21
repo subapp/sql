@@ -3,13 +3,13 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast;
-use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\AbstractNode;
 
 /**
  * Class AbstractCommonStmt
  * @package Subapp\Sql\Ast\Stmt
  */
-abstract class AbstractCommonStmt extends AbstractExpression
+abstract class AbstractCommonStmt extends AbstractNode
 {
 
     /**

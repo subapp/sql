@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Identifier as IdentifierExpression;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
@@ -15,13 +15,31 @@ class Identifier extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|IdentifierExpression $expression
+     * @param NodeInterface|IdentifierExpression $node
      * @param RendererInterface                        $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        return (string)$expression->getIdentifier();
+        return (string)$node->getIdentifier();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|IdentifierExpression $node
+     */
+    public function toArray(NodeInterface $node, RendererInterface $renderer)
+    {
+        return ['identifier' => $node->getIdentifier(),];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $values, RendererInterface $renderer)
+    {
+
     }
     
 }

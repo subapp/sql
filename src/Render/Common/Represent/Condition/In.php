@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\Common\Represent\Condition;
 
 use Subapp\Sql\Ast\Condition\In as InExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -15,16 +15,16 @@ class In extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|InExpression $expression
+     * @param NodeInterface|InExpression $node
      * @param RendererInterface                $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
         return sprintf('%s%sIN(%s)',
-            $renderer->render($expression->getLeft()),
-            ($expression->isNot() ? ' NOT ' : ' '),
-            $renderer->render($expression->getRight()));
+            $renderer->render($node->getLeft()),
+            ($node->isNot() ? ' NOT ' : ' '),
+            $renderer->render($node->getRight()));
     }
     
 }

@@ -8,7 +8,7 @@ use Subapp\Sql\Common\ClassNameTrait;
  * Class AbstractExpression
  * @package Subapp\Sql\Ast
  */
-abstract class AbstractExpression implements ExpressionInterface
+abstract class AbstractNode implements NodeInterface
 {
 
     use ClassNameTrait;

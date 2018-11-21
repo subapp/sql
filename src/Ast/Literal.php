@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast;
  * Class Literal
  * @package Subapp\Sql\Ast
  */
-class Literal extends AbstractExpression
+class Literal extends AbstractNode
 {
 
     public const STRING  = 1;

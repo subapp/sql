@@ -6,25 +6,25 @@ namespace Subapp\Sql\Ast;
  * Class Embrace
  * @package Subapp\Sql\Ast
  */
-class Embrace extends AbstractExpression
+class Embrace extends AbstractNode
 {
 
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $inner;
 
     /**
      * Embrace constructor.
-     * @param ExpressionInterface $inner
+     * @param NodeInterface $inner
      */
-    public function __construct(ExpressionInterface $inner = null)
+    public function __construct(NodeInterface $inner = null)
     {
         $this->inner = $inner;
     }
 
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getInner()
     {
@@ -32,9 +32,9 @@ class Embrace extends AbstractExpression
     }
 
     /**
-     * @param ExpressionInterface $inner
+     * @param NodeInterface $inner
      */
-    public function setInner(ExpressionInterface $inner)
+    public function setInner(NodeInterface $inner)
     {
         $this->inner = $inner;
     }

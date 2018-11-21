@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast;
  * Class Identifier
  * @package Subapp\Sql\Ast
  */
-class Identifier extends AbstractExpression
+class Identifier extends AbstractNode
 {
     
     /**
@@ -24,7 +24,7 @@ class Identifier extends AbstractExpression
     }
     
     /**
-     * @return string|ExpressionInterface
+     * @return string|NodeInterface
      */
     public function getIdentifier()
     {
@@ -32,7 +32,7 @@ class Identifier extends AbstractExpression
     }
     
     /**
-     * @param string|ExpressionInterface $identifier
+     * @param string|NodeInterface $identifier
      */
     public function setIdentifier($identifier)
     {

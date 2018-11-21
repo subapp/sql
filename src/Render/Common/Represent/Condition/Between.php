@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\Common\Represent\Condition;
 
 use Subapp\Sql\Ast\Condition\Between as BetweenExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -15,17 +15,17 @@ class Between extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|BetweenExpression $expression
+     * @param NodeInterface|BetweenExpression $node
      * @param RendererInterface                     $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
         return sprintf('%s%sBETWEEN %s AND %s',
-            $renderer->render($expression->getLeft()),
-            ($expression->isNot() ? ' NOT ' : ' '),
-            $renderer->render($expression->getA()),
-            $renderer->render($expression->getB()));
+            $renderer->render($node->getLeft()),
+            ($node->isNot() ? ' NOT ' : ' '),
+            $renderer->render($node->getA()),
+            $renderer->render($node->getB()));
     }
     
 }

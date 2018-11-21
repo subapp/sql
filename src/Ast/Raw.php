@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast;
  * Class Raw
  * @package Subapp\Sql\Ast
  */
-class Raw extends AbstractExpression
+class Raw extends AbstractNode
 {
     
     /**

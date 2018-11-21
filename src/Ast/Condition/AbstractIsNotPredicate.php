@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Class AbstractIsNotComparison
@@ -19,10 +19,10 @@ abstract class AbstractIsNotPredicate extends AbstractPredicate
     /**
      * AbstractIsNotComparison constructor.
      * @param                     boolean $isNot
-     * @param ExpressionInterface|null    $left
-     * @param ExpressionInterface|null    $right
+     * @param NodeInterface|null    $left
+     * @param NodeInterface|null    $right
      */
-    public function __construct($isNot = false, ExpressionInterface $left = null, ExpressionInterface $right = null)
+    public function __construct($isNot = false, NodeInterface $left = null, NodeInterface $right = null)
     {
         parent::__construct($left, $right);
         

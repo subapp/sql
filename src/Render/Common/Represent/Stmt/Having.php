@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent\Stmt;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\Having as HavingExpression;
 use Subapp\Sql\Render\Common\Represent\Condition\Conditions;
 use Subapp\Sql\Render\RendererInterface;
@@ -15,13 +15,13 @@ class Having extends Conditions
 {
 
     /**
-     * @param ExpressionInterface|HavingExpression $expression
+     * @param NodeInterface|HavingExpression $node
      * @param RendererInterface $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        return $expression->isNotEmpty() ? sprintf(' HAVING %s', parent::getSql($expression, $renderer)) : null;
+        return $node->isNotEmpty() ? sprintf(' HAVING %s', parent::getSql($node, $renderer)) : null;
     }
 
 }

@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Ast;
 
 /**
- * Interface ExpressionInterface
+ * Interface NodeInterface
  * @package Subapp\Sql\Ast
  */
-interface ExpressionInterface
+interface NodeInterface
 {
     
     /**

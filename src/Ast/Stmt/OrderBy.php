@@ -2,14 +2,14 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
-use Subapp\Sql\Ast\AbstractExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\AbstractNode;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Class OrderBy
  * @package Subapp\Sql\Ast
  */
-class OrderBy extends AbstractExpression
+class OrderBy extends AbstractNode
 {
     
     const ASC   = 'ASC';
@@ -21,17 +21,17 @@ class OrderBy extends AbstractExpression
     private $direction;
     
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $expression;
     
     /**
      * OrderBy constructor.
      *
-     * @param ExpressionInterface $expression
+     * @param NodeInterface $expression
      * @param string              $direction
      */
-    public function __construct(ExpressionInterface $expression = null, $direction = OrderBy::ASC)
+    public function __construct(NodeInterface $expression = null, $direction = OrderBy::ASC)
     {
         $this->expression = $expression;
         $this->direction = $direction;
@@ -54,7 +54,7 @@ class OrderBy extends AbstractExpression
     }
     
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getExpression()
     {
@@ -62,9 +62,9 @@ class OrderBy extends AbstractExpression
     }
     
     /**
-     * @param ExpressionInterface $expression
+     * @param NodeInterface $expression
      */
-    public function setExpression(ExpressionInterface $expression)
+    public function setExpression(NodeInterface $expression)
     {
         $this->expression = $expression;
     }

@@ -47,7 +47,7 @@ class QueryBuilder
     }
     
     /**
-     * @param string|Ast\ExpressionInterface ...$variables
+     * @param string|Ast\NodeInterface ...$variables
      * @return $this
      */
     public function select(...$variables)
@@ -117,7 +117,7 @@ class QueryBuilder
     
     /**
      * @param Ast\Condition\Conditions       $conditions
-     * @param Ast\ExpressionInterface|string $e
+     * @param Ast\NodeInterface|string $e
      * @param bool                           $clear
      * @return $this
      */
@@ -156,7 +156,7 @@ class QueryBuilder
     /**
      * @param string                         $table
      * @param string                         $a
-     * @param string|Ast\ExpressionInterface $condition
+     * @param string|Ast\NodeInterface $condition
      * @return QueryBuilder
      */
     public function rightJoin($table, $a, $condition)
@@ -167,7 +167,7 @@ class QueryBuilder
     /**
      * @param string                         $table
      * @param string                         $a
-     * @param string|Ast\ExpressionInterface $condition
+     * @param string|Ast\NodeInterface $condition
      * @return QueryBuilder
      */
     public function leftJoin($table, $a, $condition)
@@ -178,7 +178,7 @@ class QueryBuilder
     /**
      * @param string                         $table
      * @param string                         $a
-     * @param string|Ast\ExpressionInterface $condition
+     * @param string|Ast\NodeInterface $condition
      * @return QueryBuilder
      */
     public function innerJoin($table, $a, $condition)
@@ -189,7 +189,7 @@ class QueryBuilder
     /**
      * @param string                         $table
      * @param string                         $a
-     * @param string|Ast\ExpressionInterface $condition
+     * @param string|Ast\NodeInterface $condition
      * @param string                         $type
      * @return $this
      */
@@ -210,7 +210,7 @@ class QueryBuilder
     }
     
     /**
-     * @param string|Ast\ExpressionInterface ...$variables
+     * @param string|Ast\NodeInterface ...$variables
      * @return $this
      */
     public function group(...$variables)
@@ -223,7 +223,7 @@ class QueryBuilder
     }
     
     /**
-     * @param string|Ast\ExpressionInterface ...$arguments
+     * @param string|Ast\NodeInterface ...$arguments
      * @return $this
      */
     public function order(...$arguments)

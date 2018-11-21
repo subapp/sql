@@ -70,5 +70,8 @@ $c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 //var_dump($qb);
 
 echo $renderer->render($qb->getAst()) . PHP_EOL;
+var_dump(
+    json_encode($renderer->toArray($qb->getAst()))
+);
 //echo $renderer->render($conditions) . PHP_EOL;
 

@@ -4,7 +4,7 @@ namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
 use Subapp\Sql\Ast\Condition;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Exception\UnsupportedException;
 
 /**
@@ -30,13 +30,13 @@ class Node
     
     /**
      * @param $sql
-     * @return ExpressionInterface
+     * @return NodeInterface
      * @throws UnsupportedException
      */
     public function recognize($sql)
     {
         switch (true) {
-            case ($sql instanceOf ExpressionInterface):
+            case ($sql instanceOf NodeInterface):
                 return $sql;
             
             case is_null($sql):
@@ -57,7 +57,7 @@ class Node
             
             case is_object($sql):
                 throw new UnsupportedException(sprintf('Object recognizing able only for "%s" but "%s" passed',
-                    ExpressionInterface::class, get_class($sql)));
+                    NodeInterface::class, get_class($sql)));
             
             default:
                 return $this->recognizer->recognize($sql);
@@ -66,7 +66,7 @@ class Node
     
     /**
      * @param                         $operator
-     * @param Ast\ExpressionInterface ...$predicates
+     * @param Ast\NodeInterface ...$predicates
      * @return Condition\Conditions
      */
     public function conditions($operator, ...$predicates)
@@ -83,7 +83,7 @@ class Node
     /**
      * (Condition AND Condition)
      *
-     * @param Ast\ExpressionInterface ...$terms
+     * @param Ast\NodeInterface ...$terms
      * @return Condition\Conditions
      */
     public function and(...$terms)
@@ -92,7 +92,7 @@ class Node
     }
     
     /**
-     * @param Ast\ExpressionInterface ...$terms
+     * @param Ast\NodeInterface ...$terms
      * @return Condition\Conditions
      */
     public function or(...$terms)
@@ -101,7 +101,7 @@ class Node
     }
     
     /**
-     * @param Ast\ExpressionInterface ...$terms
+     * @param Ast\NodeInterface ...$terms
      * @return Condition\Conditions
      */
     public function xor(...$terms)
@@ -266,7 +266,7 @@ class Node
     }
     
     /**
-     * @param ExpressionInterface ...$values
+     * @param NodeInterface ...$values
      * @return Ast\Arguments
      */
     public function arguments(...$values)
@@ -275,7 +275,7 @@ class Node
     }
     
     /**
-     * @param string|ExpressionInterface $var
+     * @param string|NodeInterface $var
      * @param null                       $alias
      * @return Ast\Variable
      */

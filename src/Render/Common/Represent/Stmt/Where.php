@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent\Stmt;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\Where as WhereExpression;
 use Subapp\Sql\Render\Common\Represent\Condition\Conditions;
 use Subapp\Sql\Render\RendererInterface;
@@ -15,13 +15,13 @@ class Where extends Conditions
 {
     
     /**
-     * @param ExpressionInterface|WhereExpression $expression
+     * @param NodeInterface|WhereExpression $node
      * @param RendererInterface                   $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        return $expression->isNotEmpty() ? sprintf(' WHERE %s', parent::getSql($expression, $renderer)) : null;
+        return $node->isNotEmpty() ? sprintf(' WHERE %s', parent::getSql($node, $renderer)) : null;
     }
     
 }

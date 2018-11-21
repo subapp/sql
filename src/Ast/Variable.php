@@ -6,33 +6,33 @@ namespace Subapp\Sql\Ast;
  * Class Variable
  * @package Subapp\Sql\Ast
  */
-class Variable extends AbstractExpression
+class Variable extends AbstractNode
 {
 
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $alias;
 
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $expression;
 
     /**
      * Alias constructor.
      *
-     * @param ExpressionInterface $expression
-     * @param ExpressionInterface $alias
+     * @param NodeInterface $expression
+     * @param NodeInterface $alias
      */
-    public function __construct(ExpressionInterface $expression = null, ExpressionInterface $alias = null)
+    public function __construct(NodeInterface $expression = null, NodeInterface $alias = null)
     {
         $this->expression = $expression;
         $this->alias = $alias;
     }
 
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getAlias()
     {
@@ -40,15 +40,15 @@ class Variable extends AbstractExpression
     }
 
     /**
-     * @param ExpressionInterface $alias
+     * @param NodeInterface $alias
      */
-    public function setAlias(ExpressionInterface $alias)
+    public function setAlias(NodeInterface $alias)
     {
         $this->alias = $alias;
     }
 
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getExpression()
     {
@@ -56,9 +56,9 @@ class Variable extends AbstractExpression
     }
 
     /**
-     * @param ExpressionInterface $expression
+     * @param NodeInterface $expression
      */
-    public function setExpression(ExpressionInterface $expression)
+    public function setExpression(NodeInterface $expression)
     {
         $this->expression = $expression;
     }

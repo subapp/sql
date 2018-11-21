@@ -8,7 +8,7 @@ use Subapp\Sql\Ast\Condition\Cmp;
 use Subapp\Sql\Ast\Condition\In;
 use Subapp\Sql\Ast\Condition\IsNull;
 use Subapp\Sql\Ast\Condition\Like;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -23,7 +23,7 @@ class Predicate extends AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

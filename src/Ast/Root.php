@@ -6,10 +6,13 @@ use Subapp\Sql\Ast;
 use Subapp\Sql\Exception\UnsupportedException;
 
 /**
+ *
+ * Root AST node is intermediate layer between StatementNode -> (Root) -> CommonNodes
+ *
  * Class Root
  * @package Subapp\Sql\Ast
  */
-class Root extends AbstractExpression
+class Root extends AbstractNode
 {
 
     /**

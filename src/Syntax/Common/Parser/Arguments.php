@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Arguments as ArgsExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -19,7 +19,7 @@ class Arguments extends Common\Parser\AbstractDefaultParser
     /**
      * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|ArgsExpression
+     * @return NodeInterface|ArgsExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

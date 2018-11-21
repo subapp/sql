@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\QuoteIdentifier as QuoteIdentifierExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -18,7 +18,7 @@ class QuoteIdentifier extends Identifier
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|QuoteIdentifierExpression
+     * @return NodeInterface|QuoteIdentifierExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

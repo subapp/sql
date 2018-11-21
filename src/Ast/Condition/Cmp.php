@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Class Cmp
@@ -18,11 +18,11 @@ class Cmp extends AbstractPredicate
     
     /**
      * Cmp constructor.
-     * @param ExpressionInterface|null $left
+     * @param NodeInterface|null $left
      * @param Operator|null            $operator
-     * @param ExpressionInterface|null $right
+     * @param NodeInterface|null $right
      */
-    public function __construct(ExpressionInterface $left = null, Operator $operator = null, ExpressionInterface $right = null)
+    public function __construct(NodeInterface $left = null, Operator $operator = null, NodeInterface $right = null)
     {
         parent::__construct($left, $right);
         

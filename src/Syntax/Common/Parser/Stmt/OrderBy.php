@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\OrderBy as OrderByItem;
 use Subapp\Sql\Ast\Stmt\OrderByItems;
 use Subapp\Sql\Lexer\Lexer;
@@ -20,7 +20,7 @@ class OrderBy extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|OrderByItems
+     * @return NodeInterface|OrderByItems
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

@@ -2,22 +2,36 @@
 
 namespace Subapp\Sql\Render;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
- * Interface SqlizerInterface
+ * Interface RepresentInterface
  * @package Subapp\Sql\Render
  */
 interface RepresentInterface
 {
 
     /**
-     * @param ExpressionInterface $expression
+     * @param NodeInterface $node
      * @param RendererInterface   $renderer
      *
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer);
+    public function getSql(NodeInterface $node, RendererInterface $renderer);
+
+    /**
+     * @param NodeInterface $node
+     * @param RendererInterface $renderer
+     * @return array
+     */
+    public function toArray(NodeInterface $node, RendererInterface $renderer);
+
+    /**
+     * @param array $values
+     * @param RendererInterface $renderer
+     * @return NodeInterface
+     */
+    public function toNode(array $values, RendererInterface $renderer);
 
     /**
      * @return string

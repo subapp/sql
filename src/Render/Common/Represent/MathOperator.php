@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\MathOperator as MathOperatorExpression;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
@@ -15,13 +15,31 @@ class MathOperator extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|MathOperatorExpression $expression
+     * @param NodeInterface|MathOperatorExpression $node
      * @param RendererInterface                          $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        return $expression->getOperator();
+        return $node->getOperator();
     }
-    
+
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|MathOperatorExpression $node
+     */
+    public function toArray(NodeInterface $node, RendererInterface $renderer)
+    {
+        return ['operator' => $node->getOperator(),];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $values, RendererInterface $renderer)
+    {
+        // TODO: Implement fromArray() method.
+    }
+
 }

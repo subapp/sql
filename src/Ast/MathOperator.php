@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast;
  * Class MathOperator
  * @package Subapp\Sql\Ast
  */
-class MathOperator extends AbstractExpression
+class MathOperator extends AbstractNode
 {
     
     const NONE     = null;

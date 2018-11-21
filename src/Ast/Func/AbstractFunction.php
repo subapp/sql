@@ -2,16 +2,16 @@
 
 namespace Subapp\Sql\Ast\Func;
 
-use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\AbstractNode;
 use Subapp\Sql\Ast\Arguments;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Identifier;
 
 /**
  * Class AbstractFunction
  * @package Subapp\Sql\Ast
  */
-abstract class AbstractFunction extends AbstractExpression
+abstract class AbstractFunction extends AbstractNode
 {
     
     /**
@@ -66,7 +66,7 @@ abstract class AbstractFunction extends AbstractExpression
     
     /**
      * @param $index
-     * @return ExpressionInterface|null
+     * @return NodeInterface|null
      */
     public function get($index)
     {
@@ -74,9 +74,9 @@ abstract class AbstractFunction extends AbstractExpression
     }
     
     /**
-     * @param ExpressionInterface $expression
+     * @param NodeInterface $expression
      */
-    public function append(ExpressionInterface $expression)
+    public function append(NodeInterface $expression)
     {
         $this->arguments->append($expression);
     }

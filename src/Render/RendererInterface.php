@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Interface RendererInterface
@@ -17,31 +17,44 @@ interface RendererInterface
     public function setup(RendererSetupInterface $rendererSetup);
     
     /**
-     * @param ExpressionInterface $expression
+     * @param NodeInterface $expression
      * @return string
      */
-    public function render(ExpressionInterface $expression);
-    
+    public function render(NodeInterface $expression);
+
     /**
-     * @param RepresentInterface $sqlizer
+     * @param NodeInterface $expression
+     * @return array
      */
-    public function addRepresent(RepresentInterface $sqlizer);
+    public function toArray(NodeInterface $expression);
+
+    /**
+     * @param NodeInterface $node
+     * @param array $values
+     * @return NodeInterface
+     */
+    public function fromArray(NodeInterface $node, array $values);
+
+    /**
+     * @param RepresentInterface $represent
+     */
+    public function addRepresent(RepresentInterface $represent);
     
     /**
      * @param string $name
      */
-    public function removeSqlizer($name);
+    public function removeRepresent($name);
     
     /**
      * @param string $name
      * @return boolean
      */
-    public function hasSqlizer($name);
+    public function hasRepresent($name);
     
     /**
      * @param string $name
      * @return RepresentInterface
      */
-    public function getSqlizer($name);
+    public function getRepresent($name);
 
 }

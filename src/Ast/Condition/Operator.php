@@ -2,13 +2,13 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
-use Subapp\Sql\Ast\AbstractExpression;
+use Subapp\Sql\Ast\AbstractNode;
 
 /**
  * Class ComparisonOperator
  * @package Subapp\Sql\Ast\Condition
  */
-class Operator extends AbstractExpression
+class Operator extends AbstractNode
 {
 
     const EQ = '=';

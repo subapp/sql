@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast;
  * Class AbstractFunction
  * @package Subapp\Sql\Ast
  */
-abstract class AbstractFunction extends AbstractExpression
+abstract class AbstractFunction extends AbstractNode
 {
     
     /**
@@ -61,7 +61,7 @@ abstract class AbstractFunction extends AbstractExpression
     
     /**
      * @param $index
-     * @return ExpressionInterface|null
+     * @return NodeInterface|null
      */
     public function get($index)
     {
@@ -69,9 +69,9 @@ abstract class AbstractFunction extends AbstractExpression
     }
     
     /**
-     * @param ExpressionInterface $expression
+     * @param NodeInterface $expression
      */
-    public function append(ExpressionInterface $expression)
+    public function append(NodeInterface $expression)
     {
         $this->arguments->append($expression);
     }

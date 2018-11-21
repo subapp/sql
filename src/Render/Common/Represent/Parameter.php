@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Parameter as ParameterExpression;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
@@ -15,19 +15,37 @@ class Parameter extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|ParameterExpression $expression
+     * @param NodeInterface|ParameterExpression $node
      * @param RendererInterface                       $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        $parameter = sprintf('%s', $expression->getType());
+        $parameter = sprintf('%s', $node->getType());
         
-        if ($expression->isNamed()) {
-            $parameter = sprintf('%s%s', $parameter, $expression->getName());
+        if ($node->isNamed()) {
+            $parameter = sprintf('%s%s', $parameter, $node->getName());
         }
         
         return $parameter;
     }
-    
+
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|ParameterExpression $node
+     */
+    public function toArray(NodeInterface $node, RendererInterface $renderer)
+    {
+        return ['name' => $node->getName(), 'type' => $node->getType(),];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $values, RendererInterface $renderer)
+    {
+        // TODO: Implement fromArray() method.
+    }
+
 }

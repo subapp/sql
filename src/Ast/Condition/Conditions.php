@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\Collection;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Class Conditions
@@ -26,7 +26,7 @@ class Conditions extends Collection
     {
         parent::__construct($expressions);
         
-        $this->setClass(ExpressionInterface::class);
+        $this->setClass(NodeInterface::class);
         $this->setOperator($operator);
     }
     

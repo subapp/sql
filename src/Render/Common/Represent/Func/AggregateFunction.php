@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent\Func;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Func\AggregateFunction as AggregateFunctionExpression;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
@@ -15,16 +15,16 @@ class AggregateFunction extends AbstractRepresent
 {
 
     /**
-     * @param ExpressionInterface|AggregateFunctionExpression $expression
+     * @param NodeInterface|AggregateFunctionExpression $node
      * @param RendererInterface $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        $distinct = $expression->isDistinct() ? 'DISTINCT ' : null;
-        $function = strtoupper($renderer->render($expression->getFunctionName()));
+        $distinct = $node->isDistinct() ? 'DISTINCT ' : null;
+        $function = strtoupper($renderer->render($node->getFunctionName()));
 
-        return sprintf('%s(%s%s)', $function, $distinct, $renderer->render($expression->getArguments()));
+        return sprintf('%s(%s%s)', $function, $distinct, $renderer->render($node->getArguments()));
     }
 
 }

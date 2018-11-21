@@ -2,39 +2,39 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
-use Subapp\Sql\Ast\AbstractExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\AbstractNode;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Class AbstractPredicate
  * @package Subapp\Sql\Ast\Condition
  */
-abstract class AbstractPredicate extends AbstractExpression
+abstract class AbstractPredicate extends AbstractNode
 {
     
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $left;
     
     /**
-     * @var ExpressionInterface
+     * @var NodeInterface
      */
     private $right;
     
     /**
      * AbstractComparison constructor.
-     * @param ExpressionInterface $left
-     * @param ExpressionInterface $right
+     * @param NodeInterface $left
+     * @param NodeInterface $right
      */
-    public function __construct(ExpressionInterface $left = null, ExpressionInterface $right = null)
+    public function __construct(NodeInterface $left = null, NodeInterface $right = null)
     {
         $this->left     = $left;
         $this->right    = $right;
     }
     
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getLeft()
     {
@@ -42,15 +42,15 @@ abstract class AbstractPredicate extends AbstractExpression
     }
     
     /**
-     * @param ExpressionInterface $left
+     * @param NodeInterface $left
      */
-    public function setLeft(ExpressionInterface $left)
+    public function setLeft(NodeInterface $left)
     {
         $this->left = $left;
     }
     
     /**
-     * @return ExpressionInterface
+     * @return NodeInterface
      */
     public function getRight()
     {
@@ -58,9 +58,9 @@ abstract class AbstractPredicate extends AbstractExpression
     }
     
     /**
-     * @param ExpressionInterface $right
+     * @param NodeInterface $right
      */
-    public function setRight(ExpressionInterface $right)
+    public function setRight(NodeInterface $right)
     {
         $this->right = $right;
     }

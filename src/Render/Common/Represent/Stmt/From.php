@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Render\Common\Represent\Stmt;
 
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\From as FromExpression;
 use Subapp\Sql\Render\Common\Represent\Arguments;
 use Subapp\Sql\Render\RendererInterface;
@@ -16,12 +16,12 @@ class From extends Arguments
     
     /**
      * @param RendererInterface   $renderer
-     * @param ExpressionInterface|FromExpression $expression
+     * @param NodeInterface|FromExpression $node
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        return sprintf(' FROM %s', parent::getSql($expression, $renderer));
+        return sprintf(' FROM %s', parent::getSql($node, $renderer));
     }
-    
+
 }

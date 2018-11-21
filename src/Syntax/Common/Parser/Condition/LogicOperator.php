@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser\Condition;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Condition\LogicOperator as LogicOperatorExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -25,7 +25,7 @@ class LogicOperator extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|LogicOperatorExpression
+     * @return NodeInterface|LogicOperatorExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

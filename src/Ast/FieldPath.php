@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast;
  * Class FieldPath
  * @package Subapp\Sql\Ast
  */
-class FieldPath extends AbstractExpression
+class FieldPath extends AbstractNode
 {
     
     /**

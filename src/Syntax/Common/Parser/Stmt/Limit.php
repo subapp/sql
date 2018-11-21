@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\Limit as LimitExpression;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
@@ -19,7 +19,7 @@ class Limit extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|LimitExpression
+     * @return NodeInterface|LimitExpression
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

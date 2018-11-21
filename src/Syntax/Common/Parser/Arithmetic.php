@@ -4,7 +4,7 @@ namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Arithmetic as ArithmeticExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\MathOperator;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -19,7 +19,7 @@ class Arithmetic extends AbstractDefaultParser
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
-     * @return ExpressionInterface|Arithmetic
+     * @return NodeInterface|Arithmetic
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

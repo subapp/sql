@@ -9,7 +9,7 @@ use Subapp\Sql\Common\Collection as BaseCollection;
  * Class Collection
  * @package Subapp\Sql\Ast
  */
-class Collection extends BaseCollection implements ExpressionInterface
+class Collection extends BaseCollection implements NodeInterface
 {
 
     use ClassNameTrait;
@@ -42,13 +42,13 @@ class Collection extends BaseCollection implements ExpressionInterface
     
     /**
      * Collection constructor.
-     * @param array|ExpressionInterface[] $expressions
+     * @param array|NodeInterface[] $expressions
      */
     public function __construct(array $expressions = [])
     {
         parent::__construct($expressions);
 
-        $this->setClass(ExpressionInterface::class);
+        $this->setClass(NodeInterface::class);
     }
     
     /**

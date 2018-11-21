@@ -6,7 +6,7 @@ namespace Subapp\Sql\Ast;
  * Class Parameter
  * @package Subapp\Sql\Ast
  */
-class Parameter extends AbstractExpression
+class Parameter extends AbstractNode
 {
     
     const UNNAMED = '?';

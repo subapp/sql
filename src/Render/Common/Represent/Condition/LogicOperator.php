@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\Common\Represent\Condition;
 
 use Subapp\Sql\Ast\Condition\LogicOperator as LogicOperatorExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Render\AbstractRepresent;
 use Subapp\Sql\Render\RendererInterface;
 
@@ -15,13 +15,13 @@ class LogicOperator extends AbstractRepresent
 {
     
     /**
-     * @param ExpressionInterface|LogicOperatorExpression $expression
+     * @param NodeInterface|LogicOperatorExpression $node
      * @param RendererInterface                           $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $expression, RendererInterface $renderer)
+    public function getSql(NodeInterface $node, RendererInterface $renderer)
     {
-        return (string)$expression->getOperator();
+        return (string)$node->getOperator();
     }
     
 }

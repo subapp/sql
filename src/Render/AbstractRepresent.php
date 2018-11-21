@@ -2,6 +2,7 @@
 
 namespace Subapp\Sql\Render;
 
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Common\ClassNameTrait;
 
 /**
@@ -20,5 +21,21 @@ abstract class AbstractRepresent implements RepresentInterface
     {
         return $this->getUnderscore(static::class);
     }
-    
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray(NodeInterface $node, RendererInterface $renderer)
+    {
+        return ['nodeName' => $node->getNodeName(),];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $values, RendererInterface $renderer)
+    {
+        // TODO: Implement fromArray() method.
+    }
+
 }

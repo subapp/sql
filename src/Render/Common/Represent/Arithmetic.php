@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Render\Common\Represent;
 
 use Subapp\Sql\Ast\Arithmetic as ArithmeticExpression;
-use Subapp\Sql\Ast\ExpressionInterface;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Render\RendererInterface;
 
 /**
@@ -14,11 +14,11 @@ class Arithmetic extends Collection
 {
     
     /**
-     * @param ExpressionInterface|ArithmeticExpression $collection
+     * @param NodeInterface|ArithmeticExpression $collection
      * @param RendererInterface                        $renderer
      * @return string
      */
-    public function getSql(ExpressionInterface $collection, RendererInterface $renderer)
+    public function getSql(NodeInterface $collection, RendererInterface $renderer)
     {
         return sprintf($collection->isBraced() ? '(%s)' : '%s', parent::getSql($collection, $renderer));
     }
