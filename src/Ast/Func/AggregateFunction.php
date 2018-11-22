@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast\Func;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class AbstractAggregateFunction
  * @package Subapp\Sql\Ast\Func
@@ -46,7 +48,7 @@ class AggregateFunction extends AbstractFunction
      */
     public function getRenderer()
     {
-        return 'func.aggregate_function';
+        return ConverterInterface::CONVERTER_FUNC_AGGREGATE;
     }
 
 }

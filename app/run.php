@@ -51,8 +51,8 @@ try {
 
 //    var_dump($select);
     
-    $renderer = new \Subapp\Sql\Representer\Representer();
-    $renderer->setup(new \Subapp\Sql\Representer\Common\DefaultRepresenterSetup());
+    $renderer = new \Subapp\Sql\Converter\Representer();
+    $renderer->setup(new \Subapp\Sql\Converter\Common\DefaultRepresenterSetup());
     
     $processor->setLexer(new Lexer());
     $recognizer = new Recognizer($processor, Recognizer::COMMON);
@@ -67,11 +67,11 @@ try {
     $qb->crossJoin('asd', 'aa', 'aa.id');
     
     $time = microtime(true);
-    echo "\n====== SELECT AST Representer ======\n";
+    echo "\n====== SELECT AST Converter ======\n";
     echo $renderer->toSql($select);
     echo ($renderer->toSql($select) == $sql) ? 'Equal' : 'Not';
     echo PHP_EOL;
-    echo sprintf('Representer: %s', microtime(true) - $time);
+    echo sprintf('Converter: %s', microtime(true) - $time);
     echo PHP_EOL;
     echo sprintf('Parser: %s', $parseTime);
     echo PHP_EOL;

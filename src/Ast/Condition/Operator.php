@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\AbstractNode;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class ComparisonOperator
@@ -53,7 +54,7 @@ class Operator extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'condition.cmp_operator';
+        return ConverterInterface::CONVERTER_CONDITION_CMP_OPERATOR;
     }
 
 }

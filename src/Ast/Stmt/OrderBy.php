@@ -4,6 +4,7 @@ namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\AbstractNode;
 use Subapp\Sql\Ast\NodeInterface;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class OrderBy
@@ -74,7 +75,7 @@ class OrderBy extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'stmt.order_by';
+        return ConverterInterface::CONVERTER_STMT_ORDER_BY;
     }
     
 }

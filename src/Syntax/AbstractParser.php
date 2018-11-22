@@ -799,7 +799,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function getName()
     {
-        return $this->helper->getUnderscore(static::class);
+        return $this->helper->getObjectName(static::class, 'Parser');
     }
     
 }

@@ -15,37 +15,37 @@ use Subapp\Sql\Exception\SyntaxErrorException;
 interface ParserInterface
 {
     
-    const PARSER_AGGREGATE_FUNCTION       = 'parser.aggregate_function';
-    const PARSER_ALIAS                    = 'parser.alias';
-    const PARSER_ARGUMENTS                = 'parser.arguments';
-    const PARSER_ARITHMETIC               = 'parser.arithmetic';
-    const PARSER_COMMON                   = 'parser.common';
-    const PARSER_COMPLEX                  = 'parser.complex';
-    const PARSER_CONDITION_CMP_OPERATOR   = 'condition.cmp_operator';
-    const PARSER_CONDITION_CONDITIONAL    = 'condition.conditional';
-    const PARSER_CONDITION_LOGIC_OPERATOR = 'condition.logic_operator';
-    const PARSER_CONDITION_PREDICATE      = 'condition.predicate';
-    const PARSER_DEFAULT_FUNCTION         = 'parser.default_function';
-    const PARSER_EMBRACE                  = 'parser.embrace';
-    const PARSER_EXPRESSION               = 'parser.expression';
-    const PARSER_FIELD_PATH               = 'parser.field_path';
-    const PARSER_FUNC                     = 'parser.func';
-    const PARSER_IDENTIFIER               = 'parser.identifier';
-    const PARSER_LITERAL                  = 'parser.literal';
-    const PARSER_PARAMETER                = 'parser.parameter';
-    const PARSER_PRIMARY                  = 'parser.primary';
-    const PARSER_QUOTE_IDENTIFIER         = 'parser.quote_identifier';
-    const PARSER_STAR                     = 'parser.star';
-    const PARSER_STMT_GROUP_BY            = 'stmt.group_by';
-    const PARSER_STMT_JOIN                = 'stmt.join';
-    const PARSER_STMT_JOIN_ITEMS          = 'stmt.join_items';
-    const PARSER_STMT_LIMIT               = 'stmt.limit';
-    const PARSER_STMT_ORDER_BY            = 'stmt.order_by';
-    const PARSER_STMT_WHERE               = 'stmt.where';
-    const PARSER_SUB_SELECT               = 'parser.sub_select';
-    const PARSER_UNCOVER                  = 'parser.uncover';
-    const PARSER_VARIABLE                 = 'parser.variable';
-    const PARSER_VARIABLES                = 'parser.variables';
+    const PARSER_AGGREGATE_FUNCTION       = 'Parser::AggregateFunction';
+    const PARSER_ALIAS                    = 'Parser::Alias';
+    const PARSER_ARGUMENTS                = 'Parser::Arguments';
+    const PARSER_ARITHMETIC               = 'Parser::Arithmetic';
+    const PARSER_COMMON                   = 'Parser::Common';
+    const PARSER_COMPLEX                  = 'Parser::Complex';
+    const PARSER_CONDITION_CMP_OPERATOR   = 'Parser::CmpOperator';
+    const PARSER_CONDITION_CONDITIONAL    = 'Parser::Conditional';
+    const PARSER_CONDITION_LOGIC_OPERATOR = 'Parser::LogicOperator';
+    const PARSER_CONDITION_PREDICATE      = 'Parser::Predicate';
+    const PARSER_DEFAULT_FUNCTION         = 'Parser::DefaultFunction';
+    const PARSER_EMBRACE                  = 'Parser::Embrace';
+    const PARSER_EXPRESSION               = 'Parser::Expression';
+    const PARSER_FIELD_PATH               = 'Parser::FieldPath';
+    const PARSER_FUNC                     = 'Parser::Func';
+    const PARSER_IDENTIFIER               = 'Parser::Identifier';
+    const PARSER_LITERAL                  = 'Parser::Literal';
+    const PARSER_PARAMETER                = 'Parser::Parameter';
+    const PARSER_PRIMARY                  = 'Parser::Primary';
+    const PARSER_QUOTE_IDENTIFIER         = 'Parser::QuoteIdentifier';
+    const PARSER_STAR                     = 'Parser::Star';
+    const PARSER_STMT_GROUP_BY            = 'Parser::GroupBy';
+    const PARSER_STMT_JOIN                = 'Parser::Join';
+    const PARSER_STMT_JOIN_ITEMS          = 'Parser::JoinItems';
+    const PARSER_STMT_LIMIT               = 'Parser::Limit';
+    const PARSER_STMT_ORDER_BY            = 'Parser::OrderBy';
+    const PARSER_STMT_WHERE               = 'Parser::Where';
+    const PARSER_SUB_SELECT               = 'Parser::SubSelect';
+    const PARSER_UNCOVER                  = 'Parser::Uncover';
+    const PARSER_VARIABLE                 = 'Parser::Variable';
+    const PARSER_VARIABLES                = 'Parser::Variables';
     
     /**
      * @param LexerInterface     $lexer

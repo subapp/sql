@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\Collection;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class GroupBy
@@ -16,7 +17,7 @@ class GroupBy extends Collection
      */
     public function getRenderer()
     {
-        return 'stmt.group_by';
+        return ConverterInterface::CONVERTER_STMT_GROUP_BY;
     }
     
 }

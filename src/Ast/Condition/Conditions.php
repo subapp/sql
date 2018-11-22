@@ -4,6 +4,7 @@ namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\Collection;
 use Subapp\Sql\Ast\NodeInterface;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Conditions
@@ -51,7 +52,7 @@ class Conditions extends Collection
      */
     public function getRenderer()
     {
-        return 'condition.conditions';
+        return ConverterInterface::CONVERTER_CONDITION_CONDITIONS;
     }
     
 }

@@ -18,7 +18,7 @@ abstract class AbstractNode implements NodeInterface
      */
     public function getNodeName()
     {
-        return $this->getUnderscore(static::class);
+        return $this->getObjectName(static::class, 'ASTNode');
     }
 
 }

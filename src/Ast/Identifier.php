@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Identifier
  * @package Subapp\Sql\Ast
@@ -44,7 +46,7 @@ class Identifier extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.identifier';
+        return ConverterInterface::CONVERTER_IDENTIFIER;
     }
     
 }

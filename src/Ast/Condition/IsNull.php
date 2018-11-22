@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class IsNull
  * @package Subapp\Sql\Ast\Condition
@@ -14,7 +16,7 @@ class IsNull extends AbstractIsNotPredicate
      */
     public function getRenderer()
     {
-        return 'condition.is_null';
+        return ConverterInterface::CONVERTER_CONDITION_IS_NULL;
     }
     
 }

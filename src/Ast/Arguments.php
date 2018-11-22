@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Arguments
  * @package Subapp\Sql\Ast
@@ -14,7 +16,7 @@ class Arguments extends Collection
      */
     public function getRenderer()
     {
-        return 'converter.arguments';
+        return ConverterInterface::CONVERTER_ARGS;
     }
 
 }

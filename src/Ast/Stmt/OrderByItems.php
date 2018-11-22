@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\Arguments;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class OrderByCollection
@@ -27,7 +28,7 @@ class OrderByItems extends Arguments
      */
     public function getRenderer()
     {
-        return 'stmt.order_by_items';
+        return ConverterInterface::CONVERTER_STMT_ORDER_BY_ITEMS;
     }
     
 }

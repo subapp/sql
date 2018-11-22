@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class MathOperator
  * @package Subapp\Sql\Ast
@@ -50,7 +52,7 @@ class MathOperator extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.math_operator';
+        return ConverterInterface::CONVERTER_MATH_OPERATOR;
     }
     
 }

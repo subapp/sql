@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Variable
  * @package Subapp\Sql\Ast
@@ -68,7 +70,7 @@ class Variable extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.variable';
+        return ConverterInterface::CONVERTER_VARIABLE;
     }
 
 }

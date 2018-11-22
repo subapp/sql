@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Like
  * @package Subapp\Sql\Ast\Condition
@@ -14,7 +16,7 @@ class Like extends AbstractIsNotPredicate
      */
     public function getRenderer()
     {
-        return 'condition.like';
+        return ConverterInterface::CONVERTER_CONDITION_LIKE;
     }
     
 }

@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\AbstractNode;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class LogicOperator
@@ -50,7 +51,7 @@ class LogicOperator extends AbstractNode
     */
     public function getRenderer()
     {
-        return 'condition.logic_operator';
+        return ConverterInterface::CONVERTER_CONDITION_LOGIC_OPERATOR;
     }
 
 }

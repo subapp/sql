@@ -4,6 +4,7 @@ namespace Subapp\Sql\Ast;
 
 use Subapp\Sql\Common\ClassNameTrait;
 use Subapp\Sql\Common\Collection as BaseCollection;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Collection
@@ -72,7 +73,7 @@ class Collection extends BaseCollection implements NodeInterface
      */
     public function getRenderer()
     {
-        return 'converter.collection';
+        return ConverterInterface::CONVERTER_COLLECTION;
     }
 
     /**
@@ -80,7 +81,7 @@ class Collection extends BaseCollection implements NodeInterface
      */
     public function getNodeName()
     {
-        return $this->getUnderscore(static::class);
+        return $this->getObjectName(static::class);
     }
 
 }

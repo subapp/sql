@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Raw
  * @package Subapp\Sql\Ast
@@ -44,7 +46,7 @@ class Raw extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.raw';
+        return ConverterInterface::CONVERTER_RAW;
     }
     
 }

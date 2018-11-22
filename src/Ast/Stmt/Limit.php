@@ -4,6 +4,7 @@ namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\AbstractNode;
 use Subapp\Sql\Ast\Literal;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Limit
@@ -70,7 +71,7 @@ class Limit extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'stmt.limit';
+        return ConverterInterface::CONVERTER_STMT_LIMIT;
     }
     
 }

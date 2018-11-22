@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Parameter
  * @package Subapp\Sql\Ast
@@ -86,7 +88,7 @@ class Parameter extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.parameter';
+        return ConverterInterface::CONVERTER_PARAMETER;
     }
     
 }

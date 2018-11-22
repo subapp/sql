@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast\Condition;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class In
  * @package Subapp\Sql\Ast\Condition
@@ -14,7 +16,7 @@ class In extends AbstractIsNotPredicate
      */
     public function getRenderer()
     {
-        return 'condition.in';
+        return ConverterInterface::CONVERTER_CONDITION_IN;
     }
     
 }

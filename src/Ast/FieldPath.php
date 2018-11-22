@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class FieldPath
  * @package Subapp\Sql\Ast
@@ -67,7 +69,7 @@ class FieldPath extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.field_path';
+        return ConverterInterface::CONVERTER_FIELD_PATH;
     }
     
 }

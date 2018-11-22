@@ -4,6 +4,7 @@ namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\AbstractNode;
 use Subapp\Sql\Ast\NodeInterface;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Join
@@ -120,7 +121,7 @@ class Join extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'stmt.join';
+        return ConverterInterface::CONVERTER_STMT_JOIN;
     }
     
 }

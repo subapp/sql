@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Select
  * @package Subapp\Sql\Ast\Stmt
@@ -14,7 +16,7 @@ class Select extends AbstractCommonStmt
      */
     public function getRenderer()
     {
-        return 'stmt.select';
+        return ConverterInterface::CONVERTER_STMT_SELECT;
     }
     
 }

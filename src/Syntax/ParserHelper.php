@@ -76,7 +76,7 @@ final class ParserHelper
         $token = $lexer->peek();
         $position = $token ? $token->getPosition() : -1;
         $token = $token ? $token->getToken() : '[END OF LINE]';
-        $parserName = $parser ? $this->getUnderscore(get_class($parser)) : 'UNDEFINED';
+        $parserName = $parser ? $this->getObjectName(get_class($parser)) : 'UNDEFINED';
         
         throw new SyntaxErrorException(sprintf('Syntax error. Parser [%s] expected: %s got "%s" at position %d',
             $parserName, $tokenType, $token, $position));

@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\Condition\Conditions;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Where
@@ -16,7 +17,7 @@ class Where extends Conditions
      */
     public function getRenderer()
     {
-        return 'stmt.where';
+        return ConverterInterface::CONVERTER_STMT_WHERE;
     }
     
 }

@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Embrace
  * @package Subapp\Sql\Ast
@@ -44,7 +46,7 @@ class Embrace extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.embrace';
+        return ConverterInterface::CONVERTER_EMBRACE;
     }
 
 }

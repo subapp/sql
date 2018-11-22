@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Literal
  * @package Subapp\Sql\Ast
@@ -73,7 +75,7 @@ class Literal extends AbstractNode
      */
     public function getRenderer()
     {
-        return 'converter.literal';
+        return ConverterInterface::CONVERTER_LITERAL;
     }
 
 }

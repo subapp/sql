@@ -4,7 +4,7 @@ namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
 use Subapp\Sql\Exception\UnsupportedException;
-use Subapp\Sql\Representer\RepresenterInterface;
+use Subapp\Sql\Converter\RepresenterInterface;
 
 /**
  * Query Builder (Facade) based on AST

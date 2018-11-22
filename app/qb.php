@@ -5,8 +5,8 @@ use Subapp\Sql\Platform\MySQLPlatform;
 use Subapp\Sql\Query\Node;
 use Subapp\Sql\Query\QueryBuilder;
 use Subapp\Sql\Query\Recognizer;
-use Subapp\Sql\Representer\Common\DefaultRepresenterSetup;
-use Subapp\Sql\Representer\Representer;
+use Subapp\Sql\Converter\Common\DefaultRepresenterSetup;
+use Subapp\Sql\Converter\Representer;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\Processor;
 

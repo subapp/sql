@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\Literal;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Between
@@ -58,7 +59,7 @@ class Between extends AbstractIsNotPredicate
      */
     public function getRenderer()
     {
-        return 'condition.between';
+        return ConverterInterface::CONVERTER_CONDITION_BETWEEN;
     }
     
 }

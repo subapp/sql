@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\Collection;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class JoinItems
@@ -27,7 +28,7 @@ class JoinItems extends Collection
      */
     public function getRenderer()
     {
-        return 'stmt.join_items';
+        return ConverterInterface::CONVERTER_STMT_JOIN_ITEMS;
     }
     
 }

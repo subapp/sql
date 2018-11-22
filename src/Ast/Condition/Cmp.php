@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\NodeInterface;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Cmp
@@ -50,7 +51,7 @@ class Cmp extends AbstractPredicate
      */
     public function getRenderer()
     {
-        return 'condition.cmp';
+        return ConverterInterface::CONVERTER_CONDITION_CMP;
     }
     
 }

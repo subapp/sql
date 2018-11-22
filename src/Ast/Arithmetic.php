@@ -2,6 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Converter\ConverterInterface;
+
 /**
  * Class Arithmetic
  * @package Subapp\Sql\Ast
@@ -14,7 +16,7 @@ class Arithmetic extends Collection
      */
     public function getRenderer()
     {
-        return 'converter.arithmetic';
+        return ConverterInterface::CONVERTER_ARITHMETIC;
     }
 
 }

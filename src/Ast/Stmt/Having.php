@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Stmt;
 
 use Subapp\Sql\Ast\Condition\Conditions;
+use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class Having
@@ -16,7 +17,7 @@ class Having extends Conditions
      */
     public function getRenderer()
     {
-        return 'stmt.having';
+        return ConverterInterface::CONVERTER_STMT_HAVING;
     }
 
 }
