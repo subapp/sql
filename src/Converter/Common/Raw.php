@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Raw as RawExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Raw
@@ -16,10 +16,10 @@ class Raw extends AbstractConverter
     
     /**
      * @param NodeInterface|RawExpression $node
-     * @param RepresenterInterface                 $renderer
+     * @param ProviderInterface                 $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         return (string)$node->getExpression();
     }
@@ -29,7 +29,7 @@ class Raw extends AbstractConverter
      *
      * @param NodeInterface|RawExpression $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
         return ['string' => $node->getExpression(),];
     }
@@ -37,7 +37,7 @@ class Raw extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

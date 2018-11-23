@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common\Stmt;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\Having as HavingExpression;
 use Subapp\Sql\Converter\Common\Condition\Conditions;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Having
@@ -16,10 +16,10 @@ class Having extends Conditions
 
     /**
      * @param NodeInterface|HavingExpression $node
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         return $node->isNotEmpty() ? sprintf(' HAVING %s', parent::toSql($node, $renderer)) : null;
     }

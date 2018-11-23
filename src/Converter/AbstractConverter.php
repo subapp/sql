@@ -6,7 +6,7 @@ use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Common\ClassNameTrait;
 
 /**
- * Class AbstractRepresent
+ * Class AbstractConverter
  * @package Subapp\Sql\Converter
  */
 abstract class AbstractConverter implements ConverterInterface
@@ -25,15 +25,17 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @inheritDoc
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
-        return ['nodeName' => $node->getNodeName(),];
+        return [
+            'node' => $node->getNodeName(),
+        ];
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

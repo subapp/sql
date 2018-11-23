@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter;
 use Subapp\Sql\Ast\NodeInterface;
 
 /**
- * Interface RepresentInterface
+ * Interface ConverterInterface
  * @package Subapp\Sql\Converter
  */
 interface ConverterInterface
@@ -42,31 +42,31 @@ interface ConverterInterface
     const CONVERTER_STMT_LIMIT = 'Converter::Limit';
     const CONVERTER_STMT_ORDER_BY = 'Converter::OrderBy';
     const CONVERTER_STMT_ORDER_BY_ITEMS = 'Converter::OrderByItems';
-    const CONVERTER_STMT_SELECT = 'Converter:Select';
+    const CONVERTER_STMT_SELECT = 'Converter::Select';
     const CONVERTER_STMT_UPDATE = 'Converter::Update';
     const CONVERTER_STMT_WHERE = 'Converter::Where';
 
     /**
      * @param NodeInterface $node
-     * @param RepresenterInterface   $renderer
+     * @param ProviderInterface   $renderer
      *
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer);
+    public function toSql(NodeInterface $node, ProviderInterface $renderer);
 
     /**
      * @param NodeInterface $node
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      * @return array
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer);
+    public function toArray(NodeInterface $node, ProviderInterface $renderer);
 
     /**
      * @param array $ast
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      * @return NodeInterface
      */
-    public function toNode(array $ast, RepresenterInterface $renderer);
+    public function toNode(array $ast, ProviderInterface $renderer);
 
     /**
      * @return string

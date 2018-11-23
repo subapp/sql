@@ -9,7 +9,7 @@ use Subapp\Sql\Ast\NodeInterface;
  * Class Converter
  * @package Subapp\Sql\Converter
  */
-class Representer implements RepresenterInterface
+class Provider implements ProviderInterface
 {
     
     /**
@@ -29,17 +29,17 @@ class Representer implements RepresenterInterface
     /**
      * @inheritdoc
      */
-    public function setup(RepresenterSetupInterface $rendererSetup)
+    public function setup(ProviderSetupInterface $setup)
     {
-        $rendererSetup->setup($this);
+        $setup->setup($this);
     }
     
     /**
      * @inheritdoc
      */
-    public function append(ConverterInterface $represent)
+    public function append(ConverterInterface $converter)
     {
-        $this->collection->offsetSet($represent->getName(), $represent);
+        $this->collection->offsetSet($converter->getName(), $converter);
     }
     
     /**
@@ -63,32 +63,32 @@ class Representer implements RepresenterInterface
      */
     public function getConverter($name)
     {
-        $represent = $this->collection->offsetGet($name);
+        $converter = $this->collection->offsetGet($name);
     
-        if (!($represent instanceof ConverterInterface)) {
-            throw new \RuntimeException(sprintf('Converter cannot be performed because such represent handler "%s" doesn\'t exist',
+        if (!($converter instanceof ConverterInterface)) {
+            throw new \RuntimeException(sprintf('Converter cannot be performed because such converter handler "%s" doesn\'t exist',
                 $name));
         }
         
-        return $represent;
+        return $converter;
     }
     
     /**
      * @inheritdoc
      */
-    public function toSql(NodeInterface $expression)
+    public function toSql(NodeInterface $node)
     {
-        return $this->getConverter($expression->getRenderer())
-            ->toSql($expression, $this);
+        return $this->getConverter($node->getRenderer())
+            ->toSql($node, $this);
     }
 
     /**
      * @inheritdoc
      */
-    public function toArray(NodeInterface $expression)
+    public function toArray(NodeInterface $node)
     {
-        return $this->getConverter($expression->getRenderer())
-            ->toArray($expression, $this);
+        return $this->getConverter($node->getRenderer())
+            ->toArray($node, $this);
     }
 
     /**

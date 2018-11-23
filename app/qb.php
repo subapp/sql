@@ -5,15 +5,15 @@ use Subapp\Sql\Platform\MySQLPlatform;
 use Subapp\Sql\Query\Node;
 use Subapp\Sql\Query\QueryBuilder;
 use Subapp\Sql\Query\Recognizer;
-use Subapp\Sql\Converter\Common\DefaultRepresenterSetup;
-use Subapp\Sql\Converter\Representer;
+use Subapp\Sql\Converter\DefaultProviderSetup;
+use Subapp\Sql\Converter\Provider;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\Processor;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$renderer = new Representer();
-$renderer->setup(new DefaultRepresenterSetup());
+$renderer = new Provider();
+$renderer->setup(new DefaultProviderSetup());
 
 $lexer = new Lexer();
 $processor = new Processor($lexer);

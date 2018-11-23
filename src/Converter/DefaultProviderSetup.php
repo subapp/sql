@@ -1,22 +1,20 @@
 <?php
 
-namespace Subapp\Sql\Converter\Common;
+namespace Subapp\Sql\Converter;
 
 use Subapp\Sql\Converter\Common;
-use Subapp\Sql\Converter\RepresenterInterface;
-use Subapp\Sql\Converter\RepresenterSetupInterface;
 
 /**
  * Class DefaultRendererSetup
  * @package Subapp\Sql\Converter\Common
  */
-class DefaultRepresenterSetup implements RepresenterSetupInterface
+class DefaultProviderSetup implements ProviderSetupInterface
 {
     
     /**
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      */
-    public function setup(RepresenterInterface $renderer)
+    public function setup(ProviderInterface $renderer)
     {
         $renderer->append(new Common\Literal());
         $renderer->append(new Common\Parameter());

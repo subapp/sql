@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Variable as VariableExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Variable
@@ -16,10 +16,10 @@ class Variable extends AbstractConverter
 
     /**
      * @param NodeInterface|VariableExpression $node
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         return sprintf('%s%s',
             $renderer->toSql($node->getExpression()),
@@ -32,7 +32,7 @@ class Variable extends AbstractConverter
      *
      * @param NodeInterface|VariableExpression $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
         return [
             'expression' => $renderer->toArray($node->getExpression()),
@@ -43,7 +43,7 @@ class Variable extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

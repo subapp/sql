@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\MathOperator as MathOperatorExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class MathOperator
@@ -16,10 +16,10 @@ class MathOperator extends AbstractConverter
     
     /**
      * @param NodeInterface|MathOperatorExpression $node
-     * @param RepresenterInterface                          $renderer
+     * @param ProviderInterface                          $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         return $node->getOperator();
     }
@@ -29,7 +29,7 @@ class MathOperator extends AbstractConverter
      *
      * @param NodeInterface|MathOperatorExpression $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
         return ['operator' => $node->getOperator(),];
     }
@@ -37,7 +37,7 @@ class MathOperator extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

@@ -4,7 +4,7 @@ namespace Subapp\Sql\Converter\Common;
 
 use Subapp\Sql\Ast\Arguments as ArgumentsExpression;
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Arguments
@@ -15,10 +15,10 @@ class Arguments extends Collection
     
     /**
      * @param NodeInterface|ArgumentsExpression $node
-     * @param RepresenterInterface                       $renderer
+     * @param ProviderInterface                       $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         // ', ' - comma-separated
         $node->setSeparator("\x2c\x20");

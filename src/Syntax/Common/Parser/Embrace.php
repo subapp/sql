@@ -9,7 +9,7 @@ use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Class EmbraceExpression
+ * Class EmbraceNode
  * @package Subapp\Sql\Syntax\Common\Parser
  */
 class Embrace extends AbstractDefaultParser

@@ -5,28 +5,28 @@ namespace Subapp\Sql\Converter;
 use Subapp\Sql\Ast\NodeInterface;
 
 /**
- * Interface RepresenterInterface
+ * Interface ProviderInterface
  * @package Subapp\Sql\Converter
  */
-interface RepresenterInterface
+interface ProviderInterface
 {
     
     /**
-     * @param RepresenterSetupInterface $rendererSetup
+     * @param ProviderSetupInterface $setup
      */
-    public function setup(RepresenterSetupInterface $rendererSetup);
+    public function setup(ProviderSetupInterface $setup);
     
     /**
-     * @param NodeInterface $expression
+     * @param NodeInterface $node
      * @return string
      */
-    public function toSql(NodeInterface $expression);
+    public function toSql(NodeInterface $node);
 
     /**
-     * @param NodeInterface $expression
+     * @param NodeInterface $node
      * @return array
      */
-    public function toArray(NodeInterface $expression);
+    public function toArray(NodeInterface $node);
 
     /**
      * @param array $ast
@@ -35,9 +35,9 @@ interface RepresenterInterface
     public function toNode(array $ast);
 
     /**
-     * @param ConverterInterface $represent
+     * @param ConverterInterface $converter
      */
-    public function append(ConverterInterface $represent);
+    public function append(ConverterInterface $converter);
     
     /**
      * @param string $name

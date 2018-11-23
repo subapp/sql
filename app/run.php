@@ -51,7 +51,7 @@ try {
 
 //    var_dump($select);
     
-    $renderer = new \Subapp\Sql\Converter\Representer();
+    $renderer = new \Subapp\Sql\Converter\Provider();
     $renderer->setup(new \Subapp\Sql\Converter\Common\DefaultRepresenterSetup());
     
     $processor->setLexer(new Lexer());

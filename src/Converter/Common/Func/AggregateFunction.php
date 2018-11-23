@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common\Func;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Func\AggregateFunction as AggregateFunctionExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class AggregateFunction
@@ -16,10 +16,10 @@ class AggregateFunction extends AbstractConverter
 
     /**
      * @param NodeInterface|AggregateFunctionExpression $node
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         $distinct = $node->isDistinct() ? 'DISTINCT ' : null;
         $function = strtoupper($renderer->toSql($node->getFunctionName()));

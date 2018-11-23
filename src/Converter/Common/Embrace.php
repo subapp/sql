@@ -2,11 +2,12 @@
 
 namespace Subapp\Sql\Converter\Common;
 
-use Subapp\Sql\Ast\Embrace as EmbraceExpression;
+use Subapp\Sql\Ast\Embrace as EmbraceNode;
 use Subapp\Sql\Ast\NodeInterface;
+use Subapp\Sql\Ast\Raw;
 use Subapp\Sql\Ast\Stmt\Select;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Embrace
@@ -16,11 +17,11 @@ class Embrace extends AbstractConverter
 {
 
     /**
-     * @param NodeInterface|EmbraceExpression $node
-     * @param RepresenterInterface $renderer
+     * @param NodeInterface|EmbraceNode $node
+     * @param ProviderInterface $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         $template = ($node->getInner() instanceof Select) ? '(%s)' : '%s';
         
@@ -30,19 +31,23 @@ class Embrace extends AbstractConverter
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|EmbraceExpression $node
+     * @param NodeInterface|EmbraceNode $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
-        return ['inner' => $renderer->toArray($node->getInner()),];
+        $values = parent::toArray($node, $renderer);
+
+        $values['inner'] = $renderer->toArray($node->getInner());
+
+        return $values;
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
-        // TODO: Implement fromArray() method.
+        return new EmbraceNode($ast['inner'] ?? new Raw('[NULL]'));
     }
 
 }

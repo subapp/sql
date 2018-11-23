@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common\Stmt;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\Join as JoinExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Join
@@ -16,10 +16,10 @@ class Join extends AbstractConverter
     
     /**
      * @param NodeInterface|JoinExpression $node
-     * @param RepresenterInterface                  $renderer
+     * @param ProviderInterface                  $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         return sprintf('%s JOIN %s %s (%s)',
             $node->getJoinType(),
@@ -34,7 +34,7 @@ class Join extends AbstractConverter
      *
      * @param NodeInterface|JoinExpression $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
         return [
             'type' => $node->getJoinType(),
@@ -47,7 +47,7 @@ class Join extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

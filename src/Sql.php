@@ -10,8 +10,8 @@ use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Query\Node;
 use Subapp\Sql\Query\QueryBuilder;
 use Subapp\Sql\Query\Recognizer;
-use Subapp\Sql\Converter\Representer;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\Provider;
+use Subapp\Sql\Converter\ProviderInterface;
 use Subapp\Sql\Syntax\CacheProcessor;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\ParserSetupInterface;
@@ -41,7 +41,7 @@ class Sql
     private $processor;
     
     /**
-     * @var RepresenterInterface
+     * @var ProviderInterface
      */
     private $renderer;
     
@@ -57,7 +57,7 @@ class Sql
     {
         $this->lexer = new Lexer();
         $this->processor = new Processor($this->lexer);
-        $this->renderer = new Representer();
+        $this->renderer = new Provider();
         $this->recognizer = new Recognizer($this->processor);
         $this->node = new Node($this->recognizer);
     }
@@ -141,17 +141,17 @@ class Sql
     }
     
     /**
-     * @return RepresenterInterface
+     * @return ProviderInterface
      */
-    public function getRenderer(): RepresenterInterface
+    public function getRenderer(): ProviderInterface
     {
         return $this->renderer;
     }
     
     /**
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      */
-    public function setRenderer(RepresenterInterface $renderer): void
+    public function setRenderer(ProviderInterface $renderer): void
     {
         $this->renderer = $renderer;
     }

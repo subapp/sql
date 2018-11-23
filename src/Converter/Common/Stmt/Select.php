@@ -6,7 +6,7 @@ use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\Select as SelectExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Select
@@ -16,11 +16,11 @@ class Select extends AbstractConverter
 {
 
     /**
-     * @param RepresenterInterface $renderer
+     * @param ProviderInterface $renderer
      * @param NodeInterface|SelectExpression $node
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         return sprintf("SELECT %s%s%s%s%s%s%s%s",
             $renderer->toSql($node->getArguments()),
@@ -40,7 +40,7 @@ class Select extends AbstractConverter
      *
      * @param NodeInterface|SelectExpression $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
         return [
             'arguments' => $renderer->toArray($node->getArguments()),
@@ -58,7 +58,7 @@ class Select extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

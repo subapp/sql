@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\FieldPath as FieldPathExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class FieldPath
@@ -16,10 +16,10 @@ class FieldPath extends AbstractConverter
     
     /**
      * @param NodeInterface|FieldPathExpression $node
-     * @param RepresenterInterface                       $renderer
+     * @param ProviderInterface                       $renderer
      * @return string
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         return sprintf('%s.%s',
             $renderer->toSql($node->getTable()), $renderer->toSql($node->getField()));
@@ -30,7 +30,7 @@ class FieldPath extends AbstractConverter
      *
      * @param NodeInterface|FieldPathExpression $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
         return [
             'field' => $renderer->toArray($node->getField()),
@@ -41,7 +41,7 @@ class FieldPath extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

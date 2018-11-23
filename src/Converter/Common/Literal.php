@@ -5,7 +5,7 @@ namespace Subapp\Sql\Converter\Common;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Literal as LiteralExpression;
 use Subapp\Sql\Converter\AbstractConverter;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Literal
@@ -16,12 +16,12 @@ class Literal extends AbstractConverter
     
     /**
      * @param NodeInterface|LiteralExpression $node
-     * @param RepresenterInterface                     $renderer
+     * @param ProviderInterface                     $renderer
      *
      * @return string
      * @throws \InvalidArgumentException
      */
-    public function toSql(NodeInterface $node, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $renderer)
     {
         $sql = null;
 
@@ -48,7 +48,7 @@ class Literal extends AbstractConverter
      *
      * @param NodeInterface|LiteralExpression $node
      */
-    public function toArray(NodeInterface $node, RepresenterInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $renderer)
     {
         return ['value' => $node->getValue(), 'type' => $node->getType(),];
     }
@@ -56,7 +56,7 @@ class Literal extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, RepresenterInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $renderer)
     {
         // TODO: Implement fromArray() method.
     }

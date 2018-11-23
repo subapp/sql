@@ -4,7 +4,7 @@ namespace Subapp\Sql\Converter\Common;
 
 use Subapp\Sql\Ast\Arithmetic as ArithmeticExpression;
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Converter\RepresenterInterface;
+use Subapp\Sql\Converter\ProviderInterface;
 
 /**
  * Class Arithmetic
@@ -15,10 +15,10 @@ class Arithmetic extends Collection
     
     /**
      * @param NodeInterface|ArithmeticExpression $collection
-     * @param RepresenterInterface                        $renderer
+     * @param ProviderInterface                        $renderer
      * @return string
      */
-    public function toSql(NodeInterface $collection, RepresenterInterface $renderer)
+    public function toSql(NodeInterface $collection, ProviderInterface $renderer)
     {
         return sprintf($collection->isBraced() ? '(%s)' : '%s', parent::toSql($collection, $renderer));
     }
