@@ -30,12 +30,4 @@ abstract class AbstractConverter implements ConverterInterface
         return ['node' => $node->getNodeName(),];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function toNode(array $ast, ProviderInterface $provider)
-    {
-
-    }
-
 }

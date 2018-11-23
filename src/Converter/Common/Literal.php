@@ -27,15 +27,22 @@ class Literal extends AbstractConverter
 
         switch (true) {
             case $node->getType() === LiteralNode::STRING:
-                $sql = sprintf("'%s'", $node->getValue()); break;
+                $sql = sprintf("'%s'", $node->getValue());
+                break;
+
             case $node->getType() === LiteralNode::INT:
             case $node->getType() === LiteralNode::FLOAT:
-                $sql = $node->getValue(); break;
+                $sql = $node->getValue();
+                break;
+
             case $node->getType() === LiteralNode::BOOLEAN:
                 $sql = $node->getValue() ? 'TRUE' : 'FALSE';
                 break;
+
             case $node->getType() === LiteralNode::NULL:
-                $sql = 'NULL'; break;
+                $sql = 'NULL';
+                break;
+
             default:
                 throw new \InvalidArgumentException(
                     'Unable to render literal expression (%s) because it has unsupported type (%s)',

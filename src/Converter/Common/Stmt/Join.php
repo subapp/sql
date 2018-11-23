@@ -36,12 +36,14 @@ class Join extends AbstractConverter
      */
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        return [
-            'type' => $node->getJoinType(),
-            'conditionType' => $node->getConditionType(),
-            'left' => $provider->toArray($node->getLeft()),
-            'condition' => $provider->toArray($node->getCondition()),
-        ];
+        $values = parent::toArray($node, $provider);
+
+        $values['type'] = $node->getJoinType();
+        $values['conditionType'] = $node->getConditionType();
+        $values['left'] = $provider->toArray($node->getLeft());
+        $values['condition'] = $provider->toArray($node->getCondition());
+
+        return $values;
     }
 
     /**

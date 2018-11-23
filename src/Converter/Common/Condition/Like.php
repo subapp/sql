@@ -26,5 +26,35 @@ class Like extends AbstractConverter
             ($node->isNot() ? ' NOT' : null),
             $provider->toSql($node->getRight()));
     }
+
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|LikeNode $node
+     */
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
+    {
+        $values = parent::toArray($node, $provider);
+
+        $values['left'] = $provider->toArray($node->getLeft());
+        $values['isNot'] = $node->isNot();
+        $values['args'] = $provider->toArray($node->getRight());
+
+        return $values;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        $like = new LikeNode();
+
+        $like->setLeft($provider->toNode($ast['left']));
+        $like->setIsNot($ast['isNot']);
+        $like->setRight($provider->toNode($ast['right']));
+
+        return $like;
+    }
     
 }

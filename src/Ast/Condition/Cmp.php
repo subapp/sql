@@ -39,7 +39,7 @@ class Cmp extends AbstractPredicate
     }
     
     /**
-     * @param Operator $operator
+     * @param Operator|NodeInterface $operator
      */
     public function setOperator(Operator $operator)
     {

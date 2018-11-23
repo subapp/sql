@@ -26,5 +26,35 @@ class In extends AbstractConverter
             ($node->isNot() ? ' NOT ' : ' '),
             $provider->toSql($node->getRight()));
     }
+
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|InNode $node
+     */
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
+    {
+        $values = parent::toArray($node, $provider);
+
+        $values['left'] = $provider->toArray($node->getLeft());
+        $values['isNot'] = $node->isNot();
+        $values['args'] = $provider->toArray($node->getRight());
+
+        return $values;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        $in = new InNode();
+
+        $in->setLeft($provider->toNode($ast['left']));
+        $in->setIsNot($ast['isNot']);
+        $in->setRight($provider->toNode($ast['right']));
+
+        return $in;
+    }
     
 }

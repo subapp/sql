@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Ast\Condition;
 
 use Subapp\Sql\Ast\Literal;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Converter\ConverterInterface;
 
 /**
@@ -31,7 +32,7 @@ class Between extends AbstractIsNotPredicate
     }
     
     /**
-     * @param Literal $a
+     * @param Literal|NodeInterface $a
      */
     public function setA(Literal $a)
     {
@@ -47,7 +48,7 @@ class Between extends AbstractIsNotPredicate
     }
     
     /**
-     * @param Literal $b
+     * @param Literal|NodeInterface $b
      */
     public function setB(Literal $b)
     {

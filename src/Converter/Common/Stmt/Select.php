@@ -42,17 +42,19 @@ class Select extends AbstractConverter
      */
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        return [
-            'arguments' => $provider->toArray($node->getArguments()),
-            'from' => $provider->toArray($node->getFrom()),
-            'joins' => $provider->toArray($node->getJoins()),
-            'where' => $provider->toArray($node->getWhere()),
-            'groupBy' => $provider->toArray($node->getGroupBy()),
-            'having' => $provider->toArray($node->getHaving()),
-            'orderBy' => $provider->toArray($node->getOrderBy()),
-            'limit' => $provider->toArray($node->getLimit()),
-            'semicolon' => $provider->toArray(new Literal($node->isSemicolon(), Literal::BOOLEAN)),
-        ];
+        $values = parent::toArray($node, $provider);
+
+        $values['arguments'] = $provider->toArray($node->getArguments());
+        $values['from'] = $provider->toArray($node->getFrom());
+        $values['joins'] = $provider->toArray($node->getJoins());
+        $values['where'] = $provider->toArray($node->getWhere());
+        $values['groupBy'] = $provider->toArray($node->getGroupBy());
+        $values['having'] = $provider->toArray($node->getHaving());
+        $values['orderBy'] = $provider->toArray($node->getOrderBy());
+        $values['limit'] = $provider->toArray($node->getLimit());
+        $values['semicolon'] = $provider->toArray(new Literal($node->isSemicolon(), Literal::BOOLEAN));
+
+        return $values;
     }
 
     /**
@@ -60,7 +62,20 @@ class Select extends AbstractConverter
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        // TODO: Implement fromArray() method.
+        $select = new SelectNode();
+
+        $select->setArguments($provider->toNode($ast['arguments']));
+        $select->setFrom($provider->toNode($ast['from']));
+        $select->setJoins($provider->toNode($ast['joins']));
+        $select->setWhere($provider->toNode($ast['where']));
+        $select->setGroupBy($provider->toNode($ast['groupBy']));
+        $select->setHaving($provider->toNode($ast['having']));
+        $select->setOrderBy($provider->toNode($ast['orderBy']));
+        $select->setLimit($provider->toNode($ast['limit']));
+
+        $select->setSemicolon($ast['semicolon']['value']);
+
+        return $select;
     }
 
 }

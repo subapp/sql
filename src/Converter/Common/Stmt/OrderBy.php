@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common\Stmt;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Stmt\OrderBy as OrderByStmt;
+use Subapp\Sql\Ast\Stmt\OrderBy as OrderByNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -15,7 +15,7 @@ class OrderBy extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|OrderByStmt $node
+     * @param NodeInterface|OrderByNode $node
      * @param ProviderInterface               $provider
      * @return string
      */
@@ -27,14 +27,16 @@ class OrderBy extends AbstractConverter
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|OrderByStmt $node
+     * @param NodeInterface|OrderByNode $node
      */
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-       return [
-           'order' => $provider->toArray($node->getExpression()),
-           'direction' => $node->getDirection(),
-       ];
+        $values = parent::toArray($node, $provider);
+
+        $values['expression'] = $provider->toArray($node->getExpression());
+        $values['vector'] = $node->getDirection();
+
+        return $values;
     }
 
     /**
@@ -42,7 +44,12 @@ class OrderBy extends AbstractConverter
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        // TODO: Implement fromArray() method.
+        $order = new OrderByNode();
+
+        $order->setExpression($provider->toNode($ast['expression']));
+        $order->setDirection($ast['vector']);
+
+        return $order;
     }
 
 }

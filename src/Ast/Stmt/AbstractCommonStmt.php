@@ -58,7 +58,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Ast\Stmt\From $from
+     * @param Ast\Stmt\From|Ast\NodeInterface $from
      */
     public function setFrom(Ast\Stmt\From $from)
     {
@@ -74,7 +74,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Ast\Arguments $arguments
+     * @param Ast\Arguments|Ast\NodeInterface $arguments
      */
     public function setArguments(Ast\Arguments $arguments)
     {
@@ -90,7 +90,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Ast\Collection $joins
+     * @param Ast\Collection|Ast\NodeInterface $joins
      */
     public function setJoins(Ast\Collection $joins)
     {
@@ -98,7 +98,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Ast\Stmt\Where $where
+     * @param Ast\Stmt\Where|Ast\NodeInterface $where
      */
     public function setWhere(Ast\Stmt\Where $where)
     {
@@ -122,7 +122,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Ast\Stmt\OrderByItems $orderByCollection
+     * @param Ast\Stmt\OrderByItems|Ast\NodeInterface $orderByCollection
      */
     public function setOrderBy(Ast\Stmt\OrderByItems $orderByCollection)
     {
@@ -138,7 +138,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Having $having
+     * @param Ast\Stmt\Having|Ast\NodeInterface $having
      */
     public function setHaving(Ast\Stmt\Having $having)
     {
@@ -154,7 +154,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Ast\Stmt\GroupBy $groupBy
+     * @param Ast\Stmt\GroupBy|Ast\NodeInterface $groupBy
      */
     public function setGroupBy(Ast\Stmt\GroupBy $groupBy)
     {
@@ -170,7 +170,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @param Ast\Stmt\Limit $limit
+     * @param Ast\Stmt\Limit|Ast\NodeInterface $limit
      */
     public function setLimit(Ast\Stmt\Limit $limit)
     {
@@ -183,6 +183,14 @@ abstract class AbstractCommonStmt extends AbstractNode
     public function isSemicolon()
     {
         return $this->root->isSemicolon();
+    }
+
+    /**
+     * @param boolean $isSemicolon
+     */
+    public function setSemicolon($isSemicolon)
+    {
+        $this->root->setSemicolon($isSemicolon);
     }
     
 }

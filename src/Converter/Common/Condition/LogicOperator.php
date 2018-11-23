@@ -24,6 +24,26 @@ class LogicOperator extends AbstractConverter
         return (string)$node->getOperator();
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|LogicOperatorNode $node
+     */
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
+    {
+        $values = parent::toArray($node, $provider);
 
+        $values['value'] = $node->getOperator();
+
+        return $values;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        return new LogicOperatorNode($ast['value']);
+    }
     
 }
