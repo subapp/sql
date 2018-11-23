@@ -15,7 +15,7 @@ class Having extends Conditions
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_STMT_HAVING;
     }

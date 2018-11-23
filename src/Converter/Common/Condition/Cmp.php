@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Converter\Common\Condition;
 
-use Subapp\Sql\Ast\Condition\Cmp as PrecedenceExpression;
+use Subapp\Sql\Ast\Condition\Cmp as PrecedenceNode;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
@@ -15,16 +15,16 @@ class Cmp extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|PrecedenceExpression $node
-     * @param ProviderInterface                        $renderer
+     * @param NodeInterface|PrecedenceNode $node
+     * @param ProviderInterface                        $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return sprintf('%s %s %s',
-            $renderer->toSql($node->getLeft()),
-            $renderer->toSql($node->getOperator()),
-            $renderer->toSql($node->getRight()));
+            $provider->toSql($node->getLeft()),
+            $provider->toSql($node->getOperator()),
+            $provider->toSql($node->getRight()));
     }
     
 }

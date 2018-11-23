@@ -4,7 +4,7 @@ namespace Subapp\Sql\Converter\Common\Stmt;
 
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Literal;
-use Subapp\Sql\Ast\Stmt\Limit as LimitExpression;
+use Subapp\Sql\Ast\Stmt\Limit as LimitNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -16,20 +16,20 @@ class Limit extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|LimitExpression $node
-     * @param ProviderInterface                   $renderer
+     * @param NodeInterface|LimitNode $node
+     * @param ProviderInterface                   $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         $offset = $node->getOffset();
         $length = $node->getLength();
         
         switch (true) {
             case ($length instanceOf Literal && !($offset instanceOf Literal)):
-                return sprintf(' LIMIT %s', $renderer->toSql($length));
+                return sprintf(' LIMIT %s', $provider->toSql($length));
             case ($length instanceOf Literal && $offset instanceOf Literal):
-                return sprintf(' LIMIT %s, %s', $renderer->toSql($offset), $renderer->toSql($length));
+                return sprintf(' LIMIT %s, %s', $provider->toSql($offset), $provider->toSql($length));
         }
     
         return null;
@@ -38,22 +38,24 @@ class Limit extends AbstractConverter
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|LimitExpression $node
+     * @param NodeInterface|LimitNode $node
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        return [
-            'offset' => $node->getOffset(),
-            'length' => $node->getLength(),
-        ];
+        $values = parent::toArray($node, $provider);
+
+        $values['offset'] = $node->getOffset();
+        $values['length'] = $node->getLength();
+
+        return $values;
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
-        // TODO: Implement fromArray() method.
+        return new LimitNode((int)$ast['offset'], (int)$ast['length']);
     }
 
 }

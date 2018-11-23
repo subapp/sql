@@ -37,7 +37,7 @@ class QuoteIdentifier extends Identifier
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_QUOTE_IDENTIFIER;
     }

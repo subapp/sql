@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common\Func;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Func\DefaultFunction as DefaultFunctionExpression;
+use Subapp\Sql\Ast\Func\DefaultFunction as DefaultFunctionNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -15,16 +15,42 @@ class DefaultFunction extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|DefaultFunctionExpression $node
-     * @param ProviderInterface   $renderer
+     * @param NodeInterface|DefaultFunctionNode $node
+     * @param ProviderInterface   $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf('%s(%s)', strtoupper($renderer->toSql($node->getFunctionName())),
-            $renderer->toSql($node->getArguments()));
+        return sprintf('%s(%s)', strtoupper($provider->toSql($node->getFunctionName())),
+            $provider->toSql($node->getArguments()));
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|DefaultFunctionNode $node
+     */
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
+    {
+        $values = parent::toArray($node, $provider);
 
-    
+        $values['name'] = $provider->toArray($node->getFunctionName());
+        $values['args'] = $provider->toArray($node->getArguments());
+
+        return $values;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        $function = new DefaultFunctionNode();
+
+        $function->setFunctionName($this->toNode($ast['name'], $provider));
+        $function->setArguments($this->toNode($ast['args'], $provider));
+
+        return $function;
+    }
+
 }

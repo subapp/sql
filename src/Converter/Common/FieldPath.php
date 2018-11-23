@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\FieldPath as FieldPathExpression;
+use Subapp\Sql\Ast\FieldPath as FieldPathNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -15,35 +15,40 @@ class FieldPath extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|FieldPathExpression $node
-     * @param ProviderInterface                       $renderer
+     * @param NodeInterface|FieldPathNode $node
+     * @param ProviderInterface                       $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return sprintf('%s.%s',
-            $renderer->toSql($node->getTable()), $renderer->toSql($node->getField()));
+            $provider->toSql($node->getTable()), $provider->toSql($node->getField()));
     }
 
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|FieldPathExpression $node
+     * @param NodeInterface|FieldPathNode $node
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         return [
-            'field' => $renderer->toArray($node->getField()),
-            'table' => $renderer->toArray($node->getTable()),
+            'field' => $provider->toArray($node->getField()),
+            'table' => $provider->toArray($node->getTable()),
         ];
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
-        // TODO: Implement fromArray() method.
+        $path = new FieldPathNode();
+
+        $path->setField($provider->toNode($ast['field']));
+        $path->setTable($provider->toNode($ast['table']));
+
+        return $path;
     }
 
 }

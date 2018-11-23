@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Converter\Common\Stmt;
 
-use Subapp\Sql\Ast\Arguments as ArgumentsExpression;
+use Subapp\Sql\Ast\Arguments as ArgumentsNode;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Converter\Common\Arguments;
 use Subapp\Sql\Converter\ProviderInterface;
@@ -15,13 +15,13 @@ class OrderByItems extends Arguments
 {
     
     /**
-     * @param NodeInterface|ArgumentsExpression $node
-     * @param ProviderInterface                       $renderer
+     * @param NodeInterface|ArgumentsNode $node
+     * @param ProviderInterface                       $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return $node->count() > 0 ? sprintf(' ORDER BY %s', parent::toSql($node, $renderer)) : null;
+        return $node->count() > 0 ? sprintf(' ORDER BY %s', parent::toSql($node, $provider)) : null;
     }
     
 }

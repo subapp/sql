@@ -49,7 +49,7 @@ class LogicOperator extends AbstractNode
     /**
      * @inheritdoc
     */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_CONDITION_LOGIC_OPERATOR;
     }

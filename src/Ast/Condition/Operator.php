@@ -52,7 +52,7 @@ class Operator extends AbstractNode
     /**
      * @inheritdoc
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_CONDITION_CMP_OPERATOR;
     }

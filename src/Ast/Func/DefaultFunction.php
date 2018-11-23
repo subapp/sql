@@ -14,7 +14,7 @@ class DefaultFunction extends AbstractFunction
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_FUNC_DEFAULT;
     }

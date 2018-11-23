@@ -50,7 +50,7 @@ class Conditions extends Collection
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_CONDITION_CONDITIONS;
     }

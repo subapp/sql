@@ -26,7 +26,7 @@ class JoinItems extends Collection
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_STMT_JOIN_ITEMS;
     }

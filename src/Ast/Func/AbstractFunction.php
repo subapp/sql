@@ -41,7 +41,7 @@ abstract class AbstractFunction extends AbstractNode
     }
     
     /**
-     * @param Identifier $name
+     * @param Identifier|NodeInterface $name
      */
     public function setFunctionName(Identifier $name)
     {
@@ -57,7 +57,7 @@ abstract class AbstractFunction extends AbstractNode
     }
     
     /**
-     * @param Arguments $arguments
+     * @param Arguments|NodeInterface $arguments
      */
     public function setArguments(Arguments $arguments)
     {

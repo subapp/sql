@@ -286,7 +286,7 @@ class Root extends AbstractNode
     /**
      * @throws UnsupportedException
      */
-    public function getRenderer()
+    public function getConverter()
     {
         throw new UnsupportedException('The root AST node cannot be rendered. Its purpose is to preserve common nodes.');
     }

@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Converter\Common\Condition;
 
-use Subapp\Sql\Ast\Condition\Between as BetweenExpression;
+use Subapp\Sql\Ast\Condition\Between as BetweenNode;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
@@ -15,17 +15,17 @@ class Between extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|BetweenExpression $node
-     * @param ProviderInterface                     $renderer
+     * @param NodeInterface|BetweenNode $node
+     * @param ProviderInterface                     $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return sprintf('%s%sBETWEEN %s AND %s',
-            $renderer->toSql($node->getLeft()),
+            $provider->toSql($node->getLeft()),
             ($node->isNot() ? ' NOT ' : ' '),
-            $renderer->toSql($node->getA()),
-            $renderer->toSql($node->getB()));
+            $provider->toSql($node->getA()),
+            $provider->toSql($node->getB()));
     }
     
 }

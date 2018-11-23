@@ -48,25 +48,25 @@ interface ConverterInterface
 
     /**
      * @param NodeInterface $node
-     * @param ProviderInterface   $renderer
+     * @param ProviderInterface   $provider
      *
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer);
+    public function toSql(NodeInterface $node, ProviderInterface $provider);
 
     /**
      * @param NodeInterface $node
-     * @param ProviderInterface $renderer
+     * @param ProviderInterface $provider
      * @return array
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer);
+    public function toArray(NodeInterface $node, ProviderInterface $provider);
 
     /**
      * @param array $ast
-     * @param ProviderInterface $renderer
+     * @param ProviderInterface $provider
      * @return NodeInterface
      */
-    public function toNode(array $ast, ProviderInterface $renderer);
+    public function toNode(array $ast, ProviderInterface $provider);
 
     /**
      * @return string

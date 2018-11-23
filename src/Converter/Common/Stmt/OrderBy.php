@@ -16,12 +16,12 @@ class OrderBy extends AbstractConverter
     
     /**
      * @param NodeInterface|OrderByStmt $node
-     * @param ProviderInterface               $renderer
+     * @param ProviderInterface               $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf('%s %s', $renderer->toSql($node->getExpression()), $node->getDirection());
+        return sprintf('%s %s', $provider->toSql($node->getExpression()), $node->getDirection());
     }
 
     /**
@@ -29,10 +29,10 @@ class OrderBy extends AbstractConverter
      *
      * @param NodeInterface|OrderByStmt $node
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
        return [
-           'order' => $renderer->toArray($node->getExpression()),
+           'order' => $provider->toArray($node->getExpression()),
            'direction' => $node->getDirection(),
        ];
     }
@@ -40,7 +40,7 @@ class OrderBy extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
         // TODO: Implement fromArray() method.
     }

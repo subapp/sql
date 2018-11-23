@@ -27,7 +27,7 @@ class From extends Arguments
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_STMT_FROM;
     }

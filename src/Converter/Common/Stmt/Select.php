@@ -4,7 +4,7 @@ namespace Subapp\Sql\Converter\Common\Stmt;
 
 use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Stmt\Select as SelectExpression;
+use Subapp\Sql\Ast\Stmt\Select as SelectNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -16,21 +16,21 @@ class Select extends AbstractConverter
 {
 
     /**
-     * @param ProviderInterface $renderer
-     * @param NodeInterface|SelectExpression $node
+     * @param ProviderInterface $provider
+     * @param NodeInterface|SelectNode $node
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return sprintf("SELECT %s%s%s%s%s%s%s%s",
-            $renderer->toSql($node->getArguments()),
-            $renderer->toSql($node->getFrom()),
-            $renderer->toSql($node->getJoins()),
-            $renderer->toSql($node->getWhere()),
-            $renderer->toSql($node->getGroupBy()),
-            $renderer->toSql($node->getHaving()),
-            $renderer->toSql($node->getOrderBy()),
-            $renderer->toSql($node->getLimit()),
+            $provider->toSql($node->getArguments()),
+            $provider->toSql($node->getFrom()),
+            $provider->toSql($node->getJoins()),
+            $provider->toSql($node->getWhere()),
+            $provider->toSql($node->getGroupBy()),
+            $provider->toSql($node->getHaving()),
+            $provider->toSql($node->getOrderBy()),
+            $provider->toSql($node->getLimit()),
             $node->isSemicolon() ? "\n;" : null
         );
     }
@@ -38,27 +38,27 @@ class Select extends AbstractConverter
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|SelectExpression $node
+     * @param NodeInterface|SelectNode $node
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         return [
-            'arguments' => $renderer->toArray($node->getArguments()),
-            'from' => $renderer->toArray($node->getFrom()),
-            'joins' => $renderer->toArray($node->getJoins()),
-            'where' => $renderer->toArray($node->getWhere()),
-            'groupBy' => $renderer->toArray($node->getGroupBy()),
-            'having' => $renderer->toArray($node->getHaving()),
-            'orderBy' => $renderer->toArray($node->getOrderBy()),
-            'limit' => $renderer->toArray($node->getLimit()),
-            'semicolon' => $renderer->toArray(new Literal($node->isSemicolon(), Literal::BOOLEAN)),
+            'arguments' => $provider->toArray($node->getArguments()),
+            'from' => $provider->toArray($node->getFrom()),
+            'joins' => $provider->toArray($node->getJoins()),
+            'where' => $provider->toArray($node->getWhere()),
+            'groupBy' => $provider->toArray($node->getGroupBy()),
+            'having' => $provider->toArray($node->getHaving()),
+            'orderBy' => $provider->toArray($node->getOrderBy()),
+            'limit' => $provider->toArray($node->getLimit()),
+            'semicolon' => $provider->toArray(new Literal($node->isSemicolon(), Literal::BOOLEAN)),
         ];
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
         // TODO: Implement fromArray() method.
     }

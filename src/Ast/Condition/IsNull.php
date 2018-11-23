@@ -14,7 +14,7 @@ class IsNull extends AbstractIsNotPredicate
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_CONDITION_IS_NULL;
     }

@@ -25,19 +25,17 @@ abstract class AbstractConverter implements ConverterInterface
     /**
      * @inheritDoc
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        return [
-            'node' => $node->getNodeName(),
-        ];
+        return ['node' => $node->getNodeName(),];
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
-        // TODO: Implement fromArray() method.
+
     }
 
 }

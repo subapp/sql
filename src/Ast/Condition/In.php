@@ -14,7 +14,7 @@ class In extends AbstractIsNotPredicate
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_CONDITION_IN;
     }

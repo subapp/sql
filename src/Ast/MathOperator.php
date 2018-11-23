@@ -50,7 +50,7 @@ class MathOperator extends AbstractNode
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_MATH_OPERATOR;
     }

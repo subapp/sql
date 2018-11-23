@@ -78,7 +78,7 @@ class Provider implements ProviderInterface
      */
     public function toSql(NodeInterface $node)
     {
-        return $this->getConverter($node->getRenderer())
+        return $this->getConverter($node->getConverter())
             ->toSql($node, $this);
     }
 
@@ -87,7 +87,7 @@ class Provider implements ProviderInterface
      */
     public function toArray(NodeInterface $node)
     {
-        return $this->getConverter($node->getRenderer())
+        return $this->getConverter($node->getConverter())
             ->toArray($node, $this);
     }
 

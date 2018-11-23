@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Converter\Common\Condition;
 
-use Subapp\Sql\Ast\Condition\In as InExpression;
+use Subapp\Sql\Ast\Condition\In as InNode;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
@@ -15,16 +15,16 @@ class In extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|InExpression $node
-     * @param ProviderInterface                $renderer
+     * @param NodeInterface|InNode $node
+     * @param ProviderInterface                $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return sprintf('%s%sIN(%s)',
-            $renderer->toSql($node->getLeft()),
+            $provider->toSql($node->getLeft()),
             ($node->isNot() ? ' NOT ' : ' '),
-            $renderer->toSql($node->getRight()));
+            $provider->toSql($node->getRight()));
     }
     
 }

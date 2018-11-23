@@ -14,7 +14,7 @@ class Arithmetic extends Collection
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_ARITHMETIC;
     }

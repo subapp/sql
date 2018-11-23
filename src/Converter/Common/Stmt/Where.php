@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common\Stmt;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Stmt\Where as WhereExpression;
+use Subapp\Sql\Ast\Stmt\Where as WhereNode;
 use Subapp\Sql\Converter\Common\Condition\Conditions;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -15,13 +15,13 @@ class Where extends Conditions
 {
     
     /**
-     * @param NodeInterface|WhereExpression $node
-     * @param ProviderInterface                   $renderer
+     * @param NodeInterface|WhereNode $node
+     * @param ProviderInterface                   $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return $node->isNotEmpty() ? sprintf(' WHERE %s', parent::toSql($node, $renderer)) : null;
+        return $node->isNotEmpty() ? sprintf(' WHERE %s', parent::toSql($node, $provider)) : null;
     }
     
 }

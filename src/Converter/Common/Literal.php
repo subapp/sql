@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Literal as LiteralExpression;
+use Subapp\Sql\Ast\Literal as LiteralNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -13,31 +13,33 @@ use Subapp\Sql\Converter\ProviderInterface;
  */
 class Literal extends AbstractConverter
 {
-    
+
     /**
-     * @param NodeInterface|LiteralExpression $node
-     * @param ProviderInterface                     $renderer
+     * @param NodeInterface|LiteralNode $node
+     * @param ProviderInterface                     $provider
      *
      * @return string
      * @throws \InvalidArgumentException
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         $sql = null;
 
         switch (true) {
-            case $node->getType() === LiteralExpression::STRING:
+            case $node->getType() === LiteralNode::STRING:
                 $sql = sprintf("'%s'", $node->getValue()); break;
-            case $node->getType() === LiteralExpression::INT:
-            case $node->getType() === LiteralExpression::FLOAT:
+            case $node->getType() === LiteralNode::INT:
+            case $node->getType() === LiteralNode::FLOAT:
                 $sql = $node->getValue(); break;
-            case $node->getType() === LiteralExpression::BOOLEAN:
-                $sql = $node->getValue() ? 'TRUE' : 'FALSE'; break;
-            case $node->getType() === LiteralExpression::NULL:
+            case $node->getType() === LiteralNode::BOOLEAN:
+                $sql = $node->getValue() ? 'TRUE' : 'FALSE';
+                break;
+            case $node->getType() === LiteralNode::NULL:
                 $sql = 'NULL'; break;
             default:
-                throw new \InvalidArgumentException('Unable to render literal expression (%s) because it has unsupported type (%s)',
-                    $node->getValue(), $node->getValue());
+                throw new \InvalidArgumentException(
+                    'Unable to render literal expression (%s) because it has unsupported type (%s)',
+                        $node->getValue(), $node->getValue());
         }
 
         return $sql;
@@ -46,19 +48,24 @@ class Literal extends AbstractConverter
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|LiteralExpression $node
+     * @param NodeInterface|LiteralNode $node
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        return ['value' => $node->getValue(), 'type' => $node->getType(),];
+        $values = parent::toArray($node, $provider);
+
+        $values['value'] = $node->getValue();
+        $values['type'] = $node->getType();
+
+        return $values;
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
-        // TODO: Implement fromArray() method.
+        return new LiteralNode($ast['value'], $ast['type']);
     }
 
 }

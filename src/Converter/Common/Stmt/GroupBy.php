@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common\Stmt;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Stmt\GroupBy as GroupByExpression;
+use Subapp\Sql\Ast\Stmt\GroupBy as GroupByNode;
 use Subapp\Sql\Converter\Common\Arguments;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -15,13 +15,13 @@ class GroupBy extends Arguments
 {
     
     /**
-     * @param NodeInterface|GroupByExpression $node
-     * @param ProviderInterface                     $renderer
+     * @param NodeInterface|GroupByNode $node
+     * @param ProviderInterface                     $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return $node->count() > 0 ? sprintf(' GROUP BY %s', parent::toSql($node, $renderer)) : null;
+        return $node->count() > 0 ? sprintf(' GROUP BY %s', parent::toSql($node, $provider)) : null;
     }
 
 }

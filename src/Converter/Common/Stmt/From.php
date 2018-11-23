@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common\Stmt;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Stmt\From as FromExpression;
+use Subapp\Sql\Ast\Stmt\From as FromNode;
 use Subapp\Sql\Converter\Common\Arguments;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -15,13 +15,13 @@ class From extends Arguments
 {
     
     /**
-     * @param ProviderInterface   $renderer
-     * @param NodeInterface|FromExpression $node
+     * @param ProviderInterface   $provider
+     * @param NodeInterface|FromNode $node
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf(' FROM %s', parent::toSql($node, $renderer));
+        return sprintf(' FROM %s', parent::toSql($node, $provider));
     }
 
 }

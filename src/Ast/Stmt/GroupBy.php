@@ -15,7 +15,7 @@ class GroupBy extends Collection
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_STMT_GROUP_BY;
     }

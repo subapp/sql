@@ -14,7 +14,7 @@ class Select extends AbstractCommonStmt
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_STMT_SELECT;
     }

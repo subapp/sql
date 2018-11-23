@@ -41,7 +41,7 @@ class FieldPath extends AbstractNode
     }
     
     /**
-     * @param Identifier $table
+     * @param Identifier|NodeInterface $table
      */
     public function setTable(Identifier $table)
     {
@@ -57,7 +57,7 @@ class FieldPath extends AbstractNode
     }
     
     /**
-     * @param Identifier $field
+     * @param Identifier|NodeInterface $field
      */
     public function setField(Identifier $field)
     {
@@ -67,7 +67,7 @@ class FieldPath extends AbstractNode
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_FIELD_PATH;
     }

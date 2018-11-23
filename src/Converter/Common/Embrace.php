@@ -18,14 +18,14 @@ class Embrace extends AbstractConverter
 
     /**
      * @param NodeInterface|EmbraceNode $node
-     * @param ProviderInterface $renderer
+     * @param ProviderInterface $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         $template = ($node->getInner() instanceof Select) ? '(%s)' : '%s';
         
-        return sprintf($template, $renderer->toSql($node->getInner()));
+        return sprintf($template, $provider->toSql($node->getInner()));
     }
 
     /**
@@ -33,11 +33,11 @@ class Embrace extends AbstractConverter
      *
      * @param NodeInterface|EmbraceNode $node
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        $values = parent::toArray($node, $renderer);
+        $values = parent::toArray($node, $provider);
 
-        $values['inner'] = $renderer->toArray($node->getInner());
+        $values['inner'] = $provider->toArray($node->getInner());
 
         return $values;
     }
@@ -45,7 +45,7 @@ class Embrace extends AbstractConverter
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
         return new EmbraceNode($ast['inner'] ?? new Raw('[NULL]'));
     }

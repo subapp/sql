@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Parameter as ParameterExpression;
+use Subapp\Sql\Ast\Parameter as ParameterNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
@@ -15,11 +15,11 @@ class Parameter extends AbstractConverter
 {
     
     /**
-     * @param NodeInterface|ParameterExpression $node
-     * @param ProviderInterface                       $renderer
+     * @param NodeInterface|ParameterNode $node
+     * @param ProviderInterface                       $provider
      * @return string
      */
-    public function toSql(NodeInterface $node, ProviderInterface $renderer)
+    public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         $parameter = sprintf('%s', $node->getType());
         
@@ -33,19 +33,24 @@ class Parameter extends AbstractConverter
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|ParameterExpression $node
+     * @param NodeInterface|ParameterNode $node
      */
-    public function toArray(NodeInterface $node, ProviderInterface $renderer)
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        return ['name' => $node->getName(), 'type' => $node->getType(),];
+        $values = parent::toArray($node, $provider);
+
+        $values['name'] = $node->getName();
+        $values['type'] = $node->getType();
+
+        return $values;
     }
 
     /**
      * @inheritDoc
      */
-    public function toNode(array $ast, ProviderInterface $renderer)
+    public function toNode(array $ast, ProviderInterface $provider)
     {
-        // TODO: Implement fromArray() method.
+        return new ParameterNode($ast['type'], $ast['name']);
     }
 
 }

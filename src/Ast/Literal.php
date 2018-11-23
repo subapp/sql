@@ -73,7 +73,7 @@ class Literal extends AbstractNode
     /**
      * @return string
      */
-    public function getRenderer()
+    public function getConverter()
     {
         return ConverterInterface::CONVERTER_LITERAL;
     }
