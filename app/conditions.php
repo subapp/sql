@@ -41,6 +41,8 @@ $conditions = [
 
 $sql = new Sql();
 
+$sql->createAstFromString()
+
 $processor = $sql->createParser();
 $converter = $sql->getConverter();
 

@@ -1,26 +1,55 @@
 # sql
-SQL Two Way Query/Builder
+## SQL Parser-QueryBuilder
 
+### Configuration
+
+```php
+$sql = new Sql\Sql();
+
+// example
+$sql->setCache(new Application\PsrCachePoolImpl());
 ```
-====== SQL ======
-select
-t0.name,
-sum(length(sum(s.name)) / count(s.id)),
-Sum(u.id) * 3,
-2 * Sum(users.balance),
-cnt('test'),
-t0.id from `users`
 
-====== Tokens ======
-T_SELECT T_IDENTIFIER T_DOT T_IDENTIFIER T_COMMA T_IDENTIFIER T_OPEN_BRACE 
-T_IDENTIFIER T_OPEN_BRACE T_IDENTIFIER T_OPEN_BRACE T_IDENTIFIER T_DOT T_IDENTIFIER 
-T_CLOSE_BRACE T_CLOSE_BRACE T_DIVIDE T_IDENTIFIER T_OPEN_BRACE T_IDENTIFIER T_DOT 
-T_IDENTIFIER T_CLOSE_BRACE T_CLOSE_BRACE T_COMMA T_IDENTIFIER T_OPEN_BRACE T_IDENTIFIER 
-T_DOT T_IDENTIFIER T_CLOSE_BRACE T_MULTIPLY T_INT T_COMMA T_INT 
-T_MULTIPLY T_IDENTIFIER T_OPEN_BRACE T_IDENTIFIER T_DOT T_IDENTIFIER T_CLOSE_BRACE 
-T_COMMA T_IDENTIFIER T_OPEN_BRACE T_STRING T_CLOSE_BRACE T_COMMA T_IDENTIFIER 
-T_DOT T_IDENTIFIER T_FROM T_GRAVE_ACCENT T_IDENTIFIER T_GRAVE_ACCENT 
+### Create AST
 
-====== SELECT AST Converter ======
-SELECT t0.name, SUM((LENGTH(SUM(s.name)) / COUNT(s.id))), (SUM(u.id) * 3), (2 * SUM(users.balance)), CNT('test'), t0.id, '3.14' FROM `test`
+```php
+$sql = new Sql\Sql();
+
+$ast = $sql->createAstFromString('select U.id, U.name, max(U.id) from users U where U.id > 100');
+```
+
+### Converter
+
+```php
+$converter = $sql->getConverter();
+
+$array = $converter->toArray($ast); 
+$ast = $converter->toNode($array); 
+
+$converter->toSql($ast); 
+// > SELECT U.id, U.name, MAX(U.id) FROM users AS U WHERE U.id > 100
+```
+
+### Query Builder
+
+```php
+$sql = new Sql\Sql();
+$qb = new Query\QueryBuilder();
+$ast = $sql->createAstFromString('select U.id, U.name, max(U.id) from users U where U.id > 100');
+$node = $qb->node();
+
+$qb->setRoot($ast->getRoot());
+
+$qb
+    ->group('U.id')
+    ->order('U.name asc, rand()', 'U.id desc');
+
+$c->add($node->ne('U.id', 1000));
+
+$converter->toSql($ast); 
+// SELECT U.id, U.name, MAX(U.id) 
+// FROM users AS U WHERE U.id > 100
+// WHERE U.id <> 1000
+// GROUP BY U.id
+// ORDER BY U.name ASC, RAND(), U.id DESC
 ```
