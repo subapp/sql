@@ -41,7 +41,7 @@ echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 $lexer->rewind();
 
 $processor = new \Subapp\Sql\Syntax\Processor($lexer);
-$processor->setup(new \Subapp\Sql\Syntax\Common\DefaultParserSetup());
+$processor->setup(new \Subapp\Sql\Syntax\Common\DefaultProcessorSetup());
 
 $pool = new \Subapp\Cache\Pool\CacheItemPool(
     new \Subapp\Cache\Adapter\FilesystemAdapter(
@@ -64,7 +64,7 @@ try {
 //    var_dump($select);
     
     $renderer = new \Subapp\Sql\Converter\Converter();
-    $renderer->setup(new \Subapp\Sql\Converter\DefaultProviderSetup());
+    $renderer->setup(new \Subapp\Sql\Converter\DefaultConverterSetup());
     
     $processor->setLexer(new Lexer());
     
@@ -115,8 +115,8 @@ try {
     );
     
 //    var_dump(
-//        $renderer->render($node->false()),
-//        $renderer->render($node->and($node->eq(1, 2), $node->eq(3.14, $node->arithmetic(22, MathOperator::DIVIDE, 7))))
+//        $converter->render($node->false()),
+//        $converter->render($node->and($node->eq(1, 2), $node->eq(3.14, $node->arithmetic(22, MathOperator::DIVIDE, 7))))
 //    );
     
     echo "\n\n\n";

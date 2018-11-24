@@ -45,7 +45,7 @@ final class Processor implements ProcessorInterface
     /**
      * @inheritdoc
      */
-    public function setup(ParserSetupInterface $parserSetup)
+    public function setup(ProcessorSetupInterface $parserSetup)
     {
         $parserSetup->setup($this);
     }
@@ -53,7 +53,7 @@ final class Processor implements ProcessorInterface
     /**
      * @inheritdoc
      */
-    public function addParser(ParserInterface $parser)
+    public function add(ParserInterface $parser)
     {
         $this->parsers->offsetSet($parser->getName(), $parser);
     }
@@ -61,7 +61,7 @@ final class Processor implements ProcessorInterface
     /**
      * @inheritdoc
      */
-    public function removeParser($name)
+    public function remove($name)
     {
         $this->parsers->remove($name);
     }
@@ -69,7 +69,7 @@ final class Processor implements ProcessorInterface
     /**
      * @inheritdoc
      */
-    public function hasParser($name)
+    public function has($name)
     {
         return $this->parsers->offsetExists($name);
     }
@@ -80,7 +80,7 @@ final class Processor implements ProcessorInterface
     public function getParser($name)
     {
         $parser = $this->parsers->offsetGet($name);
-        
+
         if (!($parser instanceof ParserInterface)) {
             throw new \RuntimeException(sprintf('Unfortunately parser with name "%s" doesn\'t registered yet',
                 $name));
@@ -92,7 +92,7 @@ final class Processor implements ProcessorInterface
     /**
      * @inheritdoc
      */
-    public function cleanParsers()
+    public function clean()
     {
         $this->parsers->clear();
     }

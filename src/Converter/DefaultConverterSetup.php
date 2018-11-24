@@ -5,10 +5,10 @@ namespace Subapp\Sql\Converter;
 use Subapp\Sql\Converter\Common;
 
 /**
- * Class DefaultRendererSetup
+ * Class DefaultConverterSetup
  * @package Subapp\Sql\Converter\Common
  */
-class DefaultProviderSetup implements ProviderSetupInterface
+class DefaultConverterSetup implements ConverterSetupInterface
 {
     
     /**

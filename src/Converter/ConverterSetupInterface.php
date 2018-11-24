@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Converter;
 
 /**
- * Interface ProviderSetupInterface
+ * Interface ConverterSetupInterface
  * @package Subapp\Sql\Converter
  */
-interface ProviderSetupInterface
+interface ConverterSetupInterface
 {
     
     /**

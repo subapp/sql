@@ -6,7 +6,7 @@ namespace Subapp\Sql\Syntax;
  * Interface ParserSetupInterface
  * @package Subapp\Sql\Syntax
  */
-interface ParserSetupInterface
+interface ProcessorSetupInterface
 {
     
     /**

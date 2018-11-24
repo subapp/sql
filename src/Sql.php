@@ -2,20 +2,16 @@
 
 namespace Subapp\Sql;
 
-use Subapp\Cache\Adapter\ArrayAdapter;
-use Subapp\Cache\Pool\CacheItemPool;
-use Subapp\Cache\Serializer\JsonSerializer;
+use Psr\Cache\CacheItemPoolInterface;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Converter\Converter;
-use Subapp\Sql\Converter\DefaultProviderSetup;
+use Subapp\Sql\Converter\DefaultConverterSetup;
 use Subapp\Sql\Converter\ProviderInterface;
 use Subapp\Sql\Dumper\DumperFacade;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Query\Node;
-use Subapp\Sql\Query\Recognizer;
 use Subapp\Sql\Syntax\CacheProcessor;
-use Subapp\Sql\Syntax\Common\DefaultParserSetup;
-use Subapp\Sql\Syntax\ParserSetupInterface;
+use Subapp\Sql\Syntax\Common\DefaultProcessorSetup;
+use Subapp\Sql\Syntax\ProcessorSetupInterface;
 use Subapp\Sql\Syntax\Processor;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -32,24 +28,9 @@ class Sql
     private $lexer;
     
     /**
-     * @var Recognizer
-     */
-    private $recognizer;
-    
-    /**
-     * @var ProcessorInterface
-     */
-    private $processor;
-    
-    /**
      * @var ProviderInterface
      */
     private $converter;
-    
-    /**
-     * @var Node
-     */
-    private $node;
     
     /**
      * @var DumperFacade
@@ -57,46 +38,42 @@ class Sql
     private $dumper;
     
     /**
+     * @var CacheItemPoolInterface
+     */
+    private $cache;
+    
+    /**
      * Sql constructor.
      */
     public function __construct()
     {
         $this->lexer = new Lexer();
-        $this->processor = new Processor($this->lexer);
-        $this->converter = new Converter();
-        $this->recognizer = new Recognizer($this->processor);
-        $this->node = new Node($this->recognizer);
         $this->dumper = new DumperFacade();
+        $this->converter = new Converter();
+        $this->converter->setup(new DefaultConverterSetup());
     }
     
     /**
-     * @param ParserSetupInterface|null $setup
+     * @param ProcessorSetupInterface|null $setup
      * @return ProcessorInterface
      */
-    public function createParserProcessor(ParserSetupInterface $setup = null)
+    public function createParser(ProcessorSetupInterface $setup = null)
     {
-        $processor = clone($this->processor);
+        $processor = new Processor($this->getLexer());
         
-        $processor->cleanParsers();
-        $processor->setup($setup ?? new DefaultParserSetup());
+        $processor->clean();
+        $processor->setup($setup ?: new DefaultProcessorSetup());
         
         return $processor;
     }
     
     /**
-     * @param ParserSetupInterface|null $setup
+     * @param ProcessorSetupInterface|null $setup
      * @return CacheProcessor|ProcessorInterface
      */
-    public function createCacheParserProcessor(ParserSetupInterface $setup = null)
+    public function createCacheParser(ProcessorSetupInterface $setup = null)
     {
-        $processor = new CacheProcessor(new CacheItemPool(
-            new ArrayAdapter(new JsonSerializer())
-        ), $this->getProcessor());
-        
-        $processor->cleanParsers();
-        $processor->setup($setup ?? new DefaultParserSetup());
-        
-        return $processor;
+        return new CacheProcessor($this->getCache(), $this->createParser($setup));
     }
     
     /**
@@ -105,8 +82,10 @@ class Sql
      */
     public function createAstFromString($string)
     {
-        $processor = $this->createParserProcessor();
-        $processor->getLexer()->tokenize($string);
+        $processor = $this->createParser(null);
+        $lexer = $processor->getLexer();
+        
+        $lexer->tokenize($string);
         
         return $processor->parse();
     }
@@ -119,11 +98,7 @@ class Sql
     
     public function convertSqlToArray($sql)
     {
-        $ast = $this->createAstFromString($sql);
-        
-        $this->converter->setup(new DefaultProviderSetup());
-        
-        return $this->converter->toArray($ast);
+        return $this->getConverter()->toArray($this->createAstFromString($sql));
     }
     
     /**
@@ -154,6 +129,30 @@ class Sql
     }
     
     /**
+     * @return CacheItemPoolInterface
+     */
+    public function getCache(): CacheItemPoolInterface
+    {
+        return $this->cache;
+    }
+    
+    /**
+     * @param CacheItemPoolInterface $cache
+     */
+    public function setCache(CacheItemPoolInterface $cache): void
+    {
+        $this->cache = $cache;
+    }
+    
+    /**
+     * @return DumperFacade
+     */
+    public function getDumper(): DumperFacade
+    {
+        return $this->dumper;
+    }
+    
+    /**
      * @return LexerInterface
      */
     public function getLexer(): LexerInterface
@@ -170,38 +169,6 @@ class Sql
     }
     
     /**
-     * @return Recognizer
-     */
-    public function getRecognizer(): Recognizer
-    {
-        return $this->recognizer;
-    }
-    
-    /**
-     * @param Recognizer $recognizer
-     */
-    public function setRecognizer(Recognizer $recognizer): void
-    {
-        $this->recognizer = $recognizer;
-    }
-    
-    /**
-     * @return ProcessorInterface
-     */
-    public function getProcessor(): ProcessorInterface
-    {
-        return $this->processor;
-    }
-    
-    /**
-     * @param ProcessorInterface $processor
-     */
-    public function setProcessor(ProcessorInterface $processor): void
-    {
-        $this->processor = $processor;
-    }
-    
-    /**
      * @return ProviderInterface
      */
     public function getConverter(): ProviderInterface
@@ -215,22 +182,6 @@ class Sql
     public function setConverter(ProviderInterface $converter): void
     {
         $this->converter = $converter;
-    }
-    
-    /**
-     * @return Node
-     */
-    public function getNode(): Node
-    {
-        return $this->node;
-    }
-    
-    /**
-     * @param Node $node
-     */
-    public function setNode(Node $node): void
-    {
-        $this->node = $node;
     }
     
 }

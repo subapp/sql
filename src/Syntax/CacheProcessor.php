@@ -36,7 +36,7 @@ class CacheProcessor implements ProcessorInterface
     /**
      * @inheritDoc
      */
-    public function setup(ParserSetupInterface $parserSetup)
+    public function setup(ProcessorSetupInterface $parserSetup)
     {
         $this->processor->setup($parserSetup);
     }
@@ -44,33 +44,33 @@ class CacheProcessor implements ProcessorInterface
     /**
      * @inheritDoc
      */
-    public function addParser(ParserInterface $parser)
+    public function add(ParserInterface $parser)
     {
-        $this->processor->addParser($parser);
+        $this->processor->add($parser);
     }
     
     /**
      * @inheritDoc
      */
-    public function removeParser($name)
+    public function remove($name)
     {
-        $this->processor->removeParser($name);
+        $this->processor->remove($name);
     }
     
     /**
      * @inheritDoc
      */
-    public function hasParser($name)
+    public function has($name)
     {
-        return $this->processor->hasParser($name);
+        return $this->processor->has($name);
     }
     
     /**
      * @inheritDoc
      */
-    public function cleanParsers()
+    public function clean()
     {
-        $this->processor->cleanParsers();
+        $this->processor->clean();
     }
     
     /**

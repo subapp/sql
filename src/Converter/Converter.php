@@ -30,7 +30,7 @@ class Converter implements ProviderInterface
     /**
      * @inheritdoc
      */
-    public function setup(ProviderSetupInterface $setup)
+    public function setup(ConverterSetupInterface $setup)
     {
         $setup->setup($this);
     }

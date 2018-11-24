@@ -5,9 +5,9 @@ use Subapp\Sql\Platform\MySQLPlatform;
 use Subapp\Sql\Query\Node;
 use Subapp\Sql\Query\QueryBuilder;
 use Subapp\Sql\Query\Recognizer;
-use Subapp\Sql\Converter\DefaultProviderSetup;
+use Subapp\Sql\Converter\DefaultConverterSetup;
 use Subapp\Sql\Converter\Converter;
-use Subapp\Sql\Syntax\Common\DefaultParserSetup;
+use Subapp\Sql\Syntax\Common\DefaultProcessorSetup;
 use Subapp\Sql\Syntax\Processor;
 
 include_once __DIR__ . '/../vendor/autoload.php';
@@ -15,12 +15,12 @@ include_once __DIR__ . '/../vendor/autoload.php';
 $facade = new \Subapp\Sql\Sql();
 
 $provider = new Converter();
-$provider->setup(new DefaultProviderSetup());
+$provider->setup(new DefaultConverterSetup());
 
 $lexer = new Lexer();
 $processor = new Processor($lexer);
 
-$processor->setup(new DefaultParserSetup());
+$processor->setup(new DefaultProcessorSetup());
 $processor->setLexer(new Lexer());
 
 $recognizer = new Recognizer($processor, Recognizer::COMMON);
@@ -85,5 +85,5 @@ echo $provider->toSql($node) . PHP_EOL;
 //var_dump(
 //    json_encode()
 //);
-//echo $renderer->render($conditions) . PHP_EOL;
+//echo $converter->render($conditions) . PHP_EOL;
 

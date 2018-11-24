@@ -14,30 +14,30 @@ interface ProcessorInterface
 {
     
     /**
-     * @param ParserSetupInterface $parserSetup
+     * @param ProcessorSetupInterface $parserSetup
      */
-    public function setup(ParserSetupInterface $parserSetup);
+    public function setup(ProcessorSetupInterface $parserSetup);
     
     /**
      * @param ParserInterface $parser
      */
-    public function addParser(ParserInterface $parser);
+    public function add(ParserInterface $parser);
     
     /**
      * @param $name
      */
-    public function removeParser($name);
+    public function remove($name);
     
     /**
      * @param $name
      * @return boolean
      */
-    public function hasParser($name);
+    public function has($name);
     
     /**
      * @return void
      */
-    public function cleanParsers();
+    public function clean();
     
     /**
      * @param $name

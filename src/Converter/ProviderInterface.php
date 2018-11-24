@@ -12,9 +12,9 @@ interface ProviderInterface
 {
     
     /**
-     * @param ProviderSetupInterface $setup
+     * @param ConverterSetupInterface $setup
      */
-    public function setup(ProviderSetupInterface $setup);
+    public function setup(ConverterSetupInterface $setup);
     
     /**
      * @param NodeInterface $node

@@ -1,11 +1,7 @@
 <?php
 
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Platform\MySQLPlatform;
-use Subapp\Sql\Converter\Common\DefaultRepresenterSetup;
-use Subapp\Sql\Converter\Converter;
-use Subapp\Sql\Syntax\Common\DefaultParserSetup;
-use Subapp\Sql\Syntax\Processor;
+use Subapp\Sql\Sql;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
@@ -43,33 +39,17 @@ $conditions = [
     '(t.id + 1 > 10) and (a > 0 and b < 10) or a is null',
 ];
 
+$sql = new Sql();
 
+$processor = $sql->createParser();
+$converter = $sql->getConverter();
 
-$processor = new Processor($lexer, new MySQLPlatform());
-$processor->setup(new DefaultParserSetup());
-
-$renderer = new Converter();
-$renderer->setup(new DefaultRepresenterSetup());
-
-$operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];
-$parser = new \Subapp\Sql\Syntax\Common\Parser\Condition\Conditional();
-
-$math = new \Subapp\Sql\Syntax\Common\Parser\Arithmetic();
+//
+$parser = $processor->getParser(\Subapp\Sql\Syntax\ParserInterface::PARSER_CONDITION_CONDITIONAL);
 
 foreach ($conditions as $expression) {
-    
     $lexer->tokenize($expression, true);
     $lexer->rewind();
-
-    echo sprintf("raw: %s; rendered: %s;\n", $expression, $renderer->toSql($parser->parse($lexer, $processor)));
-    
-    /*var_dump([
-        'isTokenBetweenBraces' => $parser->isTokenBetweenBraces($lexer, true, ...$operators),
-        'isTokenBehindBraces' => $parser->isTokenBehindBraces($lexer, true, ...$operators),
-        'isTokenBehindExpression' => $parser->isTokenBehindExpression($lexer, true, ...$operators),
-        'isMathExpression' => $parser->isMathExpression($lexer),
-        'isLogicalExpression' => $parser->isLogicalExpression($lexer),
-
-    ]);*/
+    echo sprintf("raw: %s; rendered: %s;\n", $expression, $converter->toSql($parser->parse($lexer, $processor)));
 }
 
