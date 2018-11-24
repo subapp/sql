@@ -21,19 +21,19 @@ interface ProviderInterface
      * @return string
      */
     public function toSql(NodeInterface $node);
-
+    
     /**
      * @param NodeInterface $node
      * @return array
      */
     public function toArray(NodeInterface $node);
-
+    
     /**
      * @param array $ast
      * @return NodeInterface
      */
     public function toNode(array $ast);
-
+    
     /**
      * @param ConverterInterface $converter
      */
@@ -55,5 +55,5 @@ interface ProviderInterface
      * @return ConverterInterface
      */
     public function getConverter($name);
-
+    
 }

@@ -10,17 +10,17 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Variable extends AbstractNode
 {
-
+    
     /**
      * @var NodeInterface
      */
     private $alias;
-
+    
     /**
      * @var NodeInterface
      */
     private $expression;
-
+    
     /**
      * Alias constructor.
      *
@@ -32,7 +32,7 @@ class Variable extends AbstractNode
         $this->expression = $expression;
         $this->alias = $alias;
     }
-
+    
     /**
      * @return NodeInterface
      */
@@ -40,7 +40,7 @@ class Variable extends AbstractNode
     {
         return $this->alias;
     }
-
+    
     /**
      * @param NodeInterface $alias
      */
@@ -48,7 +48,7 @@ class Variable extends AbstractNode
     {
         $this->alias = $alias;
     }
-
+    
     /**
      * @return NodeInterface
      */
@@ -56,7 +56,7 @@ class Variable extends AbstractNode
     {
         return $this->expression;
     }
-
+    
     /**
      * @param NodeInterface $expression
      */
@@ -64,7 +64,7 @@ class Variable extends AbstractNode
     {
         $this->expression = $expression;
     }
-
+    
     /**
      * @return string
      */
@@ -72,5 +72,5 @@ class Variable extends AbstractNode
     {
         return ConverterInterface::CONVERTER_VARIABLE;
     }
-
+    
 }

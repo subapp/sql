@@ -10,34 +10,34 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Literal extends AbstractNode
 {
-
+    
     public const STRING  = 1;
     public const BOOLEAN = 2;
-    public const INT = 3;
-    public const FLOAT = 4;
-    public const NULL = 5;
-
+    public const INT     = 3;
+    public const FLOAT   = 4;
+    public const NULL    = 5;
+    
     /**
      * @var string|integer|float|boolean
      */
     private $value;
-
+    
     /**
      * @var integer
      */
     private $type = Literal::STRING;
-
+    
     /**
      * Literal constructor.
      * @param bool|float|int|string $value
-     * @param int $type
+     * @param int                   $type
      */
     public function __construct($value, $type = Literal::STRING)
     {
         $this->value = $value;
         $this->type = $type;
     }
-
+    
     /**
      * @return boolean|float|integer|string
      */
@@ -45,7 +45,7 @@ class Literal extends AbstractNode
     {
         return $this->value;
     }
-
+    
     /**
      * @param boolean|float|integer|string $value
      */
@@ -53,7 +53,7 @@ class Literal extends AbstractNode
     {
         $this->value = $value;
     }
-
+    
     /**
      * @return integer
      */
@@ -61,7 +61,7 @@ class Literal extends AbstractNode
     {
         return $this->type;
     }
-
+    
     /**
      * @param integer $type
      */
@@ -69,7 +69,7 @@ class Literal extends AbstractNode
     {
         $this->type = $type;
     }
-
+    
     /**
      * @return string
      */
@@ -77,5 +77,5 @@ class Literal extends AbstractNode
     {
         return ConverterInterface::CONVERTER_LITERAL;
     }
-
+    
 }

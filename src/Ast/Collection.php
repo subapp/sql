@@ -12,9 +12,9 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Collection extends BaseCollection implements NodeInterface
 {
-
+    
     use ClassNameTrait;
-
+    
     /**
      * @var boolean
      */
@@ -24,7 +24,7 @@ class Collection extends BaseCollection implements NodeInterface
      * @var string
      */
     private $separator = "\x20"; // space char by default
-
+    
     /**
      * @return bool
      */
@@ -32,7 +32,7 @@ class Collection extends BaseCollection implements NodeInterface
     {
         return $this->isBraced;
     }
-
+    
     /**
      * @param boolean $isBraced
      */
@@ -48,7 +48,7 @@ class Collection extends BaseCollection implements NodeInterface
     public function __construct(array $expressions = [])
     {
         parent::__construct($expressions);
-
+        
         $this->setClass(NodeInterface::class);
     }
     
@@ -75,13 +75,13 @@ class Collection extends BaseCollection implements NodeInterface
     {
         return ConverterInterface::CONVERTER_COLLECTION;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function getNodeName()
     {
-        return $this->getObjectName(static::class);
+        return $this->getObjectName(static::class, 'ASTNode');
     }
-
+    
 }

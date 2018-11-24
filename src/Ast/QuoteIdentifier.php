@@ -10,14 +10,14 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class QuoteIdentifier extends Identifier
 {
-
+    
     const DEFAULT_QUOTE = '`';
-
+    
     /**
      * @var string
      */
     private $quote = self::DEFAULT_QUOTE;
-
+    
     /**
      * @return string
      */
@@ -25,7 +25,7 @@ class QuoteIdentifier extends Identifier
     {
         return $this->quote;
     }
-
+    
     /**
      * @param string $quote
      */
@@ -33,7 +33,7 @@ class QuoteIdentifier extends Identifier
     {
         $this->quote = $quote;
     }
-
+    
     /**
      * @return string
      */

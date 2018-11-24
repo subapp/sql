@@ -39,15 +39,15 @@ class DefaultParserSetup implements ParserSetupInterface
         $processor->addParser(new Parser\Complex());
         $processor->addParser(new Parser\Expression());
         $processor->addParser(new Parser\Common());
-
+        
         // helpers
         $processor->addParser(new Parser\Uncover());
-
+        
         // functions
         $processor->addParser(new Parser\Func());
         $processor->addParser(new Parser\AggregateFunction());
         $processor->addParser(new Parser\DefaultFunction());
-
+        
         // conditions
         $processor->addParser(new Parser\Condition\CmpOperator());
         $processor->addParser(new Parser\Condition\LogicOperator());

@@ -14,9 +14,9 @@ use Subapp\Sql\Converter\ProviderInterface;
  */
 class Select extends AbstractConverter
 {
-
+    
     /**
-     * @param ProviderInterface $provider
+     * @param ProviderInterface        $provider
      * @param NodeInterface|SelectNode $node
      * @return string
      */
@@ -34,7 +34,7 @@ class Select extends AbstractConverter
             $node->isSemicolon() ? "\n;" : null
         );
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -43,7 +43,7 @@ class Select extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['arguments'] = $provider->toArray($node->getArguments());
         $values['from'] = $provider->toArray($node->getFrom());
         $values['joins'] = $provider->toArray($node->getJoins());
@@ -53,17 +53,17 @@ class Select extends AbstractConverter
         $values['orderBy'] = $provider->toArray($node->getOrderBy());
         $values['limit'] = $provider->toArray($node->getLimit());
         $values['semicolon'] = $provider->toArray(new Literal($node->isSemicolon(), Literal::BOOLEAN));
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
         $select = new SelectNode();
-
+        
         $select->setArguments($provider->toNode($ast['arguments']));
         $select->setFrom($provider->toNode($ast['from']));
         $select->setJoins($provider->toNode($ast['joins']));
@@ -72,10 +72,18 @@ class Select extends AbstractConverter
         $select->setHaving($provider->toNode($ast['having']));
         $select->setOrderBy($provider->toNode($ast['orderBy']));
         $select->setLimit($provider->toNode($ast['limit']));
-
+        
         $select->setSemicolon($ast['semicolon']['value']);
-
+        
         return $select;
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_STMT_SELECT;
+    }
+    
 }

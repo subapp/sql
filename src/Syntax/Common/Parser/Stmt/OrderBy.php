@@ -43,9 +43,17 @@ class OrderBy extends AbstractDefaultParser
             }
             
             $collection->append($orderBy);
-        } while($lexer->isNext(Lexer::T_COMMA) && $lexer->next());
+        } while ($lexer->isNext(Lexer::T_COMMA) && $lexer->next());
         
         return $collection;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STMT_ORDER_BY;
     }
     
 }

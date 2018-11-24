@@ -10,7 +10,7 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Arithmetic extends Collection
 {
-
+    
     /**
      * @return string
      */
@@ -18,5 +18,5 @@ class Arithmetic extends Collection
     {
         return ConverterInterface::CONVERTER_ARITHMETIC;
     }
-
+    
 }

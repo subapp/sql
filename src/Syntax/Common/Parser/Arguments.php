@@ -15,9 +15,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Arguments extends Common\Parser\AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface|ArgsExpression
      */
@@ -25,14 +25,22 @@ class Arguments extends Common\Parser\AbstractDefaultParser
     {
         $variables = new ArgsExpression();
         $parser = $this->getComplexParser($processor);
-
+        
         if (!$lexer->isNext(Lexer::T_CLOSE_BRACE)) {
             do {
                 $variables->append($parser->parse($lexer, $processor));
             } while ($lexer->toToken(Lexer::T_COMMA));
         }
-
+        
         return $variables;
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_ARGUMENTS;
+    }
+    
 }

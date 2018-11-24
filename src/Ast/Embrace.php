@@ -10,12 +10,12 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Embrace extends AbstractNode
 {
-
+    
     /**
      * @var NodeInterface
      */
     private $inner;
-
+    
     /**
      * Embrace constructor.
      * @param NodeInterface $inner
@@ -24,7 +24,7 @@ class Embrace extends AbstractNode
     {
         $this->inner = $inner;
     }
-
+    
     /**
      * @return NodeInterface
      */
@@ -32,7 +32,7 @@ class Embrace extends AbstractNode
     {
         return $this->inner;
     }
-
+    
     /**
      * @param NodeInterface $inner
      */
@@ -40,7 +40,7 @@ class Embrace extends AbstractNode
     {
         $this->inner = $inner;
     }
-
+    
     /**
      * @return string
      */
@@ -48,5 +48,5 @@ class Embrace extends AbstractNode
     {
         return ConverterInterface::CONVERTER_EMBRACE;
     }
-
+    
 }

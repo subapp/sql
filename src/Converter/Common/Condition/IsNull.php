@@ -16,7 +16,7 @@ class IsNull extends AbstractConverter
     
     /**
      * @param NodeInterface|IsNullNode $node
-     * @param ProviderInterface                    $provider
+     * @param ProviderInterface        $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -25,7 +25,7 @@ class IsNull extends AbstractConverter
             $provider->toSql($node->getLeft()),
             ($node->isNot() ? ' NOT ' : ' '));
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -34,25 +34,32 @@ class IsNull extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['left'] = $provider->toArray($node->getLeft());
         $values['isNot'] = $node->isNot();
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
         $isNull = new IsNullNode();
-
+        
         $isNull->setLeft($provider->toNode($ast['left']));
         $isNull->setIsNot($ast['isNot']);
-
+        
         return $isNull;
     }
-
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_CONDITION_IS_NULL;
+    }
+    
 }

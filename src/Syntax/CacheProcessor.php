@@ -11,28 +11,28 @@ use Subapp\Lexer\LexerInterface;
  */
 class CacheProcessor implements ProcessorInterface
 {
-
+    
     /**
      * @var CacheItemPoolInterface
      */
     private $cache;
-
+    
     /**
      * @var ProcessorInterface
      */
     private $processor;
-
+    
     /**
      * CachedProcessor constructor.
      * @param CacheItemPoolInterface $cache
-     * @param ProcessorInterface $processor
+     * @param ProcessorInterface     $processor
      */
     public function __construct(CacheItemPoolInterface $cache, ProcessorInterface $processor)
     {
         $this->cache = $cache;
         $this->processor = $processor;
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -40,7 +40,7 @@ class CacheProcessor implements ProcessorInterface
     {
         $this->processor->setup($parserSetup);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -48,7 +48,7 @@ class CacheProcessor implements ProcessorInterface
     {
         $this->processor->addParser($parser);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -56,7 +56,7 @@ class CacheProcessor implements ProcessorInterface
     {
         $this->processor->removeParser($name);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -64,7 +64,7 @@ class CacheProcessor implements ProcessorInterface
     {
         return $this->processor->hasParser($name);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -72,7 +72,7 @@ class CacheProcessor implements ProcessorInterface
     {
         $this->processor->cleanParsers();
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -80,20 +80,40 @@ class CacheProcessor implements ProcessorInterface
     {
         return $this->processor->getParser($name);
     }
-
+    
     /**
      * @inheritDoc
      */
     public function parse()
     {
-
+        $hash = $this->getLexerHash($this->processor->getLexer());
+        $item = $this->cache->getItem($hash);
+        
+        if (!$item->isHit()) {
+            var_dump($this);
+            $item->set($this->processor->parse());
+            $item->expiresAfter(3600);
+            $this->cache->save($item);
+        }
+        
+        return $item->get();
     }
-
+    
+    /**
+     * @param LexerInterface $lexer
+     * @return string
+     */
     private function getLexerHash(LexerInterface $lexer)
     {
-        return null;
+        $tokens = [];
+        
+        foreach ($lexer->getTokens() as $token) {
+            $tokens[] = sprintf('[%s]', $token->getToken());
+        }
+        
+        return hash('sha256', implode($tokens));
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -101,7 +121,7 @@ class CacheProcessor implements ProcessorInterface
     {
         return $this->processor->getLexer();
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -109,7 +129,7 @@ class CacheProcessor implements ProcessorInterface
     {
         return $this->processor->getParsers();
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -117,5 +137,5 @@ class CacheProcessor implements ProcessorInterface
     {
         $this->processor->setLexer($lexer);
     }
-
+    
 }

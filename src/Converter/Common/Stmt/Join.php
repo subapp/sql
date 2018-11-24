@@ -16,7 +16,7 @@ class Join extends AbstractConverter
     
     /**
      * @param NodeInterface|JoinNode $node
-     * @param ProviderInterface                  $provider
+     * @param ProviderInterface      $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -28,7 +28,7 @@ class Join extends AbstractConverter
             $provider->toSql($node->getCondition())
         );
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -37,27 +37,35 @@ class Join extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['type'] = $node->getJoinType();
         $values['conditionType'] = $node->getConditionType();
         $values['left'] = $provider->toArray($node->getLeft());
         $values['condition'] = $provider->toArray($node->getCondition());
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
         $join = new JoinNode($ast['type']);
-
+        
         $join->setCondition($provider->toNode($ast['condition']));
         $join->setConditionType($ast['conditionType']);
         $join->setLeft($provider->toNode($ast['left']));
-
+        
         return $join;
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_STMT_JOIN;
+    }
+    
 }

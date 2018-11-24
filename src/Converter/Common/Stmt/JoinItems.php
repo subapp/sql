@@ -16,12 +16,28 @@ class JoinItems extends Collection
     
     /**
      * @param NodeInterface|JoinItemsNode $collection
-     * @param ProviderInterface                       $provider
+     * @param ProviderInterface           $provider
      * @return string
      */
     public function toSql(NodeInterface $collection, ProviderInterface $provider)
     {
         return $collection->count() > 0 ? sprintf(' %s', parent::toSql($collection, $provider)) : null;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        return $this->toCollection(new JoinItemsNode(), $ast, $provider);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_STMT_JOIN_ITEMS;
     }
     
 }

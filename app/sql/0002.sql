@@ -1,5 +1,3 @@
-select
-*,
-`users`.*,
+select users.*,
 Count(user_id) cnt
-from `users`
+from users U

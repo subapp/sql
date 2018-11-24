@@ -59,7 +59,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_QUOTE_IDENTIFIER);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Func
@@ -68,7 +68,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_FUNC);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\DefaultFunction
@@ -77,7 +77,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_DEFAULT_FUNCTION);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\AggregateFunction
@@ -86,7 +86,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_AGGREGATE_FUNCTION);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\FieldPath
@@ -95,7 +95,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_FIELD_PATH);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Literal
@@ -104,7 +104,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_LITERAL);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Parameter
@@ -131,7 +131,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_VARIABLE);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Arguments
@@ -140,7 +140,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_ARGUMENTS);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Complex
@@ -149,7 +149,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_COMPLEX);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Expression
@@ -158,7 +158,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_EXPRESSION);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Arithmetic
@@ -176,7 +176,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_ALIAS);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Embrace
@@ -185,7 +185,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_EMBRACE);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\SubSelect
@@ -194,7 +194,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_SUB_SELECT);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Condition\Conditional
@@ -203,7 +203,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_CONDITION_CONDITIONAL);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Condition\CmpOperator
@@ -284,7 +284,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_STMT_LIMIT);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Uncover
@@ -293,5 +293,23 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_UNCOVER);
     }
-
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface
+     */
+    public function getSelectStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_SELECT);
+    }
+    
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface
+     */
+    public function getFromStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_FROM);
+    }
+    
 }

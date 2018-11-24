@@ -29,4 +29,12 @@ class QuoteIdentifier extends Identifier
         return new QuoteIdentifierExpression($identifier);
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_QUOTE_IDENTIFIER;
+    }
+    
 }

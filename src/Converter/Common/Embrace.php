@@ -15,10 +15,10 @@ use Subapp\Sql\Converter\ProviderInterface;
  */
 class Embrace extends AbstractConverter
 {
-
+    
     /**
      * @param NodeInterface|EmbraceNode $node
-     * @param ProviderInterface $provider
+     * @param ProviderInterface         $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -27,7 +27,7 @@ class Embrace extends AbstractConverter
         
         return sprintf($template, $provider->toSql($node->getInner()));
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -36,12 +36,12 @@ class Embrace extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['inner'] = $provider->toArray($node->getInner());
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -49,5 +49,13 @@ class Embrace extends AbstractConverter
     {
         return new EmbraceNode($ast['inner'] ?? new Raw('[NULL]'));
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_EMBRACE;
+    }
+    
 }

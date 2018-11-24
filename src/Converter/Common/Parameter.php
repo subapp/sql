@@ -16,7 +16,7 @@ class Parameter extends AbstractConverter
     
     /**
      * @param NodeInterface|ParameterNode $node
-     * @param ProviderInterface                       $provider
+     * @param ProviderInterface           $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -29,7 +29,7 @@ class Parameter extends AbstractConverter
         
         return $parameter;
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -38,13 +38,13 @@ class Parameter extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['name'] = $node->getName();
         $values['type'] = $node->getType();
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -52,5 +52,13 @@ class Parameter extends AbstractConverter
     {
         return new ParameterNode($ast['type'], $ast['name']);
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_PARAMETER;
+    }
+    
 }

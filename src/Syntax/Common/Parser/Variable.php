@@ -22,7 +22,7 @@ class Variable extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $parser = null;
-    
+        
         switch (true) {
             case $this->isIdentifier($lexer):
                 $parser = $this->getIdentifierParser($processor);
@@ -36,14 +36,22 @@ class Variable extends AbstractDefaultParser
             default:
                 $this->throwSyntaxError($lexer, 'Identifier', 'QuoteIdentifier', 'SubSelect');
         }
-    
+        
         $expression = new VariableExpression($parser->parse($lexer, $processor));
-    
+        
         if ($this->isAlias($lexer)) {
             $expression->setAlias($this->getAliasParser($processor)->parse($lexer, $processor));
         }
         
         return $expression;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_VARIABLE;
     }
     
 }

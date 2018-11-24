@@ -6,12 +6,13 @@ use Subapp\Cache\Adapter\ArrayAdapter;
 use Subapp\Cache\Pool\CacheItemPool;
 use Subapp\Cache\Serializer\JsonSerializer;
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Converter\Converter;
+use Subapp\Sql\Converter\DefaultProviderSetup;
+use Subapp\Sql\Converter\ProviderInterface;
+use Subapp\Sql\Dumper\DumperFacade;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Query\Node;
-use Subapp\Sql\Query\QueryBuilder;
 use Subapp\Sql\Query\Recognizer;
-use Subapp\Sql\Converter\Provider;
-use Subapp\Sql\Converter\ProviderInterface;
 use Subapp\Sql\Syntax\CacheProcessor;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\ParserSetupInterface;
@@ -43,12 +44,17 @@ class Sql
     /**
      * @var ProviderInterface
      */
-    private $renderer;
+    private $converter;
     
     /**
      * @var Node
      */
     private $node;
+    
+    /**
+     * @var DumperFacade
+     */
+    private $dumper;
     
     /**
      * Sql constructor.
@@ -57,11 +63,12 @@ class Sql
     {
         $this->lexer = new Lexer();
         $this->processor = new Processor($this->lexer);
-        $this->renderer = new Provider();
+        $this->converter = new Converter();
         $this->recognizer = new Recognizer($this->processor);
         $this->node = new Node($this->recognizer);
+        $this->dumper = new DumperFacade();
     }
-
+    
     /**
      * @param ParserSetupInterface|null $setup
      * @return ProcessorInterface
@@ -69,13 +76,13 @@ class Sql
     public function createParserProcessor(ParserSetupInterface $setup = null)
     {
         $processor = clone($this->processor);
-
+        
         $processor->cleanParsers();
         $processor->setup($setup ?? new DefaultParserSetup());
-
+        
         return $processor;
     }
-
+    
     /**
      * @param ParserSetupInterface|null $setup
      * @return CacheProcessor|ProcessorInterface
@@ -85,11 +92,65 @@ class Sql
         $processor = new CacheProcessor(new CacheItemPool(
             new ArrayAdapter(new JsonSerializer())
         ), $this->getProcessor());
-
+        
         $processor->cleanParsers();
         $processor->setup($setup ?? new DefaultParserSetup());
-
+        
         return $processor;
+    }
+    
+    /**
+     * @param $string
+     * @return Ast\NodeInterface
+     */
+    public function createAstFromString($string)
+    {
+        $processor = $this->createParserProcessor();
+        $processor->getLexer()->tokenize($string);
+        
+        return $processor->parse();
+    }
+    
+    public function createAstFromArray(array $ast)
+    {
+        return $this->converter->toNode($ast);
+    }
+    
+    
+    public function convertSqlToArray($sql)
+    {
+        $ast = $this->createAstFromString($sql);
+        
+        $this->converter->setup(new DefaultProviderSetup());
+        
+        return $this->converter->toArray($ast);
+    }
+    
+    /**
+     * @param string $sql
+     * @return false|string
+     */
+    public function convertSqlToJson($sql)
+    {
+        return $this->dumper->getJsonDumper()->dump($this->convertSqlToArray($sql));
+    }
+    
+    /**
+     * @param string $sql
+     * @return false|string
+     */
+    public function convertSqlToIni($sql)
+    {
+        return $this->dumper->getIniDumper()->dump($this->convertSqlToArray($sql));
+    }
+    
+    /**
+     * @param string $sql
+     * @return false|string
+     */
+    public function convertSqlToYaml($sql)
+    {
+        return $this->dumper->getYamlDumper()->dump($this->convertSqlToArray($sql));
     }
     
     /**
@@ -143,17 +204,17 @@ class Sql
     /**
      * @return ProviderInterface
      */
-    public function getRenderer(): ProviderInterface
+    public function getConverter(): ProviderInterface
     {
-        return $this->renderer;
+        return $this->converter;
     }
     
     /**
-     * @param ProviderInterface $renderer
+     * @param ProviderInterface $converter
      */
-    public function setRenderer(ProviderInterface $renderer): void
+    public function setConverter(ProviderInterface $converter): void
     {
-        $this->renderer = $renderer;
+        $this->converter = $converter;
     }
     
     /**

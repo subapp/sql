@@ -10,12 +10,12 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class AggregateFunction extends AbstractFunction
 {
-
+    
     /**
      * @var boolean
      */
     private $distinct = false;
-
+    
     /**
      * AggregateFunction constructor.
      * @param bool $distinct
@@ -23,10 +23,10 @@ class AggregateFunction extends AbstractFunction
     public function __construct($distinct = false)
     {
         parent::__construct();
-
+        
         $this->distinct = $distinct;
     }
-
+    
     /**
      * @return bool
      */
@@ -34,7 +34,7 @@ class AggregateFunction extends AbstractFunction
     {
         return $this->distinct;
     }
-
+    
     /**
      * @param bool $distinct
      */
@@ -42,7 +42,7 @@ class AggregateFunction extends AbstractFunction
     {
         $this->distinct = $distinct;
     }
-
+    
     /**
      * @return string
      */
@@ -50,5 +50,5 @@ class AggregateFunction extends AbstractFunction
     {
         return ConverterInterface::CONVERTER_FUNC_AGGREGATE;
     }
-
+    
 }

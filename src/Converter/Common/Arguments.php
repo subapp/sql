@@ -15,7 +15,7 @@ class Arguments extends Collection
     
     /**
      * @param NodeInterface|ArgumentsNode $node
-     * @param ProviderInterface                       $provider
+     * @param ProviderInterface           $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -24,6 +24,22 @@ class Arguments extends Collection
         $node->setSeparator("\x2c\x20");
         
         return parent::toSql($node, $provider);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        return $this->toCollection(new ArgumentsNode(), $ast, $provider);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_ARGS;
     }
     
 }

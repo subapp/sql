@@ -10,9 +10,9 @@ use Subapp\Sql\Common\ClassNameTrait;
  */
 abstract class AbstractNode implements NodeInterface
 {
-
+    
     use ClassNameTrait;
-
+    
     /**
      * @inheritDoc
      */
@@ -20,5 +20,5 @@ abstract class AbstractNode implements NodeInterface
     {
         return $this->getObjectName(static::class, 'ASTNode');
     }
-
+    
 }

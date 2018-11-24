@@ -27,9 +27,17 @@ class From extends AbstractDefaultParser
         
         do {
             $from->append($parser->parse($lexer, $processor));
-        } while($lexer->toToken(Lexer::T_COMMA));
-
+        } while ($lexer->toToken(Lexer::T_COMMA));
+        
         return $from;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STMT_FROM;
     }
     
 }

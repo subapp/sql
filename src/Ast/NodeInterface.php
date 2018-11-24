@@ -13,10 +13,10 @@ interface NodeInterface
      * @return string
      */
     public function getConverter();
-
+    
     /**
      * @return string
      */
     public function getNodeName();
-
+    
 }

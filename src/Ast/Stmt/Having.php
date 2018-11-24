@@ -11,7 +11,7 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Having extends Conditions
 {
-
+    
     /**
      * @return string
      */
@@ -19,5 +19,5 @@ class Having extends Conditions
     {
         return ConverterInterface::CONVERTER_STMT_HAVING;
     }
-
+    
 }

@@ -25,15 +25,23 @@ class GroupBy extends AbstractDefaultParser
     {
         $parser = $this->getExpressionParser($processor);
         $collection = new GroupByExpression();
-    
+        
         $this->shift(Lexer::T_GROUP, $lexer);
         $this->shift(Lexer::T_BY, $lexer);
         
         do {
             $collection->append($parser->parse($lexer, $processor));
-        } while($lexer->isNext(Lexer::T_COMMA) && $lexer->next());
+        } while ($lexer->isNext(Lexer::T_COMMA) && $lexer->next());
         
         return $collection;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STMT_GROUP_BY;
     }
     
 }

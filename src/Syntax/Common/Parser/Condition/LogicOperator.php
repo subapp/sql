@@ -17,9 +17,9 @@ class LogicOperator extends AbstractDefaultParser
 {
     
     const MAP = [
-        Lexer::T_AND => LogicOperatorExpression::AND,
-        Lexer::T_OR => LogicOperatorExpression::OR,
-        Lexer::T_XOR => LogicOperatorExpression::XOR,
+        Lexer::T_AND => LogicOperatorExpression:: AND,
+        Lexer::T_OR => LogicOperatorExpression:: OR,
+        Lexer::T_XOR => LogicOperatorExpression:: XOR,
     ];
     
     /**
@@ -31,14 +31,22 @@ class LogicOperator extends AbstractDefaultParser
     {
         $token = $lexer->getNext();
         $operator = isset(LogicOperator::MAP[$token->getType()]) ? LogicOperator::MAP[$token->getType()] : null;
-    
+        
         if (null === $operator) {
             $this->throwSyntaxError($lexer, ...array_keys(LogicOperator::MAP));
         }
-    
+        
         $lexer->next();
         
         return new LogicOperatorExpression($operator);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_CONDITION_LOGIC_OPERATOR;
     }
     
 }

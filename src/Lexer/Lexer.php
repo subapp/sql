@@ -10,7 +10,7 @@ use Subapp\Lexer\TokenInterface;
  */
 class Lexer extends AbstractSqlLexer
 {
-
+    
     /**
      * @inheritDoc
      */
@@ -18,7 +18,7 @@ class Lexer extends AbstractSqlLexer
     {
         return ['\s+', '(.)',];
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -31,7 +31,7 @@ class Lexer extends AbstractSqlLexer
             '\'(?:[^\'])*\'', '"(?:[^"])*"', // quoted strings
         ];
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -39,7 +39,7 @@ class Lexer extends AbstractSqlLexer
     {
         $tokenType = $this->getTokenCharacterType($token->getToken());
         $tokenValue = $token->getToken();
-
+        
         if (null === $tokenType) {
             if ($tokenValue[0] === '\'' || $tokenValue[0] === '"') {
                 $token->setToken(trim($tokenValue, '\'"'));
@@ -50,10 +50,10 @@ class Lexer extends AbstractSqlLexer
                 $tokenType = (strpos($tokenValue, '.') === false) ? static::T_INT : static::T_FLOAT;
             }
         }
-
+        
         $token->setType($tokenType ?? Lexer::T_UNKNOWN);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -61,6 +61,6 @@ class Lexer extends AbstractSqlLexer
     {
         return ($token->getType() !== Lexer::T_UNDEFINED);
     }
-
-
+    
+    
 }

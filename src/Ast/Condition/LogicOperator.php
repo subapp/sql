@@ -11,25 +11,25 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class LogicOperator extends AbstractNode
 {
-
+    
     const AND = 'AND';
-    const OR = 'OR';
+    const OR  = 'OR';
     const XOR = 'XOR';
-
+    
     /**
      * @var string
      */
     private $operator;
-
+    
     /**
      * LogicOperator constructor.
      * @param string $operator
      */
-    public function __construct($operator = self::AND)
+    public function __construct($operator = self:: AND)
     {
         $this->operator = $operator;
     }
-
+    
     /**
      * @return string
      */
@@ -37,7 +37,7 @@ class LogicOperator extends AbstractNode
     {
         return $this->operator;
     }
-
+    
     /**
      * @param string $operator
      */
@@ -45,13 +45,13 @@ class LogicOperator extends AbstractNode
     {
         $this->operator = $operator;
     }
-
+    
     /**
      * @inheritdoc
-    */
+     */
     public function getConverter()
     {
         return ConverterInterface::CONVERTER_CONDITION_LOGIC_OPERATOR;
     }
-
+    
 }

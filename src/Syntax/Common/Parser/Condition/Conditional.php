@@ -17,9 +17,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Conditional extends AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return Conditions|AbstractPredicate
      */
@@ -27,7 +27,7 @@ class Conditional extends AbstractDefaultParser
     {
         return $this->and($processor);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return Conditions|AbstractPredicate
@@ -36,24 +36,24 @@ class Conditional extends AbstractDefaultParser
     {
         $lexer = $processor->getLexer();
         $uncover = $this->getUncoverParser($processor);
-
+        
         // information about ahead expression
         $isOpenBrace = $this->isOpenBrace($lexer);
         $isInsideNestedBraces = $isOpenBrace && $this->isTokenBehindBraces($lexer, true, Lexer::T_CLOSE_BRACE);
         $isComparisonBehindBraces = $isOpenBrace && $this->isTokenBehindBraces($lexer, true, ...static::CMP_TOKENS);
         $isLogicalBehindBraces = $isOpenBrace && $this->isTokenBehindBraces($lexer, true, ...static::LOGICAL_TOKENS);
         $isMathBehindBraces = $isOpenBrace && $this->isTokenBehindBraces($lexer, true, ...static::MATH_TOKENS);
-
+        
         // complex boolean values
         $perhapsEndOfCondition = (!$isComparisonBehindBraces && !$isMathBehindBraces && $isOpenBrace);
         $ifNeedOnUncovering = ($perhapsEndOfCondition || $isLogicalBehindBraces || $isInsideNestedBraces);
-
+        
         /** @var Conditions|AbstractPredicate $expression */
         $expression = null;
-
+        
         switch (true) {
             /**
-             * @todo for ugly and difficult conditional expressions
+             * @todo   for ugly and difficult conditional expressions
              * if expression in nested braces
              * @example: ((((a > 1))) and b > 10) or (a > 1 and ...) or (a + 1 > 1 and ...)
              */
@@ -63,10 +63,10 @@ class Conditional extends AbstractDefaultParser
             default:
                 $expression = $this->predicate($processor);
         }
-
+        
         return $expression;
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return AbstractPredicate|Conditions
@@ -76,16 +76,16 @@ class Conditional extends AbstractDefaultParser
         $lexer = $processor->getLexer();
         $collection = new Conditions();
         
-        $collection->setOperator(LogicOperator::AND);
-
+        $collection->setOperator(LogicOperator:: AND);
+        
         do {
             $collection->append($this->or($processor));
         } while ($lexer->toToken(Lexer::T_AND));
-
+        
         // if just one expression was reached then return just it, otherwise conditions (collection)
         return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);
     }
-
+    
     /**
      * @param ProcessorInterface $processor
      * @return AbstractPredicate|Conditions
@@ -94,15 +94,15 @@ class Conditional extends AbstractDefaultParser
     {
         $lexer = $processor->getLexer();
         $collection = new Conditions();
-
-        $collection->setOperator(LogicOperator::OR);
+        
+        $collection->setOperator(LogicOperator:: OR);
         
         do {
             $collection->append($this->xor($processor));
         } while ($lexer->toToken(Lexer::T_OR));
-
+        
         $collection->setIsBraced(true);
-
+        
         // if just one expression was reached then return just it, otherwise conditions (collection)
         return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);
     }
@@ -116,7 +116,7 @@ class Conditional extends AbstractDefaultParser
         $lexer = $processor->getLexer();
         $collection = new Conditions();
         
-        $collection->setOperator(LogicOperator::XOR);
+        $collection->setOperator(LogicOperator:: XOR);
         
         do {
             $collection->append($this->recognize($processor));
@@ -136,8 +136,16 @@ class Conditional extends AbstractDefaultParser
     {
         $predicate = $this->getPredicateParser($processor);
         $expression = $predicate->parse($processor->getLexer(), $processor);
-
+        
         return $expression;
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_CONDITION_CONDITIONAL;
+    }
+    
 }

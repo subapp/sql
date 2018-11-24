@@ -2,10 +2,9 @@
 
 namespace Subapp\Sql\Syntax;
 
-use Subapp\Sql\Common\CollectionInterface;
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Platform\PlatformInterface;
+use Subapp\Sql\Common\CollectionInterface;
 
 /**
  * Class ParserProcessor

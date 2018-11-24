@@ -61,4 +61,12 @@ class Join extends AbstractDefaultParser
         return $join;
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STMT_JOIN;
+    }
+    
 }

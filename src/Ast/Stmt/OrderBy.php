@@ -13,8 +13,8 @@ use Subapp\Sql\Converter\ConverterInterface;
 class OrderBy extends AbstractNode
 {
     
-    const ASC   = 'ASC';
-    const DESC  = 'DESC';
+    const ASC  = 'ASC';
+    const DESC = 'DESC';
     
     /**
      * @var string
@@ -30,7 +30,7 @@ class OrderBy extends AbstractNode
      * OrderBy constructor.
      *
      * @param NodeInterface $expression
-     * @param string              $direction
+     * @param string        $direction
      */
     public function __construct(NodeInterface $expression = null, $direction = OrderBy::ASC)
     {

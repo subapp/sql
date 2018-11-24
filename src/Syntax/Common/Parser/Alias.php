@@ -3,9 +3,9 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Identifier;
 use Subapp\Sql\Ast\Literal;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\QuoteIdentifier;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -16,18 +16,18 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Alias extends AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface|Identifier|QuoteIdentifier|Literal
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $this->shiftIf(Lexer::T_AS, $lexer);
-
+        
         $parser = null;
-
+        
         switch (true) {
             case $this->isIdentifier($lexer):
                 $parser = $this->getIdentifierParser($processor);
@@ -38,8 +38,16 @@ class Alias extends AbstractDefaultParser
             default:
                 $this->throwSyntaxError($lexer, 'String', 'Identifier');
         }
-
+        
         return $parser->parse($lexer, $processor);
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_ALIAS;
+    }
+    
 }

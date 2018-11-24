@@ -4,8 +4,8 @@ namespace Subapp\Sql\Ast\Func;
 
 use Subapp\Sql\Ast\AbstractNode;
 use Subapp\Sql\Ast\Arguments;
-use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Identifier;
+use Subapp\Sql\Ast\NodeInterface;
 
 /**
  * Class AbstractFunction

@@ -12,16 +12,16 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Expression extends AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $parser = null;
-
+        
         switch (true) {
             case $this->isFunction($lexer):
                 $parser = $this->getFunctionParser($processor);
@@ -32,8 +32,16 @@ class Expression extends AbstractDefaultParser
             default:
                 $parser = $this->getPrimaryParser($processor);
         }
-
+        
         return $parser->parse($lexer, $processor);
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_EXPRESSION;
+    }
+    
 }

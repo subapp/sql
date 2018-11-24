@@ -14,21 +14,29 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class SubSelect extends AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface|Embrace
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $embrace = new Embrace();
-
+        
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-        $embrace->setInner($processor->getParser('stmt.select')->parse($lexer, $processor));
+        $embrace->setInner($this->getSelectStmtParser($processor)->parse($lexer, $processor));
         $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
-
+        
         return $embrace;
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_SUB_SELECT;
+    }
+    
 }

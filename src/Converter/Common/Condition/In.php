@@ -16,7 +16,7 @@ class In extends AbstractConverter
     
     /**
      * @param NodeInterface|InNode $node
-     * @param ProviderInterface                $provider
+     * @param ProviderInterface    $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -26,7 +26,7 @@ class In extends AbstractConverter
             ($node->isNot() ? ' NOT ' : ' '),
             $provider->toSql($node->getRight()));
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -35,26 +35,34 @@ class In extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['left'] = $provider->toArray($node->getLeft());
         $values['isNot'] = $node->isNot();
         $values['args'] = $provider->toArray($node->getRight());
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
         $in = new InNode();
-
+        
         $in->setLeft($provider->toNode($ast['left']));
         $in->setIsNot($ast['isNot']);
-        $in->setRight($provider->toNode($ast['right']));
-
+        $in->setRight($provider->toNode($ast['args']));
+        
         return $in;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_CONDITION_IN;
     }
     
 }

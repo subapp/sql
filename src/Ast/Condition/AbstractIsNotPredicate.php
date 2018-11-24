@@ -19,8 +19,8 @@ abstract class AbstractIsNotPredicate extends AbstractPredicate
     /**
      * AbstractIsNotComparison constructor.
      * @param                     boolean $isNot
-     * @param NodeInterface|null    $left
-     * @param NodeInterface|null    $right
+     * @param NodeInterface|null          $left
+     * @param NodeInterface|null          $right
      */
     public function __construct($isNot = false, NodeInterface $left = null, NodeInterface $right = null)
     {

@@ -24,14 +24,22 @@ class Where extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $this->shift(Lexer::T_WHERE, $lexer);
-
+        
         $where = new WhereExpression();
         $conditions = $this->getConditionalParser($processor)->parse($lexer, $processor);
         
         // @todo hardcore wrap conditions into where
         $where->asBatch($conditions->toArray());
-
+        
         return $where;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STMT_WHERE;
     }
     
 }

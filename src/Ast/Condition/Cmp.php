@@ -20,7 +20,7 @@ class Cmp extends AbstractPredicate
     /**
      * Cmp constructor.
      * @param NodeInterface|null $left
-     * @param Operator|null            $operator
+     * @param Operator|null      $operator
      * @param NodeInterface|null $right
      */
     public function __construct(NodeInterface $left = null, Operator $operator = null, NodeInterface $right = null)

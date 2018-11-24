@@ -40,4 +40,12 @@ class Limit extends AbstractDefaultParser
         return $limit;
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STMT_LIMIT;
+    }
+    
 }

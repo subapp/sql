@@ -23,7 +23,7 @@ class Conditions extends Collection
      * @param array  $expressions
      * @param string $operator
      */
-    public function __construct($expressions = [], $operator = LogicOperator::AND)
+    public function __construct($expressions = [], $operator = LogicOperator:: AND)
     {
         parent::__construct($expressions);
         

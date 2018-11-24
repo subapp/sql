@@ -16,7 +16,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Variables extends Common\Parser\AbstractDefaultParser
 {
-
+    
     /**
      * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
@@ -26,19 +26,27 @@ class Variables extends Common\Parser\AbstractDefaultParser
     {
         $variables = new Arguments();
         $parser = $this->getComplexParser($processor);
-
+        
         do {
             $expression = new Variable($parser->parse($lexer, $processor));
-    
+            
             if ($this->isAlias($lexer)) {
                 $alias = $this->getAliasParser($processor)->parse($lexer, $processor);
                 $expression->setAlias($alias);
             }
-
+            
             $variables->append($expression);
         } while ($lexer->toToken(Lexer::T_COMMA));
-
+        
         return $variables;
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_VARIABLES;
+    }
+    
 }

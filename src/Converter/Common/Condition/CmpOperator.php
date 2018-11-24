@@ -16,14 +16,14 @@ class CmpOperator extends AbstractConverter
     
     /**
      * @param NodeInterface|CmpOperatorNode $node
-     * @param ProviderInterface                         $provider
+     * @param ProviderInterface             $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return (string)$node->getOperator();
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -32,18 +32,26 @@ class CmpOperator extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['value'] = $node->getOperator();
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        return new CmpOperatorNode($ast['operator']);
+        return new CmpOperatorNode($ast['value']);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_CONDITION_CMP_OPERATOR;
     }
     
 }

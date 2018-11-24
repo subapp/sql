@@ -16,7 +16,7 @@ class Cmp extends AbstractConverter
     
     /**
      * @param NodeInterface|PrecedenceNode $node
-     * @param ProviderInterface                        $provider
+     * @param ProviderInterface            $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -26,7 +26,7 @@ class Cmp extends AbstractConverter
             $provider->toSql($node->getOperator()),
             $provider->toSql($node->getRight()));
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -35,26 +35,34 @@ class Cmp extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['left'] = $provider->toArray($node->getLeft());
         $values['operator'] = $provider->toArray($node->getOperator());
         $values['right'] = $provider->toArray($node->getRight());
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
         $predicate = new PrecedenceNode();
-
+        
         $predicate->setLeft($provider->toNode($ast['left']));
         $predicate->setOperator($provider->toNode($ast['operator']));
         $predicate->setRight($provider->toNode($ast['right']));
-
+        
         return $predicate;
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_CONDITION_CMP;
+    }
+    
 }

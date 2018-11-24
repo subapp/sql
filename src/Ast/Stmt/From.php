@@ -15,9 +15,9 @@ class From extends Arguments
     
     /**
      * From constructor.
-     * @param Variable ...$expressions
+     * @param Variable[] $expressions
      */
-    public function __construct(...$expressions)
+    public function __construct($expressions = [])
     {
         $this->setClass(Variable::class);
         

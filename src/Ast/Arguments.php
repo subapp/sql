@@ -10,7 +10,7 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Arguments extends Collection
 {
-
+    
     /**
      * @return string
      */
@@ -18,5 +18,5 @@ class Arguments extends Collection
     {
         return ConverterInterface::CONVERTER_ARGS;
     }
-
+    
 }

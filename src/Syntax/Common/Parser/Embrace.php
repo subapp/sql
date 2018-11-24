@@ -14,9 +14,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Embrace extends AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface|EmbraceExpression
      */
@@ -28,5 +28,13 @@ class Embrace extends AbstractDefaultParser
         
         return new EmbraceExpression($expression);
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_EMBRACE;
+    }
+    
 }

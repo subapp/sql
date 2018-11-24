@@ -3,8 +3,8 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\FieldPath as FieldPathExpression;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -37,6 +37,14 @@ class FieldPath extends AbstractDefaultParser
         $expression->setField($field);
         
         return $expression;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_FIELD_PATH;
     }
     
 }

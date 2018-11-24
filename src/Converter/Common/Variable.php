@@ -13,10 +13,10 @@ use Subapp\Sql\Converter\ProviderInterface;
  */
 class Variable extends AbstractConverter
 {
-
+    
     /**
      * @param NodeInterface|VariableNode $node
-     * @param ProviderInterface $provider
+     * @param ProviderInterface          $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
@@ -26,7 +26,7 @@ class Variable extends AbstractConverter
             ($node->getAlias() ? sprintf(' AS %s', $provider->toSql($node->getAlias())) : null)
         );
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -35,26 +35,30 @@ class Variable extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['expression'] = $provider->toArray($node->getExpression());
         $values['alias'] = $node->getAlias()
             ? $provider->toArray($node->getAlias()) : null;
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        $variable = new VariableNode();
-
-        $variable->setExpression($provider->toNode($ast['expression']));
-        $variable->setAlias($provider->toNode($ast['alias']));
-
-        return $variable;
+        return new VariableNode(
+            $provider->toNode($ast['expression']),
+            $ast['alias'] ? $provider->toNode($ast['alias']) : null);
     }
-
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_VARIABLE;
+    }
+    
 }

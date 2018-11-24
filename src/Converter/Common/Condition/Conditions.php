@@ -16,7 +16,7 @@ class Conditions extends Collection
     
     /**
      * @param NodeInterface|ConditionsNode $collection
-     * @param ProviderInterface                        $provider
+     * @param ProviderInterface            $provider
      * @return string
      */
     public function toSql(NodeInterface $collection, ProviderInterface $provider)
@@ -26,6 +26,41 @@ class Conditions extends Collection
         $collection->setSeparator(sprintf("\x20%s\x20", $operator));
         
         return sprintf($collection->isBraced() ? '(%s)' : '%s', parent::toSql($collection, $provider));
+    }
+    
+    /**
+     * @inheritDoc
+     *
+     * @param NodeInterface|ConditionsNode $node
+     */
+    public function toArray(NodeInterface $node, ProviderInterface $provider)
+    {
+        $values = parent::toArray($node, $provider);
+        
+        $values['operator'] = $node->getOperator();
+        
+        return $values;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        /** @var ConditionsNode $node */
+        $node = $this->toCollection(new ConditionsNode(), $ast, $provider);
+        
+        $node->setOperator($ast['operator']);
+        
+        return $node;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_CONDITION_CONDITIONS;
     }
     
 }

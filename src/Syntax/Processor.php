@@ -2,9 +2,9 @@
 
 namespace Subapp\Sql\Syntax;
 
+use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Common\Collection;
 use Subapp\Sql\Common\CollectionInterface;
-use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Lexer\Lexer;
 
 /**
@@ -31,14 +31,14 @@ final class Processor implements ProcessorInterface
     
     /**
      * Query constructor.
-     * @param LexerInterface    $lexer
+     * @param LexerInterface $lexer
      */
     public function __construct(LexerInterface $lexer)
     {
         $this->parsers = new Collection();
         $this->lexer = $lexer;
         $this->helper = new ParserHelper();
-    
+        
         $this->parsers->setClass(ParserInterface::class);
     }
     
@@ -80,7 +80,7 @@ final class Processor implements ProcessorInterface
     public function getParser($name)
     {
         $parser = $this->parsers->offsetGet($name);
-
+        
         if (!($parser instanceof ParserInterface)) {
             throw new \RuntimeException(sprintf('Unfortunately parser with name "%s" doesn\'t registered yet',
                 $name));
@@ -113,16 +113,19 @@ final class Processor implements ProcessorInterface
         // determine which of statement will be parsed
         switch (true) {
             case ($lexer->isCurrent(Lexer::T_SELECT)):
-                $name = 'select'; break;
+                $name = ParserInterface::PARSER_STMT_SELECT;
+                break;
             case ($lexer->isCurrent(Lexer::T_UPDATE)):
-                $name = 'update'; break;
+                $name = ParserInterface::PARSER_COMMON;
+                break;
             case ($lexer->isCurrent(Lexer::T_DELETE)):
-                $name = 'delete'; break;
+                $name = ParserInterface::PARSER_COMMON;
+                break;
             default:
                 $this->helper->throwSyntaxError($lexer, null, Lexer::T_SELECT, Lexer::T_UPDATE, Lexer::T_DELETE);
         }
-    
-        return $this->getParser("stmt.{$name}")->parse($lexer, $this);
+        
+        return $this->getParser($name)->parse($lexer, $this);
     }
     
     /**

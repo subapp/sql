@@ -44,4 +44,12 @@ class CmpOperator extends AbstractDefaultParser
         return new CmpOperatorExpression($operator);
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_CONDITION_CMP_OPERATOR;
+    }
+    
 }

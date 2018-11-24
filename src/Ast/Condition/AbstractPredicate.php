@@ -29,8 +29,8 @@ abstract class AbstractPredicate extends AbstractNode
      */
     public function __construct(NodeInterface $left = null, NodeInterface $right = null)
     {
-        $this->left     = $left;
-        $this->right    = $right;
+        $this->left = $left;
+        $this->right = $right;
     }
     
     /**

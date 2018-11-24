@@ -11,19 +11,19 @@ use Subapp\Sql\Converter\ConverterInterface;
  */
 class Operator extends AbstractNode
 {
-
+    
     const EQ = '=';
     const NE = '<>';
     const GT = '>';
     const LT = '<';
     const GE = '>=';
     const LE = '<=';
-
+    
     /**
      * @var string
      */
     private $operator;
-
+    
     /**
      * ComparisonOperator constructor.
      * @param string $operator
@@ -32,7 +32,7 @@ class Operator extends AbstractNode
     {
         $this->operator = $operator;
     }
-
+    
     /**
      * @return string
      */
@@ -40,7 +40,7 @@ class Operator extends AbstractNode
     {
         return $this->operator;
     }
-
+    
     /**
      * @param string $operator
      */
@@ -48,7 +48,7 @@ class Operator extends AbstractNode
     {
         $this->operator = $operator;
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -56,5 +56,5 @@ class Operator extends AbstractNode
     {
         return ConverterInterface::CONVERTER_CONDITION_CMP_OPERATOR;
     }
-
+    
 }

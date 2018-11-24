@@ -33,4 +33,12 @@ class JoinItems extends AbstractDefaultParser
         return $joins;
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STMT_JOIN_ITEMS;
+    }
+    
 }

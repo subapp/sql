@@ -27,4 +27,12 @@ class Star extends AbstractDefaultParser
         return new StarExpression();
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_STAR;
+    }
+    
 }

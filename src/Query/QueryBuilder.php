@@ -3,8 +3,8 @@
 namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
-use Subapp\Sql\Exception\UnsupportedException;
 use Subapp\Sql\Converter\ProviderInterface;
+use Subapp\Sql\Exception\UnsupportedException;
 
 /**
  * Query Builder (Facade) based on AST
@@ -70,7 +70,7 @@ class QueryBuilder
     {
         $variable = $this->node->variable($source, $alias);
         
-        $this->root->setFrom(new Ast\Stmt\From($variable));
+        $this->root->from()->append($variable);
         
         return $this;
     }
@@ -116,9 +116,9 @@ class QueryBuilder
     }
     
     /**
-     * @param Ast\Condition\Conditions       $conditions
+     * @param Ast\Condition\Conditions $conditions
      * @param Ast\NodeInterface|string $e
-     * @param bool                           $clear
+     * @param bool                     $clear
      * @return $this
      */
     private function condition(Ast\Condition\Conditions $conditions, $e, $clear = true)
@@ -154,8 +154,8 @@ class QueryBuilder
     }
     
     /**
-     * @param string                         $table
-     * @param string                         $a
+     * @param string                   $table
+     * @param string                   $a
      * @param string|Ast\NodeInterface $condition
      * @return QueryBuilder
      */
@@ -165,8 +165,8 @@ class QueryBuilder
     }
     
     /**
-     * @param string                         $table
-     * @param string                         $a
+     * @param string                   $table
+     * @param string                   $a
      * @param string|Ast\NodeInterface $condition
      * @return QueryBuilder
      */
@@ -176,8 +176,8 @@ class QueryBuilder
     }
     
     /**
-     * @param string                         $table
-     * @param string                         $a
+     * @param string                   $table
+     * @param string                   $a
      * @param string|Ast\NodeInterface $condition
      * @return QueryBuilder
      */
@@ -187,10 +187,10 @@ class QueryBuilder
     }
     
     /**
-     * @param string                         $table
-     * @param string                         $a
+     * @param string                   $table
+     * @param string                   $a
      * @param string|Ast\NodeInterface $condition
-     * @param string                         $type
+     * @param string                   $type
      * @return $this
      */
     public function join($table, $a, $condition, $type = Ast\Stmt\Join::INNER)
@@ -232,9 +232,9 @@ class QueryBuilder
         
         /** @var Ast\Arguments $arguments */
         $arguments = $this->node->recognize($arguments);
-    
+        
         // @todo perhaps exist most elegant solution
-        $arguments->forAll(function($index, Ast\Stmt\OrderByItems $collection) use ($orderByNode) {
+        $arguments->forAll(function ($index, Ast\Stmt\OrderByItems $collection) use ($orderByNode) {
             $orderByNode->asBatch($collection->toArray(), true);
             return true;
         });

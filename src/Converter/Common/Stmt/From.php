@@ -15,7 +15,7 @@ class From extends Arguments
 {
     
     /**
-     * @param ProviderInterface   $provider
+     * @param ProviderInterface      $provider
      * @param NodeInterface|FromNode $node
      * @return string
      */
@@ -23,5 +23,21 @@ class From extends Arguments
     {
         return sprintf(' FROM %s', parent::toSql($node, $provider));
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function toNode(array $ast, ProviderInterface $provider)
+    {
+        return $this->toCollection(new FromNode(), $ast, $provider);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_STMT_FROM;
+    }
+    
 }

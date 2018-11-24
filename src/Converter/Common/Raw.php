@@ -16,14 +16,14 @@ class Raw extends AbstractConverter
     
     /**
      * @param NodeInterface|RawNode $node
-     * @param ProviderInterface                 $provider
+     * @param ProviderInterface     $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return (string)$node->getExpression();
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -31,9 +31,13 @@ class Raw extends AbstractConverter
      */
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
-        return ['string' => $node->getExpression(),];
+        $values = parent::toArray($node, $provider);
+        
+        $values['string'] = $node->getExpression();
+        
+        return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -41,5 +45,13 @@ class Raw extends AbstractConverter
     {
         return new RawNode($ast['string']);
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_RAW;
+    }
+    
 }

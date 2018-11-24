@@ -14,9 +14,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Uncover extends AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface
      */
@@ -24,21 +24,29 @@ class Uncover extends AbstractDefaultParser
     {
         return $this->uncover($this->getComplexParser($processor), $processor);
     }
-
+    
     /**
-     * @param ParserInterface $parser
+     * @param ParserInterface    $parser
      * @param ProcessorInterface $processor
      * @return NodeInterface
      */
     public function uncover(ParserInterface $parser, ProcessorInterface $processor)
     {
         $lexer = $processor->getLexer();
-
+        
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
         $expression = $parser->parse($lexer, $processor);
         $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
-
+        
         return $expression;
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_UNCOVER;
+    }
+    
 }

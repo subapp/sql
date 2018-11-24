@@ -1,0 +1,769 @@
+{
+    "_": 1410,
+    "arguments": {
+        "_": 1100,
+        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+        "isBraced": false,
+        "nodes": [
+            {
+                "_": 1100,
+                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "isBraced": false,
+                "nodes": [
+                    {
+                        "_": 1210,
+                        "expression": {
+                            "_": 1140,
+                            "field": {
+                                "_": 1150,
+                                "identifier": "id"
+                            },
+                            "table": {
+                                "_": 1150,
+                                "identifier": "users"
+                            }
+                        },
+                        "alias": {
+                            "_": 1150,
+                            "identifier": "uid"
+                        }
+                    },
+                    {
+                        "_": 1210,
+                        "expression": {
+                            "_": 1140,
+                            "field": {
+                                "_": 1150,
+                                "identifier": "id"
+                            },
+                            "table": {
+                                "_": 1150,
+                                "identifier": "test"
+                            }
+                        },
+                        "alias": null
+                    }
+                ]
+            },
+            {
+                "_": 1100,
+                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "isBraced": false,
+                "nodes": [
+                    {
+                        "_": 1210,
+                        "expression": {
+                            "_": 1140,
+                            "field": {
+                                "_": 1150,
+                                "identifier": "created"
+                            },
+                            "table": {
+                                "_": 1150,
+                                "identifier": "test"
+                            }
+                        },
+                        "alias": {
+                            "_": 1150,
+                            "identifier": "dt"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "from": {
+        "_": 1330,
+        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+        "isBraced": false,
+        "nodes": [
+            {
+                "_": 1210,
+                "expression": {
+                    "_": 1150,
+                    "identifier": "Users"
+                },
+                "alias": {
+                    "_": 1150,
+                    "identifier": "U"
+                }
+            }
+        ]
+    },
+    "joins": {
+        "_": 1370,
+        "class": "Subapp\\Sql\\Ast\\Stmt\\Join",
+        "isBraced": false,
+        "nodes": [
+            {
+                "_": 1360,
+                "type": "INNER",
+                "conditionType": "ON",
+                "left": {
+                    "_": 1140,
+                    "field": {
+                        "_": 1150,
+                        "identifier": "U2"
+                    },
+                    "table": {
+                        "_": 1150,
+                        "identifier": "user"
+                    }
+                },
+                "condition": {
+                    "_": 1230,
+                    "left": {
+                        "_": 1140,
+                        "field": {
+                            "_": 1150,
+                            "identifier": "id"
+                        },
+                        "table": {
+                            "_": 1150,
+                            "identifier": "U"
+                        }
+                    },
+                    "operator": {
+                        "_": 1290,
+                        "value": "="
+                    },
+                    "right": {
+                        "_": 1140,
+                        "field": {
+                            "_": 1150,
+                            "identifier": "id"
+                        },
+                        "table": {
+                            "_": 1150,
+                            "identifier": "U2"
+                        }
+                    }
+                }
+            },
+            {
+                "_": 1360,
+                "type": "INNER",
+                "conditionType": "USING",
+                "left": {
+                    "_": 1140,
+                    "field": {
+                        "_": 1150,
+                        "identifier": "U2"
+                    },
+                    "table": {
+                        "_": 1150,
+                        "identifier": "user"
+                    }
+                },
+                "condition": {
+                    "_": 1100,
+                    "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                    "isBraced": false,
+                    "nodes": [
+                        {
+                            "_": 1210,
+                            "expression": {
+                                "_": 1140,
+                                "field": {
+                                    "_": 1150,
+                                    "identifier": "id"
+                                },
+                                "table": {
+                                    "_": 1150,
+                                    "identifier": "U"
+                                }
+                            },
+                            "alias": null
+                        },
+                        {
+                            "_": 1210,
+                            "expression": {
+                                "_": 1140,
+                                "field": {
+                                    "_": 1150,
+                                    "identifier": "id"
+                                },
+                                "table": {
+                                    "_": 1150,
+                                    "identifier": "U2"
+                                }
+                            },
+                            "alias": null
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "where": {
+        "_": 1430,
+        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+        "isBraced": false,
+        "nodes": [
+            {
+                "_": 1240,
+                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "isBraced": false,
+                "nodes": [
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1300,
+                            "name": {
+                                "_": 1150,
+                                "identifier": "count"
+                            },
+                            "distinct": false,
+                            "args": {
+                                "_": 1100,
+                                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                                "isBraced": false,
+                                "nodes": [
+                                    {
+                                        "_": 1140,
+                                        "field": {
+                                            "_": 1150,
+                                            "identifier": "id"
+                                        },
+                                        "table": {
+                                            "_": 1150,
+                                            "identifier": "a"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": ">"
+                        },
+                        "right": {
+                            "_": 1160,
+                            "value": "1",
+                            "type": 3
+                        }
+                    },
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1150,
+                            "identifier": "b"
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": "<"
+                        },
+                        "right": {
+                            "_": 1160,
+                            "value": "10",
+                            "type": 3
+                        }
+                    }
+                ],
+                "operator": {}
+            },
+            {
+                "_": 1250,
+                "left": {
+                    "_": 1100,
+                    "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                    "isBraced": false,
+                    "nodes": [
+                        {
+                            "_": 1210,
+                            "expression": {
+                                "_": 1140,
+                                "field": {
+                                    "_": 1150,
+                                    "identifier": "id"
+                                },
+                                "table": {
+                                    "_": 1150,
+                                    "identifier": "users"
+                                }
+                            },
+                            "alias": null
+                        }
+                    ]
+                },
+                "isNot": false,
+                "args": {
+                    "_": 1100,
+                    "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                    "isBraced": false,
+                    "nodes": [
+                        {
+                            "_": 1160,
+                            "value": 1,
+                            "type": 3
+                        },
+                        {
+                            "_": 1160,
+                            "value": 2,
+                            "type": 3
+                        },
+                        {
+                            "_": 1160,
+                            "value": 3,
+                            "type": 3
+                        }
+                    ]
+                }
+            },
+            {
+                "_": 1240,
+                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "isBraced": true,
+                "nodes": [
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1160,
+                            "value": 1,
+                            "type": 3
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": "="
+                        },
+                        "right": {
+                            "_": 1160,
+                            "value": 2,
+                            "type": 3
+                        }
+                    },
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1160,
+                            "value": 1,
+                            "type": 3
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": ">="
+                        },
+                        "right": {
+                            "_": 1160,
+                            "value": 2,
+                            "type": 3
+                        }
+                    },
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1160,
+                            "value": 1,
+                            "type": 3
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": "<>"
+                        },
+                        "right": {
+                            "_": 1100,
+                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                            "isBraced": false,
+                            "nodes": [
+                                {
+                                    "_": 1210,
+                                    "expression": {
+                                        "_": 1140,
+                                        "field": {
+                                            "_": 1150,
+                                            "identifier": "id"
+                                        },
+                                        "table": {
+                                            "_": 1150,
+                                            "identifier": "u"
+                                        }
+                                    },
+                                    "alias": null
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_": 1250,
+                        "left": {
+                            "_": 1100,
+                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                            "isBraced": false,
+                            "nodes": [
+                                {
+                                    "_": 1210,
+                                    "expression": {
+                                        "_": 1140,
+                                        "field": {
+                                            "_": 1150,
+                                            "identifier": "id"
+                                        },
+                                        "table": {
+                                            "_": 1150,
+                                            "identifier": "users"
+                                        }
+                                    },
+                                    "alias": null
+                                }
+                            ]
+                        },
+                        "isNot": false,
+                        "args": {
+                            "_": 1100,
+                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                            "isBraced": false,
+                            "nodes": [
+                                {
+                                    "_": 1160,
+                                    "value": 1,
+                                    "type": 3
+                                },
+                                {
+                                    "_": 1160,
+                                    "value": 2,
+                                    "type": 3
+                                },
+                                {
+                                    "_": 1160,
+                                    "value": 3,
+                                    "type": 3
+                                },
+                                {
+                                    "_": 1100,
+                                    "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                                    "isBraced": false,
+                                    "nodes": [
+                                        {
+                                            "_": 1210,
+                                            "expression": {
+                                                "_": 1300,
+                                                "name": {
+                                                    "_": 1150,
+                                                    "identifier": "Max"
+                                                },
+                                                "distinct": false,
+                                                "args": {
+                                                    "_": 1100,
+                                                    "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                                                    "isBraced": false,
+                                                    "nodes": [
+                                                        {
+                                                            "_": 1140,
+                                                            "field": {
+                                                                "_": 1150,
+                                                                "identifier": "id"
+                                                            },
+                                                            "table": {
+                                                                "_": 1150,
+                                                                "identifier": "u"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "alias": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "operator": {}
+            }
+        ],
+        "operator": {}
+    },
+    "groupBy": {
+        "_": 1340,
+        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+        "isBraced": false,
+        "nodes": [
+            {
+                "_": 1100,
+                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "isBraced": false,
+                "nodes": [
+                    {
+                        "_": 1210,
+                        "expression": {
+                            "_": 1140,
+                            "field": {
+                                "_": 1150,
+                                "identifier": "id"
+                            },
+                            "table": {
+                                "_": 1150,
+                                "identifier": "a"
+                            }
+                        },
+                        "alias": null
+                    },
+                    {
+                        "_": 1210,
+                        "expression": {
+                            "_": 1140,
+                            "field": {
+                                "_": 1150,
+                                "identifier": "id"
+                            },
+                            "table": {
+                                "_": 1150,
+                                "identifier": "u"
+                            }
+                        },
+                        "alias": null
+                    }
+                ]
+            }
+        ]
+    },
+    "having": {
+        "_": 1350,
+        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+        "isBraced": false,
+        "nodes": [
+            {
+                "_": 1240,
+                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "isBraced": true,
+                "nodes": [
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1160,
+                            "value": 1,
+                            "type": 3
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": "="
+                        },
+                        "right": {
+                            "_": 1160,
+                            "value": 2,
+                            "type": 3
+                        }
+                    },
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1160,
+                            "value": 1,
+                            "type": 3
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": ">="
+                        },
+                        "right": {
+                            "_": 1160,
+                            "value": 2,
+                            "type": 3
+                        }
+                    },
+                    {
+                        "_": 1230,
+                        "left": {
+                            "_": 1160,
+                            "value": 1,
+                            "type": 3
+                        },
+                        "operator": {
+                            "_": 1290,
+                            "value": "<>"
+                        },
+                        "right": {
+                            "_": 1100,
+                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                            "isBraced": false,
+                            "nodes": [
+                                {
+                                    "_": 1210,
+                                    "expression": {
+                                        "_": 1140,
+                                        "field": {
+                                            "_": 1150,
+                                            "identifier": "id"
+                                        },
+                                        "table": {
+                                            "_": 1150,
+                                            "identifier": "u"
+                                        }
+                                    },
+                                    "alias": null
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "_": 1250,
+                        "left": {
+                            "_": 1100,
+                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                            "isBraced": false,
+                            "nodes": [
+                                {
+                                    "_": 1210,
+                                    "expression": {
+                                        "_": 1140,
+                                        "field": {
+                                            "_": 1150,
+                                            "identifier": "id"
+                                        },
+                                        "table": {
+                                            "_": 1150,
+                                            "identifier": "users"
+                                        }
+                                    },
+                                    "alias": null
+                                }
+                            ]
+                        },
+                        "isNot": false,
+                        "args": {
+                            "_": 1100,
+                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                            "isBraced": false,
+                            "nodes": [
+                                {
+                                    "_": 1160,
+                                    "value": 1,
+                                    "type": 3
+                                },
+                                {
+                                    "_": 1160,
+                                    "value": 2,
+                                    "type": 3
+                                },
+                                {
+                                    "_": 1160,
+                                    "value": 3,
+                                    "type": 3
+                                },
+                                {
+                                    "_": 1100,
+                                    "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                                    "isBraced": false,
+                                    "nodes": [
+                                        {
+                                            "_": 1210,
+                                            "expression": {
+                                                "_": 1300,
+                                                "name": {
+                                                    "_": 1150,
+                                                    "identifier": "Max"
+                                                },
+                                                "distinct": false,
+                                                "args": {
+                                                    "_": 1100,
+                                                    "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                                                    "isBraced": false,
+                                                    "nodes": [
+                                                        {
+                                                            "_": 1140,
+                                                            "field": {
+                                                                "_": 1150,
+                                                                "identifier": "id"
+                                                            },
+                                                            "table": {
+                                                                "_": 1150,
+                                                                "identifier": "u"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "alias": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "operator": {}
+            }
+        ],
+        "operator": {}
+    },
+    "orderBy": {
+        "_": 1400,
+        "class": "Subapp\\Sql\\Ast\\Stmt\\OrderBy",
+        "isBraced": false,
+        "nodes": [
+            {
+                "_": 1390,
+                "expression": {
+                    "_": 1140,
+                    "field": {
+                        "_": 1150,
+                        "identifier": "id"
+                    },
+                    "table": {
+                        "_": 1150,
+                        "identifier": "a"
+                    }
+                },
+                "vector": "ASC"
+            },
+            {
+                "_": 1390,
+                "expression": {
+                    "_": 1140,
+                    "field": {
+                        "_": 1150,
+                        "identifier": "id"
+                    },
+                    "table": {
+                        "_": 1150,
+                        "identifier": "b"
+                    }
+                },
+                "vector": "DESC"
+            },
+            {
+                "_": 1390,
+                "expression": {
+                    "_": 1310,
+                    "name": {
+                        "_": 1150,
+                        "identifier": "rand"
+                    },
+                    "args": {
+                        "_": 1100,
+                        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                        "isBraced": false,
+                        "nodes": []
+                    }
+                },
+                "vector": "ASC"
+            },
+            {
+                "_": 1390,
+                "expression": {
+                    "_": 1140,
+                    "field": {
+                        "_": 1150,
+                        "identifier": "test"
+                    },
+                    "table": {
+                        "_": 1150,
+                        "identifier": "a"
+                    }
+                },
+                "vector": "DESC"
+            }
+        ]
+    },
+    "limit": {
+        "_": 1380,
+        "offset": null,
+        "length": null
+    },
+    "semicolon": {
+        "_": 1160,
+        "value": false,
+        "type": 2
+    }
+}

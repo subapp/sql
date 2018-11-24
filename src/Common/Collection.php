@@ -3,8 +3,8 @@
 namespace Subapp\Sql\Common;
 
 use ArrayIterator;
-use JsonSerializable;
 use Closure;
+use JsonSerializable;
 use Subapp\Sql\Exception\InvalidValueException;
 
 /**
@@ -13,17 +13,17 @@ use Subapp\Sql\Exception\InvalidValueException;
  */
 class Collection implements CollectionInterface, JsonSerializable
 {
-
+    
     /**
      * @var array
      */
     private $elements;
-
+    
     /**
      * @var string
      */
     private $class;
-
+    
     /**
      * Collection constructor.
      * @param array $elements
@@ -32,7 +32,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         $this->elements = $elements;
     }
-
+    
     /**
      * @param $element
      * @throws InvalidValueException
@@ -44,7 +44,7 @@ class Collection implements CollectionInterface, JsonSerializable
                 $this->getClass(), (is_object($element) ? get_class($element) : gettype($element))));
         }
     }
-
+    
     /**
      * @param $element
      * @return boolean
@@ -52,13 +52,13 @@ class Collection implements CollectionInterface, JsonSerializable
     private function isElementInstanceOf($element)
     {
         $class = $this->getClass();
-
+        
         $isClassExist = class_exists($class);
         $isInstanceOf = $isClassExist && is_object($element) && !($element instanceOf $class);
-
+        
         return !$isClassExist || ($isClassExist && !$isInstanceOf);
     }
-
+    
     /**
      * @return string
      */
@@ -66,7 +66,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->class;
     }
-
+    
     /**
      * @param string $class
      */
@@ -74,17 +74,17 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         $this->class = $class;
     }
-
+    
     /**
      * @inheritdoc
      */
     public function add($element): void
     {
         $this->validate($element);
-
+        
         $this->elements[] = $element;
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -92,7 +92,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         $this->elements = [];
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -100,7 +100,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return in_array($element, $this->elements, true);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -108,7 +108,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return empty($this->elements);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -116,35 +116,35 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return !$this->isEmpty();
     }
-
+    
     /**
      * @inheritdoc
      */
     public function remove($key)
     {
         $removed = $this->elements[$key] ?? null;
-
+        
         unset($this->elements[$key]);
-
+        
         return $removed;
     }
-
+    
     /**
      * @inheritdoc
      */
     public function removeElement($element): bool
     {
         $key = array_search($element, $this->elements, true);
-
+        
         if (false === $key) {
             return false;
         }
-
+        
         unset($this->elements[$key]);
-
+        
         return true;
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -152,7 +152,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return array_key_exists($key, $this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -160,7 +160,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->elements[$key];
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -168,7 +168,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return array_keys($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -176,27 +176,27 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return array_values($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
     public function set($key, $value): void
     {
         $this->validate($value);
-
+        
         $this->elements[$key] = $value;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function append($value): void
     {
         $this->validate($value);
-
+        
         $this->add($value);
     }
-
+    
     /**
      * @inheritDoc
      */
@@ -204,7 +204,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         array_unshift($this->elements, $value);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -214,7 +214,7 @@ class Collection implements CollectionInterface, JsonSerializable
             $this->offsetSet($append ? null : $index, $element);
         }
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -222,7 +222,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->elements;
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -230,7 +230,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->toArray();
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -238,7 +238,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return reset($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -246,7 +246,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return end($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -254,7 +254,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return key($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -262,7 +262,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return current($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -270,7 +270,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return next($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -281,10 +281,10 @@ class Collection implements CollectionInterface, JsonSerializable
                 return true;
             }
         }
-
+        
         return false;
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -292,7 +292,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->createFrom(array_filter($this->elements, $predicate));
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -303,10 +303,10 @@ class Collection implements CollectionInterface, JsonSerializable
                 return false;
             }
         }
-
+        
         return true;
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -314,14 +314,14 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->createFrom(array_map($closure, $this->elements));
     }
-
+    
     /**
      * @inheritdoc
      */
     public function partition(Closure $predicate)
     {
         $matches = $noMatches = [];
-
+        
         foreach ($this->elements as $key => $element) {
             if ($predicate($key, $element)) {
                 $matches[$key] = $element;
@@ -329,10 +329,10 @@ class Collection implements CollectionInterface, JsonSerializable
                 $noMatches[$key] = $element;
             }
         }
-
+        
         return [$this->createFrom($matches), $this->createFrom($noMatches)];
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -340,7 +340,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return array_search($element, $this->elements, true);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -348,7 +348,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return array_slice($this->elements, $offset, $length, true);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -356,7 +356,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return new ArrayIterator($this->elements);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -364,7 +364,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->containsKey($offset);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -372,7 +372,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return $this->get($offset);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -384,7 +384,7 @@ class Collection implements CollectionInterface, JsonSerializable
             $this->set($offset, $value);
         }
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -392,7 +392,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         $this->remove($offset);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -400,7 +400,7 @@ class Collection implements CollectionInterface, JsonSerializable
     {
         return count($this->elements);
     }
-
+    
     /**
      * Creates a new instance from the specified elements.
      *

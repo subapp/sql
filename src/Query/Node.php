@@ -66,7 +66,7 @@ class Node
     
     /**
      * @param                         $operator
-     * @param Ast\NodeInterface ...$predicates
+     * @param Ast\NodeInterface       ...$predicates
      * @return Condition\Conditions
      */
     public function conditions($operator, ...$predicates)
@@ -276,7 +276,7 @@ class Node
     
     /**
      * @param string|NodeInterface $var
-     * @param null                       $alias
+     * @param null                 $alias
      * @return Ast\Variable
      */
     public function variable($var, $alias = null)

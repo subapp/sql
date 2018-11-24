@@ -15,47 +15,47 @@ final class ParserHelper
 {
     
     use ClassNameTrait;
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param integer $type
+     * @param integer        $type
      * @return string
      */
     public function getStringToToken(LexerInterface $lexer, $type)
     {
         $expression = null;
-
+        
         $token = $lexer->getToken();
-
+        
         do {
             $expression = sprintf('%s %s', $expression, $token->getToken());
             $token = $lexer->peek();
         } while ($token && !$token->is($type));
-
+        
         $lexer->resetPeek();
-
+        
         return sprintf('[.. %s ..]', $expression);
     }
-
+    
     /**
      * @param LexerInterface $lexer
-     * @param integer $length
+     * @param integer        $length
      * @return string
      */
     public function getStringLength(LexerInterface $lexer, $length = 5)
     {
         $expression = null;
-
+        
         do {
             $token = $lexer->peek();
             $expression = sprintf('%s %s', $expression, $token->getToken());
         } while ($token && --$length > 0);
-
+        
         $lexer->resetPeek();
-
+        
         return sprintf('[.. %s ..]', $expression);
     }
-
+    
     /**
      * @param ParserInterface $parser
      * @param LexerInterface  $lexer
@@ -81,5 +81,5 @@ final class ParserHelper
         throw new SyntaxErrorException(sprintf('Syntax error. Parser [%s] expected: %s got "%s" at position %d',
             $parserName, $tokenType, $token, $position));
     }
-
+    
 }

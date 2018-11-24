@@ -3,7 +3,7 @@
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Platform\MySQLPlatform;
 use Subapp\Sql\Converter\Common\DefaultRepresenterSetup;
-use Subapp\Sql\Converter\Provider;
+use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\Processor;
 
@@ -48,7 +48,7 @@ $conditions = [
 $processor = new Processor($lexer, new MySQLPlatform());
 $processor->setup(new DefaultParserSetup());
 
-$renderer = new Provider();
+$renderer = new Converter();
 $renderer->setup(new DefaultRepresenterSetup());
 
 $operators = [Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_MULTIPLY, Lexer::T_DIVIDE,];

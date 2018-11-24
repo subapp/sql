@@ -13,10 +13,10 @@ use Subapp\Sql\Converter\ProviderInterface;
  */
 class Collection extends AbstractConverter
 {
-
+    
     /**
      * @param NodeInterface|CollectionNode $collection
-     * @param ProviderInterface $provider
+     * @param ProviderInterface            $provider
      * @return string
      */
     public function toSql(NodeInterface $collection, ProviderInterface $provider)
@@ -24,10 +24,10 @@ class Collection extends AbstractConverter
         $nodes = $collection->map(function (NodeInterface $inner) use ($provider) {
             return $provider->toSql($inner);
         });
-
+        
         return implode($collection->getSeparator(), $nodes->toArray());
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -35,31 +35,55 @@ class Collection extends AbstractConverter
      */
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
+        $values = parent::toArray($node, $provider);
+        
         $class = $node->getClass();
         $nodes = $node->map(function (NodeInterface $inner) use ($provider) {
             return $provider->toArray($inner);
         })->toArray();
-
-        $array = parent::toArray($node, $provider);
-
-        $array['class'] = $class;
-        $array['nodes'] = $nodes;
-
-        return $array;
+        
+        $values['class'] = $class;
+        $values['isBraced'] = $node->isBraced();
+        $values['nodes'] = $nodes;
+        
+        return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        $collection = (new CollectionNode($ast['nodes']))->map(function ($node) use ($provider) {
+        return $this->toCollection(new CollectionNode(), $ast, $provider);
+    }
+    
+    /**
+     * @param CollectionNode    $collection
+     * @param array             $ast
+     * @param ProviderInterface $provider
+     * @return CollectionNode
+     */
+    protected function toCollection(CollectionNode $collection, array $ast, ProviderInterface $provider)
+    {
+        /** @var CollectionNode $collection */
+        $collection->asBatch($ast['nodes']);
+        
+        $collection = $collection->map(function ($node) use ($provider) {
             return $provider->toNode($node);
         });
-
+        
         $collection->setClass($ast['class']);
-
+        $collection->setIsBraced($ast['isBraced']);
+        
         return $collection;
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_COLLECTION;
+    }
+    
 }

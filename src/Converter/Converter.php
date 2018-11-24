@@ -2,14 +2,15 @@
 
 namespace Subapp\Sql\Converter;
 
-use Subapp\Sql\Common\Collection;
 use Subapp\Sql\Ast\NodeInterface;
+use Subapp\Sql\Common\Collection;
+use Subapp\Sql\Exception\InvalidValueException;
 
 /**
  * Class Converter
  * @package Subapp\Sql\Converter
  */
-class Provider implements ProviderInterface
+class Converter implements ProviderInterface
 {
     
     /**
@@ -60,13 +61,15 @@ class Provider implements ProviderInterface
     
     /**
      * @inheritdoc
+     *
+     * @throws InvalidValueException
      */
     public function getConverter($name)
     {
         $converter = $this->collection->offsetGet($name);
-    
+        
         if (!($converter instanceof ConverterInterface)) {
-            throw new \RuntimeException(sprintf('Converter cannot be performed because such converter handler "%s" doesn\'t exist',
+            throw new InvalidValueException(sprintf('Converter cannot be performed because such converter handler "%s" doesn\'t exist',
                 $name));
         }
         
@@ -81,7 +84,7 @@ class Provider implements ProviderInterface
         return $this->getConverter($node->getConverter())
             ->toSql($node, $this);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -90,13 +93,13 @@ class Provider implements ProviderInterface
         return $this->getConverter($node->getConverter())
             ->toArray($node, $this);
     }
-
+    
     /**
      * @inheritdoc
      */
     public function toNode(array $ast)
     {
-        return $this->getConverter($ast['converter'])
+        return $this->getConverter($ast['_'])
             ->toNode($ast, $this);
     }
     

@@ -87,7 +87,7 @@ class Recognizer
         $processor = $this->getProcessor();
         $lexer = $processor->getLexer();
         $parser = $this->getParser();
-    
+        
         // tokenize parts of SQL:
         // - Count(u.Id) > 4 + 1
         // - u.subscription Not In(1, (SubSelect))

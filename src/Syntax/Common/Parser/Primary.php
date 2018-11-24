@@ -12,16 +12,16 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Primary extends AbstractDefaultParser
 {
-
+    
     /**
-     * @param LexerInterface $lexer
+     * @param LexerInterface     $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $parser = null;
-
+        
         switch (true) {
             case $this->isStar($lexer):
                 $parser = $this->getStarParser($processor);
@@ -47,8 +47,16 @@ class Primary extends AbstractDefaultParser
             default:
                 $this->throwSyntaxError($lexer, 'Identifier', 'QuoteIdentifier', 'Literal', 'FieldPath', 'MathExpression');
         }
-
+        
         return $parser->parse($lexer, $processor);
     }
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_PRIMARY;
+    }
+    
 }

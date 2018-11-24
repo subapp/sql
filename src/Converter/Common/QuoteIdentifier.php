@@ -15,14 +15,14 @@ class QuoteIdentifier extends Identifier
     
     /**
      * @param NodeInterface|IdentifierNode $node
-     * @param ProviderInterface   $provider
+     * @param ProviderInterface            $provider
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return sprintf('%s%s%s', $node->getQuote(), parent::toSql($node->getIdentifier(), $provider), $node->getQuote());
     }
-
+    
     /**
      * @inheritDoc
      *
@@ -31,22 +31,30 @@ class QuoteIdentifier extends Identifier
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-
+        
         $values['quote'] = $node->getQuote();
-
+        
         return $values;
     }
-
+    
     /**
      * @inheritDoc
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
         $identifier = new IdentifierNode($ast['identifier']);
-
+        
         $identifier->setQuote($ast['quote']);
-
+        
         return $identifier;
     }
-
+    
+    /**
+     * @inheritDoc
+     */
+    public function getName()
+    {
+        return self::CONVERTER_QUOTE_IDENTIFIER;
+    }
+    
 }

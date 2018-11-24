@@ -11,7 +11,7 @@ use Subapp\Sql\Ast\AbstractNode;
  */
 abstract class AbstractCommonStmt extends AbstractNode
 {
-
+    
     /**
      * @var Ast\Root
      */
@@ -176,7 +176,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     {
         $this->root->setLimit($limit);
     }
-
+    
     /**
      * @return boolean
      */
@@ -184,7 +184,7 @@ abstract class AbstractCommonStmt extends AbstractNode
     {
         return $this->root->isSemicolon();
     }
-
+    
     /**
      * @param boolean $isSemicolon
      */

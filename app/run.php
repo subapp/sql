@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Complex';
+$sqlVersion = '0004';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -40,40 +40,52 @@ echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
 $lexer->rewind();
 
-$processor = new \Subapp\Sql\Syntax\Processor($lexer, new Subapp\Sql\Platform\MySQLPlatform());
+$processor = new \Subapp\Sql\Syntax\Processor($lexer);
 $processor->setup(new \Subapp\Sql\Syntax\Common\DefaultParserSetup());
+
+$pool = new \Subapp\Cache\Pool\CacheItemPool(
+    new \Subapp\Cache\Adapter\FilesystemAdapter(
+        new League\Flysystem\Filesystem(
+            new \League\Flysystem\Adapter\Local(__DIR__)
+        ), '/', new \Subapp\Cache\Serializer\PhpSerializer()
+    )
+);
+
+$cache = new \Subapp\Sql\Syntax\CacheProcessor($pool, $processor);
 
 try {
     /** @var \Subapp\Sql\Ast\Stmt\Select $select */
     $time = microtime(true);
+    $selectCache = $cache->parse();
+    $cacheTime = microtime(true) - $time;
     $select = $processor->parse();
     $parseTime = microtime(true) - $time;
 
 //    var_dump($select);
     
-    $renderer = new \Subapp\Sql\Converter\Provider();
-    $renderer->setup(new \Subapp\Sql\Converter\Common\DefaultRepresenterSetup());
+    $renderer = new \Subapp\Sql\Converter\Converter();
+    $renderer->setup(new \Subapp\Sql\Converter\DefaultProviderSetup());
     
     $processor->setLexer(new Lexer());
+    
     $recognizer = new Recognizer($processor, Recognizer::COMMON);
     
     $node = new \Subapp\Sql\Query\Node();
     $node->setRecognizer($recognizer);
-    
-    $qb = new \Subapp\Sql\Query\QueryBuilder($node);
-    
-    $qb->setRoot($select->getRoot());
-    
-    $qb->crossJoin('asd', 'aa', 'aa.id');
+
     
     $time = microtime(true);
     echo "\n====== SELECT AST Converter ======\n";
     echo $renderer->toSql($select);
+    echo "\n====== SELECT AST Converter ======\n";
+    echo $renderer->toSql($selectCache);
     echo ($renderer->toSql($select) == $sql) ? 'Equal' : 'Not';
     echo PHP_EOL;
     echo sprintf('Converter: %s', microtime(true) - $time);
     echo PHP_EOL;
     echo sprintf('Parser: %s', $parseTime);
+    echo PHP_EOL;
+    echo sprintf('Cache: %s', $cacheTime);
     echo PHP_EOL;
     
     
@@ -96,10 +108,7 @@ try {
     
 //    var_dump($conditions);
     
-    $qb->and($node->or($conditions));
-    
     var_dump(
-        $qb->getQuery($renderer),
         $renderer->toSql($recognized),
         $renderer->toSql($conditions),
         $renderer->toSql($node->or($conditions, $node->eq(1, 10)))

@@ -6,14 +6,16 @@ use Subapp\Sql\Query\Node;
 use Subapp\Sql\Query\QueryBuilder;
 use Subapp\Sql\Query\Recognizer;
 use Subapp\Sql\Converter\DefaultProviderSetup;
-use Subapp\Sql\Converter\Provider;
+use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Syntax\Common\DefaultParserSetup;
 use Subapp\Sql\Syntax\Processor;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$renderer = new Provider();
-$renderer->setup(new DefaultProviderSetup());
+$facade = new \Subapp\Sql\Sql();
+
+$provider = new Converter();
+$provider->setup(new DefaultProviderSetup());
 
 $lexer = new Lexer();
 $processor = new Processor($lexer);
@@ -69,9 +71,19 @@ $c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 
 //var_dump($qb);
 
-echo $renderer->toSql($qb->getAst()) . PHP_EOL;
-var_dump(
-    json_encode($renderer->toArray($qb->getAst()))
-);
+echo $provider->toSql($qb->getAst()) . PHP_EOL;
+
+echo $facade->convertSqlToIni('select * from users');
+
+$array = $provider->toArray($qb->getAst());
+
+file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
+
+$node = $provider->toNode($array);
+echo $provider->toSql($node) . PHP_EOL;
+
+//var_dump(
+//    json_encode()
+//);
 //echo $renderer->render($conditions) . PHP_EOL;
 

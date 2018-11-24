@@ -3,8 +3,8 @@
 namespace Subapp\Sql\Syntax\Common\Parser;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Identifier as IdentifierExpression;
+use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
@@ -25,6 +25,14 @@ class Identifier extends AbstractDefaultParser
         $this->shift(Lexer::T_IDENTIFIER, $lexer);
         
         return new IdentifierExpression($lexer->getTokenValue());
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_IDENTIFIER;
     }
     
 }

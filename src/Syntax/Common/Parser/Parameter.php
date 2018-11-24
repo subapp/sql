@@ -40,4 +40,12 @@ class Parameter extends AbstractDefaultParser
         return $parameter;
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_PARAMETER;
+    }
+    
 }

@@ -27,7 +27,7 @@ class Common extends AbstractDefaultParser
         $isVarsWithAlias = $this->isExpressionWithAlias($lexer);
         
         $parser = $this->getComplexParser($processor);
-
+        
         switch (true) {
             case $isConditional:
                 $parser = $this->getConditionalParser($processor);
@@ -42,6 +42,14 @@ class Common extends AbstractDefaultParser
         }
         
         return $parser->parse($lexer, $processor);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return self::PARSER_COMMON;
     }
     
 }
