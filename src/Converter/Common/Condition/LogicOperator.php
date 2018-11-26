@@ -34,7 +34,7 @@ class LogicOperator extends AbstractConverter
         $values = parent::toArray($node, $provider);
         
         $values['value'] = $node->getOperator();
-        
+
         return $values;
     }
     

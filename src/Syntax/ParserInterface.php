@@ -285,7 +285,13 @@ interface ParserInterface
      * @return boolean
      */
     public function isLimit(LexerInterface $lexer);
-    
+
+    /**
+     * @param LexerInterface $lexer
+     * @return boolean
+     */
+    public function isMatchAgainst(LexerInterface $lexer);
+
     /**
      * @param LexerInterface $lexer
      * @return boolean

@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = '0004';
+$sqlVersion = 'Select';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -21,8 +21,8 @@ echo PHP_EOL;
 
 //die(var_dump($lexer));
 
-echo "====== SQL ======\n";
-echo $sql;
+//echo "====== SQL ======\n";
+//echo $sql;
 
 echo "\n====== Tokens ======\n";
 
@@ -42,22 +42,11 @@ $lexer->rewind();
 
 $processor = new \Subapp\Sql\Syntax\Processor($lexer);
 $processor->setup(new \Subapp\Sql\Syntax\Common\DefaultProcessorSetup());
-
-$pool = new \Subapp\Cache\Pool\CacheItemPool(
-    new \Subapp\Cache\Adapter\FilesystemAdapter(
-        new League\Flysystem\Filesystem(
-            new \League\Flysystem\Adapter\Local(__DIR__)
-        ), '/', new \Subapp\Cache\Serializer\PhpSerializer()
-    )
-);
-
-$cache = new \Subapp\Sql\Syntax\CacheProcessor($pool, $processor);
+$processor->setup(new \Subapp\Sql\Syntax\Sugar\SugarProcessorSetup());
 
 try {
     /** @var \Subapp\Sql\Ast\Stmt\Select $select */
     $time = microtime(true);
-    $selectCache = $cache->parse();
-    $cacheTime = microtime(true) - $time;
     $select = $processor->parse();
     $parseTime = microtime(true) - $time;
 
@@ -67,25 +56,25 @@ try {
     $renderer->setup(new \Subapp\Sql\Converter\DefaultConverterSetup());
     
     $processor->setLexer(new Lexer());
-    
     $recognizer = new Recognizer($processor, Recognizer::COMMON);
     
     $node = new \Subapp\Sql\Query\Node();
     $node->setRecognizer($recognizer);
-
+    
+    $qb = new \Subapp\Sql\Query\QueryBuilder($node);
+    
+    $qb->setRoot($select->getRoot());
+    
+    $qb->crossJoin('asd', 'aa', 'aa.id');
     
     $time = microtime(true);
     echo "\n====== SELECT AST Converter ======\n";
     echo $renderer->toSql($select);
-    echo "\n====== SELECT AST Converter ======\n";
-    echo $renderer->toSql($selectCache);
     echo ($renderer->toSql($select) == $sql) ? 'Equal' : 'Not';
     echo PHP_EOL;
     echo sprintf('Converter: %s', microtime(true) - $time);
     echo PHP_EOL;
     echo sprintf('Parser: %s', $parseTime);
-    echo PHP_EOL;
-    echo sprintf('Cache: %s', $cacheTime);
     echo PHP_EOL;
     
     
@@ -105,20 +94,7 @@ try {
             $node->isNull('U.updated')
         )
     );
-    
-//    var_dump($conditions);
-    
-    var_dump(
-        $renderer->toSql($recognized),
-        $renderer->toSql($conditions),
-        $renderer->toSql($node->or($conditions, $node->eq(1, 10)))
-    );
-    
-//    var_dump(
-//        $converter->render($node->false()),
-//        $converter->render($node->and($node->eq(1, 2), $node->eq(3.14, $node->arithmetic(22, MathOperator::DIVIDE, 7))))
-//    );
-    
+
     echo "\n\n\n";
     
 } catch (\Throwable $exception) {

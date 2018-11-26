@@ -90,7 +90,6 @@ class CacheProcessor implements ProcessorInterface
         $item = $this->cache->getItem($hash);
         
         if (!$item->isHit()) {
-            var_dump($this);
             $item->set($this->processor->parse());
             $item->expiresAfter(3600);
             $this->cache->save($item);

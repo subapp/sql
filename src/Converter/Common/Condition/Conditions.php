@@ -37,7 +37,7 @@ class Conditions extends Collection
     {
         $values = parent::toArray($node, $provider);
         
-        $values['operator'] = $node->getOperator();
+        $values['operator'] = $provider->toArray($node->getOperator());
         
         return $values;
     }
@@ -50,7 +50,7 @@ class Conditions extends Collection
         /** @var ConditionsNode $node */
         $node = $this->toCollection(new ConditionsNode(), $ast, $provider);
         
-        $node->setOperator($ast['operator']);
+        $node->setOperator($provider->toNode($ast['operator']));
         
         return $node;
     }

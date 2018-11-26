@@ -8,6 +8,8 @@ select
 
   (COUNT(s.id) + SQRT(12)) aaa,
 
+MATCH_AGAINST(title,body AGAINST 'string -exclusion +test +test2 -test4') as selectVar,
+
   10 one, 20 + 30 + 40 two,
   (100 + 200) + 300 tri, null, Sum(Distinct Length(SQRT(s.name)) / count(s.id)), COS(u.id) * 3, 2 * SIN(users.balance),
   TAN(u.id), (1 + 2) three, sqrt(rand(100)) / count(s.id) + sum(s.balance) as tough, (Select 123 int_type,

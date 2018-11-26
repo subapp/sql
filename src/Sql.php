@@ -21,38 +21,32 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Sql
 {
-    
+
     /**
      * @var LexerInterface
      */
     private $lexer;
-    
+
     /**
      * @var ProviderInterface
      */
     private $converter;
-    
-    /**
-     * @var DumperFacade
-     */
-    private $dumper;
-    
+
     /**
      * @var CacheItemPoolInterface
      */
     private $cache;
-    
+
     /**
      * Sql constructor.
      */
     public function __construct()
     {
         $this->lexer = new Lexer();
-        $this->dumper = new DumperFacade();
         $this->converter = new Converter();
         $this->converter->setup(new DefaultConverterSetup());
     }
-    
+
     /**
      * @param ProcessorSetupInterface|null $setup
      * @return ProcessorInterface
@@ -60,13 +54,13 @@ class Sql
     public function createParser(ProcessorSetupInterface $setup = null)
     {
         $processor = new Processor($this->getLexer());
-        
+
         $processor->clean();
         $processor->setup($setup ?: new DefaultProcessorSetup());
-        
+
         return $processor;
     }
-    
+
     /**
      * @param ProcessorSetupInterface|null $setup
      * @return CacheProcessor|ProcessorInterface
@@ -75,7 +69,7 @@ class Sql
     {
         return new CacheProcessor($this->getCache(), $this->createParser($setup));
     }
-    
+
     /**
      * @param $string
      * @return Ast\NodeInterface
@@ -84,50 +78,31 @@ class Sql
     {
         $processor = $this->createParser(null);
         $lexer = $processor->getLexer();
-        
+
         $lexer->tokenize($string);
-        
+
         return $processor->parse();
     }
-    
+
+    /**
+     * @param array $ast
+     * @return Ast\NodeInterface
+     */
     public function createAstFromArray(array $ast)
     {
         return $this->converter->toNode($ast);
     }
-    
-    
+
+
+    /**
+     * @param $sql
+     * @return array
+     */
     public function convertSqlToArray($sql)
     {
         return $this->getConverter()->toArray($this->createAstFromString($sql));
     }
-    
-    /**
-     * @param string $sql
-     * @return false|string
-     */
-    public function convertSqlToJson($sql)
-    {
-        return $this->dumper->getJsonDumper()->dump($this->convertSqlToArray($sql));
-    }
-    
-    /**
-     * @param string $sql
-     * @return false|string
-     */
-    public function convertSqlToIni($sql)
-    {
-        return $this->dumper->getIniDumper()->dump($this->convertSqlToArray($sql));
-    }
-    
-    /**
-     * @param string $sql
-     * @return false|string
-     */
-    public function convertSqlToYaml($sql)
-    {
-        return $this->dumper->getYamlDumper()->dump($this->convertSqlToArray($sql));
-    }
-    
+
     /**
      * @return CacheItemPoolInterface
      */
@@ -135,7 +110,7 @@ class Sql
     {
         return $this->cache;
     }
-    
+
     /**
      * @param CacheItemPoolInterface $cache
      */
@@ -143,15 +118,7 @@ class Sql
     {
         $this->cache = $cache;
     }
-    
-    /**
-     * @return DumperFacade
-     */
-    public function getDumper(): DumperFacade
-    {
-        return $this->dumper;
-    }
-    
+
     /**
      * @return LexerInterface
      */
@@ -159,7 +126,7 @@ class Sql
     {
         return $this->lexer;
     }
-    
+
     /**
      * @param LexerInterface $lexer
      */
@@ -167,7 +134,7 @@ class Sql
     {
         $this->lexer = $lexer;
     }
-    
+
     /**
      * @return ProviderInterface
      */
@@ -175,7 +142,7 @@ class Sql
     {
         return $this->converter;
     }
-    
+
     /**
      * @param ProviderInterface $converter
      */
@@ -183,5 +150,5 @@ class Sql
     {
         $this->converter = $converter;
     }
-    
+
 }

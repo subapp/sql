@@ -39,11 +39,14 @@ abstract class AbstractSqlLexer extends AbstractLexer
     const T_OPEN_CURLY_BRACE  = 1230;
     const T_CLOSE_BRACE       = 1240;
     const T_CLOSE_CURLY_BRACE = 1250;
+    const T_TILDA             = 1300;
     
     const T_STRING = 500;
     const T_INT    = 510;
     const T_FLOAT  = 520;
-    
+
+
+    const T_AGAINST       = 1990;
     const T_ALL           = 2000;
     const T_AND           = 2010;
     const T_AS            = 2020;
@@ -69,6 +72,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
     const T_LEFT          = 2220;
     const T_LIKE          = 2230;
     const T_LIMIT         = 2240;
+    const T_MATCH         = 2245;
     const T_NOT           = 2250;
     const T_NULL          = 2260;
     const T_ON            = 2270;
@@ -97,6 +101,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
      * @var array
      */
     protected $characters = [
+        '~' => AbstractSqlLexer::T_TILDA,
         '@' => AbstractSqlLexer::T_AT,
         '#' => AbstractSqlLexer::T_HASH,
         '=' => AbstractSqlLexer::T_EQ,
@@ -128,6 +133,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
         '&&' => AbstractSqlLexer::T_AND,
         '||' => AbstractSqlLexer::T_OR,
         
+        'AGAINST' => AbstractSqlLexer::T_AGAINST,
         'ALL' => AbstractSqlLexer::T_ALL,
         'AND' => AbstractSqlLexer::T_AND,
         'AS' => AbstractSqlLexer::T_AS,
@@ -153,6 +159,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
         'LEFT' => AbstractSqlLexer::T_LEFT,
         'LIKE' => AbstractSqlLexer::T_LIKE,
         'LIMIT' => AbstractSqlLexer::T_LIMIT,
+        'MATCH' => AbstractSqlLexer::T_MATCH,
         'NOT' => AbstractSqlLexer::T_NOT,
         'NULL' => AbstractSqlLexer::T_NULL,
         'ON' => AbstractSqlLexer::T_ON,

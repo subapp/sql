@@ -10,7 +10,7 @@ use Subapp\Sql\Ast\NodeInterface;
  */
 interface ConverterInterface
 {
-    
+
     const CONVERTER_ARGS                     = 1100;
     const CONVERTER_ARITHMETIC               = 1110;
     const CONVERTER_COLLECTION               = 1120;
@@ -33,6 +33,8 @@ interface ConverterInterface
     const CONVERTER_CONDITION_CMP_OPERATOR   = 1290;
     const CONVERTER_FUNC_AGGREGATE           = 1300;
     const CONVERTER_FUNC_DEFAULT             = 1310;
+    const CONVERTER_MATCH_AGAINST            = 1312;
+    const CONVERTER_MODIFIERS                = 1315;
     const CONVERTER_STMT_DELETE              = 1320;
     const CONVERTER_STMT_FROM                = 1330;
     const CONVERTER_STMT_GROUP_BY            = 1340;
@@ -45,7 +47,7 @@ interface ConverterInterface
     const CONVERTER_STMT_SELECT              = 1410;
     const CONVERTER_STMT_UPDATE              = 1420;
     const CONVERTER_STMT_WHERE               = 1430;
-    
+
     /**
      * @param NodeInterface     $node
      * @param ProviderInterface $provider
@@ -53,24 +55,24 @@ interface ConverterInterface
      * @return string
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider);
-    
+
     /**
      * @param NodeInterface     $node
      * @param ProviderInterface $provider
      * @return array
      */
     public function toArray(NodeInterface $node, ProviderInterface $provider);
-    
+
     /**
      * @param array             $ast
      * @param ProviderInterface $provider
      * @return NodeInterface
      */
     public function toNode(array $ast, ProviderInterface $provider);
-    
+
     /**
      * @return string
      */
     public function getName();
-    
+
 }

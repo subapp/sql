@@ -12,9 +12,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Expression extends AbstractDefaultParser
 {
-    
+
     /**
-     * @param LexerInterface     $lexer
+     * @param LexerInterface $lexer
      * @param ProcessorInterface $processor
      * @return NodeInterface
      */

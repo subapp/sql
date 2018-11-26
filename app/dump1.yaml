@@ -1,0 +1,85 @@
+node: 1250
+constant: CONDITION_IN
+left:
+    node: 1100
+    constant: ARGS
+    class: Subapp\Sql\Ast\NodeInterface
+    isBraced: false
+    nodes:
+    -
+        node: 1210
+        constant: VARIABLE
+        expression:
+            node: 1140
+            constant: FIELD_PATH
+            field:
+                node: 1150
+                constant: IDENTIFIER
+                identifier: id
+            table:
+                node: 1150
+                constant: IDENTIFIER
+                identifier: users
+        alias: null
+isNot: false
+args:
+    node: 1100
+    constant: ARGS
+    class: Subapp\Sql\Ast\NodeInterface
+    isBraced: false
+    nodes:
+    -
+        node: 1160
+        constant: LITERAL
+        value: 1
+        type: 3
+    -
+        node: 1160
+        constant: LITERAL
+        value: 2
+        type: 3
+    -
+        node: 1160
+        constant: LITERAL
+        value: 3
+        type: 3
+
+    -   node: 1160
+        constant: LITERAL
+        value: 3
+        type: 2
+    -
+        node: 1100
+        constant: ARGS
+        class: Subapp\Sql\Ast\NodeInterface
+        isBraced: false
+        nodes:
+        -
+            node: 1210
+            constant: VARIABLE
+            expression:
+                node: 1300
+                constant: FUNC_AGGREGATE
+                name:
+                    node: 1150
+                    constant: IDENTIFIER
+                    identifier: Max
+                distinct: true
+                args:
+                    node: 1100
+                    constant: ARGS
+                    class: Subapp\Sql\Ast\NodeInterface
+                    isBraced: false
+                    nodes:
+                    -
+                        node: 1140
+                        constant: FIELD_PATH
+                        field:
+                            node: 1150
+                            constant: IDENTIFIER
+                            identifier: id
+                        table:
+                            node: 1150
+                            constant: IDENTIFIER
+                            identifier: u
+            alias: null

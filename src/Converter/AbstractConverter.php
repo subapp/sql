@@ -20,7 +20,24 @@ abstract class AbstractConverter implements ConverterInterface
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         // converter key-name
-        return ['_' => $this->getName(),];
+        return ['node' => $this->getName(), 'constant' => $this->getConstantName($this->getName()),];
+    }
+    
+    /**
+     * @param $value
+     * @return null|string
+     */
+    private function getConstantName($value)
+    {
+        static $constants;
+        
+        if (!$constants) {
+            $constants = (new \ReflectionObject($this))->getConstants();
+        }
+        
+        $key = array_search($value, $constants);
+        
+        return $key ? str_replace('CONVERTER_', null, $key) : null;
     }
     
 }

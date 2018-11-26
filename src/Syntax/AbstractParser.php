@@ -477,6 +477,22 @@ abstract class AbstractParser implements ParserInterface
         
         return $isLike;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function isMatchAgainst(LexerInterface $lexer)
+    {
+        // if next token between
+        $token = $lexer->peek();
+
+        $isMatch = $token && $token->is(Lexer::T_MATCH);
+        $isMatch = $isMatch && $this->isTokenBehindBraces($lexer, true, Lexer::T_AGAINST);
+
+        $lexer->resetPeek();
+
+        return $isMatch;
+    }
     
     /**
      * @inheritDoc

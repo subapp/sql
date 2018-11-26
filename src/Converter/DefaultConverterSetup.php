@@ -39,9 +39,11 @@ class DefaultConverterSetup implements ConverterSetupInterface
         $renderer->append(new Common\Condition\Between());
         $renderer->append(new Common\Condition\In());
         $renderer->append(new Common\Condition\Like());
-        
+
         $renderer->append(new Common\Condition\Conditions());
-        
+        $renderer->append(new Common\Modifiers());
+        $renderer->append(new Common\MatchAgainst());
+
         $renderer->append(new Common\Stmt\Select());
         $renderer->append(new Common\Stmt\From());
         $renderer->append(new Common\Stmt\Join());

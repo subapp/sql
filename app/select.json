@@ -1,43 +1,55 @@
 {
-    "_": 1410,
+    "node": 1410,
+    "constant": "STMT_SELECT",
     "arguments": {
-        "_": 1100,
+        "node": 1100,
+        "constant": "ARGS",
         "class": "Subapp\\Sql\\Ast\\NodeInterface",
         "isBraced": false,
         "nodes": [
             {
-                "_": 1100,
+                "node": 1100,
+                "constant": "ARGS",
                 "class": "Subapp\\Sql\\Ast\\NodeInterface",
                 "isBraced": false,
                 "nodes": [
                     {
-                        "_": 1210,
+                        "node": 1210,
+                        "constant": "VARIABLE",
                         "expression": {
-                            "_": 1140,
+                            "node": 1140,
+                            "constant": "FIELD_PATH",
                             "field": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "id"
                             },
                             "table": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "users"
                             }
                         },
                         "alias": {
-                            "_": 1150,
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
                             "identifier": "uid"
                         }
                     },
                     {
-                        "_": 1210,
+                        "node": 1210,
+                        "constant": "VARIABLE",
                         "expression": {
-                            "_": 1140,
+                            "node": 1140,
+                            "constant": "FIELD_PATH",
                             "field": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "id"
                             },
                             "table": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "test"
                             }
                         },
@@ -46,25 +58,31 @@
                 ]
             },
             {
-                "_": 1100,
+                "node": 1100,
+                "constant": "ARGS",
                 "class": "Subapp\\Sql\\Ast\\NodeInterface",
                 "isBraced": false,
                 "nodes": [
                     {
-                        "_": 1210,
+                        "node": 1210,
+                        "constant": "VARIABLE",
                         "expression": {
-                            "_": 1140,
+                            "node": 1140,
+                            "constant": "FIELD_PATH",
                             "field": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "created"
                             },
                             "table": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "test"
                             }
                         },
                         "alias": {
-                            "_": 1150,
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
                             "identifier": "dt"
                         }
                     }
@@ -73,118 +91,148 @@
         ]
     },
     "from": {
-        "_": 1330,
+        "node": 1330,
+        "constant": "STMT_FROM",
         "class": "Subapp\\Sql\\Ast\\NodeInterface",
         "isBraced": false,
         "nodes": [
             {
-                "_": 1210,
+                "node": 1210,
+                "constant": "VARIABLE",
                 "expression": {
-                    "_": 1150,
+                    "node": 1150,
+                    "constant": "IDENTIFIER",
                     "identifier": "Users"
                 },
                 "alias": {
-                    "_": 1150,
+                    "node": 1150,
+                    "constant": "IDENTIFIER",
                     "identifier": "U"
                 }
             }
         ]
     },
     "joins": {
-        "_": 1370,
+        "node": 1370,
+        "constant": "STMT_JOIN_ITEMS",
         "class": "Subapp\\Sql\\Ast\\Stmt\\Join",
         "isBraced": false,
         "nodes": [
             {
-                "_": 1360,
+                "node": 1360,
+                "constant": "STMT_JOIN",
                 "type": "INNER",
                 "conditionType": "ON",
                 "left": {
-                    "_": 1140,
+                    "node": 1140,
+                    "constant": "FIELD_PATH",
                     "field": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "U2"
                     },
                     "table": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "user"
                     }
                 },
                 "condition": {
-                    "_": 1230,
+                    "node": 1230,
+                    "constant": "CONDITION_CMP",
                     "left": {
-                        "_": 1140,
+                        "node": 1140,
+                        "constant": "FIELD_PATH",
                         "field": {
-                            "_": 1150,
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
                             "identifier": "id"
                         },
                         "table": {
-                            "_": 1150,
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
                             "identifier": "U"
                         }
                     },
                     "operator": {
-                        "_": 1290,
+                        "node": 1290,
+                        "constant": "CONDITION_CMP_OPERATOR",
                         "value": "="
                     },
                     "right": {
-                        "_": 1140,
+                        "node": 1140,
+                        "constant": "FIELD_PATH",
                         "field": {
-                            "_": 1150,
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
                             "identifier": "id"
                         },
                         "table": {
-                            "_": 1150,
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
                             "identifier": "U2"
                         }
                     }
                 }
             },
             {
-                "_": 1360,
+                "node": 1360,
+                "constant": "STMT_JOIN",
                 "type": "INNER",
                 "conditionType": "USING",
                 "left": {
-                    "_": 1140,
+                    "node": 1140,
+                    "constant": "FIELD_PATH",
                     "field": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "U2"
                     },
                     "table": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "user"
                     }
                 },
                 "condition": {
-                    "_": 1100,
+                    "node": 1100,
+                    "constant": "ARGS",
                     "class": "Subapp\\Sql\\Ast\\NodeInterface",
                     "isBraced": false,
                     "nodes": [
                         {
-                            "_": 1210,
+                            "node": 1210,
+                            "constant": "VARIABLE",
                             "expression": {
-                                "_": 1140,
+                                "node": 1140,
+                                "constant": "FIELD_PATH",
                                 "field": {
-                                    "_": 1150,
+                                    "node": 1150,
+                                    "constant": "IDENTIFIER",
                                     "identifier": "id"
                                 },
                                 "table": {
-                                    "_": 1150,
+                                    "node": 1150,
+                                    "constant": "IDENTIFIER",
                                     "identifier": "U"
                                 }
                             },
                             "alias": null
                         },
                         {
-                            "_": 1210,
+                            "node": 1210,
+                            "constant": "VARIABLE",
                             "expression": {
-                                "_": 1140,
+                                "node": 1140,
+                                "constant": "FIELD_PATH",
                                 "field": {
-                                    "_": 1150,
+                                    "node": 1150,
+                                    "constant": "IDENTIFIER",
                                     "identifier": "id"
                                 },
                                 "table": {
-                                    "_": 1150,
+                                    "node": 1150,
+                                    "constant": "IDENTIFIER",
                                     "identifier": "U2"
                                 }
                             },
@@ -192,41 +240,107 @@
                         }
                     ]
                 }
+            },
+            {
+                "node": 1360,
+                "constant": "STMT_JOIN",
+                "type": "INNER",
+                "conditionType": "ON",
+                "left": {
+                    "node": 1140,
+                    "constant": "FIELD_PATH",
+                    "field": {
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
+                        "identifier": "U2"
+                    },
+                    "table": {
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
+                        "identifier": "users2"
+                    }
+                },
+                "condition": {
+                    "node": 1230,
+                    "constant": "CONDITION_CMP",
+                    "left": {
+                        "node": 1140,
+                        "constant": "FIELD_PATH",
+                        "field": {
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
+                            "identifier": "id"
+                        },
+                        "table": {
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
+                            "identifier": "U2"
+                        }
+                    },
+                    "operator": {
+                        "node": 1290,
+                        "constant": "CONDITION_CMP_OPERATOR",
+                        "value": "<>"
+                    },
+                    "right": {
+                        "node": 1140,
+                        "constant": "FIELD_PATH",
+                        "field": {
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
+                            "identifier": "id"
+                        },
+                        "table": {
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
+                            "identifier": "U"
+                        }
+                    }
+                }
             }
         ]
     },
     "where": {
-        "_": 1430,
+        "node": 1430,
+        "constant": "STMT_WHERE",
         "class": "Subapp\\Sql\\Ast\\NodeInterface",
         "isBraced": false,
         "nodes": [
             {
-                "_": 1240,
+                "node": 1240,
+                "constant": "CONDITION_CONDITIONS",
                 "class": "Subapp\\Sql\\Ast\\NodeInterface",
                 "isBraced": false,
                 "nodes": [
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1300,
+                            "node": 1300,
+                            "constant": "FUNC_AGGREGATE",
                             "name": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "count"
                             },
                             "distinct": false,
                             "args": {
-                                "_": 1100,
+                                "node": 1100,
+                                "constant": "ARGS",
                                 "class": "Subapp\\Sql\\Ast\\NodeInterface",
                                 "isBraced": false,
                                 "nodes": [
                                     {
-                                        "_": 1140,
+                                        "node": 1140,
+                                        "constant": "FIELD_PATH",
                                         "field": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "id"
                                         },
                                         "table": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "a"
                                         }
                                     }
@@ -234,51 +348,67 @@
                             }
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": ">"
                         },
                         "right": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": "1",
                             "type": 3
                         }
                     },
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1150,
+                            "node": 1150,
+                            "constant": "IDENTIFIER",
                             "identifier": "b"
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": "<"
                         },
                         "right": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": "10",
                             "type": 3
                         }
                     }
                 ],
-                "operator": {}
+                "operator": {
+                    "node": 1280,
+                    "constant": "CONDITION_LOGIC_OPERATOR",
+                    "value": "AND"
+                }
             },
             {
-                "_": 1250,
+                "node": 1250,
+                "constant": "CONDITION_IN",
                 "left": {
-                    "_": 1100,
+                    "node": 1100,
+                    "constant": "ARGS",
                     "class": "Subapp\\Sql\\Ast\\NodeInterface",
                     "isBraced": false,
                     "nodes": [
                         {
-                            "_": 1210,
+                            "node": 1210,
+                            "constant": "VARIABLE",
                             "expression": {
-                                "_": 1140,
+                                "node": 1140,
+                                "constant": "FIELD_PATH",
                                 "field": {
-                                    "_": 1150,
+                                    "node": 1150,
+                                    "constant": "IDENTIFIER",
                                     "identifier": "id"
                                 },
                                 "table": {
-                                    "_": 1150,
+                                    "node": 1150,
+                                    "constant": "IDENTIFIER",
                                     "identifier": "users"
                                 }
                             },
@@ -288,22 +418,26 @@
                 },
                 "isNot": false,
                 "args": {
-                    "_": 1100,
+                    "node": 1100,
+                    "constant": "ARGS",
                     "class": "Subapp\\Sql\\Ast\\NodeInterface",
                     "isBraced": false,
                     "nodes": [
                         {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 1,
                             "type": 3
                         },
                         {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 2,
                             "type": 3
                         },
                         {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 3,
                             "type": 3
                         }
@@ -311,70 +445,87 @@
                 }
             },
             {
-                "_": 1240,
+                "node": 1240,
+                "constant": "CONDITION_CONDITIONS",
                 "class": "Subapp\\Sql\\Ast\\NodeInterface",
                 "isBraced": true,
                 "nodes": [
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 1,
                             "type": 3
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": "="
                         },
                         "right": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 2,
                             "type": 3
                         }
                     },
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 1,
                             "type": 3
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": ">="
                         },
                         "right": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 2,
                             "type": 3
                         }
                     },
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 1,
                             "type": 3
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": "<>"
                         },
                         "right": {
-                            "_": 1100,
+                            "node": 1100,
+                            "constant": "ARGS",
                             "class": "Subapp\\Sql\\Ast\\NodeInterface",
                             "isBraced": false,
                             "nodes": [
                                 {
-                                    "_": 1210,
+                                    "node": 1210,
+                                    "constant": "VARIABLE",
                                     "expression": {
-                                        "_": 1140,
+                                        "node": 1140,
+                                        "constant": "FIELD_PATH",
                                         "field": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "id"
                                         },
                                         "table": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "u"
                                         }
                                     },
@@ -384,22 +535,28 @@
                         }
                     },
                     {
-                        "_": 1250,
+                        "node": 1250,
+                        "constant": "CONDITION_IN",
                         "left": {
-                            "_": 1100,
+                            "node": 1100,
+                            "constant": "ARGS",
                             "class": "Subapp\\Sql\\Ast\\NodeInterface",
                             "isBraced": false,
                             "nodes": [
                                 {
-                                    "_": 1210,
+                                    "node": 1210,
+                                    "constant": "VARIABLE",
                                     "expression": {
-                                        "_": 1140,
+                                        "node": 1140,
+                                        "constant": "FIELD_PATH",
                                         "field": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "id"
                                         },
                                         "table": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "users"
                                         }
                                     },
@@ -409,52 +566,64 @@
                         },
                         "isNot": false,
                         "args": {
-                            "_": 1100,
+                            "node": 1100,
+                            "constant": "ARGS",
                             "class": "Subapp\\Sql\\Ast\\NodeInterface",
                             "isBraced": false,
                             "nodes": [
                                 {
-                                    "_": 1160,
+                                    "node": 1160,
+                                    "constant": "LITERAL",
                                     "value": 1,
                                     "type": 3
                                 },
                                 {
-                                    "_": 1160,
+                                    "node": 1160,
+                                    "constant": "LITERAL",
                                     "value": 2,
                                     "type": 3
                                 },
                                 {
-                                    "_": 1160,
+                                    "node": 1160,
+                                    "constant": "LITERAL",
                                     "value": 3,
                                     "type": 3
                                 },
                                 {
-                                    "_": 1100,
+                                    "node": 1100,
+                                    "constant": "ARGS",
                                     "class": "Subapp\\Sql\\Ast\\NodeInterface",
                                     "isBraced": false,
                                     "nodes": [
                                         {
-                                            "_": 1210,
+                                            "node": 1210,
+                                            "constant": "VARIABLE",
                                             "expression": {
-                                                "_": 1300,
+                                                "node": 1300,
+                                                "constant": "FUNC_AGGREGATE",
                                                 "name": {
-                                                    "_": 1150,
+                                                    "node": 1150,
+                                                    "constant": "IDENTIFIER",
                                                     "identifier": "Max"
                                                 },
                                                 "distinct": false,
                                                 "args": {
-                                                    "_": 1100,
+                                                    "node": 1100,
+                                                    "constant": "ARGS",
                                                     "class": "Subapp\\Sql\\Ast\\NodeInterface",
                                                     "isBraced": false,
                                                     "nodes": [
                                                         {
-                                                            "_": 1140,
+                                                            "node": 1140,
+                                                            "constant": "FIELD_PATH",
                                                             "field": {
-                                                                "_": 1150,
+                                                                "node": 1150,
+                                                                "constant": "IDENTIFIER",
                                                                 "identifier": "id"
                                                             },
                                                             "table": {
-                                                                "_": 1150,
+                                                                "node": 1150,
+                                                                "constant": "IDENTIFIER",
                                                                 "identifier": "u"
                                                             }
                                                         }
@@ -469,46 +638,64 @@
                         }
                     }
                 ],
-                "operator": {}
+                "operator": {
+                    "node": 1280,
+                    "constant": "CONDITION_LOGIC_OPERATOR",
+                    "value": "OR"
+                }
             }
         ],
-        "operator": {}
+        "operator": {
+            "node": 1280,
+            "constant": "CONDITION_LOGIC_OPERATOR",
+            "value": "AND"
+        }
     },
     "groupBy": {
-        "_": 1340,
+        "node": 1340,
+        "constant": "STMT_GROUP_BY",
         "class": "Subapp\\Sql\\Ast\\NodeInterface",
         "isBraced": false,
         "nodes": [
             {
-                "_": 1100,
+                "node": 1100,
+                "constant": "ARGS",
                 "class": "Subapp\\Sql\\Ast\\NodeInterface",
                 "isBraced": false,
                 "nodes": [
                     {
-                        "_": 1210,
+                        "node": 1210,
+                        "constant": "VARIABLE",
                         "expression": {
-                            "_": 1140,
+                            "node": 1140,
+                            "constant": "FIELD_PATH",
                             "field": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "id"
                             },
                             "table": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "a"
                             }
                         },
                         "alias": null
                     },
                     {
-                        "_": 1210,
+                        "node": 1210,
+                        "constant": "VARIABLE",
                         "expression": {
-                            "_": 1140,
+                            "node": 1140,
+                            "constant": "FIELD_PATH",
                             "field": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "id"
                             },
                             "table": {
-                                "_": 1150,
+                                "node": 1150,
+                                "constant": "IDENTIFIER",
                                 "identifier": "u"
                             }
                         },
@@ -519,75 +706,93 @@
         ]
     },
     "having": {
-        "_": 1350,
+        "node": 1350,
+        "constant": "STMT_HAVING",
         "class": "Subapp\\Sql\\Ast\\NodeInterface",
         "isBraced": false,
         "nodes": [
             {
-                "_": 1240,
+                "node": 1240,
+                "constant": "CONDITION_CONDITIONS",
                 "class": "Subapp\\Sql\\Ast\\NodeInterface",
                 "isBraced": true,
                 "nodes": [
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 1,
                             "type": 3
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": "="
                         },
                         "right": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 2,
                             "type": 3
                         }
                     },
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 1,
                             "type": 3
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": ">="
                         },
                         "right": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 2,
                             "type": 3
                         }
                     },
                     {
-                        "_": 1230,
+                        "node": 1230,
+                        "constant": "CONDITION_CMP",
                         "left": {
-                            "_": 1160,
+                            "node": 1160,
+                            "constant": "LITERAL",
                             "value": 1,
                             "type": 3
                         },
                         "operator": {
-                            "_": 1290,
+                            "node": 1290,
+                            "constant": "CONDITION_CMP_OPERATOR",
                             "value": "<>"
                         },
                         "right": {
-                            "_": 1100,
+                            "node": 1100,
+                            "constant": "ARGS",
                             "class": "Subapp\\Sql\\Ast\\NodeInterface",
                             "isBraced": false,
                             "nodes": [
                                 {
-                                    "_": 1210,
+                                    "node": 1210,
+                                    "constant": "VARIABLE",
                                     "expression": {
-                                        "_": 1140,
+                                        "node": 1140,
+                                        "constant": "FIELD_PATH",
                                         "field": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "id"
                                         },
                                         "table": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "u"
                                         }
                                     },
@@ -597,22 +802,28 @@
                         }
                     },
                     {
-                        "_": 1250,
+                        "node": 1250,
+                        "constant": "CONDITION_IN",
                         "left": {
-                            "_": 1100,
+                            "node": 1100,
+                            "constant": "ARGS",
                             "class": "Subapp\\Sql\\Ast\\NodeInterface",
                             "isBraced": false,
                             "nodes": [
                                 {
-                                    "_": 1210,
+                                    "node": 1210,
+                                    "constant": "VARIABLE",
                                     "expression": {
-                                        "_": 1140,
+                                        "node": 1140,
+                                        "constant": "FIELD_PATH",
                                         "field": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "id"
                                         },
                                         "table": {
-                                            "_": 1150,
+                                            "node": 1150,
+                                            "constant": "IDENTIFIER",
                                             "identifier": "users"
                                         }
                                     },
@@ -622,52 +833,64 @@
                         },
                         "isNot": false,
                         "args": {
-                            "_": 1100,
+                            "node": 1100,
+                            "constant": "ARGS",
                             "class": "Subapp\\Sql\\Ast\\NodeInterface",
                             "isBraced": false,
                             "nodes": [
                                 {
-                                    "_": 1160,
+                                    "node": 1160,
+                                    "constant": "LITERAL",
                                     "value": 1,
                                     "type": 3
                                 },
                                 {
-                                    "_": 1160,
+                                    "node": 1160,
+                                    "constant": "LITERAL",
                                     "value": 2,
                                     "type": 3
                                 },
                                 {
-                                    "_": 1160,
+                                    "node": 1160,
+                                    "constant": "LITERAL",
                                     "value": 3,
                                     "type": 3
                                 },
                                 {
-                                    "_": 1100,
+                                    "node": 1100,
+                                    "constant": "ARGS",
                                     "class": "Subapp\\Sql\\Ast\\NodeInterface",
                                     "isBraced": false,
                                     "nodes": [
                                         {
-                                            "_": 1210,
+                                            "node": 1210,
+                                            "constant": "VARIABLE",
                                             "expression": {
-                                                "_": 1300,
+                                                "node": 1300,
+                                                "constant": "FUNC_AGGREGATE",
                                                 "name": {
-                                                    "_": 1150,
+                                                    "node": 1150,
+                                                    "constant": "IDENTIFIER",
                                                     "identifier": "Max"
                                                 },
                                                 "distinct": false,
                                                 "args": {
-                                                    "_": 1100,
+                                                    "node": 1100,
+                                                    "constant": "ARGS",
                                                     "class": "Subapp\\Sql\\Ast\\NodeInterface",
                                                     "isBraced": false,
                                                     "nodes": [
                                                         {
-                                                            "_": 1140,
+                                                            "node": 1140,
+                                                            "constant": "FIELD_PATH",
                                                             "field": {
-                                                                "_": 1150,
+                                                                "node": 1150,
+                                                                "constant": "IDENTIFIER",
                                                                 "identifier": "id"
                                                             },
                                                             "table": {
-                                                                "_": 1150,
+                                                                "node": 1150,
+                                                                "constant": "IDENTIFIER",
                                                                 "identifier": "u"
                                                             }
                                                         }
@@ -682,56 +905,77 @@
                         }
                     }
                 ],
-                "operator": {}
+                "operator": {
+                    "node": 1280,
+                    "constant": "CONDITION_LOGIC_OPERATOR",
+                    "value": "OR"
+                }
             }
         ],
-        "operator": {}
+        "operator": {
+            "node": 1280,
+            "constant": "CONDITION_LOGIC_OPERATOR",
+            "value": "AND"
+        }
     },
     "orderBy": {
-        "_": 1400,
+        "node": 1400,
+        "constant": "STMT_ORDER_BY_ITEMS",
         "class": "Subapp\\Sql\\Ast\\Stmt\\OrderBy",
         "isBraced": false,
         "nodes": [
             {
-                "_": 1390,
+                "node": 1390,
+                "constant": "STMT_ORDER_BY",
                 "expression": {
-                    "_": 1140,
+                    "node": 1140,
+                    "constant": "FIELD_PATH",
                     "field": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "id"
                     },
                     "table": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "a"
                     }
                 },
                 "vector": "ASC"
             },
             {
-                "_": 1390,
+                "node": 1390,
+                "constant": "STMT_ORDER_BY",
                 "expression": {
-                    "_": 1140,
+                    "node": 1140,
+                    "constant": "FIELD_PATH",
                     "field": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "id"
                     },
                     "table": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "b"
                     }
                 },
                 "vector": "DESC"
             },
             {
-                "_": 1390,
+                "node": 1390,
+                "constant": "STMT_ORDER_BY",
                 "expression": {
-                    "_": 1310,
+                    "node": 1310,
+                    "constant": "FUNC_DEFAULT",
                     "name": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "rand"
                     },
                     "args": {
-                        "_": 1100,
+                        "node": 1100,
+                        "constant": "ARGS",
                         "class": "Subapp\\Sql\\Ast\\NodeInterface",
                         "isBraced": false,
                         "nodes": []
@@ -740,15 +984,19 @@
                 "vector": "ASC"
             },
             {
-                "_": 1390,
+                "node": 1390,
+                "constant": "STMT_ORDER_BY",
                 "expression": {
-                    "_": 1140,
+                    "node": 1140,
+                    "constant": "FIELD_PATH",
                     "field": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "test"
                     },
                     "table": {
-                        "_": 1150,
+                        "node": 1150,
+                        "constant": "IDENTIFIER",
                         "identifier": "a"
                     }
                 },
@@ -757,12 +1005,14 @@
         ]
     },
     "limit": {
-        "_": 1380,
+        "node": 1380,
+        "constant": "STMT_LIMIT",
         "offset": null,
         "length": null
     },
     "semicolon": {
-        "_": 1160,
+        "node": 1160,
+        "constant": "LITERAL",
         "value": false,
         "type": 2
     }

@@ -99,7 +99,7 @@ class Converter implements ProviderInterface
      */
     public function toNode(array $ast)
     {
-        return $this->getConverter($ast['_'])
+        return $this->getConverter($ast['node'] ?? ConverterInterface::CONVERTER_RAW)
             ->toNode($ast, $this);
     }
     

@@ -296,7 +296,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface
+     * @return ParserInterface|Common\Parser\Stmt\Select
      */
     public function getSelectStmtParser(ProcessorInterface $processor)
     {
@@ -305,7 +305,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface
+     * @return ParserInterface|Common\Parser\Stmt\From
      */
     public function getFromStmtParser(ProcessorInterface $processor)
     {

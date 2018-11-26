@@ -1,11 +1,8 @@
 <?php
 
-use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Sql;
 
 include_once __DIR__ . '/../vendor/autoload.php';
-
-$lexer = new Lexer();
 
 $expression1 = "(c < 300 OR f = 10 OR e = 100) 
 AND (
@@ -41,17 +38,16 @@ $conditions = [
 
 $sql = new Sql();
 
-$sql->createAstFromString()
-
 $processor = $sql->createParser();
 $converter = $sql->getConverter();
+
+$lexer = $processor->getLexer();
 
 //
 $parser = $processor->getParser(\Subapp\Sql\Syntax\ParserInterface::PARSER_CONDITION_CONDITIONAL);
 
 foreach ($conditions as $expression) {
     $lexer->tokenize($expression, true);
-    $lexer->rewind();
-    echo sprintf("raw: %s; rendered: %s;\n", $expression, $converter->toSql($parser->parse($lexer, $processor)));
+    echo sprintf("========\nraw: %s;\n++++++++\nrendered: %s;\n", $expression, $converter->toSql($parser->parse($lexer, $processor)));
 }
 
