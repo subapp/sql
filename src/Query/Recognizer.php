@@ -13,9 +13,9 @@ use Subapp\Sql\Syntax\ProcessorInterface;
 class Recognizer
 {
     
-    const COMMON     = ParserInterface::PARSER_COMMON;
-    const EXPRESSION = ParserInterface::PARSER_EXPRESSION;
-    const PRIMARY    = ParserInterface::PARSER_PRIMARY;
+    const COMMON     = ParserInterface::PARSER_A;
+    const EXPRESSION = ParserInterface::PARSER_C;
+    const PRIMARY    = ParserInterface::PARSER_D;
     
     /**
      * @var ProcessorInterface

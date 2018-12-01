@@ -25,7 +25,7 @@ class Variables extends Common\Parser\AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $variables = new Arguments();
-        $parser = $this->getComplexParser($processor);
+        $parser = $this->getParserB($processor);
         
         do {
             $expression = new Variable($parser->parse($lexer, $processor));

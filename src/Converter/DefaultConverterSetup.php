@@ -45,7 +45,8 @@ class DefaultConverterSetup implements ConverterSetupInterface
         $renderer->append(new Common\MatchAgainst());
 
         $renderer->append(new Common\Stmt\Select());
-        $renderer->append(new Common\Stmt\From());
+        $renderer->append(new Common\Stmt\Update());
+        $renderer->append(new Common\Stmt\TableReference());
         $renderer->append(new Common\Stmt\Join());
         $renderer->append(new Common\Stmt\JoinItems());
         $renderer->append(new Common\Stmt\Where());
@@ -54,6 +55,7 @@ class DefaultConverterSetup implements ConverterSetupInterface
         $renderer->append(new Common\Stmt\OrderBy());
         $renderer->append(new Common\Stmt\OrderByItems());
         $renderer->append(new Common\Stmt\Limit());
+        $renderer->append(new Common\Stmt\Assignment());
     }
     
 }

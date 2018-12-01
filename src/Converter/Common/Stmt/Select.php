@@ -22,7 +22,7 @@ class Select extends AbstractConverter
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf("SELECT %s%s%s%s%s%s%s%s",
+        return sprintf("SELECT %s%s%s%s%s%s%s%s%s",
             $provider->toSql($node->getArguments()),
             $provider->toSql($node->getFrom()),
             $provider->toSql($node->getJoins()),

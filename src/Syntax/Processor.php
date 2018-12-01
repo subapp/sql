@@ -116,13 +116,16 @@ final class Processor implements ProcessorInterface
                 $name = ParserInterface::PARSER_STMT_SELECT;
                 break;
             case ($lexer->isCurrent(Lexer::T_UPDATE)):
-                $name = ParserInterface::PARSER_COMMON;
+                $name = ParserInterface::PARSER_STMT_UPDATE;
                 break;
             case ($lexer->isCurrent(Lexer::T_DELETE)):
-                $name = ParserInterface::PARSER_COMMON;
+                $name = ParserInterface::PARSER_STMT_DELETE;
+                break;
+            case ($lexer->isCurrent(Lexer::T_INSERT)):
+                $name = ParserInterface::PARSER_STMT_INSERT;
                 break;
             default:
-                $this->helper->throwSyntaxError($lexer, null, Lexer::T_SELECT, Lexer::T_UPDATE, Lexer::T_DELETE);
+                $this->helper->throwSyntaxError($lexer, null, Lexer::T_SELECT, Lexer::T_UPDATE, Lexer::T_DELETE, Lexer::T_INSERT);
         }
         
         return $this->getParser($name)->parse($lexer, $this);

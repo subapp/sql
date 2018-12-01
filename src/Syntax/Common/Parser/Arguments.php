@@ -24,7 +24,7 @@ class Arguments extends Common\Parser\AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $variables = new ArgsExpression();
-        $parser = $this->getComplexParser($processor);
+        $parser = $this->getParserB($processor);
         
         if (!$lexer->isNext(Lexer::T_CLOSE_BRACE)) {
             do {

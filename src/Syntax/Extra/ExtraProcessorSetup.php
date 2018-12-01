@@ -1,16 +1,16 @@
 <?php
 
-namespace Subapp\Sql\Syntax\Sugar;
+namespace Subapp\Sql\Syntax\Extra;
 
 use Subapp\Sql\Syntax\ProcessorInterface;
 use Subapp\Sql\Syntax\ProcessorSetupInterface;
-use Subapp\Sql\Syntax\Sugar\Parser;
+use Subapp\Sql\Syntax\Extra\Parser;
 
 /**
- * Class SugarProcessorSetup
- * @package Subapp\Sql\Syntax\Sugar
+ * Class ExtraProcessorSetup
+ * @package Subapp\Sql\Syntax\Extra
  */
-class SugarProcessorSetup implements ProcessorSetupInterface
+class ExtraProcessorSetup implements ProcessorSetupInterface
 {
 
     /**

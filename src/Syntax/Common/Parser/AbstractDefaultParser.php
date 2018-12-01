@@ -13,26 +13,44 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 abstract class AbstractDefaultParser extends AbstractParser
 {
-    
+
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Common
+     * @return ParserInterface|Common\Parser\ParserA
      */
-    
-    public function getCommonParser(ProcessorInterface $processor)
+
+    public function getParserA(ProcessorInterface $processor)
     {
-        return $processor->getParser(self::PARSER_COMMON);
+        return $processor->getParser(self::PARSER_A);
     }
-    
+
     /**
      * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Primary
+     * @return ParserInterface|Common\Parser\ParserB
      */
-    public function getPrimaryParser(ProcessorInterface $processor)
+    public function getParserB(ProcessorInterface $processor)
     {
-        return $processor->getParser(self::PARSER_PRIMARY);
+        return $processor->getParser(self::PARSER_B);
     }
-    
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\ParserC
+     */
+    public function getParserC(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_C);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\ParserD
+     */
+    public function getParserD(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_D);
+    }
+
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Identifier
@@ -140,25 +158,7 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_ARGUMENTS);
     }
-    
-    /**
-     * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Complex
-     */
-    public function getComplexParser(ProcessorInterface $processor)
-    {
-        return $processor->getParser(self::PARSER_COMPLEX);
-    }
-    
-    /**
-     * @param ProcessorInterface $processor
-     * @return ParserInterface|Common\Parser\Expression
-     */
-    public function getExpressionParser(ProcessorInterface $processor)
-    {
-        return $processor->getParser(self::PARSER_EXPRESSION);
-    }
-    
+
     /**
      * @param ProcessorInterface $processor
      * @return ParserInterface|Common\Parser\Arithmetic
@@ -310,6 +310,33 @@ abstract class AbstractDefaultParser extends AbstractParser
     public function getFromStmtParser(ProcessorInterface $processor)
     {
         return $processor->getParser(self::PARSER_STMT_FROM);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\TableReference
+     */
+    public function getTableReferenceStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_TABLE_REFERENCE);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Assignment
+     */
+    public function getAssignmentStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_ASSIGNMENT);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\AssignmentList
+     */
+    public function getAssignmentListStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_ASSIGNMENT_LIST);
     }
     
 }

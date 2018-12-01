@@ -11,7 +11,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  * Class Common
  * @package Subapp\Sql\Syntax\Common\Parser
  */
-class Common extends AbstractDefaultParser
+class ParserA extends AbstractDefaultParser
 {
     
     /**
@@ -26,7 +26,7 @@ class Common extends AbstractDefaultParser
         $isVarsLikeOrderBy = $this->isTokenBehindExpression($lexer, true, Lexer::T_ASC, Lexer::T_DESC);
         $isVarsWithAlias = $this->isExpressionWithAlias($lexer);
         
-        $parser = $this->getComplexParser($processor);
+        $parser = $this->getParserB($processor);
         
         switch (true) {
             case $isConditional:
@@ -49,7 +49,7 @@ class Common extends AbstractDefaultParser
      */
     public function getName()
     {
-        return self::PARSER_COMMON;
+        return self::PARSER_A;
     }
     
 }

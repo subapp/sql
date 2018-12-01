@@ -13,6 +13,7 @@ interface ConverterInterface
 
     const CONVERTER_ARGS                     = 1100;
     const CONVERTER_ARITHMETIC               = 1110;
+    const CONVERTER_ASSIGNMENT               = 1115;
     const CONVERTER_COLLECTION               = 1120;
     const CONVERTER_EMBRACE                  = 1130;
     const CONVERTER_FIELD_PATH               = 1140;
@@ -36,7 +37,7 @@ interface ConverterInterface
     const CONVERTER_MATCH_AGAINST            = 1312;
     const CONVERTER_MODIFIERS                = 1315;
     const CONVERTER_STMT_DELETE              = 1320;
-    const CONVERTER_STMT_FROM                = 1330;
+    const CONVERTER_STMT_TABLE_REFERENCE     = 1330;
     const CONVERTER_STMT_GROUP_BY            = 1340;
     const CONVERTER_STMT_HAVING              = 1350;
     const CONVERTER_STMT_JOIN                = 1360;

@@ -10,7 +10,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  * Class Expression
  * @package Subapp\Sql\Syntax\Common\Parser
  */
-class Expression extends AbstractDefaultParser
+class ParserC extends AbstractDefaultParser
 {
 
     /**
@@ -30,7 +30,7 @@ class Expression extends AbstractDefaultParser
                 $parser = $this->getUncoverParser($processor);
                 break;
             default:
-                $parser = $this->getPrimaryParser($processor);
+                $parser = $this->getParserD($processor);
         }
         
         return $parser->parse($lexer, $processor);
@@ -41,7 +41,7 @@ class Expression extends AbstractDefaultParser
      */
     public function getName()
     {
-        return self::PARSER_EXPRESSION;
+        return self::PARSER_C;
     }
     
 }

@@ -10,7 +10,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  * Class Primary
  * @package Subapp\Sql\Syntax\Common\Parser
  */
-class Primary extends AbstractDefaultParser
+class ParserD extends AbstractDefaultParser
 {
     
     /**
@@ -56,7 +56,7 @@ class Primary extends AbstractDefaultParser
      */
     public function getName()
     {
-        return self::PARSER_PRIMARY;
+        return self::PARSER_D;
     }
     
 }

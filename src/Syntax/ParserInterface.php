@@ -14,40 +14,46 @@ use Subapp\Sql\Exception\SyntaxErrorException;
  */
 interface ParserInterface
 {
-    
-    const PARSER_AGGREGATE_FUNCTION       = 2100;
-    const PARSER_ALIAS                    = 2110;
-    const PARSER_ARGUMENTS                = 2120;
-    const PARSER_ARITHMETIC               = 2130;
-    const PARSER_COMMON                   = 2140;
-    const PARSER_COMPLEX                  = 2150;
-    const PARSER_CONDITION_CMP_OPERATOR   = 2160;
-    const PARSER_CONDITION_CONDITIONAL    = 2170;
-    const PARSER_CONDITION_LOGIC_OPERATOR = 2180;
-    const PARSER_CONDITION_PREDICATE      = 2190;
-    const PARSER_DEFAULT_FUNCTION         = 2200;
-    const PARSER_EMBRACE                  = 2210;
-    const PARSER_EXPRESSION               = 2220;
-    const PARSER_FIELD_PATH               = 2230;
-    const PARSER_FUNC                     = 2240;
-    const PARSER_IDENTIFIER               = 2250;
-    const PARSER_LITERAL                  = 2260;
-    const PARSER_PARAMETER                = 2270;
-    const PARSER_PRIMARY                  = 2280;
-    const PARSER_QUOTE_IDENTIFIER         = 2290;
-    const PARSER_STAR                     = 2300;
-    const PARSER_STMT_FROM                = 2310;
-    const PARSER_STMT_GROUP_BY            = 2320;
-    const PARSER_STMT_JOIN                = 2330;
-    const PARSER_STMT_JOIN_ITEMS          = 2340;
-    const PARSER_STMT_LIMIT               = 2350;
-    const PARSER_STMT_ORDER_BY            = 2360;
-    const PARSER_STMT_SELECT              = 2370;
-    const PARSER_STMT_WHERE               = 2380;
-    const PARSER_SUB_SELECT               = 2390;
-    const PARSER_UNCOVER                  = 2400;
-    const PARSER_VARIABLE                 = 2410;
-    const PARSER_VARIABLES                = 2420;
+
+    const PARSER_A                        = 2100;
+    const PARSER_B                        = 2110;
+    const PARSER_C                        = 2120;
+    const PARSER_D                        = 2130;
+    const PARSER_AGGREGATE_FUNCTION       = 2140;
+    const PARSER_ASSIGNMENT               = 2150;
+    const PARSER_ASSIGNMENT_LIST          = 2160;
+    const PARSER_ALIAS                    = 2170;
+    const PARSER_ARGUMENTS                = 2180;
+    const PARSER_ARITHMETIC               = 2190;
+    const PARSER_CONDITION_CMP_OPERATOR   = 2200;
+    const PARSER_CONDITION_CONDITIONAL    = 2210;
+    const PARSER_CONDITION_LOGIC_OPERATOR = 2220;
+    const PARSER_CONDITION_PREDICATE      = 2230;
+    const PARSER_DEFAULT_FUNCTION         = 2240;
+    const PARSER_EMBRACE                  = 2250;
+    const PARSER_FIELD_PATH               = 2260;
+    const PARSER_FUNC                     = 2270;
+    const PARSER_IDENTIFIER               = 2280;
+    const PARSER_LITERAL                  = 2290;
+    const PARSER_PARAMETER                = 2300;
+    const PARSER_QUOTE_IDENTIFIER         = 2310;
+    const PARSER_STAR                     = 2320;
+    const PARSER_STMT_DELETE              = 2330;
+    const PARSER_STMT_FROM                = 2340;
+    const PARSER_STMT_GROUP_BY            = 2350;
+    const PARSER_STMT_INSERT              = 2360;
+    const PARSER_STMT_JOIN                = 2370;
+    const PARSER_STMT_JOIN_ITEMS          = 2380;
+    const PARSER_STMT_LIMIT               = 2390;
+    const PARSER_STMT_ORDER_BY            = 2400;
+    const PARSER_STMT_SELECT              = 2410;
+    const PARSER_STMT_TABLE_REFERENCE     = 2420;
+    const PARSER_STMT_UPDATE              = 2430;
+    const PARSER_STMT_WHERE               = 2440;
+    const PARSER_SUB_SELECT               = 2450;
+    const PARSER_UNCOVER                  = 2460;
+    const PARSER_VARIABLE                 = 2470;
+    const PARSER_VARIABLES                = 2480;
     
     /**
      * @param LexerInterface     $lexer

@@ -10,7 +10,7 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  * Class Complex
  * @package Subapp\Sql\Syntax\Common\Parser
  */
-class Complex extends AbstractDefaultParser
+class ParserB extends AbstractDefaultParser
 {
     
     /**
@@ -36,7 +36,7 @@ class Complex extends AbstractDefaultParser
             
             // Embrace, Function, Primary
             default:
-                $parser = $this->getExpressionParser($processor);
+                $parser = $this->getParserC($processor);
         }
         
         return $parser->parse($lexer, $processor);
@@ -47,7 +47,7 @@ class Complex extends AbstractDefaultParser
      */
     public function getName()
     {
-        return self::PARSER_COMPLEX;
+        return self::PARSER_B;
     }
     
 }

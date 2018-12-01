@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Select';
+$sqlVersion = 'Update';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -42,12 +42,12 @@ $lexer->rewind();
 
 $processor = new \Subapp\Sql\Syntax\Processor($lexer);
 $processor->setup(new \Subapp\Sql\Syntax\Common\DefaultProcessorSetup());
-$processor->setup(new \Subapp\Sql\Syntax\Sugar\SugarProcessorSetup());
+$processor->setup(new \Subapp\Sql\Syntax\Extra\ExtraProcessorSetup());
 
 try {
-    /** @var \Subapp\Sql\Ast\Stmt\Select $select */
+    /** @var \Subapp\Sql\Ast\Stmt\Select $ast */
     $time = microtime(true);
-    $select = $processor->parse();
+    $ast = $processor->parse();
     $parseTime = microtime(true) - $time;
 
 //    var_dump($select);
@@ -63,37 +63,38 @@ try {
     
     $qb = new \Subapp\Sql\Query\QueryBuilder($node);
     
-    $qb->setRoot($select->getRoot());
+//    $qb->setRoot($ast->getRoot());
     
-    $qb->crossJoin('asd', 'aa', 'aa.id');
+//    $qb->crossJoin('asd', 'aa', 'aa.id');
     
     $time = microtime(true);
-    echo "\n====== SELECT AST Converter ======\n";
-    echo $renderer->toSql($select);
-    echo ($renderer->toSql($select) == $sql) ? 'Equal' : 'Not';
-    echo PHP_EOL;
-    echo sprintf('Converter: %s', microtime(true) - $time);
-    echo PHP_EOL;
-    echo sprintf('Parser: %s', $parseTime);
-    echo PHP_EOL;
-    
-    
-    
-    /** @var Conditions $conditions */
-    $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');
-    
-    $conditions = $node->and(
-        $node->eq(1, 2),
-        $recognized,
-//        $node->ge(2, 'count(Distinct U.id)'),
-        $node->ne(3, 4),
-//        $node->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
-        $node->or(
-//            '(u.id + 1 * 2) > sum(Distinct U.cnt)',
-            $node->between('U.create', '2017', '2016'),
-            $node->isNull('U.updated')
-        )
-    );
+    $class = get_class($ast);
+    echo "\n====== {$class} AST Converter ======\n";
+    echo $renderer->toSql($ast);
+//    echo ($renderer->toSql($select) == $sql) ? 'Equal' : 'Not';
+//    echo PHP_EOL;
+//    echo sprintf('Converter: %s', microtime(true) - $time);
+//    echo PHP_EOL;
+//    echo sprintf('Parser: %s', $parseTime);
+//    echo PHP_EOL;
+//
+//
+//
+//    /** @var Conditions $conditions */
+//    $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');
+//
+//    $conditions = $node->and(
+//        $node->eq(1, 2),
+//        $recognized,
+////        $node->ge(2, 'count(Distinct U.id)'),
+//        $node->ne(3, 4),
+////        $node->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
+//        $node->or(
+////            '(u.id + 1 * 2) > sum(Distinct U.cnt)',
+//            $node->between('U.create', '2017', '2016'),
+//            $node->isNull('U.updated')
+//        )
+//    );
 
     echo "\n\n\n";
     

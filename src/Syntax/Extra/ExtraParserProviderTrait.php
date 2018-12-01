@@ -1,15 +1,15 @@
 <?php
 
-namespace Subapp\Sql\Syntax\Sugar;
+namespace Subapp\Sql\Syntax\Extra;
 
 use Subapp\Sql\Syntax\ParserInterface;
 use Subapp\Sql\Syntax\ProcessorInterface;
 
 /**
- * Trait SugarParserProviderTrait
- * @package Subapp\Sql\Syntax\Sugar
+ * Trait ExtraParserProviderTrait
+ * @package Subapp\Sql\Syntax\Extra
  */
-trait SugarParserProviderTrait
+trait ExtraParserProviderTrait
 {
 
     /**
@@ -38,7 +38,7 @@ trait SugarParserProviderTrait
      */
     public function completeName($name)
     {
-        return sprintf('SUGAR_FUNC_%s', strtoupper($name));
+        return sprintf('EXTRA_FUNC_%s', strtoupper($name));
     }
 
 }

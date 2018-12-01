@@ -2,8 +2,8 @@
 
 namespace Subapp\Sql\Ast;
 
+use Subapp\Sql\Common\Bit\AbstractBitMask;
 use Subapp\Sql\Converter\ConverterInterface;
-use Subapp\Sql\Exception\UnsupportedException;
 
 /**
  * Class Modifiers
@@ -31,45 +31,45 @@ class Modifiers extends AbstractNode
      * [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]
      */
 
-    const LOW_PRIORITY = 1;
-    const HIGH_PRIORITY = 2;
-    const DELAYED = 4;
-    const IGNORE = 8;
-    const ALL = 16;
-    const DISTINCT = 32;
-    const DISTINCTROW = 64;
-    const SQL_SMALL_RESULT = 128;
-    const SQL_BIG_RESULT = 256;
-    const SQL_BUFFER_RESULT = 512;
-    const SQL_CACHE = 1024;
-    const SQL_NO_CACHE = 2048;
-    const SQL_CALC_FOUND_ROWS = 4096;
-    const QUICK = 8192;
+    const MODIFIER_LOW_PRIORITY = 1;
+    const MODIFIER_HIGH_PRIORITY = 2;
+    const MODIFIER_DELAYED = 4;
+    const MODIFIER_IGNORE = 8;
+    const MODIFIER_ALL = 16;
+    const MODIFIER_DISTINCT = 32;
+    const MODIFIER_DISTINCTROW = 64;
+    const MODIFIER_SQL_SMALL_RESULT = 128;
+    const MODIFIER_SQL_BIG_RESULT = 256;
+    const MODIFIER_SQL_BUFFER_RESULT = 512;
+    const MODIFIER_SQL_CACHE = 1024;
+    const MODIFIER_SQL_NO_CACHE = 2048;
+    const MODIFIER_SQL_CALC_FOUND_ROWS = 4096;
+    const MODIFIER_QUICK = 8192;
 
     /**
      * @var array
      */
     protected static $modifiersMap = [
-        self::LOW_PRIORITY => 'LOW_PRIORITY',
-        self::HIGH_PRIORITY => 'HIGH_PRIORITY',
-        self::DELAYED => 'DELAYED',
-        self::IGNORE => 'IGNORE',
-        self::ALL => 'ALL',
-        self::DISTINCT => 'DISTINCT',
-        self::DISTINCTROW => 'DISTINCTROW',
-        self::SQL_SMALL_RESULT => 'SQL_SMALL_RESULT',
-        self::SQL_BIG_RESULT => 'SQL_BIG_RESULT',
-        self::SQL_BUFFER_RESULT => 'SQL_BUFFER_RESULT',
-        self::SQL_CACHE => 'SQL_CACHE',
-        self::SQL_NO_CACHE => 'SQL_NO_CACHE',
-        self::SQL_CALC_FOUND_ROWS => 'SQL_CALC_FOUND_ROWS',
-        self::QUICK => 'QUICK',
+        self::MODIFIER_LOW_PRIORITY => 'LOW_PRIORITY',
+        self::MODIFIER_HIGH_PRIORITY => 'HIGH_PRIORITY',
+        self::MODIFIER_DELAYED => 'DELAYED',
+        self::MODIFIER_IGNORE => 'IGNORE',
+        self::MODIFIER_ALL => 'ALL',
+        self::MODIFIER_DISTINCT => 'DISTINCT',
+        self::MODIFIER_DISTINCTROW => 'DISTINCTROW',
+        self::MODIFIER_SQL_SMALL_RESULT => 'SQL_SMALL_RESULT',
+        self::MODIFIER_SQL_BIG_RESULT => 'SQL_BIG_RESULT',
+        self::MODIFIER_SQL_BUFFER_RESULT => 'SQL_BUFFER_RESULT',
+        self::MODIFIER_SQL_CACHE => 'SQL_CACHE',
+        self::MODIFIER_SQL_NO_CACHE => 'SQL_NO_CACHE',
+        self::MODIFIER_SQL_CALC_FOUND_ROWS => 'SQL_CALC_FOUND_ROWS',
+        self::MODIFIER_QUICK => 'QUICK',
     ];
 
     /**
-     * @var integer
+     * @var BlankBitMask
      */
-    protected $modifiers = 0;
+    protected $modifiers;
 
     /**
      * Modifiers constructor.
@@ -77,50 +77,41 @@ class Modifiers extends AbstractNode
      */
     public function __construct($modifiers = 0)
     {
-        $this->modifiers = $modifiers;
+        $this->modifiers = new class($modifiers, static::class, 'MODIFIER') extends AbstractBitMask {};
     }
 
     /**
-     * @param int $modifier
+     * @param integer|string $modifier
      *
      * @return $this
      */
-    public function remove($modifier = 0)
+    public function remove($modifier)
     {
-        $this->modifiers &= ~$modifier;
-
-        return $this;
-    }
-
-    /**
-     * @param int $modifier
-     *
-     * @return $this
-     */
-    public function set($modifier = 0)
-    {
-        $this->modifiers = $this->resolve($modifier);
+        $this->modifiers->remove($modifier);
 
         return $this;
     }
 
     /**
      * @param integer $modifier
-     * @return integer
+     *
+     * @return $this
      */
-    protected function resolve($modifier)
+    public function set($modifier)
     {
-        return $modifier;
+        $this->modifiers->setBitMask($modifier);
+
+        return $this;
     }
 
     /**
-     * @param int $modifier
+     * @param integer|string $modifier
      *
      * @return $this
      */
     public function add($modifier = 0)
     {
-        $this->modifiers |= $this->resolve($modifier);
+        $this->modifiers->add($modifier);
 
         return $this;
     }
@@ -130,7 +121,7 @@ class Modifiers extends AbstractNode
      */
     public function reset()
     {
-        $this->modifiers = 0;
+        $this->modifiers->reset();
 
         return $this;
     }
@@ -140,7 +131,7 @@ class Modifiers extends AbstractNode
      */
     public function getModifiers()
     {
-        return $this->modifiers;
+        return $this->modifiers->getBitMask();
     }
 
     /**

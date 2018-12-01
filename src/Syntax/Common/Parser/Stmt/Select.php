@@ -23,14 +23,16 @@ class Select extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        // If lexer was executed like lexer->tokenize(sql, FALSE) - (without unshifting within blank token)
+        // If lexer was executed like lexer->tokenize(sql, FALSE) - (without shifting with blank token)
         // that means next token is NOT SELECT
         $this->shiftIf(Lexer::T_SELECT, $lexer);
         
         $root = new Ast\Root();
         
         $root->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
-        $root->setFrom($this->parseFromExpression($processor));
+        $root->setTableReference($this->getFromStmtParser($processor)->parse($lexer, $processor
+
+        ));
         
         if ($this->isJoin($lexer)) {
             $parser = $this->getJoinItemsParser($processor);
@@ -64,7 +66,7 @@ class Select extends AbstractDefaultParser
     
     /**
      * @param ProcessorInterface $processor
-     * @return Ast\NodeInterface|Ast\Stmt\From
+     * @return Ast\NodeInterface|Ast\Stmt\TableReference
      */
     public function parseFromExpression(ProcessorInterface $processor)
     {

@@ -31,7 +31,7 @@ class Predicate extends AbstractDefaultParser
          * parse left part of conditional expression
          * @example: (count(*) / 22) + 1 != 100
          */
-        $parser = $this->getComplexParser($processor);
+        $parser = $this->getParserB($processor);
         $left = $parser->parse($lexer, $processor);
 
         switch (true) {

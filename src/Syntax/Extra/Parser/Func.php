@@ -1,20 +1,20 @@
 <?php
 
-namespace Subapp\Sql\Syntax\Sugar\Parser;
+namespace Subapp\Sql\Syntax\Extra\Parser;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Syntax\Common\Parser\Func as BaseFunc;
 use Subapp\Sql\Syntax\ProcessorInterface;
-use Subapp\Sql\Syntax\Sugar\SugarParserProviderTrait;
+use Subapp\Sql\Syntax\Extra\ExtraParserProviderTrait;
 
 /**
  * Class Func
- * @package Subapp\Sql\Syntax\Sugar\Parser
+ * @package Subapp\Sql\Syntax\Extra\Parser
  */
 class Func extends BaseFunc
 {
 
-    use SugarParserProviderTrait;
+    use ExtraParserProviderTrait;
 
     /**
      * @inheritDoc
@@ -26,7 +26,9 @@ class Func extends BaseFunc
         $function = strtoupper($token->getToken());
         $hasFunctionParser = $this->hasFuncParser($function, $processor);
 
-        return $hasFunctionParser ? $this->getFuncParser($function, $processor)->parse($lexer, $processor) : parent::parse($lexer, $processor);
+        return $hasFunctionParser
+            ? $this->getFuncParser($function, $processor)->parse($lexer, $processor)
+            : parent::parse($lexer, $processor);
     }
 
 }

@@ -22,7 +22,7 @@ class Uncover extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        return $this->uncover($this->getComplexParser($processor), $processor);
+        return $this->uncover($this->getParserB($processor), $processor);
     }
     
     /**

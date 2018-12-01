@@ -1,9 +1,9 @@
 <?php
 
-namespace Subapp\Sql\Syntax\Sugar\Parser\Func;
+namespace Subapp\Sql\Syntax\Extra\Parser\Func;
 
 use Subapp\Lexer\LexerInterface;
-use Subapp\Sql\Ast\Condition\MatchAgainst as MatchAgainstNode;
+use Subapp\Sql\Ast\MatchAgainst as MatchAgainstNode;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractFunction;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -81,7 +81,7 @@ class MatchAgainst extends AbstractFunction
      */
     public function getName()
     {
-        return 'SUGAR_FUNC_MATCH_AGAINST';
+        return 'EXTRA_FUNC_MATCH_AGAINST';
     }
 
 }

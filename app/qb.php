@@ -9,7 +9,7 @@ use Subapp\Sql\Converter\DefaultConverterSetup;
 use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Syntax\Common\DefaultProcessorSetup;
 use Subapp\Sql\Syntax\Processor;
-use Subapp\Sql\Syntax\Sugar\SugarProcessorSetup;
+use Subapp\Sql\Syntax\Extra\ExtraProcessorSetup;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
@@ -22,7 +22,7 @@ $lexer = new Lexer();
 $processor = new Processor($lexer);
 
 $processor->setup(new DefaultProcessorSetup());
-$processor->setup(new SugarProcessorSetup());
+$processor->setup(new ExtraProcessorSetup());
 $processor->setLexer(new Lexer());
 
 $recognizer = new Recognizer($processor, Recognizer::COMMON);

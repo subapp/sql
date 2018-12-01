@@ -23,7 +23,7 @@ class GroupBy extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->getExpressionParser($processor);
+        $parser = $this->getParserC($processor);
         $collection = new GroupByExpression();
         
         $this->shift(Lexer::T_GROUP, $lexer);

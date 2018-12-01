@@ -2,14 +2,14 @@
 
 namespace Subapp\Sql\Ast\Stmt;
 
-use Subapp\Sql\Ast\Collection;
+use Subapp\Sql\Ast\Arguments;
 use Subapp\Sql\Converter\ConverterInterface;
 
 /**
  * Class GroupBy
  * @package Subapp\Sql\Ast
  */
-class GroupBy extends Collection
+class GroupBy extends Arguments
 {
     
     /**

@@ -1,17 +1,13 @@
 <?php
 
-namespace Subapp\Sql\Ast\Condition;
+namespace Subapp\Sql\Ast;
 
-use Subapp\Sql\Ast\AbstractNode;
-use Subapp\Sql\Ast\Arguments;
-use Subapp\Sql\Ast\Collection;
-use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Converter\ConverterInterface;
 use Subapp\Sql\Exception\UnsupportedException;
 
 /**
  * Class MatchAgainst
- * @package Subapp\Sql\Ast\Condition
+ * @package Subapp\Sql\Ast
  */
 class MatchAgainst extends AbstractNode
 {

@@ -32,14 +32,14 @@ class DefaultProcessorSetup implements ProcessorSetupInterface
         $processor->add(new Parser\Parameter());
         $processor->add(new Parser\FieldPath());
         $processor->add(new Parser\Embrace());
-        $processor->add(new Parser\Primary());
         $processor->add(new Parser\Variable());
-        
+
         // complex parsers
-        $processor->add(new Parser\Complex());
-        $processor->add(new Parser\Expression());
-        $processor->add(new Parser\Common());
-        
+        $processor->add(new Parser\ParserA());
+        $processor->add(new Parser\ParserB());
+        $processor->add(new Parser\ParserC());
+        $processor->add(new Parser\ParserD());
+
         // helpers
         $processor->add(new Parser\Uncover());
         
@@ -56,6 +56,9 @@ class DefaultProcessorSetup implements ProcessorSetupInterface
         
         // stmt
         $processor->add(new Parser\Stmt\Select());
+        $processor->add(new Parser\Stmt\Insert());
+        $processor->add(new Parser\Stmt\Update());
+        $processor->add(new Parser\Stmt\Delete());
         $processor->add(new Parser\Stmt\Join());
         $processor->add(new Parser\Stmt\JoinItems());
         $processor->add(new Parser\Stmt\From());
@@ -63,6 +66,9 @@ class DefaultProcessorSetup implements ProcessorSetupInterface
         $processor->add(new Parser\Stmt\OrderBy());
         $processor->add(new Parser\Stmt\GroupBy());
         $processor->add(new Parser\Stmt\Limit());
+        $processor->add(new Parser\Stmt\TableReference());
+        $processor->add(new Parser\Stmt\Assignment());
+        $processor->add(new Parser\Stmt\AssignmentList());
     }
     
 }

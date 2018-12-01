@@ -24,7 +24,7 @@ class OrderBy extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->getExpressionParser($processor);
+        $parser = $this->getParserC($processor);
         $collection = new OrderByItems();
         
         $this->shiftIf(Lexer::T_ORDER, $lexer);

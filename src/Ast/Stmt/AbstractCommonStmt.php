@@ -50,19 +50,19 @@ abstract class AbstractCommonStmt extends AbstractNode
     }
     
     /**
-     * @return Ast\Stmt\From
+     * @return Ast\Stmt\TableReference
      */
     public function getFrom()
     {
-        return $this->root->getFrom();
+        return $this->root->getTableReference();
     }
     
     /**
-     * @param Ast\Stmt\From|Ast\NodeInterface $from
+     * @param Ast\Stmt\TableReference|Ast\NodeInterface $from
      */
-    public function setFrom(Ast\Stmt\From $from)
+    public function setFrom(Ast\Stmt\TableReference $from)
     {
-        $this->root->setFrom($from);
+        $this->root->setTableReference($from);
     }
     
     /**
@@ -79,6 +79,22 @@ abstract class AbstractCommonStmt extends AbstractNode
     public function setArguments(Ast\Arguments $arguments)
     {
         $this->root->setArguments($arguments);
+    }
+
+    /**
+     * @return Ast\Arguments
+     */
+    public function getAssignment()
+    {
+        return $this->root->getAssignment();
+    }
+
+    /**
+     * @param Ast\Arguments $assignment
+     */
+    public function setAssignment(Ast\Arguments $assignment)
+    {
+        return $this->root->setAssignment($assignment);
     }
     
     /**

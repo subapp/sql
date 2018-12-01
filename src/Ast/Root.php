@@ -7,26 +7,36 @@ use Subapp\Sql\Exception\UnsupportedException;
 
 /**
  *
- * Root AST node is intermediate layer between StatementNode -> (Root) -> CommonNodes
+ * Root AST node is intermediate layer between StatementNode -> {RootNode} <- CommonNodes
  *
  * Class Root
  * @package Subapp\Sql\Ast
  */
 class Root extends AbstractNode
 {
-    
+
+    /**
+     * @var Ast\Modifiers
+     */
+    private $modifiers;
+
     /**
      * @var Ast\Arguments
      */
     private $arguments;
-    
+
     /**
-     * @var Ast\Stmt\From
+     * @var Ast\Arguments
      */
-    private $from;
+    private $assignment;
     
     /**
-     * @var Ast\Condition\Conditions
+     * @var Ast\Stmt\TableReference
+     */
+    private $tableReference;
+    
+    /**
+     * @var Ast\Stmt\JoinItems
      */
     private $joins;
     
@@ -65,7 +75,8 @@ class Root extends AbstractNode
      */
     public function __construct()
     {
-        $this->from = new Ast\Stmt\From();
+        $this->modifiers = new Ast\Modifiers(0);
+        $this->tableReference = new Ast\Stmt\TableReference();
         $this->arguments = new Ast\Arguments();
         $this->joins = new Ast\Stmt\JoinItems();
         $this->where = new Ast\Stmt\Where();
@@ -74,21 +85,37 @@ class Root extends AbstractNode
         $this->orderBy = new Ast\Stmt\OrderByItems();
         $this->limit = new Ast\Stmt\Limit();
     }
-    
+
     /**
-     * @return Ast\Stmt\From
+     * @return Modifiers
      */
-    public function getFrom()
+    public function getModifiers()
     {
-        return $this->from;
+        return $this->modifiers;
+    }
+
+    /**
+     * @param Modifiers $modifiers
+     */
+    public function setModifiers(Ast\Modifiers $modifiers)
+    {
+        $this->modifiers = $modifiers;
     }
     
     /**
-     * @param Ast\Stmt\From $from
+     * @return Ast\Stmt\TableReference
      */
-    public function setFrom(Ast\Stmt\From $from)
+    public function getTableReference()
     {
-        $this->from = $from;
+        return $this->tableReference;
+    }
+    
+    /**
+     * @param Ast\Stmt\TableReference $tableReference
+     */
+    public function setTableReference(Ast\Stmt\TableReference $tableReference)
+    {
+        $this->tableReference = $tableReference;
     }
     
     /**
@@ -105,6 +132,22 @@ class Root extends AbstractNode
     public function setArguments(Ast\Arguments $arguments)
     {
         $this->arguments = $arguments;
+    }
+
+    /**
+     * @return Arguments
+     */
+    public function getAssignment()
+    {
+        return $this->assignment;
+    }
+
+    /**
+     * @param Arguments $assignment
+     */
+    public function setAssignment(Arguments $assignment)
+    {
+        $this->assignment = $assignment;
     }
     
     /**
@@ -202,25 +245,41 @@ class Root extends AbstractNode
     {
         $this->limit = $limit;
     }
-    
+
     /**
-     * @return Stmt\From
+     * @return Ast\Modifiers
      */
-    public function from()
+    public function modifiers()
     {
-        return $this->getFrom();
+        return $this->getModifiers();
     }
     
     /**
-     * @return Arguments
+     * @return Stmt\TableReference
+     */
+    public function from()
+    {
+        return $this->getTableReference();
+    }
+    
+    /**
+     * @return Ast\Arguments
      */
     public function arguments()
     {
         return $this->getArguments();
     }
+
+    /**
+     * @return Ast\Arguments
+     */
+    public function assignment()
+    {
+        return $this->getAssignment();
+    }
     
     /**
-     * @return Collection
+     * @return Ast\Collection
      */
     public function joins()
     {

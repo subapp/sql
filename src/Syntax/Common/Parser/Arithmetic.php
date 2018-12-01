@@ -24,7 +24,7 @@ class Arithmetic extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $arithmetic = new ArithmeticExpression();
-        $parser = $this->getExpressionParser($processor);
+        $parser = $this->getParserC($processor);
         
         do {
             

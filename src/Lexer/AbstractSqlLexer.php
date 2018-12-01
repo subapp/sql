@@ -81,6 +81,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
     const T_OUTER         = 2300;
     const T_RIGHT         = 2310;
     const T_SELECT        = 2320;
+    const T_SET           = 2325;
     const T_STRAIGHT_JOIN = 2330;
     const T_TABLE         = 2340;
     const T_TRUE          = 2350;
@@ -168,6 +169,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
         'OUTER' => AbstractSqlLexer::T_OUTER,
         'RIGHT' => AbstractSqlLexer::T_RIGHT,
         'SELECT' => AbstractSqlLexer::T_SELECT,
+        'SET' => AbstractSqlLexer::T_SET,
         'STRAIGHT_JOIN' => AbstractSqlLexer::T_STRAIGHT_JOIN,
         'TABLE' => AbstractSqlLexer::T_TABLE,
         'TRUE' => AbstractSqlLexer::T_TRUE,

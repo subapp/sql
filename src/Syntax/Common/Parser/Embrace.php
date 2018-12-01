@@ -23,7 +23,7 @@ class Embrace extends AbstractDefaultParser
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-        $expression = $this->getComplexParser($processor)->parse($lexer, $processor);
+        $expression = $this->getParserB($processor)->parse($lexer, $processor);
         $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
         
         return new EmbraceExpression($expression);
