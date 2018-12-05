@@ -20,7 +20,7 @@ class QuoteIdentifier extends Identifier
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf('%s%s%s', $node->getQuote(), parent::toSql($node->getIdentifier(), $provider), $node->getQuote());
+        return sprintf('%s%s%s', $node->getQuote(), $node->getIdentifier(), $node->getQuote());
     }
     
     /**
@@ -33,7 +33,7 @@ class QuoteIdentifier extends Identifier
         $values = parent::toArray($node, $provider);
         
         $values['quote'] = $node->getQuote();
-        
+
         return $values;
     }
     
@@ -42,7 +42,7 @@ class QuoteIdentifier extends Identifier
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        $identifier = new IdentifierNode($ast['identifier']);
+        $identifier = parent::toNode($ast, $provider);
         
         $identifier->setQuote($ast['quote']);
         

@@ -25,7 +25,7 @@ class AggregateFunction extends AbstractFunction
         $name = parent::parse($lexer, $processor);
         
         $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-        
+
         $function = new AggregateFunctionExpression($lexer->toToken(Lexer::T_DISTINCT));
         $function->setFunctionName($name);
         $function->setArguments($this->getArgumentsParser($processor)->parse($lexer, $processor));

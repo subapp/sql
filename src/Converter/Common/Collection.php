@@ -43,7 +43,7 @@ class Collection extends AbstractConverter
         })->toArray();
         
         $values['class'] = $class;
-        $values['isBraced'] = $node->isBraced();
+        $values['wrapped'] = $node->isWrapped();
         $values['nodes'] = $nodes;
         
         return $values;
@@ -67,13 +67,12 @@ class Collection extends AbstractConverter
     {
         /** @var CollectionNode $collection */
         $collection->asBatch($ast['nodes']);
-        
         $collection = $collection->map(function ($node) use ($provider) {
             return $provider->toNode($node);
         });
         
         $collection->setClass($ast['class']);
-        $collection->setIsBraced($ast['isBraced']);
+        $collection->setWrapped($ast['wrapped']);
         
         return $collection;
     }

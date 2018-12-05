@@ -20,7 +20,7 @@ class Arithmetic extends Collection
      */
     public function toSql(NodeInterface $collection, ProviderInterface $provider)
     {
-        return sprintf($collection->isBraced() ? '(%s)' : '%s', parent::toSql($collection, $provider));
+        return sprintf($collection->isWrapped() ? '(%s)' : '%s', parent::toSql($collection, $provider));
     }
     
     /**

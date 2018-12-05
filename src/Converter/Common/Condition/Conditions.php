@@ -25,7 +25,7 @@ class Conditions extends Collection
         
         $collection->setSeparator(sprintf("\x20%s\x20", $operator));
         
-        return sprintf($collection->isBraced() ? '(%s)' : '%s', parent::toSql($collection, $provider));
+        return sprintf($collection->isWrapped() ? '(%s)' : '%s', parent::toSql($collection, $provider));
     }
     
     /**

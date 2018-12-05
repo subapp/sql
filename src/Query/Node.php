@@ -289,7 +289,19 @@ class Node
         
         return $variable;
     }
-    
+
+    /**
+     * @param string|NodeInterface $left
+     * @param string|NodeInterface $value
+     * @return Ast\Stmt\Assignment
+     */
+    public function assignment($left, $value)
+    {
+        return new Ast\Stmt\Assignment(
+            $this->recognize($left), $this->recognize($value)
+        );
+    }
+
     /**
      * @param string $value
      * @param int    $type

@@ -21,7 +21,10 @@ class From extends TableReference
     {
         $this->shift(Lexer::T_FROM, $lexer);
 
-        return parent::into($processor, new Ast\Stmt\TableReference());
+        $reference = new Ast\Stmt\TableReference();
+        $reference->setPrefix('FROM');
+
+        return parent::into($processor, $reference);
     }
     
     /**

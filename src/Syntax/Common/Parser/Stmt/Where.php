@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\Collection;
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Ast\Stmt\Where as WhereExpression;
 use Subapp\Sql\Lexer\Lexer;
@@ -29,7 +30,7 @@ class Where extends AbstractDefaultParser
         $conditions = $this->getConditionalParser($processor)->parse($lexer, $processor);
         
         // @todo hardcore wrap conditions into where
-        $where->asBatch($conditions->toArray());
+        $where->asBatch($conditions instanceof Collection ? $conditions->toArray() : [$conditions]);
         
         return $where;
     }

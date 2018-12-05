@@ -16,10 +16,12 @@ class Set extends Arguments
 
     /**
      * @inheritDoc
+     *
+     * @param SetNode $node
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf('SET %s', parent::toSql($node, $provider));
+        return $node->isNotEmpty() ? sprintf(' SET %s', parent::toSql($node, $provider)) : null;
     }
 
     /**

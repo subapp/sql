@@ -22,7 +22,7 @@ class TableReference extends Arguments
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         return sprintf(' %s%s',
-            $node->getPrefix() ? sprintf(' %s', $node->getPrefix()) : null,
+            $node->getPrefix() ? sprintf('%s ', $node->getPrefix()) : null,
             parent::toSql($node, $provider));
     }
 

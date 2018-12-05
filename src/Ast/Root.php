@@ -21,12 +21,12 @@ class Root extends AbstractNode
     private $modifiers;
 
     /**
-     * @var Ast\Stmt\Set
+     * @var Ast\Arguments
      */
     private $arguments;
 
     /**
-     * @var Ast\Arguments
+     * @var Ast\Stmt\Set
      */
     private $assignment;
     
@@ -78,6 +78,7 @@ class Root extends AbstractNode
         $this->modifiers = new Ast\Modifiers(0);
         $this->tableReference = new Ast\Stmt\TableReference();
         $this->arguments = new Ast\Arguments();
+        $this->assignment = new Ast\Stmt\Set();
         $this->joins = new Ast\Stmt\JoinItems();
         $this->where = new Ast\Stmt\Where();
         $this->groupBy = new Ast\Stmt\GroupBy();
@@ -127,9 +128,9 @@ class Root extends AbstractNode
     }
     
     /**
-     * @param Ast\Stmt\Set $arguments
+     * @param Ast\Arguments $arguments
      */
-    public function setArguments(Ast\Stmt\Set $arguments)
+    public function setArguments(Ast\Arguments $arguments)
     {
         $this->arguments = $arguments;
     }
@@ -143,9 +144,9 @@ class Root extends AbstractNode
     }
 
     /**
-     * @param Arguments $assignment
+     * @param Ast\Stmt\Set $assignment
      */
-    public function setAssignment(Arguments $assignment)
+    public function setAssignment(Ast\Stmt\Set $assignment)
     {
         $this->assignment = $assignment;
     }
@@ -257,7 +258,7 @@ class Root extends AbstractNode
     /**
      * @return Stmt\TableReference
      */
-    public function from()
+    public function tableReference()
     {
         return $this->getTableReference();
     }

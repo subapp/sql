@@ -26,23 +26,25 @@ class Update extends AbstractDefaultParser
         // that means next token is NOT T_UPDATE token
         $this->shiftIf(Lexer::T_UPDATE, $lexer);
 
-        $root->setModifiers($this->getModifierStmtParser($processor)->parse($lexer, $processor));
-
+        // parse three consecutive expressions
+        // UPDATE [Modifiers] [TableReference] SET [SetAssignments]
+        $root->setModifiers($this->getModifierStmtParser($processor)
+            ->parse($lexer, $processor));
         $root->setTableReference($this->getTableReferenceStmtParser($processor)
             ->parse($lexer, $processor));
-
-        // todo: need to most properly solution
-        $this->shift(Lexer::T_SET, $lexer);
-        $root->setAssignment($this->getAssignmentListStmtParser($processor)
+        $root->setAssignment($this->getSetStmtParser($processor)
             ->parse($lexer, $processor));
 
         if ($this->isJoin($lexer)) {
-            $parser = $this->getJoinItemsParser($processor);
-            $root->setJoins($parser->parse($lexer, $processor));
+            $root->setJoins($this->getJoinItemsParser($processor)->parse($lexer, $processor));
         }
 
         if ($this->isWhere($lexer)) {
             $root->setWhere($this->getWhereParser($processor)->parse($lexer, $processor));
+        }
+
+        if ($this->isOrderBy($lexer)) {
+            $root->setOrderBy($this->getOrderByParser($processor)->parse($lexer, $processor));
         }
 
         if ($this->isLimit($lexer)) {

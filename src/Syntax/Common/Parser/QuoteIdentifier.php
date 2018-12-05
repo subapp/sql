@@ -26,7 +26,7 @@ class QuoteIdentifier extends Identifier
         $identifier = parent::parse($lexer, $processor);
         $this->shiftIf(Lexer::T_GRAVE_ACCENT, $lexer);
         
-        return new QuoteIdentifierExpression($identifier);
+        return new QuoteIdentifierExpression($identifier->getIdentifier());
     }
     
     /**

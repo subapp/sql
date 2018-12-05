@@ -16,26 +16,26 @@ use Subapp\Sql\Exception\UnsupportedException;
  */
 class QueryBuilder
 {
-    
+
     public const SELECT = 1;
     public const DELETE = 2;
     public const UPDATE = 4;
-    
+
     /**
      * @var Node
      */
     private $node;
-    
+
     /**
      * @var integer
      */
     private $type = QueryBuilder::SELECT;
-    
+
     /**
      * @var Ast\Root
      */
     private $root;
-    
+
     /**
      * QueryBuilder constructor.
      * @param Node $nodeBuilder
@@ -45,7 +45,7 @@ class QueryBuilder
         $this->node = $nodeBuilder;
         $this->root = new Ast\Root();
     }
-    
+
     /**
      * @param string|Ast\NodeInterface ...$variables
      * @return $this
@@ -53,14 +53,89 @@ class QueryBuilder
     public function select(...$variables)
     {
         $this->type = QueryBuilder::SELECT;
-        
+
         /** @var Ast\Arguments $variables */
         $variables = $this->node->recognize($variables);
         $this->root->setArguments($variables);
-        
+
         return $this;
     }
-    
+
+    /**
+     * @return $this
+     */
+    public function delete()
+    {
+        $this->type = QueryBuilder::DELETE;
+
+        return $this;
+    }
+
+    /**
+     * @param array|null $assignments
+     * @return $this
+     */
+    public function update(array $assignments = null)
+    {
+        $this->type = QueryBuilder::UPDATE;
+
+        foreach ($assignments as $left => $value) {
+            $this->assignment($left, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function quick()
+    {
+        $this->root->modifiers()->add(Ast\Modifiers::MODIFIER_QUICK);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function ignore()
+    {
+        $this->root->modifiers()->add(Ast\Modifiers::MODIFIER_IGNORE);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function distinct()
+    {
+        $this->root->modifiers()->add(Ast\Modifiers::MODIFIER_DISTINCT);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function delayed()
+    {
+        $this->root->modifiers()->add(Ast\Modifiers::MODIFIER_DELAYED);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function noCache()
+    {
+        $this->root->modifiers()->add(Ast\Modifiers::MODIFIER_SQL_NO_CACHE);
+
+        return $this;
+    }
+
     /**
      * @param $source
      * @param $alias
@@ -69,42 +144,22 @@ class QueryBuilder
     public function from($source, $alias)
     {
         $variable = $this->node->variable($source, $alias);
-        
-        $this->root->from()->append($variable);
-        
+
+        $this->root->tableReference()->append($variable);
+
         return $this;
     }
-    
-    /**
-     * @return $this
-     */
-    public function delete()
-    {
-        $this->type = QueryBuilder::DELETE;
-        
-        return $this;
-    }
-    
-    /**
-     * @return $this
-     */
-    public function update()
-    {
-        $this->type = QueryBuilder::UPDATE;
-        
-        return $this;
-    }
-    
+
     /**
      * @param string|Ast\Condition\AbstractPredicate $e
      * @param boolean                                $clear
      * @return $this
      */
-    public function where($e, $clear = true)
+    public function where($x, $y = null, $clear = true)
     {
         return $this->condition($this->root->where(), $e, $clear);
     }
-    
+
     /**
      * @param string|Ast\Condition\AbstractPredicate $e
      * @param boolean                                $clear
@@ -114,7 +169,7 @@ class QueryBuilder
     {
         return $this->condition($this->root->having(), $e, $clear);
     }
-    
+
     /**
      * @param Ast\Condition\Conditions $conditions
      * @param Ast\NodeInterface|string $e
@@ -124,24 +179,24 @@ class QueryBuilder
     private function condition(Ast\Condition\Conditions $conditions, $e, $clear = true)
     {
         $outer = $conditions->getOperator();
-        
+
         $predicates = $this->node()->recognize($e);
-        
+
         if ($predicates instanceof Ast\Condition\Conditions) {
             $inner = $predicates->getOperator();
             $ifGreaterThanOne = ($predicates->count() > 1);
-            $predicates->setIsBraced(!($outer->getOperator() == $inner->getOperator()) && $ifGreaterThanOne);
+            $predicates->setWrapped(!($outer->getOperator() == $inner->getOperator()) && $ifGreaterThanOne);
         }
-        
+
         if ($clear) {
             $conditions->clear();
         }
-        
+
         $conditions->append($predicates);
-        
+
         return $this;
     }
-    
+
     /**
      * @param $table
      * @param $a
@@ -152,7 +207,7 @@ class QueryBuilder
     {
         return $this->join($table, $a, $condition, Ast\Stmt\Join::CROSS);
     }
-    
+
     /**
      * @param string                   $table
      * @param string                   $a
@@ -163,7 +218,7 @@ class QueryBuilder
     {
         return $this->join($table, $a, $condition, Ast\Stmt\Join::RIGHT);
     }
-    
+
     /**
      * @param string                   $table
      * @param string                   $a
@@ -174,7 +229,7 @@ class QueryBuilder
     {
         return $this->join($table, $a, $condition, Ast\Stmt\Join::LEFT);
     }
-    
+
     /**
      * @param string                   $table
      * @param string                   $a
@@ -185,7 +240,7 @@ class QueryBuilder
     {
         return $this->join($table, $a, $condition, Ast\Stmt\Join::INNER);
     }
-    
+
     /**
      * @param string                   $table
      * @param string                   $a
@@ -197,18 +252,42 @@ class QueryBuilder
     {
         $join = new Ast\Stmt\Join($type);
         $node = $this->getNode();
-        
+
         $this->root->getJoins()->append($join);
-        
+
         $condition = $node->recognize($condition);
-        
+
         $join->setLeft($node->path($table, $a));
         $join->setConditionType(($condition instanceof Ast\Arguments) ? Ast\Stmt\Join::USING : Ast\Stmt\Join::ON);
         $join->setCondition($condition);
-        
+
         return $this;
     }
-    
+
+    /**
+     * @param string|Ast\NodeInterface $left
+     * @param string|Ast\NodeInterface $value
+     * @return $this
+     */
+    public function assignment($left, $value)
+    {
+        $this->root->assignment()->append(
+            $this->node->assignment($left, $value)
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param string|Ast\NodeInterface $left
+     * @param string|Ast\NodeInterface $value
+     * @return $this
+     */
+    public function set($left, $value)
+    {
+        return $this->assignment($left, $value);
+    }
+
     /**
      * @param string|Ast\NodeInterface ...$variables
      * @return $this
@@ -218,10 +297,10 @@ class QueryBuilder
         /** @var Ast\Arguments $variables */
         $variables = $this->node->recognize($variables);
         $this->root->groupBy()->asBatch($variables->toArray());
-        
+
         return $this;
     }
-    
+
     /**
      * @param string|Ast\NodeInterface ...$arguments
      * @return $this
@@ -229,19 +308,19 @@ class QueryBuilder
     public function order(...$arguments)
     {
         $orderByNode = $this->root->orderBy();
-        
+
         /** @var Ast\Arguments $arguments */
         $arguments = $this->node->recognize($arguments);
-        
+
         // @todo perhaps exist most elegant solution
         $arguments->forAll(function ($index, Ast\Stmt\OrderByItems $collection) use ($orderByNode) {
             $orderByNode->asBatch($collection->toArray(), true);
             return true;
         });
-        
+
         return $this;
     }
-    
+
     /**
      * @return Ast\Stmt\Delete|Ast\Stmt\Select|Ast\Stmt\Update
      * @throws UnsupportedException
@@ -250,7 +329,7 @@ class QueryBuilder
     {
         /** @var Ast\Stmt\Select|Ast\Stmt\Delete|Ast\Stmt\Update $ast */
         $ast = null;
-        
+
         switch ($this->type) {
             case QueryBuilder::SELECT:
                 $ast = new Ast\Stmt\Select();
@@ -265,12 +344,12 @@ class QueryBuilder
                 throw new UnsupportedException(sprintf('Cannot create AST node for type: "%s"',
                     $this->getType()));
         }
-        
+
         $ast->setRoot($this->root);
-        
+
         return $ast;
     }
-    
+
     /**
      * @param ProviderInterface $renderer
      * @return string
@@ -279,8 +358,8 @@ class QueryBuilder
     {
         return $renderer->toSql($this->getAst());
     }
-    
-    
+
+
     /**
      * @return Node
      */
@@ -288,7 +367,7 @@ class QueryBuilder
     {
         return $this->node;
     }
-    
+
     /**
      * Alias: $this->getNodeBuilder(): Query\NodeBuilder
      *
@@ -298,7 +377,7 @@ class QueryBuilder
     {
         return $this->getNode();
     }
-    
+
     /**
      * @return Ast\Root
      */
@@ -306,7 +385,7 @@ class QueryBuilder
     {
         return $this->root;
     }
-    
+
     /**
      * @param Ast\Root $root
      */
@@ -314,7 +393,7 @@ class QueryBuilder
     {
         $this->root = $root;
     }
-    
+
     /**
      * @return int
      */
@@ -322,7 +401,7 @@ class QueryBuilder
     {
         return $this->type;
     }
-    
+
     /**
      * @param int $type
      */
@@ -330,5 +409,5 @@ class QueryBuilder
     {
         $this->type = $type;
     }
-    
+
 }

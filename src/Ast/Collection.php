@@ -18,7 +18,7 @@ class Collection extends BaseCollection implements NodeInterface
     /**
      * @var boolean
      */
-    private $isBraced = false;
+    private $wrapped = false;
     
     /**
      * @var string
@@ -28,17 +28,17 @@ class Collection extends BaseCollection implements NodeInterface
     /**
      * @return bool
      */
-    public function isBraced()
+    public function isWrapped()
     {
-        return $this->isBraced;
+        return $this->wrapped;
     }
     
     /**
-     * @param boolean $isBraced
+     * @param boolean $wrapped
      */
-    public function setIsBraced($isBraced)
+    public function setWrapped($wrapped)
     {
-        $this->isBraced = $isBraced;
+        $this->wrapped = $wrapped;
     }
     
     /**

@@ -1,4 +1,5 @@
 select
+SQL_SMALL_RESULT DISTINCTROW SQL_no_Cache
   1 - 2.0 + 3 + 4 * 5 * 6 + 7 * 8 + 1 / 2 - 3 + 7 test , 1 + (2 * 3) - 3 / 7 test2,
   1 + 1 test3, 1 * 1 * 1 test4,
   2 * 2 + 3 test5, 2 * 2 * 2 / 3 - 1 test6,

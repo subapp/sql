@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Update';
+$sqlVersion = 'Delete';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -34,7 +34,6 @@ $counter = 0;
 //        . ($counter++ % 5 === 0 ? PHP_EOL : null);
 //}
 
-var_dump($lexer);
 
 echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
@@ -66,13 +65,18 @@ try {
     $qb = new \Subapp\Sql\Query\QueryBuilder($node);
     
 //    $qb->setRoot($ast->getRoot());
-    
+
+//    var_dump($ast);
+
 //    $qb->crossJoin('asd', 'aa', 'aa.id');
     
     $time = microtime(true);
     $class = get_class($ast);
-    echo "\n====== {$class} AST Converter ======\n";
+    echo "\n====== [{$class}] AST Converter ======\n";
     echo $renderer->toSql($ast);
+
+//    echo json_encode($renderer->toArray($ast), 128);
+
 //    echo ($renderer->toSql($select) == $sql) ? 'Equal' : 'Not';
 //    echo PHP_EOL;
 //    echo sprintf('Converter: %s', microtime(true) - $time);

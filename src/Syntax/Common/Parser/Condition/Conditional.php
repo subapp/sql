@@ -101,7 +101,7 @@ class Conditional extends AbstractDefaultParser
             $collection->append($this->xor($processor));
         } while ($lexer->toToken(Lexer::T_OR));
         
-        $collection->setIsBraced(true);
+        $collection->setWrapped(true);
         
         // if just one expression was reached then return just it, otherwise conditions (collection)
         return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);
@@ -122,7 +122,7 @@ class Conditional extends AbstractDefaultParser
             $collection->append($this->recognize($processor));
         } while ($lexer->toToken(Lexer::T_XOR));
         
-        $collection->setIsBraced(true);
+        $collection->setWrapped(true);
         
         // if just one expression was reached then return just it, otherwise conditions (collection)
         return $collection->offsetExists(1) ? $collection : $collection->offsetGet(0);

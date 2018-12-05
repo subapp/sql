@@ -15,9 +15,6 @@ include_once __DIR__ . '/../vendor/autoload.php';
 
 $facade = new \Subapp\Sql\Sql();
 
-$provider = new Converter();
-$provider->setup(new DefaultConverterSetup());
-
 $lexer = new Lexer();
 $processor = new Processor($lexer);
 
@@ -51,6 +48,8 @@ $qb->join('user', 'U2', 'U.id, U2.id');
 
 $qb->having($c);
 
+$qb->noCache();
+
 $qb->join('users2', 'U2', 'U2.id != U.id');
 
 $qb->where($c, false);
@@ -75,26 +74,19 @@ $c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 
 //var_dump($qb);
 
+$qb->assignment('U.total', 'count(Distinct U.id)');
+
+$qb->update([
+    'u.id' => '123',
+    'u.name' => 'Concat(1, U.id, "Name", Rand())'
+]);
+
+$qb->where('u.id = 123');
+
 $converter = $facade->getConverter();
 
-$yaml = file_get_contents(__DIR__ . '/dump1.yaml');
-$yamlData = $facade->getDumper()->getYamlDumper()->parse($yaml);
+echo $converter->toSql($qb->getAst()) . PHP_EOL;
 
-var_dump($converter->toSql($converter->toNode($yamlData)));
-
-echo $provider->toSql($qb->getAst()) . PHP_EOL;
-
-//echo $facade->getDumper()->getYamlDumper()->dump($facade->getConverter()->toArray($qb->getAst()));
-
-$array = $provider->toArray($qb->getAst());
+$array = $converter->toArray($qb->getAst());
 
 file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
-
-$node = $provider->toNode($array);
-echo $provider->toSql($node) . PHP_EOL;
-
-//var_dump(
-//    json_encode()
-//);
-//echo $converter->render($conditions) . PHP_EOL;
-

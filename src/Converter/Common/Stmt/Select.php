@@ -22,9 +22,13 @@ class Select extends AbstractConverter
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf("SELECT %s%s%s%s%s%s%s%s%s",
-            $provider->toSql($node->getArguments()),
-            $provider->toSql($node->getFrom()),
+        $arguments = $node->getArguments();
+        $arguments = $arguments->isNotEmpty() ? sprintf(' %s', $provider->toSql($arguments)) : null;
+
+        return sprintf("SELECT%s%s%s%s%s%s%s%s%s%s",
+            $provider->toSql($node->getModifiers()),
+            $arguments,
+            $provider->toSql($node->getTableReference()),
             $provider->toSql($node->getJoins()),
             $provider->toSql($node->getWhere()),
             $provider->toSql($node->getGroupBy()),
@@ -43,9 +47,10 @@ class Select extends AbstractConverter
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
-        
+
+        $values['modifiers'] = $provider->toArray($node->getModifiers());
         $values['arguments'] = $provider->toArray($node->getArguments());
-        $values['from'] = $provider->toArray($node->getFrom());
+        $values['reference'] = $provider->toArray($node->getTableReference());
         $values['joins'] = $provider->toArray($node->getJoins());
         $values['where'] = $provider->toArray($node->getWhere());
         $values['groupBy'] = $provider->toArray($node->getGroupBy());
@@ -64,8 +69,9 @@ class Select extends AbstractConverter
     {
         $select = new SelectNode();
         
+        $select->setModifiers($provider->toNode($ast['modifiers']));
         $select->setArguments($provider->toNode($ast['arguments']));
-        $select->setFrom($provider->toNode($ast['from']));
+        $select->setTableReference($provider->toNode($ast['reference']));
         $select->setJoins($provider->toNode($ast['joins']));
         $select->setWhere($provider->toNode($ast['where']));
         $select->setGroupBy($provider->toNode($ast['groupBy']));

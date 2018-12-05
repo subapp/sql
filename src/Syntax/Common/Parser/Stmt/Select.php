@@ -30,13 +30,12 @@ class Select extends AbstractDefaultParser
         $root = new Ast\Root();
 
         $root->setModifiers($this->getModifierStmtParser($processor)->parse($lexer, $processor));
-        
+
         $root->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
         $root->setTableReference($this->getFromStmtParser($processor)->parse($lexer, $processor));
-        
+
         if ($this->isJoin($lexer)) {
-            $parser = $this->getJoinItemsParser($processor);
-            $root->setJoins($parser->parse($lexer, $processor));
+            $root->setJoins($this->getJoinItemsParser($processor)->parse($lexer, $processor));
         }
         
         if ($this->isWhere($lexer)) {

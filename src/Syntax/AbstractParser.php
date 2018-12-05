@@ -203,12 +203,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isFunction(LexerInterface $lexer)
     {
-        $token = $lexer->peek();
-        $isFunction = ($token && $token->is(Lexer::T_IDENTIFIER)
-            && ($token = $lexer->peek()) && $token->is(Lexer::T_OPEN_BRACE));
-        $lexer->resetPeek();
-        
-        return $isFunction;
+        return $this->isPeekSequence($lexer, Lexer::T_IDENTIFIER, Lexer::T_OPEN_BRACE);
     }
     
     /**

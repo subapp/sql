@@ -179,7 +179,6 @@ abstract class AbstractSqlLexer extends AbstractLexer
         'HIGH_PRIORITY' => AbstractSqlLexer::T_MODIFIER,
         'DELAYED' => AbstractSqlLexer::T_MODIFIER,
         'IGNORE' => AbstractSqlLexer::T_MODIFIER,
-        'DISTINCT' => AbstractSqlLexer::T_MODIFIER,
         'DISTINCTROW' => AbstractSqlLexer::T_MODIFIER,
         'SQL_SMALL_RESULT' => AbstractSqlLexer::T_MODIFIER,
         'SQL_BIG_RESULT' => AbstractSqlLexer::T_MODIFIER,
@@ -196,7 +195,7 @@ abstract class AbstractSqlLexer extends AbstractLexer
      */
     protected function getTokenCharacterType($character)
     {
-        $character = ctype_alpha($character) ? strtoupper($character) : $character;
+        $character = strtoupper($character);
         
         return isset($this->characters[$character]) ? $this->characters[$character] : null;
     }

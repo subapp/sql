@@ -29,7 +29,7 @@ class Modifiers extends AbstractConverter
             }
         }
         
-        return implode("\x20", $modifiers);
+        return empty($modifiers) ? null : sprintf(' %s', implode("\x20", $modifiers));
     }
 
     /**

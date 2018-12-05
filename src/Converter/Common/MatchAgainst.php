@@ -3,7 +3,7 @@
 namespace Subapp\Sql\Converter\Common;
 
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Condition\MatchAgainst as MatchAgainstNode;
+use Subapp\Sql\Ast\MatchAgainst as MatchAgainstNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 

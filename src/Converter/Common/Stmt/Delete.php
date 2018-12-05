@@ -4,28 +4,31 @@ namespace Subapp\Sql\Converter\Common\Stmt;
 
 use Subapp\Sql\Ast\Literal;
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Ast\Stmt\Update as UpdateNode;
+use Subapp\Sql\Ast\Stmt\Delete as DeleteNode;
 use Subapp\Sql\Converter\AbstractConverter;
 use Subapp\Sql\Converter\ProviderInterface;
 
 /**
- * Class Update
+ * Class Delete
  * @package Subapp\Sql\Converter\Common\Stmt
  */
-class Update extends AbstractConverter
+class Delete extends AbstractConverter
 {
 
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|UpdateNode $node
+     * @param NodeInterface|DeleteNode $node
      */
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
-        return sprintf("UPDATE%s%s%s%s%s%s%s%s",
+        $arguments = $node->getArguments();
+        $arguments = $arguments->isNotEmpty() ? sprintf(' %s', $provider->toSql($arguments)) : null;
+
+        return sprintf("DELETE%s%s%s%s%s%s%s%s",
             $provider->toSql($node->getModifiers()),
+            $arguments,
             $provider->toSql($node->getTableReference()),
-            $provider->toSql($node->getAssignment()),
             $provider->toSql($node->getJoins()),
             $provider->toSql($node->getWhere()),
             $provider->toSql($node->getOrderBy()),
@@ -37,15 +40,15 @@ class Update extends AbstractConverter
     /**
      * @inheritDoc
      *
-     * @param NodeInterface|UpdateNode $node
+     * @param NodeInterface|DeleteNode $node
      */
     public function toArray(NodeInterface $node, ProviderInterface $provider)
     {
         $values = parent::toArray($node, $provider);
 
         $values['modifiers'] = $provider->toArray($node->getModifiers());
+        $values['arguments'] = $provider->toArray($node->getArguments());
         $values['reference'] = $provider->toArray($node->getTableReference());
-        $values['assignment'] = $provider->toArray($node->getAssignment());
         $values['joins'] = $provider->toArray($node->getJoins());
         $values['where'] = $provider->toArray($node->getWhere());
         $values['orderBy'] = $provider->toArray($node->getOrderBy());
@@ -60,11 +63,11 @@ class Update extends AbstractConverter
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        $update = new UpdateNode();
+        $update = new DeleteNode();
 
         $update->setModifiers($provider->toNode($ast['modifiers']));
+        $update->setArguments($provider->toNode($ast['arguments']));
         $update->setTableReference($provider->toNode($ast['reference']));
-        $update->setAssignment($provider->toNode($ast['assignment']));
         $update->setJoins($provider->toNode($ast['joins']));
         $update->setWhere($provider->toNode($ast['where']));
         $update->setOrderBy($provider->toNode($ast['orderBy']));
@@ -80,7 +83,7 @@ class Update extends AbstractConverter
      */
     public function getName()
     {
-        return self::CONVERTER_STMT_UPDATE;
+        return self::CONVERTER_STMT_DELETE;
     }
 
 }
