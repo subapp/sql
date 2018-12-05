@@ -28,11 +28,11 @@ class Select extends AbstractDefaultParser
         $this->shiftIf(Lexer::T_SELECT, $lexer);
         
         $root = new Ast\Root();
+
+        $root->setModifiers($this->getModifierStmtParser($processor)->parse($lexer, $processor));
         
         $root->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
-        $root->setTableReference($this->getFromStmtParser($processor)->parse($lexer, $processor
-
-        ));
+        $root->setTableReference($this->getFromStmtParser($processor)->parse($lexer, $processor));
         
         if ($this->isJoin($lexer)) {
             $parser = $this->getJoinItemsParser($processor);

@@ -338,5 +338,23 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_ASSIGNMENT_LIST);
     }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Set
+     */
+    public function getSetStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_SET);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Modifier
+     */
+    public function getModifierStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_MODIFIER);
+    }
     
 }

@@ -19,14 +19,26 @@ class AssignmentList extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $node = new Arguments();
+        return $this->into($processor, new Arguments());
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @param Collection|null $collection
+     * @return Collection
+     */
+    public function into(ProcessorInterface $processor, Collection $collection = null)
+    {
+        $lexer = $processor->getLexer();
+        $collection = $collection ?: new Collection();
+
         $parser = $this->getAssignmentStmtParser($processor);
 
         do{
-            $node->append($parser->parse($lexer, $processor));
+            $collection->append($parser->parse($lexer, $processor));
         } while($lexer->toToken(Lexer::T_COMMA));
 
-        return $node;
+        return $collection;
     }
 
     /**

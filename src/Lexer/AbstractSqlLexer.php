@@ -91,12 +91,8 @@ abstract class AbstractSqlLexer extends AbstractLexer
     const T_WHERE         = 2390;
     const T_XOR           = 2400;
     
-    
-    const T_SQL_CALC_FOUND_ROWS = 3010;
-    const T_SQL_BIG_RESULT      = 3020;
-    const T_SQL_SMALL_RESULT    = 3030;
-    
-    const T_IDENTIFIER = 4000;
+    const T_IDENTIFIER      = 4000;
+    const T_MODIFIER        = 5000;
     
     /**
      * @var array
@@ -179,9 +175,19 @@ abstract class AbstractSqlLexer extends AbstractLexer
         'WHERE' => AbstractSqlLexer::T_WHERE,
         'XOR' => AbstractSqlLexer::T_XOR,
         
-        'SQL_CALC_FOUND_ROWS' => AbstractSqlLexer::T_SQL_CALC_FOUND_ROWS,
-        'SQL_BIG_RESULT' => AbstractSqlLexer::T_SQL_BIG_RESULT,
-        'SQL_SMALL_RESULT' => AbstractSqlLexer::T_SQL_SMALL_RESULT,
+        'LOW_PRIORITY' => AbstractSqlLexer::T_MODIFIER,
+        'HIGH_PRIORITY' => AbstractSqlLexer::T_MODIFIER,
+        'DELAYED' => AbstractSqlLexer::T_MODIFIER,
+        'IGNORE' => AbstractSqlLexer::T_MODIFIER,
+        'DISTINCT' => AbstractSqlLexer::T_MODIFIER,
+        'DISTINCTROW' => AbstractSqlLexer::T_MODIFIER,
+        'SQL_SMALL_RESULT' => AbstractSqlLexer::T_MODIFIER,
+        'SQL_BIG_RESULT' => AbstractSqlLexer::T_MODIFIER,
+        'SQL_BUFFER_RESULT' => AbstractSqlLexer::T_MODIFIER,
+        'SQL_CACHE' => AbstractSqlLexer::T_MODIFIER,
+        'SQL_NO_CACHE' => AbstractSqlLexer::T_MODIFIER,
+        'SQL_CALC_FOUND_ROWS' => AbstractSqlLexer::T_MODIFIER,
+        'QUICK' => AbstractSqlLexer::T_MODIFIER,
     ];
     
     /**

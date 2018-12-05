@@ -13,7 +13,7 @@ use Subapp\Sql\Converter\ConverterInterface;
 class TableReference extends Arguments
 {
 
-    const SELECT_FROM = 'FROM ';
+    const SELECT_FROM = 'FROM';
 
     /**
      * @var null|string

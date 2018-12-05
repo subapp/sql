@@ -34,6 +34,8 @@ $counter = 0;
 //        . ($counter++ % 5 === 0 ? PHP_EOL : null);
 //}
 
+var_dump($lexer);
+
 echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
 

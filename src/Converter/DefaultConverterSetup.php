@@ -56,6 +56,7 @@ class DefaultConverterSetup implements ConverterSetupInterface
         $renderer->append(new Common\Stmt\OrderByItems());
         $renderer->append(new Common\Stmt\Limit());
         $renderer->append(new Common\Stmt\Assignment());
+        $renderer->append(new Common\Stmt\Set());
     }
     
 }

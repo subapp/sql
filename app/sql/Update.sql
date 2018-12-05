@@ -1,4 +1,5 @@
 UPDATE
+Ignore Quick
     `users` U
 SET
 `country`='Ukraine', U.city='Kyiv',

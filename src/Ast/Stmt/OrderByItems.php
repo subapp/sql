@@ -13,7 +13,7 @@ class OrderByItems extends Arguments
 {
     
     /**
-     * TermCollection constructor.
+     * OrderByItems constructor.
      * @param array $expressions
      */
     public function __construct($expressions = [])

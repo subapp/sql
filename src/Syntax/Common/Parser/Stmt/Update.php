@@ -26,6 +26,8 @@ class Update extends AbstractDefaultParser
         // that means next token is NOT T_UPDATE token
         $this->shiftIf(Lexer::T_UPDATE, $lexer);
 
+        $root->setModifiers($this->getModifierStmtParser($processor)->parse($lexer, $processor));
+
         $root->setTableReference($this->getTableReferenceStmtParser($processor)
             ->parse($lexer, $processor));
 

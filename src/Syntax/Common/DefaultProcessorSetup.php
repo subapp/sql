@@ -69,6 +69,8 @@ class DefaultProcessorSetup implements ProcessorSetupInterface
         $processor->add(new Parser\Stmt\TableReference());
         $processor->add(new Parser\Stmt\Assignment());
         $processor->add(new Parser\Stmt\AssignmentList());
+        $processor->add(new Parser\Stmt\Set());
+        $processor->add(new Parser\Stmt\Modifier());
     }
     
 }

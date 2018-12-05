@@ -21,7 +21,7 @@ class Root extends AbstractNode
     private $modifiers;
 
     /**
-     * @var Ast\Arguments
+     * @var Ast\Stmt\Set
      */
     private $arguments;
 
@@ -127,15 +127,15 @@ class Root extends AbstractNode
     }
     
     /**
-     * @param Ast\Arguments $arguments
+     * @param Ast\Stmt\Set $arguments
      */
-    public function setArguments(Ast\Arguments $arguments)
+    public function setArguments(Ast\Stmt\Set $arguments)
     {
         $this->arguments = $arguments;
     }
 
     /**
-     * @return Arguments
+     * @return Ast\Stmt\Set
      */
     public function getAssignment()
     {
@@ -271,7 +271,7 @@ class Root extends AbstractNode
     }
 
     /**
-     * @return Ast\Arguments
+     * @return Ast\Stmt\Set
      */
     public function assignment()
     {
