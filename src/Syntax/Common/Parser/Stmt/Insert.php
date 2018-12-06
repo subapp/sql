@@ -23,6 +23,8 @@ class Insert extends AbstractDefaultParser
     {
         $insert     = new Ast\Stmt\Insert();
         $root       = new Ast\Root();
+
+        // bind root node to insert-node
         $insert->setRoot($root);
 
         // If lexer was executed like lexer->tokenize(sql, FALSE) - (without shifting with blank token)
