@@ -223,12 +223,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function isSubSelect(LexerInterface $lexer)
     {
-        $token = $lexer->peek();
-        $isSubSelect = ($token && $token->is(Lexer::T_OPEN_BRACE) && $lexer->peek()->is(Lexer::T_SELECT));
-        
-        $lexer->resetPeek();
-        
-        return $isSubSelect;
+        return $this->isPeekSequence($lexer, Lexer::T_OPEN_BRACE, Lexer::T_SELECT);
     }
     
     /**

@@ -21,9 +21,19 @@ class Root extends AbstractNode
     private $modifiers;
 
     /**
+     * @var Ast\Identifier
+     */
+    private $table;
+
+    /**
      * @var Ast\Arguments
      */
     private $arguments;
+
+    /**
+     * @var Ast\Arguments
+     */
+    private $values;
 
     /**
      * @var Ast\Stmt\Set
@@ -76,8 +86,10 @@ class Root extends AbstractNode
     public function __construct()
     {
         $this->modifiers = new Ast\Modifiers(0);
+        $this->table = new Identifier();
         $this->tableReference = new Ast\Stmt\TableReference();
         $this->arguments = new Ast\Arguments();
+        $this->values = new Ast\Arguments();
         $this->assignment = new Ast\Stmt\Set();
         $this->joins = new Ast\Stmt\JoinItems();
         $this->where = new Ast\Stmt\Where();
@@ -102,7 +114,23 @@ class Root extends AbstractNode
     {
         $this->modifiers = $modifiers;
     }
-    
+
+    /**
+     * @return Ast\Identifier
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * @param Identifier $table
+     */
+    public function setTable(Ast\Identifier $table)
+    {
+        $this->table = $table;
+    }
+
     /**
      * @return Ast\Stmt\TableReference
      */
@@ -133,6 +161,22 @@ class Root extends AbstractNode
     public function setArguments(Ast\Arguments $arguments)
     {
         $this->arguments = $arguments;
+    }
+
+    /**
+     * @return Ast\Arguments
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    /**
+     * @param Ast\Arguments $values
+     */
+    public function setValues(Arguments $values)
+    {
+        $this->values = $values;
     }
 
     /**
@@ -254,6 +298,14 @@ class Root extends AbstractNode
     {
         return $this->getModifiers();
     }
+
+    /**
+     * @return Ast\Identifier
+     */
+    public function table()
+    {
+        return $this->getTable();
+    }
     
     /**
      * @return Stmt\TableReference
@@ -269,6 +321,14 @@ class Root extends AbstractNode
     public function arguments()
     {
         return $this->getArguments();
+    }
+
+    /**
+     * @return Ast\Arguments
+     */
+    public function values()
+    {
+        return $this->getValues();
     }
 
     /**

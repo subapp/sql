@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Common\Bit;
 
 /**
- * Class BlankBitMask
+ * Class Bit
  * @package Subapp\Sql\Common\Bit
  */
-class BlankBitMask extends AbstractBitMask
+class Bit extends AbstractBit
 {
 
 }

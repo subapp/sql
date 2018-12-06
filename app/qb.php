@@ -83,6 +83,11 @@ $qb->update([
 
 $qb->where('u.id = 123');
 
+$and = $node->and($node->eq('Max(u.id)', 1));
+$and->add($node->or($node->eq('U.id', 123), $node->ge('Min(U.level)', 10)));
+
+$qb->where($and);
+
 $converter = $facade->getConverter();
 
 echo $converter->toSql($qb->getAst()) . PHP_EOL;

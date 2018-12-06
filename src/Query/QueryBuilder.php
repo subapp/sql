@@ -151,13 +151,13 @@ class QueryBuilder
     }
 
     /**
-     * @param string|Ast\Condition\AbstractPredicate $e
+     * @param string|Ast\Condition\AbstractPredicate $x
      * @param boolean                                $clear
      * @return $this
      */
-    public function where($x, $y = null, $clear = true)
+    public function where($x, $clear = true)
     {
-        return $this->condition($this->root->where(), $e, $clear);
+        return $this->condition($this->root->where(), $x, $clear);
     }
 
     /**

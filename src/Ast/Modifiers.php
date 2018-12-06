@@ -2,7 +2,7 @@
 
 namespace Subapp\Sql\Ast;
 
-use Subapp\Sql\Common\Bit\AbstractBitMask;
+use Subapp\Sql\Common\Bit\AbstractBit;
 use Subapp\Sql\Converter\ConverterInterface;
 
 /**
@@ -67,7 +67,7 @@ class Modifiers extends AbstractNode
     ];
 
     /**
-     * @var BlankBitMask
+     * @var AbstractBit
      */
     protected $modifiers;
 
@@ -77,7 +77,7 @@ class Modifiers extends AbstractNode
      */
     public function __construct($modifiers = 0)
     {
-        $this->modifiers = new class($modifiers, static::class, 'MODIFIER') extends AbstractBitMask {};
+        $this->modifiers = new class($modifiers, static::class, 'MODIFIER') extends AbstractBit {};
     }
 
     /**

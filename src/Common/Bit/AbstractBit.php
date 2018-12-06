@@ -3,10 +3,10 @@
 namespace Subapp\Sql\Common\Bit;
 
 /**
- * Class AbstractBitMask
+ * Class AbstractBit
  * @package Subapp\Sql\Common\Bit
  */
-abstract class AbstractBitMask implements MaskInterface, \JsonSerializable
+abstract class AbstractBit implements MaskInterface, \JsonSerializable
 {
     
     /**

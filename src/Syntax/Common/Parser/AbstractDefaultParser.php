@@ -302,6 +302,33 @@ abstract class AbstractDefaultParser extends AbstractParser
     {
         return $processor->getParser(self::PARSER_STMT_SELECT);
     }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Update
+     */
+    public function getUpdateStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_UPDATE);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Delete
+     */
+    public function getDeleteStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_DELETE);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Insert
+     */
+    public function getInsertStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_INSERT);
+    }
     
     /**
      * @param ProcessorInterface $processor
@@ -355,6 +382,24 @@ abstract class AbstractDefaultParser extends AbstractParser
     public function getModifierStmtParser(ProcessorInterface $processor)
     {
         return $processor->getParser(self::PARSER_STMT_MODIFIER);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\Into
+     */
+    public function getIntoStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_INTO);
+    }
+
+    /**
+     * @param ProcessorInterface $processor
+     * @return ParserInterface|Common\Parser\Stmt\ValueList
+     */
+    public function getValueListStmtParser(ProcessorInterface $processor)
+    {
+        return $processor->getParser(self::PARSER_STMT_VALUES);
     }
     
 }

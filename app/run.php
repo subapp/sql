@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Delete';
+$sqlVersion = 'Insert';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 

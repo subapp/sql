@@ -40,6 +40,7 @@ interface ConverterInterface
     const CONVERTER_STMT_TABLE_REFERENCE     = 'STMT_TABLE_REFERENCE';
     const CONVERTER_STMT_GROUP_BY            = 'STMT_GROUP_BY';
     const CONVERTER_STMT_HAVING              = 'STMT_HAVING';
+    const CONVERTER_STMT_INSERT              = 'STMT_INSERT';
     const CONVERTER_STMT_JOIN                = 'STMT_JOIN';
     const CONVERTER_STMT_JOIN_ITEMS          = 'STMT_JOIN_ITEMS';
     const CONVERTER_STMT_LIMIT               = 'STMT_LIMIT';

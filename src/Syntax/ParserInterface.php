@@ -41,6 +41,7 @@ interface ParserInterface
     const PARSER_STMT_DELETE              = 'PARSER_STMT_DELETE';
     const PARSER_STMT_FROM                = 'PARSER_STMT_FROM';
     const PARSER_STMT_GROUP_BY            = 'PARSER_STMT_GROUP_BY';
+    const PARSER_STMT_INTO                = 'PARSER_STMT_INTO';
     const PARSER_STMT_INSERT              = 'PARSER_STMT_INSERT';
     const PARSER_STMT_JOIN                = 'PARSER_STMT_JOIN';
     const PARSER_STMT_JOIN_ITEMS          = 'PARSER_STMT_JOIN_ITEMS';
@@ -50,6 +51,7 @@ interface ParserInterface
     const PARSER_STMT_SELECT              = 'PARSER_STMT_SELECT';
     const PARSER_STMT_SET                 = 'PARSER_STMT_SET';
     const PARSER_STMT_TABLE_REFERENCE     = 'PARSER_STMT_TABLE_REFERENCE';
+    const PARSER_STMT_VALUES              = 'PARSER_STMT_VALUES';
     const PARSER_STMT_UPDATE              = 'PARSER_STMT_UPDATE';
     const PARSER_STMT_WHERE               = 'PARSER_STMT_WHERE';
     const PARSER_SUB_SELECT               = 'PARSER_SUB_SELECT';
