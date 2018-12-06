@@ -21,8 +21,8 @@ class Insert extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $insert = new Ast\Stmt\Insert();
-        $root = new Ast\Root();
+        $insert     = new Ast\Stmt\Insert();
+        $root       = new Ast\Root();
         $insert->setRoot($root);
 
         // If lexer was executed like lexer->tokenize(sql, FALSE) - (without shifting with blank token)
