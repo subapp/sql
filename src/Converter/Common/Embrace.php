@@ -47,7 +47,7 @@ class Embrace extends AbstractConverter
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        return new EmbraceNode($ast['inner'] ?? new Raw('[NULL]'));
+        return new EmbraceNode($provider->toNode($ast['inner']));
     }
     
     /**

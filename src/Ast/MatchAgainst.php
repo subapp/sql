@@ -58,6 +58,7 @@ class MatchAgainst extends AbstractNode
     {
         $this->matchColumns = new Arguments($columns);
         $this->againstWords = new Collection($against);
+        $this->againstWords->setClass(null);
     }
     
     /**

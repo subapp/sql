@@ -47,6 +47,7 @@ class DefaultConverterSetup implements ConverterSetupInterface
         $renderer->append(new Common\Stmt\Select());
         $renderer->append(new Common\Stmt\Update());
         $renderer->append(new Common\Stmt\Delete());
+        $renderer->append(new Common\Stmt\Insert());
         $renderer->append(new Common\Stmt\TableReference());
         $renderer->append(new Common\Stmt\Join());
         $renderer->append(new Common\Stmt\JoinItems());

@@ -35,7 +35,7 @@ class Select extends AbstractConverter
             $provider->toSql($node->getHaving()),
             $provider->toSql($node->getOrderBy()),
             $provider->toSql($node->getLimit()),
-            $node->isSemicolon() ? "\n;" : null
+            $node->isSemicolon() ? ";" : null
         );
     }
     

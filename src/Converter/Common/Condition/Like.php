@@ -52,7 +52,7 @@ class Like extends AbstractConverter
         
         $like->setLeft($provider->toNode($ast['left']));
         $like->setIsNot($ast['isNot']);
-        $like->setRight($provider->toNode($ast['right']));
+        $like->setRight($provider->toNode($ast['args']));
         
         return $like;
     }

@@ -31,6 +31,9 @@ class Insert extends AbstractDefaultParser
         // that means next token is NOT SELECT
         $this->shiftIf(Lexer::T_INSERT, $lexer);
 
+        // INSERT {IGNORE} INTO users ...
+        $root->setModifiers($this->getModifierStmtParser($processor)->parse($lexer, $processor));
+
         // INSERT {INTO users} ...
         $root->setTable($this->getIntoStmtParser($processor)->parse($lexer, $processor));
 
@@ -61,7 +64,11 @@ class Insert extends AbstractDefaultParser
                 $bit->add(Ast\Stmt\Insert::INSERT_FIELDS);
 
                 $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-                $root->setArguments($this->getVariablesParser($processor)->parse($lexer, $processor));
+
+                $fields = $this->getVariablesParser($processor)->parse($lexer, $processor);
+                $fields->setWrapped(true);
+                $root->setArguments($fields);
+
                 $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
 
                 // used the first time in ten years :D
@@ -92,8 +99,7 @@ class Insert extends AbstractDefaultParser
 
                 $bit->add(Ast\Stmt\Insert::INSERT_SELECT);
                 $select = $this->getSelectStmtParser($processor)->parse($lexer, $processor);
-
-                var_dump($select);
+                $root->values()->append($select);
                 break;
 
             // syntax error

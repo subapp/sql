@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Insert';
+$sqlVersion = 'Select1';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -37,7 +37,7 @@ $counter = 0;
 
 echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
-
+var_dump($lexer);
 
 $lexer->rewind();
 
@@ -72,8 +72,13 @@ try {
     
     $time = microtime(true);
     $class = get_class($ast);
+//    file_put_contents(__DIR__ . '/select.json', json_encode($renderer->toArray($ast), 128));
+    
     echo "\n====== [{$class}] AST Converter ======\n";
     echo $renderer->toSql($ast);
+    $array = $renderer->toArray($ast);
+    file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
+    echo $renderer->toSql($renderer->toNode($array)) . PHP_EOL;
 
 //    echo json_encode($renderer->toArray($ast), 128);
 
@@ -105,5 +110,6 @@ try {
     echo "\n\n\n";
     
 } catch (\Throwable $exception) {
-    die(sprintf("\n-----------------\n[%s]: %s\n%s\n-----------------\n", get_class($exception), $exception->getMessage(), $exception->getTraceAsString()));
+    die(sprintf("\n-----------------\n[%s]: %s\n%s\n-----------------\n",
+        get_class($exception), $exception->getMessage(), $exception->getTraceAsString()));
 }

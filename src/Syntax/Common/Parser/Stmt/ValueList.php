@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
+use Subapp\Sql\Ast\Arguments as ValueListNode;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\Arguments;
 use Subapp\Sql\Syntax\ProcessorInterface;
@@ -19,12 +20,21 @@ class ValueList extends Arguments
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $this->shift(Lexer::T_VALUES, $lexer);
-        $this->shift(Lexer::T_OPEN_BRACE, $lexer);
-        $node = parent::parse($lexer, $processor);
-        $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
+        $values = new ValueListNode();
 
-        return $node;
+        $values->setClass(ValueListNode::class);
+
+        $this->shift(Lexer::T_VALUES, $lexer);
+
+        do {
+            $this->shift(Lexer::T_OPEN_BRACE, $lexer);
+            $node = parent::parse($lexer, $processor);
+            $node->setWrapped(true);
+            $values->append($node);
+            $this->shift(Lexer::T_CLOSE_BRACE, $lexer);
+        } while($lexer->toToken(Lexer::T_COMMA));
+
+        return $values;
     }
 
     /**

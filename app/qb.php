@@ -94,4 +94,6 @@ echo $converter->toSql($qb->getAst()) . PHP_EOL;
 
 $array = $converter->toArray($qb->getAst());
 
-file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
+echo $converter->toSql($converter->toNode($array)) . PHP_EOL;
+
+//file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));

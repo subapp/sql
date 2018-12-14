@@ -28,12 +28,9 @@ class Update extends AbstractDefaultParser
 
         // parse three consecutive expressions
         // UPDATE [Modifiers] [TableReference] SET [SetAssignments]
-        $root->setModifiers($this->getModifierStmtParser($processor)
-            ->parse($lexer, $processor));
-        $root->setTableReference($this->getTableReferenceStmtParser($processor)
-            ->parse($lexer, $processor));
-        $root->setAssignment($this->getSetStmtParser($processor)
-            ->parse($lexer, $processor));
+        $root->setModifiers($this->getModifierStmtParser($processor)->parse($lexer, $processor));
+        $root->setTableReference($this->getTableReferenceStmtParser($processor)->parse($lexer, $processor));
+        $root->setAssignment($this->getSetStmtParser($processor)->parse($lexer, $processor));
 
         if ($this->isJoin($lexer)) {
             $root->setJoins($this->getJoinItemsParser($processor)->parse($lexer, $processor));

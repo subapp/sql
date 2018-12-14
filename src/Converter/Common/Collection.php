@@ -24,8 +24,10 @@ class Collection extends AbstractConverter
         $nodes = $collection->map(function (NodeInterface $inner) use ($provider) {
             return $provider->toSql($inner);
         });
-        
-        return implode($collection->getSeparator(), $nodes->toArray());
+
+        $sql = implode($collection->getSeparator(), $nodes->toArray());
+
+        return $collection->isWrapped() ? sprintf('(%s)', $sql) : $sql;
     }
     
     /**
@@ -38,8 +40,10 @@ class Collection extends AbstractConverter
         $values = parent::toArray($node, $provider);
         
         $class = $node->getClass();
-        $nodes = $node->map(function (NodeInterface $inner) use ($provider) {
-            return $provider->toArray($inner);
+
+        // "as is" for scalar types
+        $nodes = $node->map(function ($inner) use ($provider) {
+            return ($inner instanceOf NodeInterface) ? $provider->toArray($inner) : $inner;
         })->toArray();
         
         $values['class'] = $class;
@@ -68,7 +72,7 @@ class Collection extends AbstractConverter
         /** @var CollectionNode $collection */
         $collection->asBatch($ast['nodes']);
         $collection = $collection->map(function ($node) use ($provider) {
-            return $provider->toNode($node);
+            return is_scalar($node) ? $node : $provider->toNode($node);
         });
         
         $collection->setClass($ast['class']);

@@ -64,6 +64,38 @@ abstract class AbstractCommonStmt extends AbstractNode
     {
         $this->root->setModifiers($modifiers);
     }
+
+    /**
+     * @return Ast\Identifier
+     */
+    public function getTable()
+    {
+        return $this->root->getTable();
+    }
+
+    /**
+     * @param Ast\Identifier $table
+     */
+    public function setTable(Ast\Identifier $table)
+    {
+        $this->root->setTable($table);
+    }
+
+    /**
+     * @return Ast\Arguments
+     */
+    public function getValueList()
+    {
+        return $this->root->getValues();
+    }
+
+    /**
+     * @param Ast\Arguments $values
+     */
+    public function setValueList(Ast\Arguments $values)
+    {
+        $this->root->setValues($values);
+    }
     
     /**
      * @return Ast\Stmt\TableReference
