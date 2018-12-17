@@ -42,7 +42,7 @@ class QuoteIdentifier extends Identifier
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        $identifier = parent::toNode($ast, $provider);
+        $identifier = new IdentifierNode($ast['identifier']);
         
         $identifier->setQuote($ast['quote']);
         

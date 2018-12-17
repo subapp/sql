@@ -33,7 +33,7 @@ class Delete extends AbstractConverter
             $provider->toSql($node->getWhere()),
             $provider->toSql($node->getOrderBy()),
             $provider->toSql($node->getLimit()),
-            $node->isSemicolon() ? "\n;" : null
+            $node->isSemicolon() ? ";" : null
         );
     }
 

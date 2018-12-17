@@ -88,11 +88,15 @@ $and->add($node->or($node->eq('U.id', 123), $node->ge('Min(U.level)', 10)));
 
 $qb->where($and);
 
+$qb->insert('users');
+
+$ast = $qb->getAst();
+
 $converter = $facade->getConverter();
 
-echo $converter->toSql($qb->getAst()) . PHP_EOL;
+echo $converter->toSql($ast) . PHP_EOL;
 
-$array = $converter->toArray($qb->getAst());
+$array = $converter->toArray($ast);
 
 echo $converter->toSql($converter->toNode($array)) . PHP_EOL;
 

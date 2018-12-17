@@ -20,6 +20,7 @@ class QueryBuilder
     public const SELECT = 1;
     public const DELETE = 2;
     public const UPDATE = 4;
+    public const INSERT = 8;
 
     /**
      * @var Node
@@ -38,26 +39,37 @@ class QueryBuilder
 
     /**
      * QueryBuilder constructor.
-     * @param Node $nodeBuilder
+     * @param Node $node
      */
-    public function __construct(Node $nodeBuilder)
+    public function __construct(Node $node)
     {
-        $this->node = $nodeBuilder;
+        $this->node = $node;
         $this->root = new Ast\Root();
     }
 
     /**
-     * @param string|Ast\NodeInterface ...$variables
+     * @param string|Ast\NodeInterface ...$arguments
      * @return $this
      */
-    public function select(...$variables)
+    public function select(...$arguments)
     {
         $this->type = QueryBuilder::SELECT;
 
-        /** @var Ast\Arguments $variables */
-        $variables = $this->node->recognize($variables);
-        $this->root->setArguments($variables);
+        $this->arguments(...$arguments);
 
+        return $this;
+    }
+    
+    /**
+     * @param string|Ast\NodeInterface $table
+     * @return $this
+     */
+    public function insert($table)
+    {
+        $this->type = QueryBuilder::INSERT;
+    
+        $this->root->setTable($this->node->recognize($table));
+    
         return $this;
     }
 
@@ -79,9 +91,7 @@ class QueryBuilder
     {
         $this->type = QueryBuilder::UPDATE;
 
-        foreach ($assignments as $left => $value) {
-            $this->assignment($left, $value);
-        }
+        $this->sets($assignments);
 
         return $this;
     }
@@ -133,6 +143,19 @@ class QueryBuilder
     {
         $this->root->modifiers()->add(Ast\Modifiers::MODIFIER_SQL_NO_CACHE);
 
+        return $this;
+    }
+    
+    /**
+     * @param string|Ast\NodeInterface ...$arguments
+     * @return $this
+     */
+    public function arguments(...$arguments)
+    {
+        /** @var Ast\Arguments $arguments */
+        $arguments = $this->node->recognize($arguments);
+        $this->root->setArguments($arguments);
+        
         return $this;
     }
 
@@ -277,6 +300,19 @@ class QueryBuilder
 
         return $this;
     }
+    
+    /**
+     * @param array|string[]|Ast\NodeInterface[] $assignments
+     * @return $this
+     */
+    public function sets(array $assignments)
+    {
+        foreach ($assignments as $left => $value) {
+            $this->assignment($left, $value);
+        }
+        
+        return $this;
+    }
 
     /**
      * @param string|Ast\NodeInterface $left
@@ -322,7 +358,7 @@ class QueryBuilder
     }
 
     /**
-     * @return Ast\Stmt\Delete|Ast\Stmt\Select|Ast\Stmt\Update
+     * @return Ast\Stmt\Delete|Ast\Stmt\Select|Ast\Stmt\Update|Ast\Stmt\Insert
      * @throws UnsupportedException
      */
     public function getAst()
@@ -339,6 +375,9 @@ class QueryBuilder
                 break;
             case QueryBuilder::UPDATE:
                 $ast = new Ast\Stmt\Update();
+                break;
+            case QueryBuilder::INSERT:
+                $ast = new Ast\Stmt\Insert();
                 break;
             default:
                 throw new UnsupportedException(sprintf('Cannot create AST node for type: "%s"',
@@ -369,7 +408,7 @@ class QueryBuilder
     }
 
     /**
-     * Alias: $this->getNodeBuilder(): Query\NodeBuilder
+     * Alias: $this->getNode(): Query\NodeBuilder
      *
      * @return Node
      */

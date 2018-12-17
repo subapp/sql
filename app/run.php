@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Select1';
+$sqlVersion = 'Insert';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -37,7 +37,7 @@ $counter = 0;
 
 echo "Tokens: " . count($lexer->getTokens()) . PHP_EOL;
 
-var_dump($lexer);
+//var_dump($lexer);
 
 $lexer->rewind();
 
@@ -78,6 +78,7 @@ try {
     echo $renderer->toSql($ast);
     $array = $renderer->toArray($ast);
     file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
+    echo PHP_EOL;
     echo $renderer->toSql($renderer->toNode($array)) . PHP_EOL;
 
 //    echo json_encode($renderer->toArray($ast), 128);
