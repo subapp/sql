@@ -324,6 +324,11 @@ class QueryBuilder
         return $this->assignment($left, $value);
     }
 
+    public function values(array $values)
+    {
+
+    }
+
     /**
      * @param string|Ast\NodeInterface ...$variables
      * @return $this
