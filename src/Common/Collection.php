@@ -2,6 +2,7 @@
 
 namespace Subapp\Sql\Common;
 
+use Closure;
 use Subapp\Collection\Collection as BaseCollection;
 
 /**
@@ -10,5 +11,21 @@ use Subapp\Collection\Collection as BaseCollection;
  */
 class Collection extends BaseCollection
 {
-
+    
+    /**
+     * @inheritdoc
+     */
+    public function map(Closure $closure, Closure $keys = null)
+    {
+        return new static(array_map($closure, $this->elements));
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function toArray()
+    {
+        return $this->elements;
+    }
+    
 }

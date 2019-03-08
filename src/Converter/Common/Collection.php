@@ -47,8 +47,8 @@ class Collection extends AbstractConverter
             return ($inner instanceOf NodeInterface) ? $provider->toArray($inner) : $inner;
         })->toArray();
         
-        $values['classKey'] = Map::toKey($class);
         $values['wrapped'] = $node->isWrapped();
+        $values['classKey'] = Map::toKey($class);;
         $values['nodes'] = $nodes;
         
         return $values;
