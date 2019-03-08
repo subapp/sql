@@ -11,13 +11,13 @@
     },
     "assignment": {
         "node": "STMT_SET",
-        "class": "Subapp\\Sql\\Ast\\Stmt\\Assignment",
+        "classKey": "Stmt.Assignment",
         "wrapped": false,
         "nodes": []
     },
     "fields": {
         "node": "ARGS",
-        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+        "classKey": "Root.NodeInterface",
         "wrapped": true,
         "nodes": [
             {
@@ -54,12 +54,12 @@
     },
     "valueList": {
         "node": "ARGS",
-        "class": "Subapp\\Sql\\Ast\\Arguments",
+        "classKey": "Root.Arguments",
         "wrapped": false,
         "nodes": [
             {
                 "node": "ARGS",
-                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "classKey": "Root.NodeInterface",
                 "wrapped": true,
                 "nodes": [
                     {
@@ -81,7 +81,7 @@
             },
             {
                 "node": "ARGS",
-                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "classKey": "Root.NodeInterface",
                 "wrapped": true,
                 "nodes": [
                     {
@@ -92,7 +92,7 @@
                         },
                         "args": {
                             "node": "ARGS",
-                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                            "classKey": "Root.NodeInterface",
                             "wrapped": false,
                             "nodes": [
                                 {
@@ -116,12 +116,12 @@
                     },
                     {
                         "node": "ARITHMETIC",
-                        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                        "classKey": "Root.NodeInterface",
                         "wrapped": false,
                         "nodes": [
                             {
                                 "node": "ARITHMETIC",
-                                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                                "classKey": "Root.NodeInterface",
                                 "wrapped": false,
                                 "nodes": [
                                     {
@@ -141,7 +141,7 @@
                                         },
                                         "args": {
                                             "node": "ARGS",
-                                            "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                                            "classKey": "Root.NodeInterface",
                                             "wrapped": false,
                                             "nodes": [
                                                 {
@@ -165,7 +165,7 @@
             },
             {
                 "node": "ARGS",
-                "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                "classKey": "Root.NodeInterface",
                 "wrapped": true,
                 "nodes": [
                     {
@@ -175,7 +175,7 @@
                     },
                     {
                         "node": "ARITHMETIC",
-                        "class": "Subapp\\Sql\\Ast\\NodeInterface",
+                        "classKey": "Root.NodeInterface",
                         "wrapped": false,
                         "nodes": [
                             {

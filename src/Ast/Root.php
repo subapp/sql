@@ -124,9 +124,9 @@ class Root extends AbstractNode
     }
 
     /**
-     * @param Identifier $table
+     * @param Ast\NodeInterface $table
      */
-    public function setTable(Ast\Identifier $table)
+    public function setTable(Ast\NodeInterface $table)
     {
         $this->table = $table;
     }

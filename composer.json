@@ -12,7 +12,8 @@
     "ext-json": "*",
     "symfony/yaml": "4.2.0-BETA2",
     "subapp/lexer": "~2.0",
-    "subapp/cache": "~1.0"
+    "subapp/cache": "~1.0",
+    "subapp/collection": "~1.4"
   },
   "autoload": {
     "psr-4": { "Subapp\\Sql\\": "src" }

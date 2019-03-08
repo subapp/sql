@@ -48,6 +48,7 @@ interface ProcessorInterface
     
     /**
      * @return NodeInterface
+     * @throws \RuntimeException
      */
     public function parse();
     

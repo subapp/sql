@@ -4,7 +4,6 @@ namespace Subapp\Sql\Syntax;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Common\Collection;
-use Subapp\Sql\Common\CollectionInterface;
 use Subapp\Sql\Lexer\Lexer;
 
 /**
@@ -20,7 +19,7 @@ final class Processor implements ProcessorInterface
     private $lexer;
     
     /**
-     * @var CollectionInterface|ParserInterface[]
+     * @var Collection|ParserInterface[]
      */
     private $parsers;
     
@@ -103,6 +102,11 @@ final class Processor implements ProcessorInterface
     public function parse()
     {
         $lexer = $this->getLexer();
+        
+        // check if Lexer ready to work
+        if ($lexer->getTokens() == 0) {
+            throw new \RuntimeException('Nothing to parse. Lexer is not tokenized yet');
+        }
         
         // reset lexer to start
         $lexer->rewind();

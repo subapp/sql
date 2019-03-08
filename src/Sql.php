@@ -7,13 +7,12 @@ use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Converter\DefaultConverterSetup;
 use Subapp\Sql\Converter\ProviderInterface;
-use Subapp\Sql\Dumper\DumperFacade;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\CacheProcessor;
 use Subapp\Sql\Syntax\Common\DefaultProcessorSetup;
-use Subapp\Sql\Syntax\ProcessorSetupInterface;
 use Subapp\Sql\Syntax\Processor;
 use Subapp\Sql\Syntax\ProcessorInterface;
+use Subapp\Sql\Syntax\ProcessorSetupInterface;
 
 /**
  * Class Sql
@@ -21,22 +20,22 @@ use Subapp\Sql\Syntax\ProcessorInterface;
  */
 class Sql
 {
-
+    
     /**
      * @var LexerInterface
      */
     private $lexer;
-
+    
     /**
      * @var ProviderInterface
      */
     private $converter;
-
+    
     /**
      * @var CacheItemPoolInterface
      */
     private $cache;
-
+    
     /**
      * Sql constructor.
      */
@@ -46,7 +45,7 @@ class Sql
         $this->converter = new Converter();
         $this->converter->setup(new DefaultConverterSetup());
     }
-
+    
     /**
      * @param ProcessorSetupInterface|null $setup
      * @return ProcessorInterface
@@ -54,13 +53,13 @@ class Sql
     public function createParser(ProcessorSetupInterface $setup = null)
     {
         $processor = new Processor($this->getLexer());
-
+        
         $processor->clean();
         $processor->setup($setup ?: new DefaultProcessorSetup());
-
+        
         return $processor;
     }
-
+    
     /**
      * @param ProcessorSetupInterface|null $setup
      * @return CacheProcessor|ProcessorInterface
@@ -69,7 +68,7 @@ class Sql
     {
         return new CacheProcessor($this->getCache(), $this->createParser($setup));
     }
-
+    
     /**
      * @param $string
      * @return Ast\NodeInterface
@@ -78,12 +77,12 @@ class Sql
     {
         $processor = $this->createParser(null);
         $lexer = $processor->getLexer();
-
+        
         $lexer->tokenize($string);
-
+        
         return $processor->parse();
     }
-
+    
     /**
      * @param array $ast
      * @return Ast\NodeInterface
@@ -92,8 +91,7 @@ class Sql
     {
         return $this->converter->toNode($ast);
     }
-
-
+    
     /**
      * @param $sql
      * @return array
@@ -102,7 +100,7 @@ class Sql
     {
         return $this->getConverter()->toArray($this->createAstFromString($sql));
     }
-
+    
     /**
      * @return CacheItemPoolInterface
      */
@@ -110,7 +108,7 @@ class Sql
     {
         return $this->cache;
     }
-
+    
     /**
      * @param CacheItemPoolInterface $cache
      */
@@ -118,7 +116,7 @@ class Sql
     {
         $this->cache = $cache;
     }
-
+    
     /**
      * @return LexerInterface
      */
@@ -126,7 +124,7 @@ class Sql
     {
         return $this->lexer;
     }
-
+    
     /**
      * @param LexerInterface $lexer
      */
@@ -134,7 +132,7 @@ class Sql
     {
         $this->lexer = $lexer;
     }
-
+    
     /**
      * @return ProviderInterface
      */
@@ -142,7 +140,7 @@ class Sql
     {
         return $this->converter;
     }
-
+    
     /**
      * @param ProviderInterface $converter
      */
@@ -150,5 +148,5 @@ class Sql
     {
         $this->converter = $converter;
     }
-
+    
 }

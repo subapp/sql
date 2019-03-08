@@ -36,6 +36,7 @@ $qb->select('users.id uid, test.id', 'test.created dt');
 $qb->where('count(a.id) > 1 and b < 10');
 $qb->where($node->in('users.id', [1, 2, 3]), false);
 
+$qb->crossJoin('u.name', 'U7', 'U7 < Cos(1)');
 
 $c = $node->or(
     $node->eq(1, 2),
@@ -88,7 +89,7 @@ $and->add($node->or($node->eq('U.id', 123), $node->ge('Min(U.level)', 10)));
 
 $qb->where($and);
 
-$qb->insert('users');
+//$qb->insert('users');
 
 $ast = $qb->getAst();
 
