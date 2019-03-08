@@ -29,6 +29,7 @@ $node->setRecognizer($recognizer);
 
 $qb = new QueryBuilder($node);
 $qb->from('Users', 'U');
+$qb->from("Table1");
 $qb->select('users.id uid, test.id', 'test.created dt');
 
 //$qb->where('count(a.id) > 1 and b < 10');
@@ -77,10 +78,10 @@ $c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 
 $qb->assignment('U.total', 'count(Distinct U.id)');
 
-$qb->update([
+/*$qb->update([
     'u.id' => '123',
     'u.name' => 'Concat(1, U.id, "Name", Rand())'
-]);
+]);*/
 
 $qb->where('u.id = 123');
 

@@ -215,13 +215,25 @@ class QueryBuilder
      * @param $alias
      * @return $this
      */
-    public function from($source, $alias)
+    public function from($source, $alias = null)
     {
+        $table = $this->root->tableReference();
         $variable = $this->node->variable($source, $alias);
         
-        $this->root->tableReference()->append($variable);
+        $table->setPrefix('FROM');
+        $table->append($variable);
         
         return $this;
+    }
+    
+    /**
+     * @param             $name
+     * @param null|string $alias
+     * @return QueryBuilder
+     */
+    public function table($name, $alias = null)
+    {
+        return $this->from($name, $alias);
     }
     
     /**
