@@ -203,52 +203,39 @@ class QueryBuilder
     }
     
     /**
-     * @param string|Ast\NodeInterface ...$arguments
+     * @param string $table
      * @return $this
      */
-    public function select(...$arguments)
+    public function select($table)
     {
-        $this->type = QueryBuilder::SELECT;
-        
-        $this->arguments(...$arguments);
-        
-        return $this;
+        return $this->asSelect()->from($table);
     }
     
     /**
-     * @param string|Ast\NodeInterface $table
+     * @param string $table
      * @return $this
      */
     public function insert($table)
     {
-        $this->type = QueryBuilder::INSERT;
-        
-        $this->root->setTable($this->node->recognize($table));
-        
-        return $this;
+        return $this->asInsert()->into($table);
     }
     
     /**
+     * @param string $table
      * @return $this
      */
-    public function delete()
+    public function delete($table)
     {
-        $this->type = QueryBuilder::DELETE;
-        
-        return $this;
+        return $this->asDelete()->table($table);
     }
     
     /**
-     * @param array|null $assignments
+     * @param string $table
      * @return $this
      */
-    public function update(array $assignments = null)
+    public function update($table)
     {
-        $this->type = QueryBuilder::UPDATE;
-        
-        $this->sets($assignments);
-        
-        return $this;
+        return $this->asUpdate()->tables($table);
     }
     
     /**
@@ -302,13 +289,22 @@ class QueryBuilder
     }
     
     /**
+     * @param string|Ast\NodeInterface ...$columns
+     * @return QueryBuilder
+     */
+    public function columns(...$columns)
+    {
+        return $this->arguments(...$columns);
+    }
+    
+    /**
      * @param string|Ast\NodeInterface ...$arguments
      * @return $this
      */
     public function arguments(...$arguments)
     {
         /** @var Ast\Arguments $arguments */
-        $arguments = $this->node->recognize($arguments);
+        $arguments = $this->node->identify($arguments);
         
         $this->root->setArguments($arguments);
         
@@ -320,14 +316,35 @@ class QueryBuilder
      * @param $alias
      * @return $this
      */
+    public function into($source, $alias = null)
+    {
+        return $this->tables($source, $alias, 'INTO');
+    }
+    
+    /**
+     * @param $source
+     * @param $alias
+     * @return $this
+     */
     public function from($source, $alias = null)
     {
+        return $this->tables($source, $alias, 'FROM');
+    }
+    
+    /**
+     * @param string $name
+     * @param string|null $alias
+     * @param string|null $prefix
+     * @return $this
+     */
+    public function tables($name, $alias = null, $prefix = null)
+    {
         $table = $this->root->tableReference();
-        $variable = $this->node->variable($source, $alias);
-        
-        $table->setPrefix('FROM');
+        $variable = $this->node->variable($name, $alias);
+    
+        $table->setPrefix($prefix);
         $table->append($variable);
-        
+    
         return $this;
     }
     
@@ -338,7 +355,11 @@ class QueryBuilder
      */
     public function table($name, $alias = null)
     {
-        return $this->from($name, $alias);
+        $variable = $this->node->variable($name, $alias);
+     
+        $this->root->setTable($variable);
+        
+        return $this;
     }
     
     /**

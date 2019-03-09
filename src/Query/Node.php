@@ -29,38 +29,64 @@ class Node
     }
     
     /**
-     * @param $sql
+     * @param $value
      * @return NodeInterface
      * @throws UnsupportedException
      */
-    public function recognize($sql)
+    public function recognize($value)
     {
         switch (true) {
-            case ($sql instanceOf NodeInterface):
-                return $sql;
+            case ($value instanceOf NodeInterface):
+                return $value;
+    
+            case is_array($value):
+                return $this->arguments(...array_map([$this, 'recognize'], $value));
             
-            case is_null($sql):
+            case is_null($value):
                 return $this->null();
             
-            case is_bool($sql):
-                return $this->boolean($sql);
+            case is_bool($value):
+                return $this->boolean($value);
             
-            case is_numeric($sql):
-                $isFloat = (strpos($sql, '.') !== false);
-                return $this->literal($sql, $isFloat ? Ast\Literal::FLOAT : Ast\Literal::INT);
+            case is_numeric($value):
+                $isFloat = (strpos($value, '.') !== false);
+                return $this->literal($value, $isFloat ? Ast\Literal::FLOAT : Ast\Literal::INT);
+
+            case is_string($value):
+                switch (true) {
+                    // todo: beware about that place
+                    case preg_match('/^\w+\.\w+/i', $value):
+                    case preg_match('/^\w+\(.+\)/i', $value):
+                        return $this->recognizer->recognize($value);
+                        break;
+                    default:
+                        return $this->string($value);
+                }
+                break;
             
-            case is_string($sql) && preg_match('/^[\w\d]+$/i', $sql):
-                return $this->identifier($sql);
-            
-            case is_array($sql):
-                return $this->arguments(...array_map([$this, 'recognize'], $sql));
-            
-            case is_object($sql):
+            case is_object($value):
                 throw new UnsupportedException(sprintf('Object recognizing able only for "%s" but "%s" passed',
-                    NodeInterface::class, get_class($sql)));
+                    NodeInterface::class, get_class($value)));
             
             default:
-                return $this->recognizer->recognize($sql);
+                return $this->recognizer->recognize($value);
+        }
+    }
+    
+    /**
+     * @param $value
+     * @return Ast\Identifier|NodeInterface
+     */
+    public function identify($value)
+    {
+        switch (true) {
+            case is_array($value):
+                return $this->arguments(...array_map([$this, 'identify'], $value));
+            case is_string($value) && preg_match('/^[\w\d]+$/i', $value):
+                return $this->identifier($value, true);
+                break;
+            default:
+                return $this->recognize($value);
         }
     }
     
@@ -243,7 +269,7 @@ class Node
      */
     public function field($field)
     {
-        return $this->identifier($field);
+        return $this->identifier($field, true);
     }
     
     /**
@@ -252,7 +278,7 @@ class Node
      */
     public function table($table)
     {
-        return $this->identifier($table);
+        return $this->identifier($table, true);
     }
     
     /**
@@ -281,7 +307,7 @@ class Node
      */
     public function variable($var, $alias = null)
     {
-        $variable = new Ast\Variable($this->recognize($var));
+        $variable = new Ast\Variable($this->identify($var));
         
         if ($alias !== null) {
             $variable->setAlias(new Ast\Identifier($alias));
@@ -298,7 +324,7 @@ class Node
     public function assignment($left, $value)
     {
         return new Ast\Stmt\Assignment(
-            $this->recognize($left), $this->recognize($value)
+            $this->field($left), $this->recognize($value)
         );
     }
 
@@ -374,11 +400,12 @@ class Node
     
     /**
      * @param string $identifier
+     * @param bool   $quoted
      * @return Ast\Identifier
      */
-    public function identifier($identifier)
+    public function identifier($identifier, $quoted = false)
     {
-        return new Ast\Identifier($identifier);
+        return !$quoted ? new Ast\Identifier($identifier) : new Ast\QuoteIdentifier($identifier);
     }
     
     /**

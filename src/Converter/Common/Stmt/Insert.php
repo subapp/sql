@@ -23,10 +23,8 @@ class Insert extends AbstractConverter
     public function toSql(NodeInterface $node, ProviderInterface $provider)
     {
         $insert = [
-            sprintf('INSERT%s',
-                $provider->toSql($node->getModifiers())),
-            sprintf('INTO %s',
-                $provider->toSql($node->getTable())),
+            sprintf('INSERT%s%s',
+                $provider->toSql($node->getModifiers()), $provider->toSql($node->getTableReference())),
         ];
         
         $node->hasType() || $node->defineType();
