@@ -83,7 +83,7 @@ class Node
             case is_array($value):
                 return $this->arguments(...array_map([$this, 'identify'], $value));
             case is_string($value) && preg_match('/^[\w\d]+$/i', $value):
-                return $this->identifier($value, true);
+                return $this->identifier($value);
                 break;
             default:
                 return $this->recognize($value);

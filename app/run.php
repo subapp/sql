@@ -68,34 +68,23 @@ try {
     
     $qb->setConverter($renderer);
     
-    $qb->update('users');
-
-    $qb->sets([
-        'id' => 1,
-        'name' => 'John',
-        'date' => '2018-01-01',
-        'uid' => 'sum(count(a) + count(b) / (len("user@mail.com") + len(u.email)))'
-    ]);
-
-    die(var_dump($qb->getSql()));
-    
-    $qb->insert('users');
-    $qb->fields('test', 'id', 'created');
-    $qb->values([
-        [1, 2, 3],
-        [3, 2, 1],
-    ]);
-    $qb->values([
-        ['Count(a)', 123, 'Date("2019-01-01")'],
-        ['Count(b)', 321, 'Date("2019-01-01")'],
-        ['Sum(z)', 111, 'Date("2019-01-01")'],
-    ]);
-
-    echo $renderer->toSql($qb->getAst());
-    die;
-    
-//    $qb->select('users');
-//    $qb->columns('test', 'id', 'created');
+//    $qb->update('users');
+//
+//    $qb->sets([
+//        'id' => 1,
+//        'name' => 'John',
+//        'date' => '2018-01-01',
+//        'uid' => 'sum(count(a) + count(b) / (len("user@mail.com") + len(u.email)))'
+//    ]);
+//
+//    die(var_dump($qb->getSql()));
+//
+//    $qb->insert('users');
+//    $qb->fields('test', 'id', 'created');
+//    $qb->values([
+//        [1, 2, 3],
+//        [3, 2, 1],
+//    ]);
 //    $qb->values([
 //        ['Count(a)', 123, 'Date("2019-01-01")'],
 //        ['Count(b)', 321, 'Date("2019-01-01")'],
@@ -104,6 +93,17 @@ try {
 //
 //    echo $renderer->toSql($qb->getAst());
 //    die;
+    
+    $qb->select('users');
+    $qb->columns('test', 'id', 'created');
+    $qb->values([
+        ['Count(a)', 123, 'Date("2019-01-01")'],
+        ['Count(b)', 321, 'Date("2019-01-01")'],
+        ['Sum(z)', 111, 'Date("2019-01-01")'],
+    ]);
+
+    echo $renderer->toSql($qb->getAst());
+    die;
 
 
 //
