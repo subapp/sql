@@ -63,6 +63,20 @@ try {
     $node->setRecognizer($recognizer);
     
     $qb = new \Subapp\Sql\Query\QueryBuilder($node);
+    $qb->insert('users');
+    $qb->fields('test', 'id', 'created');
+    $qb->values([
+        [1, 2, 3],
+        [3, 2, 1],
+    ]);
+    $qb->values([
+        ['Count(a)', 123, 'Date("2019-01-01")'],
+        ['Count(b)', 321, 'Date("2019-01-01")'],
+        ['Sum(z)', 111, 'Date("2019-01-01")'],
+    ]);
+    
+    echo $renderer->toSql($qb->getAst());
+    die;
     
 //    $qb->setRoot($ast->getRoot());
 
@@ -78,9 +92,9 @@ try {
 //    var_dump($ast);
     echo $renderer->toSql($ast);
     $array = $renderer->toArray($ast);
-//    file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
-//    echo PHP_EOL;
-//    echo $renderer->toSql($renderer->toNode($array)) . PHP_EOL;
+    file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
+    echo PHP_EOL;
+    echo $renderer->toSql($renderer->toNode($array)) . PHP_EOL;
 
 //    echo json_encode($renderer->toArray($ast), 128);
 

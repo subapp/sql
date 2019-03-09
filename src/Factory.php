@@ -3,6 +3,8 @@
 namespace Subapp\Sql;
 
 use Subapp\Collection\Collection;
+use Subapp\Sql\Converter\Converter;
+use Subapp\Sql\Converter\DefaultConverterSetup;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Query\Node;
 use Subapp\Sql\Query\QueryBuilder;
@@ -20,6 +22,7 @@ class Factory
 {
     
     private const PROCESSOR = 1;
+    private const CONVERTER = 2;
     
     /**
      * @var Factory
@@ -38,20 +41,8 @@ class Factory
     {
         $this->collection = new Collection([
             Factory::PROCESSOR => $this->newProcessor(),
+            Factory::CONVERTER => $this->newConverter(),
         ]);
-    }
-    
-    /**
-     * @return Factory
-     */
-    public static function getInstance() {
-        $isNull = Factory::$instance == null;
-        
-        if ($isNull) {
-            Factory::$instance = new Factory();
-        }
-        
-        return Factory::$instance;
     }
     
     /**
@@ -74,6 +65,26 @@ class Factory
         $processor->setup(new ExtraProcessorSetup());
         
         return $processor;
+    }
+    
+    /**
+     * @return mixed|null
+     */
+    public function getConverter()
+    {
+        return $this->collection->get(Factory::CONVERTER);
+    }
+    
+    /**
+     * @return Converter
+     */
+    public function newConverter()
+    {
+        $converter = new Converter();
+        
+        $converter->setup(new DefaultConverterSetup());
+        
+        return $converter;
     }
     
     /**
@@ -103,7 +114,24 @@ class Factory
      */
     public function newQueryBuilder()
     {
-        return new QueryBuilder($this->newNode());
+        $queryBuilder = new QueryBuilder($this->newNode());
+        
+        $queryBuilder->setConverter($this->getConverter());
+        
+        return $queryBuilder;
+    }
+    
+    /**
+     * @return Factory
+     */
+    public static function getInstance() {
+        $isNull = Factory::$instance == null;
+        
+        if ($isNull) {
+            Factory::$instance = new Factory();
+        }
+        
+        return Factory::$instance;
     }
     
 }

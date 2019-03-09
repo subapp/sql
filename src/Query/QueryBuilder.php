@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
+use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Converter\ProviderInterface;
 use Subapp\Sql\Exception\UnsupportedException;
 
@@ -22,6 +23,13 @@ class QueryBuilder
     public const UPDATE = 4;
     public const INSERT = 8;
     
+    public const GROUP_BY = 16;
+    public const ORDER_BY = 32;
+    public const WHERE    = 64;
+    public const HAVING   = 128;
+    
+    public const ALL = PHP_INT_MAX;
+    
     /**
      * @var Node
      */
@@ -38,6 +46,11 @@ class QueryBuilder
     private $root;
     
     /**
+     * @var Converter
+     */
+    private $converter;
+    
+    /**
      * QueryBuilder constructor.
      * @param Node $node
      */
@@ -51,11 +64,102 @@ class QueryBuilder
      * @param int $type
      * @return $this
      */
-    public function reset($type = QueryBuilder::SELECT)
+    public function reset($type = QueryBuilder::ALL)
     {
-        $this->setRoot(new Ast\Root());
+        $root = $this->getRoot();
+        
+        switch (true) {
+            case ($type & QueryBuilder::ALL):
+                $this->setRoot(new Ast\Root());
+                break;
+            
+            case ($type & QueryBuilder::SELECT):
+                $root->getArguments()->clear();
+                break;
+            
+            case ($type & QueryBuilder::UPDATE):
+                $root->getAssignment()->clear();
+                break;
+            
+            case ($type & QueryBuilder::INSERT):
+                $root->getAssignment()->clear();
+                $root->getValues()->clear();
+                break;
+            
+            case ($type & QueryBuilder::GROUP_BY):
+                $root->getGroupBy()->clear();
+                break;
+            
+            case ($type & QueryBuilder::WHERE):
+                $root->getWhere()->clear();
+                break;
+            
+            case ($type & QueryBuilder::HAVING):
+                $root->getHaving()->clear();
+                break;
+            
+            case ($type & QueryBuilder::ORDER_BY):
+                $root->getOrderBy()->clear();
+                break;
+        }
         
         return $this;
+    }
+    
+    /**
+     * @return $this
+     */
+    public function resetSelect()
+    {
+        return $this->reset(QueryBuilder::SELECT);
+    }
+    
+    /**
+     * @return $this
+     */
+    public function resetInsert()
+    {
+        return $this->reset(QueryBuilder::INSERT);
+    }
+    
+    /**
+     * @return $this
+     */
+    public function resetUpdate()
+    {
+        return $this->reset(QueryBuilder::UPDATE);
+    }
+    
+    /**
+     * @return $this
+     */
+    public function resetWhere()
+    {
+        return $this->reset(QueryBuilder::WHERE);
+    }
+    
+    /**
+     * @return $this
+     */
+    public function resetHaving()
+    {
+        return $this->reset(QueryBuilder::HAVING);
+    }
+    
+    /**
+     * @return $this
+     */
+    public function resetGroupBy()
+    {
+        return $this->reset(QueryBuilder::GROUP_BY);
+    }
+    
+    /**
+     * @return $this
+     */
+    public function resetOrderBy()
+    {
+        return $this->reset(QueryBuilder::ORDER_BY);
     }
     
     /**
@@ -205,6 +309,7 @@ class QueryBuilder
     {
         /** @var Ast\Arguments $arguments */
         $arguments = $this->node->recognize($arguments);
+        
         $this->root->setArguments($arguments);
         
         return $this;
@@ -234,6 +339,39 @@ class QueryBuilder
     public function table($name, $alias = null)
     {
         return $this->from($name, $alias);
+    }
+    
+    /**
+     * @param string ...$fields
+     * @return $this
+     */
+    public function fields(...$fields)
+    {
+        $this->arguments(...$fields);
+        
+        $this->root->arguments()->setWrapped(true);
+        
+        return $this;
+    }
+    
+    /**
+     * @param array ...$values
+     * @return $this
+     */
+    public function values(array $values)
+    {
+        $node = $this->getNode();
+        $root = $this->getRoot();
+        
+        /** @var Ast\Arguments $values */
+        $values = $node->recognize($values);
+        
+        $values->each(function ($key, Ast\Arguments $set) use ($root) {
+            $set->setWrapped(true);
+            $root->values()->append($set);
+        });
+        
+        return $this;
     }
     
     /**
@@ -414,7 +552,6 @@ class QueryBuilder
         // @todo perhaps exist most elegant solution
         $arguments->each(function ($index, Ast\Stmt\OrderByItems $collection) use ($orderByNode) {
             $orderByNode->asBatch($collection->toArray());
-            return true;
         });
         
         return $this;
@@ -465,6 +602,22 @@ class QueryBuilder
         $ast->setRoot($this->root);
         
         return $ast;
+    }
+    
+    /**
+     * @return string
+     * @throws UnsupportedException
+     */
+    public function getSql()
+    {
+        $converter = $this->getConverter();
+        
+        if ($converter == null) {
+            throw new UnsupportedException(
+                'Unable to build SQL string from AST tree because converter is not initialized yet');
+        }
+        
+        return $converter->toSql($this->getAst());
     }
     
     /**
@@ -525,6 +678,22 @@ class QueryBuilder
     public function setType($type)
     {
         $this->type = $type;
+    }
+    
+    /**
+     * @return Converter
+     */
+    public function getConverter()
+    {
+        return $this->converter;
+    }
+    
+    /**
+     * @param Converter $converter
+     */
+    public function setConverter(Converter $converter)
+    {
+        $this->converter = $converter;
     }
     
 }

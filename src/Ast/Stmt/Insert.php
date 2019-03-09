@@ -52,10 +52,10 @@ class Insert extends AbstractCommonStmt
         }
         
         if ($valueList->isNotEmpty()) {
-            if ($valueList->offsetExists(1)) {
-                $type->add(self::INSERT_VALUES);
-            } elseif ($valueList->getFirst() instanceOf Select) {
+            if ($valueList->offsetGet(0) instanceOf Select) {
                 $type->add(self::INSERT_SELECT);
+            } else {
+                $type->add(self::INSERT_VALUES);
             }
         }
         
