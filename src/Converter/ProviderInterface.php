@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Converter;
 
 use Subapp\Sql\Ast\NodeInterface;
+use Subapp\Sql\Context;
 
 /**
  * Interface ProviderInterface
@@ -55,5 +56,10 @@ interface ProviderInterface
      * @return ConverterInterface
      */
     public function getConverter($name);
+    
+    /**
+     * @return Context
+     */
+    public function getContext();
     
 }

@@ -4,7 +4,8 @@ namespace Subapp\Sql\Syntax;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\NodeInterface;
-use Subapp\Sql\Common\CollectionInterface;
+use Subapp\Sql\Common\Collection;
+use Subapp\Sql\Context;
 
 /**
  * Class ParserProcessor
@@ -58,7 +59,7 @@ interface ProcessorInterface
     public function getLexer();
     
     /**
-     * @return CollectionInterface|ParserInterface[]
+     * @return Collection|ParserInterface[]
      */
     public function getParsers();
     
@@ -66,5 +67,10 @@ interface ProcessorInterface
      * @param LexerInterface $lexer
      */
     public function setLexer(LexerInterface $lexer);
+    
+    /**
+     * @return Context
+     */
+    public function getContext();
     
 }

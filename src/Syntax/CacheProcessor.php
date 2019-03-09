@@ -137,4 +137,12 @@ class CacheProcessor implements ProcessorInterface
         $this->processor->setLexer($lexer);
     }
     
+    /**
+     * @inheritDoc
+     */
+    public function getContext()
+    {
+        return $this->processor->getContext();
+    }
+    
 }

@@ -4,6 +4,7 @@ namespace Subapp\Sql\Syntax;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Common\Collection;
+use Subapp\Sql\Context;
 use Subapp\Sql\Lexer\Lexer;
 
 /**
@@ -29,11 +30,17 @@ final class Processor implements ProcessorInterface
     private $helper;
     
     /**
+     * @var Context
+     */
+    private $context;
+    
+    /**
      * Query constructor.
      * @param LexerInterface $lexer
      */
     public function __construct(LexerInterface $lexer)
     {
+        $this->context = new Context();
         $this->parsers = new Collection();
         $this->lexer = $lexer;
         $this->helper = new ParserHelper();
@@ -157,6 +164,14 @@ final class Processor implements ProcessorInterface
     public function getParsers()
     {
         return $this->parsers;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
     
 }

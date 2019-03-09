@@ -2,151 +2,154 @@
 
 namespace Subapp\Sql;
 
-use Psr\Cache\CacheItemPoolInterface;
-use Subapp\Lexer\LexerInterface;
+use Subapp\Collection\Collection;
 use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Converter\DefaultConverterSetup;
-use Subapp\Sql\Converter\ProviderInterface;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Syntax\CacheProcessor;
+use Subapp\Sql\Query\Node;
+use Subapp\Sql\Query\QueryBuilder;
+use Subapp\Sql\Query\Recognizer;
 use Subapp\Sql\Syntax\Common\DefaultProcessorSetup;
+use Subapp\Sql\Syntax\Extra\ExtraProcessorSetup;
 use Subapp\Sql\Syntax\Processor;
 use Subapp\Sql\Syntax\ProcessorInterface;
-use Subapp\Sql\Syntax\ProcessorSetupInterface;
 
 /**
- * Class Sql
+ * Class Factory
  * @package Subapp\Sql
  */
 class Sql
 {
     
-    /**
-     * @var LexerInterface
-     */
-    private $lexer;
+    private const PROCESSOR = 1;
+    private const CONVERTER = 2;
+    private const CONTEXT = 3;
     
     /**
-     * @var ProviderInterface
+     * @var Sql
      */
-    private $converter;
+    private static $instance;
     
     /**
-     * @var CacheItemPoolInterface
+     * @var Collection
      */
-    private $cache;
+    private $collection;
     
     /**
-     * Sql constructor.
+     * Factory constructor.
      */
-    public function __construct()
+    private function __construct()
     {
-        $this->lexer = new Lexer();
-        $this->converter = new Converter();
-        $this->converter->setup(new DefaultConverterSetup());
+        $this->collection = new Collection([
+            Sql::PROCESSOR  => $this->newProcessor(),
+            Sql::CONVERTER  => $this->newConverter(),
+            Sql::CONTEXT    => $this->newContext(),
+        ]);
     }
     
     /**
-     * @param ProcessorSetupInterface|null $setup
+     * @return Context
+     */
+    public function getContext()
+    {
+        return $this->collection->get(Sql::CONTEXT);
+    }
+    
+    /**
+     * @return Context
+     */
+    public function newContext()
+    {
+        return new Context();
+    }
+    
+    /**
      * @return ProcessorInterface
      */
-    public function createParser(ProcessorSetupInterface $setup = null)
+    public function getProcessor()
     {
-        $processor = new Processor($this->getLexer());
+        return $this->collection->get(Sql::PROCESSOR);
+    }
+    
+    /**
+     * @return Processor
+     */
+    public function newProcessor()
+    {
+        $lexer = new Lexer();
         
-        $processor->clean();
-        $processor->setup($setup ?: new DefaultProcessorSetup());
+        $processor = new Processor($lexer);
+        $processor->setup(new DefaultProcessorSetup());
+        $processor->setup(new ExtraProcessorSetup());
         
         return $processor;
     }
     
     /**
-     * @param ProcessorSetupInterface|null $setup
-     * @return CacheProcessor|ProcessorInterface
+     * @return Converter
      */
-    public function createCacheParser(ProcessorSetupInterface $setup = null)
+    public function getConverter()
     {
-        return new CacheProcessor($this->getCache(), $this->createParser($setup));
+        return $this->collection->get(Sql::CONVERTER);
     }
     
     /**
-     * @param $string
-     * @return Ast\NodeInterface
+     * @return Converter
      */
-    public function createAstFromString($string)
+    public function newConverter()
     {
-        $processor = $this->createParser(null);
-        $lexer = $processor->getLexer();
+        $converter = new Converter();
         
-        $lexer->tokenize($string);
+        $converter->setup(new DefaultConverterSetup());
         
-        return $processor->parse();
+        return $converter;
     }
     
     /**
-     * @param array $ast
-     * @return Ast\NodeInterface
+     * @return Node
      */
-    public function createAstFromArray(array $ast)
-    {
-        return $this->converter->toNode($ast);
+    public function newNode() {
+        $node = new Node();
+    
+        $node->setRecognizer($this->newRecognizer());
+        
+        return $node;
     }
     
     /**
-     * @param $sql
-     * @return array
+     * @param null|string $complexity
+     * @return Recognizer
      */
-    public function convertSqlToArray($sql)
+    public function newRecognizer($complexity = null)
     {
-        return $this->getConverter()->toArray($this->createAstFromString($sql));
+        $recognizer = new Recognizer($this->getProcessor(), $complexity ?? Recognizer::COMMON);
+        
+        return $recognizer;
     }
     
     /**
-     * @return CacheItemPoolInterface
+     * @return QueryBuilder
      */
-    public function getCache(): CacheItemPoolInterface
+    public function newQueryBuilder()
     {
-        return $this->cache;
+        $queryBuilder = new QueryBuilder($this->newNode());
+        
+        $queryBuilder->setConverter($this->getConverter());
+        
+        return $queryBuilder;
     }
     
     /**
-     * @param CacheItemPoolInterface $cache
+     * @return Sql
      */
-    public function setCache(CacheItemPoolInterface $cache): void
-    {
-        $this->cache = $cache;
-    }
-    
-    /**
-     * @return LexerInterface
-     */
-    public function getLexer(): LexerInterface
-    {
-        return $this->lexer;
-    }
-    
-    /**
-     * @param LexerInterface $lexer
-     */
-    public function setLexer(LexerInterface $lexer): void
-    {
-        $this->lexer = $lexer;
-    }
-    
-    /**
-     * @return ProviderInterface
-     */
-    public function getConverter(): ProviderInterface
-    {
-        return $this->converter;
-    }
-    
-    /**
-     * @param ProviderInterface $converter
-     */
-    public function setConverter(ProviderInterface $converter): void
-    {
-        $this->converter = $converter;
+    public static function getInstance() {
+        $isNull = Sql::$instance == null;
+        
+        if ($isNull) {
+            Sql::$instance = new Sql();
+        }
+        
+        return Sql::$instance;
     }
     
 }

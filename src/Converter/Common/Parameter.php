@@ -26,6 +26,8 @@ class Parameter extends AbstractConverter
         if ($node->isNamed()) {
             $parameter = sprintf('%s%s', $parameter, $node->getName());
         }
+    
+        $this->getPlaceholders($provider)->append($node);
         
         return $parameter;
     }
@@ -50,7 +52,20 @@ class Parameter extends AbstractConverter
      */
     public function toNode(array $ast, ProviderInterface $provider)
     {
-        return new ParameterNode($ast['type'], $ast['name']);
+        $node = new ParameterNode($ast['type'], $ast['name']);
+        
+        $this->getPlaceholders($provider)->append($node);
+        
+        return $node;
+    }
+    
+    /**
+     * @param ProviderInterface $provider
+     * @return \Subapp\Sql\Common\Placeholders
+     */
+    private function getPlaceholders(ProviderInterface $provider)
+    {
+        return $provider->getContext()->getPlaceholders();
     }
     
     /**

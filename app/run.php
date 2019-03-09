@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Select';
+$sqlVersion = 'Select1';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -50,6 +50,8 @@ try {
     $time = microtime(true);
     $ast = $processor->parse();
     $parseTime = microtime(true) - $time;
+    
+    var_dump($processor->getContext());
 
 //    var_dump($select);
     
@@ -63,20 +65,20 @@ try {
     $node->setRecognizer($recognizer);
     
     $qb = new \Subapp\Sql\Query\QueryBuilder($node);
-    $qb->insert('users');
-    $qb->fields('test', 'id', 'created');
-    $qb->values([
-        [1, 2, 3],
-        [3, 2, 1],
-    ]);
-    $qb->values([
-        ['Count(a)', 123, 'Date("2019-01-01")'],
-        ['Count(b)', 321, 'Date("2019-01-01")'],
-        ['Sum(z)', 111, 'Date("2019-01-01")'],
-    ]);
-    
-    echo $renderer->toSql($qb->getAst());
-    die;
+//    $qb->insert('users');
+//    $qb->fields('test', 'id', 'created');
+//    $qb->values([
+//        [1, 2, 3],
+//        [3, 2, 1],
+//    ]);
+//    $qb->values([
+//        ['Count(a)', 123, 'Date("2019-01-01")'],
+//        ['Count(b)', 321, 'Date("2019-01-01")'],
+//        ['Sum(z)', 111, 'Date("2019-01-01")'],
+//    ]);
+//
+//    echo $renderer->toSql($qb->getAst());
+//    die;
     
 //    $qb->setRoot($ast->getRoot());
 
@@ -94,6 +96,9 @@ try {
     $array = $renderer->toArray($ast);
     file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
     echo PHP_EOL;
+    
+    var_dump($renderer->getContext()->getPlaceholders());
+    
     echo $renderer->toSql($renderer->toNode($array)) . PHP_EOL;
 
 //    echo json_encode($renderer->toArray($ast), 128);

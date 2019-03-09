@@ -22,6 +22,7 @@ class Parameter extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
+        $context = $processor->getContext();
         $parameter = new ParameterExpression();
         
         switch (true) {
@@ -36,6 +37,8 @@ class Parameter extends AbstractDefaultParser
             default:
                 $this->throwSyntaxError($lexer, Lexer::T_COLON, Lexer::T_QUESTION);
         }
+    
+        $context->getPlaceholders()->append($parameter);
         
         return $parameter;
     }

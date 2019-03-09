@@ -4,13 +4,14 @@ namespace Subapp\Sql\Converter;
 
 use Subapp\Sql\Ast\NodeInterface;
 use Subapp\Sql\Common\Collection;
+use Subapp\Sql\Context;
 use Subapp\Sql\Exception\InvalidValueException;
 
 /**
  * Class Converter
  * @package Subapp\Sql\Converter
  */
-class Converter implements ProviderInterface
+final class Converter implements ProviderInterface
 {
     
     /**
@@ -19,11 +20,17 @@ class Converter implements ProviderInterface
     private $collection;
     
     /**
+     * @var Context
+     */
+    private $context;
+    
+    /**
      * Renderer constructor.
      */
     public function __construct()
     {
         $this->collection = new Collection();
+        $this->context = new Context();
         $this->collection->setClass(ConverterInterface::class);
     }
     
@@ -101,6 +108,14 @@ class Converter implements ProviderInterface
     {
         return $this->getConverter($ast['node'] ?? ConverterInterface::CONVERTER_RAW)
             ->toNode($ast, $this);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
     
 }
