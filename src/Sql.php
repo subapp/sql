@@ -130,13 +130,13 @@ class Sql
     /**
      * @return Query
      */
-    public function newQueryBuilder()
+    public function newQuery()
     {
-        $queryBuilder = new Query($this->newNode());
+        $query = new Query($this->newNode());
         
-        $queryBuilder->setConverter($this->getConverter());
+        $query->setConverter($this->getConverter());
         
-        return $queryBuilder;
+        return $query;
     }
     
     /**

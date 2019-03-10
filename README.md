@@ -4,10 +4,7 @@
 ### Configuration
 
 ```php
-$sql = new Sql\Sql();
-
-// example
-$sql->setCache(new Application\PsrCachePoolImpl());
+$query = Sql::getInstance()->newQuery();
 ```
 
 ### Create AST
