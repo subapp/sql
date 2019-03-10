@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Select1';
+$sqlVersion = 'Insert';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -50,68 +50,80 @@ try {
     $time = microtime(true);
     $ast = $processor->parse();
     $parseTime = microtime(true) - $time;
-    
-    var_dump($processor->getContext());
-
-//    var_dump($select);
-    
     $renderer = new \Subapp\Sql\Converter\Converter();
     $renderer->setup(new \Subapp\Sql\Converter\DefaultConverterSetup());
-    
     $processor->setLexer(new Lexer());
     $recognizer = new Recognizer($processor, Recognizer::COMMON);
+    $builder = new \Subapp\Sql\Query\Builder();
+    $builder->setRecognizer($recognizer);
     
-    $node = new \Subapp\Sql\Query\Node();
-    $node->setRecognizer($recognizer);
+    $query = new \Subapp\Sql\Query\Query($builder);
     
-    $qb = new \Subapp\Sql\Query\QueryBuilder($node);
+    $query->setConverter($renderer);
     
-    $qb->setConverter($renderer);
+    ////// Update
+    $query->update('users')->delayed();
+    $query->sets([
+        'id' => 1,
+        'name' => 'John',
+        'date' => '2018-01-01',
+        'uid' => $builder->sql('sum(count(a))')
+    ]);
     
-//    $qb->update('users');
-//
-//    $qb->sets([
-//        'id' => 1,
-//        'name' => 'John',
-//        'date' => '2018-01-01',
-//        'uid' => 'sum(count(a) + count(b) / (len("user@mail.com") + len(u.email)))'
-//    ]);
-//
-//    die(var_dump($qb->getSql()));
-//
-//    $qb->insert('users');
-//    $qb->fields('test', 'id', 'created');
-//    $qb->values([
-//        [1, 2, 3],
-//        [3, 2, 1],
-//    ]);
-//    $qb->values([
-//        ['Count(a)', 123, 'Date("2019-01-01")'],
-//        ['Count(b)', 321, 'Date("2019-01-01")'],
-//        ['Sum(z)', 111, 'Date("2019-01-01")'],
-//    ]);
-//
-//    echo $renderer->toSql($qb->getAst());
-//    die;
+    $where = $builder->and(
+        $builder->or('u2.a > 2', 'a < len(email)'),
+        $builder->or('a < 0', 'a > len(name)', $builder->eq('x', $builder->sql('len(x)')))
+    );
     
-    $qb->select('users');
-    $qb->columns('test', 'id', 'created');
-    $qb->values([
-        ['Count(a)', 123, 'Date("2019-01-01")'],
+    $query->where($where);
+//    $query->where(null);
+
+    var_dump($query->getConverter()->toSql($query->getRoot()->getWhere()));
+    
+    echo $query->getSql() . PHP_EOL;
+    
+    ///////// Insert
+    $query->reset();
+    
+    $query->insert('users U')->ignore();
+    $query->fields('U.test', 'id', 'created');
+    $query->values([
+        [1, 2, 3],
+        [3, 2, 1],
+    ]);
+    $query->values([
+        ['Count(a)', 123, $builder->sql('Date("2019-01-01")')],
         ['Count(b)', 321, 'Date("2019-01-01")'],
         ['Sum(z)', 111, 'Date("2019-01-01")'],
     ]);
 
-    echo $renderer->toSql($qb->getAst());
-    die;
+    echo $renderer->toSql($query->getAst()) . PHP_EOL;
+    
+    ////// Select
+    $query->reset();
+    
+    $query->select('users')->noCache();
+    $query->columns('test', 'id', 'created', 'count(*) cnt');
+    $query->where('id = 1');
+    
+    echo $query->getSql() . PHP_EOL;
+    
+    ////// Delete
+    $query->reset();
+    
+    $query->quick();
+    $query->delete('users');
+    $query->where('id = 1');
+
+    echo $renderer->toSql($query->getAst()) . PHP_EOL;
 
 
 //
-//    $qb->setRoot($ast->getRoot());
+//    $query->setRoot($ast->getRoot());
 
 //    var_dump($ast);
 
-//    $qb->crossJoin('asd', 'aa', 'aa.id');
+//    $query->crossJoin('asd', 'aa', 'aa.id');
     
     $time = microtime(true);
     $class = get_class($ast);
@@ -123,8 +135,6 @@ try {
     $array = $renderer->toArray($ast);
     file_put_contents(__DIR__ . '/select.json', json_encode($array, 128));
     echo PHP_EOL;
-    
-    var_dump($renderer->getContext()->getPlaceholders());
     
     echo $renderer->toSql($renderer->toNode($array)) . PHP_EOL;
 
@@ -142,16 +152,16 @@ try {
 //    /** @var Conditions $conditions */
 //    $recognized = $recognizer->recognize('Upper(u.name) > 1 + 1');
 //
-//    $conditions = $node->and(
-//        $node->eq(1, 2),
+//    $conditions = $builder->and(
+//        $builder->eq(1, 2),
 //        $recognized,
-////        $node->ge(2, 'count(Distinct U.id)'),
-//        $node->ne(3, 4),
-////        $node->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
-//        $node->or(
+////        $builder->ge(2, 'count(Distinct U.id)'),
+//        $builder->ne(3, 4),
+////        $builder->in('U.id', [1, 2, 3, '(select id from users u limit 1)', 5, 6, 7, 'sum(U.id)'], true),
+//        $builder->or(
 ////            '(u.id + 1 * 2) > sum(Distinct U.cnt)',
-//            $node->between('U.create', '2017', '2016'),
-//            $node->isNull('U.updated')
+//            $builder->between('U.create', '2017', '2016'),
+//            $builder->isNull('U.updated')
 //        )
 //    );
 

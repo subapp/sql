@@ -4,37 +4,28 @@ namespace Subapp\Sql\Syntax\Common\Parser\Stmt;
 
 use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
+use Subapp\Sql\Ast;
 
 /**
  * Class Into
  * @package Subapp\Sql\Syntax\Common\Parser\Stmt
  */
-class Into extends AbstractDefaultParser
+class Into extends TableReference
 {
 
     /**
      * @inheritDoc
+     * @return Ast\Stmt\TableReference|Ast\NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
         $this->shift(Lexer::T_INTO, $lexer);
-
-        $parser = null;
-
-        switch (true) {
-            case $this->isIdentifier($lexer):
-                $parser = $this->getIdentifierParser($processor);
-                break;
-            case $this->isQuoteIdentifier($lexer):
-                $parser = $this->getQuoteIdentifierParser($processor);
-                break;
-            default:
-                $this->throwSyntaxError($lexer, 'Identifier', 'QuoteIdentifier');
-        }
-
-        return $parser->parse($lexer, $processor);
+    
+        $reference = new Ast\Stmt\TableReference();
+        $reference->setPrefix('INTO');
+    
+        return parent::into($processor, $reference);
     }
 
     /**

@@ -8,6 +8,7 @@ use Subapp\Sql\Ast\Stmt\TableReference as TableReferenceNode;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\Common\Parser\AbstractDefaultParser;
 use Subapp\Sql\Syntax\ProcessorInterface;
+use Subapp\Sql\Ast;
 
 /**
  * Class TableReference
@@ -18,6 +19,7 @@ class TableReference extends AbstractDefaultParser
 
     /**
      * @inheritDoc
+     * @return Ast\Stmt\TableReference|Ast\NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

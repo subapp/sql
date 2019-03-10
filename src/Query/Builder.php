@@ -11,7 +11,7 @@ use Subapp\Sql\Exception\UnsupportedException;
  * Class Node
  * @package Subapp\Sql\Query
  */
-class Node
+class Builder
 {
     
     /**
@@ -31,16 +31,55 @@ class Node
     /**
      * @param $value
      * @return NodeInterface
-     * @throws UnsupportedException
      */
     public function recognize($value)
     {
+        $node = new Ast\Raw(sprintf('[UNRECOGNIZED: "%s"]', is_object($value) ? get_class($value) : gettype($value)));
+        
         switch (true) {
+            case is_array($value):
+                $node = $this->arguments(...array_map([$this, 'recognize'], $value));
+                break;
+            
+            case is_string($value):
+                switch (true) {
+                    case preg_match('/^[\w\d_-]+\.[\w\d_-]+$/ui', $value):
+                        list($table, $field) = explode('.', $value);
+                        $node = $this->path($table, $field);
+                        break;
+                    default:
+                        $node = $this->recognizer->recognize($value);
+                }
+                break;
+            
+            case ($value instanceOf NodeInterface):
+            case is_null($value):
+            case is_bool($value):
+            case is_numeric($value):
+                $node = $this->normalize($value);
+                break;
+        }
+        
+        return $node;
+    }
+    
+    /**
+     * @param $value
+     * @return Ast\Identifier|NodeInterface
+     * @throws UnsupportedException
+     */
+    public function normalize($value)
+    {
+        switch (true) {
+            
+            case is_array($value):
+                return $this->arguments(...array_map([$this, 'normalize'], $value));
+            
             case ($value instanceOf NodeInterface):
                 return $value;
-    
-            case is_array($value):
-                return $this->arguments(...array_map([$this, 'recognize'], $value));
+            
+            case is_string($value):
+                return $this->string($value);
             
             case is_null($value):
                 return $this->null();
@@ -49,44 +88,12 @@ class Node
                 return $this->boolean($value);
             
             case is_numeric($value):
-                $isFloat = (strpos($value, '.') !== false);
-                return $this->literal($value, $isFloat ? Ast\Literal::FLOAT : Ast\Literal::INT);
-
-            case is_string($value):
-                switch (true) {
-                    // todo: beware about that place
-                    case preg_match('/^\w+\.\w+/i', $value):
-                    case preg_match('/^\w+\(.+\)/i', $value):
-                        return $this->recognizer->recognize($value);
-                        break;
-                    default:
-                        return $this->string($value);
-                }
-                break;
-            
-            case is_object($value):
-                throw new UnsupportedException(sprintf('Object recognizing able only for "%s" but "%s" passed',
-                    NodeInterface::class, get_class($value)));
+                $type = (strpos($value, '.') !== false) ? Ast\Literal::FLOAT : Ast\Literal::INT;
+                return $this->literal($value, $type);
             
             default:
-                return $this->recognizer->recognize($value);
-        }
-    }
-    
-    /**
-     * @param $value
-     * @return Ast\Identifier|NodeInterface
-     */
-    public function identify($value)
-    {
-        switch (true) {
-            case is_array($value):
-                return $this->arguments(...array_map([$this, 'identify'], $value));
-            case is_string($value) && preg_match('/^[\w\d]+$/i', $value):
-                return $this->identifier($value);
-                break;
-            default:
-                return $this->recognize($value);
+                throw new UnsupportedException(sprintf('Unexpected case of normalizing value. Expect only scalar but "%s" passed',
+                    is_object($value) ? get_class($value) : gettype($value)));
         }
     }
     
@@ -102,6 +109,8 @@ class Node
         foreach ($predicates as $predicate) {
             $collection->append($this->recognize($predicate));
         }
+        
+        $collection->setWrapped($collection->count() > 1);
         
         return $collection;
     }
@@ -145,7 +154,7 @@ class Node
      */
     public function comparison($x, $operator, $y)
     {
-        return new Condition\Cmp($this->recognize($x), $this->cmp($operator), $this->recognize($y));
+        return new Condition\Cmp($this->recognize($x), $this->cmp($operator), $this->normalize($y));
     }
     
     /**
@@ -265,20 +274,22 @@ class Node
     
     /**
      * @param string $field
+     * @param bool   $quote
      * @return Ast\Identifier
      */
-    public function field($field)
+    public function field($field, $quote = false)
     {
-        return $this->identifier($field, true);
+        return $this->identifier($field, $quote);
     }
     
     /**
      * @param string $table
+     * @param bool   $quote
      * @return Ast\Identifier
      */
-    public function table($table)
+    public function table($table, $quote = false)
     {
-        return $this->identifier($table, true);
+        return $this->identifier($table, $quote);
     }
     
     /**
@@ -288,7 +299,8 @@ class Node
      */
     public function path($table, $field)
     {
-        return new Ast\FieldPath($this->table($table), $this->field($field));
+        // table unquoted 'cause maybe be aliased
+        return new Ast\FieldPath($this->table($table, false), $this->field($field, true));
     }
     
     /**
@@ -307,7 +319,7 @@ class Node
      */
     public function variable($var, $alias = null)
     {
-        $variable = new Ast\Variable($this->identify($var));
+        $variable = new Ast\Variable($this->recognize($var));
         
         if ($alias !== null) {
             $variable->setAlias(new Ast\Identifier($alias));
@@ -315,7 +327,7 @@ class Node
         
         return $variable;
     }
-
+    
     /**
      * @param string|NodeInterface $left
      * @param string|NodeInterface $value
@@ -324,10 +336,10 @@ class Node
     public function assignment($left, $value)
     {
         return new Ast\Stmt\Assignment(
-            $this->field($left), $this->recognize($value)
+            $this->field($left), $this->normalize($value)
         );
     }
-
+    
     /**
      * @param string $value
      * @param int    $type
@@ -470,12 +482,21 @@ class Node
     }
     
     /**
-     * @param $string
+     * @param string $string
      * @return Ast\Raw
      */
     public function raw($string)
     {
         return new Ast\Raw($string);
+    }
+    
+    /**
+     * @param string $string
+     * @return Ast\NodeInterface
+     */
+    public function sql($string)
+    {
+        return $this->recognizer->recognize($string);
     }
     
     /**

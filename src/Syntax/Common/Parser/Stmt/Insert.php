@@ -35,7 +35,7 @@ class Insert extends AbstractDefaultParser
         $root->setModifiers($this->getModifierStmtParser($processor)->parse($lexer, $processor));
 
         // INSERT {INTO users} ...
-        $root->setTable($this->getIntoStmtParser($processor)->parse($lexer, $processor));
+        $root->setTableReference($this->getIntoStmtParser($processor)->parse($lexer, $processor));
 
         // - INSERT INTO users (name, age, phone) VALUES ('John', 25, '123-12-12')
         // - INSERT INTO users VALUES(50 * 2, 'John', 'Sales', 5000 + id)

@@ -6,6 +6,7 @@ use Subapp\Lexer\LexerInterface;
 use Subapp\Sql\Ast\Stmt\Set as SetNode;
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Syntax\ProcessorInterface;
+use Subapp\Sql\Ast;
 
 /**
  * Class Set
@@ -16,6 +17,7 @@ class Set extends AssignmentList
 
     /**
      * @inheritDoc
+     * @return Ast\Stmt\Set|Ast\NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {

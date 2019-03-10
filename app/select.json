@@ -1,11 +1,12 @@
 {
-    "node": "STMT_SELECT",
+    "node": "STMT_INSERT",
+    "insertType": 6,
     "modifiers": {
         "node": "MODIFIERS",
-        "modifiers": 0
+        "modifiers": 8
     },
-    "arguments": {
-        "node": "ARGS",
+    "tableReference": {
+        "node": "STMT_TABLE_REFERENCE",
         "wrapped": false,
         "classKey": "Root.NodeInterface",
         "nodes": [
@@ -13,7 +14,30 @@
                 "node": "VARIABLE",
                 "expression": {
                     "node": "IDENTIFIER",
-                    "identifier": "a"
+                    "identifier": "student"
+                },
+                "alias": null
+            }
+        ],
+        "prefix": "INTO"
+    },
+    "assignment": {
+        "node": "STMT_SET",
+        "wrapped": false,
+        "classKey": "Stmt.Assignment",
+        "nodes": []
+    },
+    "fields": {
+        "node": "ARGS",
+        "wrapped": true,
+        "classKey": "Root.NodeInterface",
+        "nodes": [
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "QUOTE_IDENTIFIER",
+                    "identifier": "name",
+                    "quote": "`"
                 },
                 "alias": null
             },
@@ -21,7 +45,7 @@
                 "node": "VARIABLE",
                 "expression": {
                     "node": "IDENTIFIER",
-                    "identifier": "b"
+                    "identifier": "age"
                 },
                 "alias": null
             },
@@ -29,21 +53,81 @@
                 "node": "VARIABLE",
                 "expression": {
                     "node": "IDENTIFIER",
-                    "identifier": "c"
+                    "identifier": "phone"
                 },
                 "alias": null
-            },
+            }
+        ]
+    },
+    "semicolon": {
+        "node": "LITERAL",
+        "value": false,
+        "type": 2
+    },
+    "valueList": {
+        "node": "ARGS",
+        "wrapped": false,
+        "classKey": "Root.Arguments",
+        "nodes": [
             {
-                "node": "VARIABLE",
-                "expression": {
-                    "node": "FUNC_AGGREGATE",
-                    "name": {
-                        "node": "IDENTIFIER",
-                        "identifier": "sum"
+                "node": "ARGS",
+                "wrapped": true,
+                "classKey": "Root.NodeInterface",
+                "nodes": [
+                    {
+                        "node": "LITERAL",
+                        "value": "Mike",
+                        "type": 1
                     },
-                    "distinct": false,
-                    "args": {
-                        "node": "ARGS",
+                    {
+                        "node": "LITERAL",
+                        "value": "25",
+                        "type": 3
+                    },
+                    {
+                        "node": "LITERAL",
+                        "value": "345-65-78",
+                        "type": 1
+                    }
+                ]
+            },
+            {
+                "node": "ARGS",
+                "wrapped": true,
+                "classKey": "Root.NodeInterface",
+                "nodes": [
+                    {
+                        "node": "FUNC_DEFAULT",
+                        "name": {
+                            "node": "IDENTIFIER",
+                            "identifier": "Concat"
+                        },
+                        "args": {
+                            "node": "ARGS",
+                            "wrapped": false,
+                            "classKey": "Root.NodeInterface",
+                            "nodes": [
+                                {
+                                    "node": "LITERAL",
+                                    "value": "U_ID",
+                                    "type": 1
+                                },
+                                {
+                                    "node": "FIELD_PATH",
+                                    "field": {
+                                        "node": "IDENTIFIER",
+                                        "identifier": "id"
+                                    },
+                                    "table": {
+                                        "node": "IDENTIFIER",
+                                        "identifier": "U"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "node": "ARITHMETIC",
                         "wrapped": false,
                         "classKey": "Root.NodeInterface",
                         "nodes": [
@@ -53,10 +137,19 @@
                                 "classKey": "Root.NodeInterface",
                                 "nodes": [
                                     {
+                                        "node": "LITERAL",
+                                        "value": "25",
+                                        "type": 3
+                                    },
+                                    {
+                                        "node": "MATH_OPERATOR",
+                                        "value": "\/"
+                                    },
+                                    {
                                         "node": "FUNC_DEFAULT",
                                         "name": {
                                             "node": "IDENTIFIER",
-                                            "identifier": "if"
+                                            "identifier": "Cos"
                                         },
                                         "args": {
                                             "node": "ARGS",
@@ -64,414 +157,61 @@
                                             "classKey": "Root.NodeInterface",
                                             "nodes": [
                                                 {
-                                                    "node": "PARAMETER",
-                                                    "name": "uid",
-                                                    "type": ":"
-                                                },
-                                                {
-                                                    "node": "IDENTIFIER",
-                                                    "identifier": "i2"
-                                                },
-                                                {
-                                                    "node": "FUNC_AGGREGATE",
-                                                    "name": {
-                                                        "node": "IDENTIFIER",
-                                                        "identifier": "count"
-                                                    },
-                                                    "distinct": false,
-                                                    "args": {
-                                                        "node": "ARGS",
-                                                        "wrapped": false,
-                                                        "classKey": "Root.NodeInterface",
-                                                        "nodes": [
-                                                            {
-                                                                "node": "PARAMETER",
-                                                                "name": "u",
-                                                                "type": ":"
-                                                            },
-                                                            {
-                                                                "node": "FUNC_DEFAULT",
-                                                                "name": {
-                                                                    "node": "IDENTIFIER",
-                                                                    "identifier": "alert"
-                                                                },
-                                                                "args": {
-                                                                    "node": "ARGS",
-                                                                    "wrapped": false,
-                                                                    "classKey": "Root.NodeInterface",
-                                                                    "nodes": [
-                                                                        {
-                                                                            "node": "PARAMETER",
-                                                                            "name": "test",
-                                                                            "type": ":"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "node": "PARAMETER",
-                                                                "name": "z",
-                                                                "type": ":"
-                                                            }
-                                                        ]
-                                                    }
+                                                    "node": "LITERAL",
+                                                    "value": "3.14",
+                                                    "type": 4
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "node": "MATH_OPERATOR",
-                                        "value": "+"
-                                    },
-                                    {
-                                        "node": "LITERAL",
-                                        "value": "123",
-                                        "type": 3
                                     }
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "node": "LITERAL",
+                        "value": "345-65-78",
+                        "type": 1
                     }
-                },
-                "alias": null
+                ]
+            },
+            {
+                "node": "ARGS",
+                "wrapped": true,
+                "classKey": "Root.NodeInterface",
+                "nodes": [
+                    {
+                        "node": "LITERAL",
+                        "value": "John",
+                        "type": 1
+                    },
+                    {
+                        "node": "ARITHMETIC",
+                        "wrapped": false,
+                        "classKey": "Root.NodeInterface",
+                        "nodes": [
+                            {
+                                "node": "LITERAL",
+                                "value": "5000",
+                                "type": 3
+                            },
+                            {
+                                "node": "MATH_OPERATOR",
+                                "value": "+"
+                            },
+                            {
+                                "node": "IDENTIFIER",
+                                "identifier": "id"
+                            }
+                        ]
+                    },
+                    {
+                        "node": "LITERAL",
+                        "value": "345-65-78",
+                        "type": 1
+                    }
+                ]
             }
         ]
-    },
-    "reference": {
-        "node": "STMT_TABLE_REFERENCE",
-        "wrapped": false,
-        "classKey": "Root.NodeInterface",
-        "nodes": [
-            {
-                "node": "VARIABLE",
-                "expression": {
-                    "node": "IDENTIFIER",
-                    "identifier": "users"
-                },
-                "alias": {
-                    "node": "IDENTIFIER",
-                    "identifier": "U"
-                }
-            }
-        ],
-        "prefix": "FROM"
-    },
-    "joins": {
-        "node": "STMT_JOIN_ITEMS",
-        "wrapped": false,
-        "classKey": "Stmt.Join",
-        "nodes": []
-    },
-    "where": {
-        "node": "STMT_WHERE",
-        "wrapped": false,
-        "classKey": "Root.NodeInterface",
-        "nodes": [
-            {
-                "node": "CONDITION_CONDITIONS",
-                "wrapped": true,
-                "classKey": "Root.NodeInterface",
-                "nodes": [
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "a"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "<"
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "1",
-                            "type": 3
-                        }
-                    },
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "b"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "<"
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "10",
-                            "type": 3
-                        }
-                    },
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "z"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "<>"
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "1",
-                            "type": 3
-                        }
-                    }
-                ],
-                "operator": {
-                    "node": "CONDITION_LOGIC_OPERATOR",
-                    "value": "OR"
-                }
-            },
-            {
-                "node": "CONDITION_CMP",
-                "left": {
-                    "node": "IDENTIFIER",
-                    "identifier": "b"
-                },
-                "operator": {
-                    "node": "CONDITION_CMP_OPERATOR",
-                    "value": ">"
-                },
-                "right": {
-                    "node": "LITERAL",
-                    "value": "2",
-                    "type": 3
-                }
-            },
-            {
-                "node": "CONDITION_CONDITIONS",
-                "wrapped": true,
-                "classKey": "Root.NodeInterface",
-                "nodes": [
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "c"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "<>"
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "0",
-                            "type": 3
-                        }
-                    },
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "d"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": ">="
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "2",
-                            "type": 3
-                        }
-                    }
-                ],
-                "operator": {
-                    "node": "CONDITION_LOGIC_OPERATOR",
-                    "value": "OR"
-                }
-            },
-            {
-                "node": "CONDITION_CMP",
-                "left": {
-                    "node": "IDENTIFIER",
-                    "identifier": "a"
-                },
-                "operator": {
-                    "node": "CONDITION_CMP_OPERATOR",
-                    "value": ">"
-                },
-                "right": {
-                    "node": "LITERAL",
-                    "value": "100",
-                    "type": 3
-                }
-            },
-            {
-                "node": "CONDITION_CONDITIONS",
-                "wrapped": true,
-                "classKey": "Root.NodeInterface",
-                "nodes": [
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "c"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "<"
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "300",
-                            "type": 3
-                        }
-                    },
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "f"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "="
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "10",
-                            "type": 3
-                        }
-                    },
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "e"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "="
-                        },
-                        "right": {
-                            "node": "LITERAL",
-                            "value": "100",
-                            "type": 3
-                        }
-                    }
-                ],
-                "operator": {
-                    "node": "CONDITION_LOGIC_OPERATOR",
-                    "value": "OR"
-                }
-            },
-            {
-                "node": "CONDITION_CMP",
-                "left": {
-                    "node": "IDENTIFIER",
-                    "identifier": "z"
-                },
-                "operator": {
-                    "node": "CONDITION_CMP_OPERATOR",
-                    "value": "="
-                },
-                "right": {
-                    "node": "PARAMETER",
-                    "name": null,
-                    "type": "?"
-                }
-            },
-            {
-                "node": "CONDITION_CONDITIONS",
-                "wrapped": true,
-                "classKey": "Root.NodeInterface",
-                "nodes": [
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "c3"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": "="
-                        },
-                        "right": {
-                            "node": "PARAMETER",
-                            "name": "name",
-                            "type": ":"
-                        }
-                    },
-                    {
-                        "node": "CONDITION_CMP",
-                        "left": {
-                            "node": "IDENTIFIER",
-                            "identifier": "u"
-                        },
-                        "operator": {
-                            "node": "CONDITION_CMP_OPERATOR",
-                            "value": ">"
-                        },
-                        "right": {
-                            "node": "PARAMETER",
-                            "name": null,
-                            "type": "?"
-                        }
-                    }
-                ],
-                "operator": {
-                    "node": "CONDITION_LOGIC_OPERATOR",
-                    "value": "OR"
-                }
-            },
-            {
-                "node": "CONDITION_CMP",
-                "left": {
-                    "node": "PARAMETER",
-                    "name": "uid",
-                    "type": ":"
-                },
-                "operator": {
-                    "node": "CONDITION_CMP_OPERATOR",
-                    "value": ">"
-                },
-                "right": {
-                    "node": "PARAMETER",
-                    "name": "result",
-                    "type": ":"
-                }
-            }
-        ],
-        "operator": {
-            "node": "CONDITION_LOGIC_OPERATOR",
-            "value": "AND"
-        }
-    },
-    "groupBy": {
-        "node": "STMT_GROUP_BY",
-        "wrapped": false,
-        "classKey": "Root.NodeInterface",
-        "nodes": []
-    },
-    "having": {
-        "node": "STMT_HAVING",
-        "wrapped": false,
-        "classKey": "Root.NodeInterface",
-        "nodes": [],
-        "operator": {
-            "node": "CONDITION_LOGIC_OPERATOR",
-            "value": "AND"
-        }
-    },
-    "orderBy": {
-        "node": "STMT_ORDER_BY_ITEMS",
-        "wrapped": false,
-        "classKey": "Stmt.OrderBy",
-        "nodes": []
-    },
-    "limit": {
-        "node": "STMT_LIMIT",
-        "offset": null,
-        "length": null
-    },
-    "semicolon": {
-        "node": "LITERAL",
-        "value": true,
-        "type": 2
     }
 }

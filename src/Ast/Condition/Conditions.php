@@ -22,13 +22,15 @@ class Conditions extends Collection
      * TermCollection constructor.
      * @param array  $expressions
      * @param string $operator
+     * @param bool   $wrapped
      */
-    public function __construct($expressions = [], $operator = LogicOperator:: AND)
+    public function __construct($expressions = [], $operator = LogicOperator:: AND, $wrapped = false)
     {
         parent::__construct($expressions);
         
         $this->setClass(NodeInterface::class);
         $this->setOperator($operator);
+        $this->setWrapped($wrapped);
     }
     
     /**

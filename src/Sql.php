@@ -6,8 +6,8 @@ use Subapp\Collection\Collection;
 use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Converter\DefaultConverterSetup;
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Query\Node;
-use Subapp\Sql\Query\QueryBuilder;
+use Subapp\Sql\Query\Builder;
+use Subapp\Sql\Query\Query;
 use Subapp\Sql\Query\Recognizer;
 use Subapp\Sql\Syntax\Common\DefaultProcessorSetup;
 use Subapp\Sql\Syntax\Extra\ExtraProcessorSetup;
@@ -106,10 +106,10 @@ class Sql
     }
     
     /**
-     * @return Node
+     * @return Builder
      */
     public function newNode() {
-        $node = new Node();
+        $node = new Builder();
     
         $node->setRecognizer($this->newRecognizer());
         
@@ -122,17 +122,17 @@ class Sql
      */
     public function newRecognizer($complexity = null)
     {
-        $recognizer = new Recognizer($this->getProcessor(), $complexity ?? Recognizer::COMMON);
+        $recognizer = new Recognizer($this->getProcessor(), $complexity ?? Recognizer::EXPRESSION);
         
         return $recognizer;
     }
     
     /**
-     * @return QueryBuilder
+     * @return Query
      */
     public function newQueryBuilder()
     {
-        $queryBuilder = new QueryBuilder($this->newNode());
+        $queryBuilder = new Query($this->newNode());
         
         $queryBuilder->setConverter($this->getConverter());
         

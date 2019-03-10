@@ -2,8 +2,8 @@
 
 use Subapp\Sql\Lexer\Lexer;
 use Subapp\Sql\Platform\MySQLPlatform;
-use Subapp\Sql\Query\Node;
-use Subapp\Sql\Query\QueryBuilder;
+use Subapp\Sql\Query\Builder;
+use Subapp\Sql\Query\Query;
 use Subapp\Sql\Query\Recognizer;
 use Subapp\Sql\Converter\DefaultConverterSetup;
 use Subapp\Sql\Converter\Converter;
@@ -24,10 +24,10 @@ $processor->setLexer(new Lexer());
 
 $recognizer = new Recognizer($processor, Recognizer::COMMON);
 
-$node = new Node();
+$node = new Builder();
 $node->setRecognizer($recognizer);
 
-$qb = new QueryBuilder($node);
+$qb = new Query($node);
 $qb->from('Users', 'U');
 $qb->from("Table1");
 $qb->select('users.id uid, test.id', 'test.created dt');

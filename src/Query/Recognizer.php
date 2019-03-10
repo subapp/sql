@@ -25,17 +25,17 @@ class Recognizer
     /**
      * @var string
      */
-    private $rootParser;
+    private $complexity;
     
     /**
      * Recognizer constructor.
      * @param ProcessorInterface $processor
-     * @param string             $rootParser
+     * @param string             $complexity
      */
-    public function __construct(ProcessorInterface $processor, $rootParser = Recognizer::EXPRESSION)
+    public function __construct(ProcessorInterface $processor, $complexity = Recognizer::EXPRESSION)
     {
         $this->processor = $processor;
-        $this->rootParser = $rootParser;
+        $this->complexity = $complexity;
     }
     
     /**
@@ -59,23 +59,23 @@ class Recognizer
      */
     public function getParser()
     {
-        return $this->processor->getParser($this->rootParser);
+        return $this->processor->getParser($this->complexity);
     }
     
     /**
      * @return string
      */
-    public function getRootParser()
+    public function getComplexity()
     {
-        return $this->rootParser;
+        return $this->complexity;
     }
     
     /**
-     * @param string $rootParser
+     * @param string $complexity
      */
-    public function setRootParser($rootParser)
+    public function setComplexity($complexity)
     {
-        $this->rootParser = $rootParser;
+        $this->complexity = $complexity;
     }
     
     /**

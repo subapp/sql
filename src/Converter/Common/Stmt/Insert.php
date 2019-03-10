@@ -66,7 +66,7 @@ class Insert extends AbstractConverter
         
         $values['insertType'] = $insertType->getBitMask();
         $values['modifiers'] = $provider->toArray($node->getModifiers());
-        $values['table'] = $provider->toArray($node->getTable());
+        $values['tableReference'] = $provider->toArray($node->getTableReference());
         $values['assignment'] = $provider->toArray($node->getAssignment());
         $values['fields'] = $provider->toArray($node->getArguments());
         $values['semicolon'] = $provider->toArray(new Literal($node->isSemicolon(), Literal::BOOLEAN));
@@ -93,7 +93,7 @@ class Insert extends AbstractConverter
         $insertType->setBitMask($ast['insertType']);
     
         $insert->setModifiers($provider->toNode($ast['modifiers']));
-        $insert->setTable($provider->toNode($ast['table']));
+        $insert->setTableReference($provider->toNode($ast['tableReference']));
         $insert->setAssignment($provider->toNode($ast['assignment']));
         $insert->setArguments($provider->toNode($ast['fields']));
         $insert->setSemicolon($ast['semicolon']['value'] ?? false);

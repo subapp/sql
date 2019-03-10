@@ -16,6 +16,7 @@ class From extends TableReference
     
     /**
      * @inheritdoc
+     * @return Ast\Stmt\TableReference|Ast\NodeInterface
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
