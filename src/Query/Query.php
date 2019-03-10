@@ -294,18 +294,19 @@ class Query
      */
     public function columns(...$columns)
     {
-        return $this->arguments(...$columns);
+        return $this->arguments(false, ...$columns);
     }
     
     /**
+     * @param bool                     $wrapped
      * @param string|Ast\NodeInterface ...$arguments
      * @return $this
      */
-    public function arguments(...$arguments)
+    public function arguments($wrapped = false, ...$arguments)
     {
         /** @var Ast\Arguments $arguments */
         $arguments = $this->builder->recognize($arguments);
-        $arguments->setWrapped(true);
+        $arguments->setWrapped($wrapped);
         
         $this->root->setArguments($arguments);
         
@@ -369,7 +370,7 @@ class Query
      */
     public function fields(...$fields)
     {
-        return $this->arguments(...$fields);
+        return $this->arguments(true, ...$fields);
     }
     
     /**
