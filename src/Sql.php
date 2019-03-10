@@ -108,7 +108,7 @@ class Sql
     /**
      * @return Builder
      */
-    public function newNode() {
+    public function newBuilder() {
         $node = new Builder();
     
         $node->setRecognizer($this->newRecognizer());
@@ -132,7 +132,7 @@ class Sql
      */
     public function newQuery()
     {
-        $query = new Query($this->newNode());
+        $query = new Query($this->newBuilder());
         
         $query->setConverter($this->getConverter());
         

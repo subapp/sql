@@ -62,17 +62,16 @@ try {
     $query->setConverter($renderer);
     
     ////// Update
-    $query->update('users')->delayed();
+    $query->update('users U')->delayed();
     $query->sets([
-        'id' => 1,
         'name' => 'John',
         'date' => '2018-01-01',
-        'uid' => $builder->sql('sum(count(a))')
+        'hits' => $builder->sql('sum(U.hit)')
     ]);
     
     $where = $builder->and(
-        $builder->or('u2.a > 2', 'a < len(email)'),
-        $builder->or('a < 0', 'a > len(name)', $builder->eq('x', $builder->sql('len(x)')))
+        $builder->or('U.id > 2', 'U.id < len(U.email)'),
+        $builder->or('U.id < 0', 'U.id > len(U.name)', $builder->eq('x', $builder->sql('len(x)')))
     );
     
     $query->where($where);
@@ -86,15 +85,13 @@ try {
     $query->reset();
     
     $query->insert('users U')->ignore();
-    $query->fields('U.test', 'id', 'created');
+    $query->fields('U.name', 'created');
     $query->values([
-        [1, 2, 3],
-        [3, 2, 1],
+        ['tedd', '2019-01-01'],
     ]);
     $query->values([
-        ['Count(a)', 123, $builder->sql('Date("2019-01-01")')],
-        ['Count(b)', 321, 'Date("2019-01-01")'],
-        ['Sum(z)', 111, 'Date("2019-01-01")'],
+        ['john', $builder->sql('now()')],
+        ['nedd', '2019-01-01'],
     ]);
 
     echo $renderer->toSql($query->getAst()) . PHP_EOL;
@@ -111,9 +108,17 @@ try {
     ////// Delete
     $query->reset();
     
-    $query->quick();
-    $query->delete('users');
-    $query->where('id = 1');
+    $query->delete('users U')->quick();
+    $query->where(
+        $builder->or(
+            'U.id = 1',
+            $builder->ge('U.id', 1000),
+            $builder->ge('U.access',
+                $builder->sql('rand()'
+                )
+            ))
+    );
+    $query->limit(1);
 
     echo $renderer->toSql($query->getAst()) . PHP_EOL;
 
