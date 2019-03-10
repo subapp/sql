@@ -226,7 +226,7 @@ class Query
      */
     public function delete($table)
     {
-        return $this->asDelete()->tables($table);
+        return $this->asDelete()->tables($table, null, 'FROM');
     }
     
     /**

@@ -26,7 +26,7 @@ class Limit extends AbstractConverter
         $length = $node->getLength();
         
         switch (true) {
-            case ($length instanceOf Literal && !($offset instanceOf Literal)):
+            case ($length instanceOf Literal && (!($offset instanceOf Literal) || $offset->getValue() == 0)):
                 return sprintf(' LIMIT %s', $provider->toSql($length));
             case ($length instanceOf Literal && $offset instanceOf Literal):
                 return sprintf(' LIMIT %s, %s', $provider->toSql($offset), $provider->toSql($length));
