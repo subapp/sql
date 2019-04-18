@@ -69,10 +69,6 @@ class Query
         $root = $this->getRoot();
         
         switch (true) {
-            case ($type & Query::ALL):
-                $this->setRoot(new Ast\Root());
-                break;
-            
             case ($type & Query::SELECT):
                 $root->getArguments()->clear();
                 break;
