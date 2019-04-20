@@ -496,7 +496,7 @@ class Query
         
         $condition = $builder->recognize($condition);
         
-        $join->setLeft($builder->path($table, $a));
+        $join->setLeft($builder->table($table));
         $join->setConditionType(($condition instanceof Ast\Arguments) ? Ast\Stmt\Join::USING : Ast\Stmt\Join::ON);
         $join->setCondition($condition);
         
