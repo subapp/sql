@@ -13,7 +13,7 @@ use Subapp\Sql\Syntax\Extra\ExtraProcessorSetup;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$facade = new \Subapp\Sql\Sql();
+$facade = \Subapp\Sql\Sql::getInstance();
 
 $lexer = new Lexer();
 $processor = new Processor($lexer);
@@ -58,9 +58,14 @@ $qb->where($c, false);
 
 $qb->group('a.id, u.id')->order('a.id asc, b.id desc, rand()', 'a.test desc');
 
-$c->add($node->ne(1, 'u.id'));
+$qb->order('t1.uid desc');
+$qb->order('t1.`uid` desc');
+$qb->order('`t2`.uid desc');
+$qb->order('`u`.`id` desc');
 
-$c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
+//$c->add($node->ne(1, 'u.id'));
+
+//$c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 //
 //$conditions = $node->and(
 //    $node->eq(1, 2),
@@ -76,19 +81,19 @@ $c->add($node->in('users.id', [1, 2, 3, 'Max(u.id)']));
 
 //var_dump($qb);
 
-$qb->assignment('U.total', 'count(Distinct U.id)');
+//$qb->assignment('U.total', 'count(Distinct U.id)');
 
 /*$qb->update([
     'u.id' => '123',
     'u.name' => 'Concat(1, U.id, "Name", Rand())'
 ]);*/
 
-$qb->where('u.id = 123');
-
-$and = $node->and($node->eq('Max(u.id)', 1));
-$and->add($node->or($node->eq('U.id', 123), $node->ge('Min(U.level)', 10)));
-
-$qb->where($and);
+//$qb->where('u.id = 123');
+//
+//$and = $node->and($node->eq('Max(u.id)', 1));
+//$and->add($node->or($node->eq('U.id', 123), $node->ge('Min(U.level)', 10)));
+//
+//$qb->where($and);
 
 //$qb->insert('users');
 

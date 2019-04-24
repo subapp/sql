@@ -22,14 +22,13 @@ class FieldPath extends AbstractDefaultParser
      */
     public function parse(LexerInterface $lexer, ProcessorInterface $processor)
     {
-        $parser = $this->isQuoteIdentifier($lexer)
-            ? $this->getQuoteIdentifierParser($processor) : $this->getIdentifierParser($processor);
+        $parser = $this->getNextParser($lexer, $processor);
         
         $table = $parser->parse($lexer, $processor);
         $this->shift(Lexer::T_DOT, $lexer);
         $field = $this->isStar($lexer)
             ? $this->getStarParser($processor)->parse($lexer, $processor)
-            : $parser->parse($lexer, $processor);
+            : $this->getNextParser($lexer, $processor)->parse($lexer, $processor);
         
         $expression = new FieldPathExpression();
         
@@ -37,6 +36,17 @@ class FieldPath extends AbstractDefaultParser
         $expression->setField($field);
         
         return $expression;
+    }
+
+    /**
+     * @param Lexer $lexer
+     * @param ProcessorInterface $processor
+     * @return Identifier|QuoteIdentifier
+     */
+    private function getNextParser(Lexer $lexer, ProcessorInterface $processor)
+    {
+        return $this->isQuoteIdentifier($lexer)
+            ? $this->getQuoteIdentifierParser($processor) : $this->getIdentifierParser($processor);
     }
     
     /**

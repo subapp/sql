@@ -594,7 +594,7 @@ abstract class AbstractParser implements ParserInterface
     {
         $token = $lexer->peek();
         $isSatisfied = ($token && in_array($token->getType(), $tokens, true));
-        
+
         if ($resetPeek) {
             $lexer->resetPeek();
         }
@@ -630,6 +630,20 @@ abstract class AbstractParser implements ParserInterface
             $isFounded = in_array($token->getType(), $needed, true);
         }
         
+        return $isFounded;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function peekTo(LexerInterface $lexer, array $needed)
+    {
+        $isFounded = false;
+
+        while (!$isFounded && ($token = $lexer->peek())) {
+            $isFounded = in_array($token->getType(), $needed, true);
+        }
+
         return $isFounded;
     }
     
@@ -676,13 +690,26 @@ abstract class AbstractParser implements ParserInterface
         // if expression starts with: u.id / 22
         $isFieldPath = $this->isFieldPath($lexer);
         $lexer->setPeek($peekValue);
-        
+
+        $isQuoteTable = $this->isQuoteIdentifier($lexer);
+        $lexer->setPeek($peekValue);
+
+        $this->peekTo($lexer, [Lexer::T_DOT]);
+        $isQuoteColumn = $this->isQuoteIdentifier($lexer);
+        $lexer->setPeek($peekValue);
+
         // if expression starts with: ID
         $isIdentifier = $this->isIdentifier($lexer);
         $lexer->setPeek($peekValue);
-        
+
+        $peekSize = 3;
+
+        foreach ([$isQuoteTable, $isQuoteColumn,] as $ifIncrease) {
+            $peekSize += ($ifIncrease ? 2 : 0);
+        }
+
         if ($isFieldPath || $isIdentifier) {
-            $isFieldPath ? $lexer->increasePeek(3) : $lexer->peek();
+            $isFieldPath ? $lexer->increasePeek($peekSize) : $lexer->peek();
         }
     }
     

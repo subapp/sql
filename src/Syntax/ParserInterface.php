@@ -395,6 +395,13 @@ interface ParserInterface
      * @return boolean
      */
     public function isPeekAgainst(LexerInterface $lexer, array $needed, array $against);
+
+    /**
+     * @param LexerInterface $lexer
+     * @param array $needed
+     * @return boolean
+     */
+    public function peekTo(LexerInterface $lexer, array $needed);
     
     /**
      * @param LexerInterface $lexer

@@ -25,7 +25,7 @@ class ParserA extends AbstractDefaultParser
         $isCommaSeparated = $this->isExpressionWithComma($lexer);
         $isVarsLikeOrderBy = $this->isTokenBehindExpression($lexer, true, Lexer::T_ASC, Lexer::T_DESC);
         $isVarsWithAlias = $this->isExpressionWithAlias($lexer);
-        
+
         $parser = $this->getParserB($processor);
         
         switch (true) {

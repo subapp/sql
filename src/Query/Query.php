@@ -3,6 +3,7 @@
 namespace Subapp\Sql\Query;
 
 use Subapp\Sql\Ast;
+use Subapp\Sql\Converter\Common\Stmt\OrderBy;
 use Subapp\Sql\Converter\Converter;
 use Subapp\Sql\Converter\ProviderInterface;
 use Subapp\Sql\Exception\UnsupportedException;
@@ -563,10 +564,12 @@ class Query
         
         /** @var Ast\Arguments $arguments */
         $arguments = $this->builder->recognize($arguments);
-        
+
         // @todo perhaps exist most elegant solution
-        $arguments->each(function ($index, Ast\Stmt\OrderByItems $collection) use ($orderByNode) {
-            $orderByNode->asBatch($collection->toArray());
+        $arguments->each(function ($index, Ast\Arguments $collection) use ($orderByNode) {
+            foreach ($collection as $orderBy) {
+                $orderByNode->append(($orderBy instanceof Ast\Stmt\OrderBy) ? $orderBy : new Ast\Stmt\OrderBy($orderBy));
+            }
         });
         
         return $this;
