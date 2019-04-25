@@ -122,7 +122,7 @@ class Sql
      */
     public function newRecognizer($complexity = null)
     {
-        $recognizer = new Recognizer($this->getProcessor(), $complexity ?? Recognizer::EXPRESSION);
+        $recognizer = new Recognizer($this->getProcessor(), $complexity ?? Recognizer::COMMON);
         
         return $recognizer;
     }

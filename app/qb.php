@@ -1,7 +1,6 @@
 <?php
 
 use Subapp\Sql\Lexer\Lexer;
-use Subapp\Sql\Platform\MySQLPlatform;
 use Subapp\Sql\Query\Builder;
 use Subapp\Sql\Query\Query;
 use Subapp\Sql\Query\Recognizer;
@@ -30,7 +29,7 @@ $node->setRecognizer($recognizer);
 $qb = new Query($node);
 $qb->from('Users', 'U');
 $qb->from("Table1");
-$qb->select('users.id uid, test.id', 'test.created dt');
+$qb->select('users.id uid, test.id');
 
 //$qb->where('count(a.id) > 1 and b < 10');
 //$qb->where('count(a.id)');
@@ -56,12 +55,12 @@ $qb->join('users2', 'U2', 'U2.id != U.id');
 
 $qb->where($c, false);
 
-$qb->group('a.id, u.id')->order('a.id asc, b.id desc, rand()', 'a.test desc');
+//$qb->group('a.id, u.id')->order('a.id asc, b.id desc, rand()', 'a.test desc');
 
-$qb->order('t1.uid desc');
-$qb->order('t1.`uid` desc');
-$qb->order('`t2`.uid desc');
-$qb->order('`u`.`id` desc');
+$qb->order('profiles.likes desc');
+//$qb->order('t1.`uid` desc');
+//$qb->order('`t2`.uid desc');
+//$qb->order('`u`.`id` desc');
 
 //$c->add($node->ne(1, 'u.id'));
 
