@@ -1,11 +1,209 @@
 {
-    "node": "STMT_INSERT",
-    "insertType": 6,
+    "node": "STMT_SELECT",
     "modifiers": {
         "node": "MODIFIERS",
-        "modifiers": 8
+        "modifiers": 0
     },
-    "tableReference": {
+    "arguments": {
+        "node": "ARGS",
+        "wrapped": false,
+        "classKey": "Root.NodeInterface",
+        "nodes": [
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "FIELD_PATH",
+                    "field": {
+                        "node": "IDENTIFIER",
+                        "identifier": "amadeus_lss_user"
+                    },
+                    "table": {
+                        "node": "IDENTIFIER",
+                        "identifier": "u"
+                    }
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "lss_user"
+                }
+            },
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "FIELD_PATH",
+                    "field": {
+                        "node": "IDENTIFIER",
+                        "identifier": "resellerCode"
+                    },
+                    "table": {
+                        "node": "IDENTIFIER",
+                        "identifier": "r"
+                    }
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "code"
+                }
+            },
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "FIELD_PATH",
+                    "field": {
+                        "node": "IDENTIFIER",
+                        "identifier": "username"
+                    },
+                    "table": {
+                        "node": "IDENTIFIER",
+                        "identifier": "u"
+                    }
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "name"
+                }
+            },
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "FIELD_PATH",
+                    "field": {
+                        "node": "IDENTIFIER",
+                        "identifier": "hqAmadeusId"
+                    },
+                    "table": {
+                        "node": "IDENTIFIER",
+                        "identifier": "h"
+                    }
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "office_id"
+                }
+            },
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "LITERAL",
+                    "value": "CSP",
+                    "type": 1
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "csp"
+                }
+            },
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "LITERAL",
+                    "value": "AVH",
+                    "type": 1
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "avh"
+                }
+            },
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "FUNC_DEFAULT",
+                    "name": {
+                        "node": "IDENTIFIER",
+                        "identifier": "CONCAT"
+                    },
+                    "args": {
+                        "node": "ARGS",
+                        "wrapped": false,
+                        "classKey": "Root.NodeInterface",
+                        "nodes": [
+                            {
+                                "node": "FIELD_PATH",
+                                "field": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "resellerCode"
+                                },
+                                "table": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "r"
+                                }
+                            },
+                            {
+                                "node": "LITERAL",
+                                "value": ":",
+                                "type": 1
+                            },
+                            {
+                                "node": "FIELD_PATH",
+                                "field": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "username"
+                                },
+                                "table": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "u"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "source_id"
+                }
+            },
+            {
+                "node": "VARIABLE",
+                "expression": {
+                    "node": "FUNC_DEFAULT",
+                    "name": {
+                        "node": "IDENTIFIER",
+                        "identifier": "CONCAT"
+                    },
+                    "args": {
+                        "node": "ARGS",
+                        "wrapped": false,
+                        "classKey": "Root.NodeInterface",
+                        "nodes": [
+                            {
+                                "node": "FIELD_PATH",
+                                "field": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "amadeus_lss_user"
+                                },
+                                "table": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "u"
+                                }
+                            },
+                            {
+                                "node": "LITERAL",
+                                "value": ":",
+                                "type": 1
+                            },
+                            {
+                                "node": "FIELD_PATH",
+                                "field": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "hqAmadeusId"
+                                },
+                                "table": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "h"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "target_id"
+                }
+            }
+        ]
+    },
+    "reference": {
         "node": "STMT_TABLE_REFERENCE",
         "wrapped": false,
         "classKey": "Root.NodeInterface",
@@ -14,204 +212,226 @@
                 "node": "VARIABLE",
                 "expression": {
                     "node": "IDENTIFIER",
-                    "identifier": "student"
+                    "identifier": "reseller_user"
                 },
-                "alias": null
+                "alias": {
+                    "node": "IDENTIFIER",
+                    "identifier": "u"
+                }
             }
         ],
-        "prefix": "INTO"
+        "prefix": "FROM"
     },
-    "assignment": {
-        "node": "STMT_SET",
+    "joins": {
+        "node": "STMT_JOIN_ITEMS",
         "wrapped": false,
-        "classKey": "Stmt.Assignment",
-        "nodes": []
+        "classKey": "Stmt.Join",
+        "nodes": [
+            {
+                "node": "STMT_JOIN",
+                "type": "INNER",
+                "conditionType": "ON",
+                "left": {
+                    "node": "VARIABLE",
+                    "expression": {
+                        "node": "IDENTIFIER",
+                        "identifier": "reseller"
+                    },
+                    "alias": {
+                        "node": "IDENTIFIER",
+                        "identifier": "r"
+                    }
+                },
+                "condition": {
+                    "node": "CONDITION_CMP",
+                    "left": {
+                        "node": "FIELD_PATH",
+                        "field": {
+                            "node": "IDENTIFIER",
+                            "identifier": "idParent"
+                        },
+                        "table": {
+                            "node": "IDENTIFIER",
+                            "identifier": "u"
+                        }
+                    },
+                    "operator": {
+                        "node": "CONDITION_CMP_OPERATOR",
+                        "value": "="
+                    },
+                    "right": {
+                        "node": "FIELD_PATH",
+                        "field": {
+                            "node": "IDENTIFIER",
+                            "identifier": "id"
+                        },
+                        "table": {
+                            "node": "IDENTIFIER",
+                            "identifier": "r"
+                        }
+                    }
+                }
+            },
+            {
+                "node": "STMT_JOIN",
+                "type": "INNER",
+                "conditionType": "ON",
+                "left": {
+                    "node": "VARIABLE",
+                    "expression": {
+                        "node": "IDENTIFIER",
+                        "identifier": "reseller_headquarters"
+                    },
+                    "alias": {
+                        "node": "IDENTIFIER",
+                        "identifier": "h"
+                    }
+                },
+                "condition": {
+                    "node": "CONDITION_CONDITIONS",
+                    "wrapped": false,
+                    "classKey": "Root.NodeInterface",
+                    "nodes": [
+                        {
+                            "node": "CONDITION_CMP",
+                            "left": {
+                                "node": "FIELD_PATH",
+                                "field": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "id"
+                                },
+                                "table": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "r"
+                                }
+                            },
+                            "operator": {
+                                "node": "CONDITION_CMP_OPERATOR",
+                                "value": "="
+                            },
+                            "right": {
+                                "node": "FIELD_PATH",
+                                "field": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "idReseller"
+                                },
+                                "table": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "h"
+                                }
+                            }
+                        },
+                        {
+                            "node": "CONDITION_CMP",
+                            "left": {
+                                "node": "FIELD_PATH",
+                                "field": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "is_main_office"
+                                },
+                                "table": {
+                                    "node": "IDENTIFIER",
+                                    "identifier": "h"
+                                }
+                            },
+                            "operator": {
+                                "node": "CONDITION_CMP_OPERATOR",
+                                "value": "="
+                            },
+                            "right": {
+                                "node": "LITERAL",
+                                "value": "1",
+                                "type": 3
+                            }
+                        }
+                    ],
+                    "operator": {
+                        "node": "CONDITION_LOGIC_OPERATOR",
+                        "value": "AND"
+                    }
+                }
+            }
+        ]
     },
-    "fields": {
-        "node": "ARGS",
-        "wrapped": true,
+    "where": {
+        "node": "STMT_WHERE",
+        "wrapped": false,
         "classKey": "Root.NodeInterface",
         "nodes": [
             {
-                "node": "VARIABLE",
-                "expression": {
-                    "node": "QUOTE_IDENTIFIER",
-                    "identifier": "name",
-                    "quote": "`"
+                "node": "CONDITION_IS_NULL",
+                "left": {
+                    "node": "FIELD_PATH",
+                    "field": {
+                        "node": "IDENTIFIER",
+                        "identifier": "amadeus_lss_user"
+                    },
+                    "table": {
+                        "node": "IDENTIFIER",
+                        "identifier": "u"
+                    }
                 },
-                "alias": null
+                "isNot": true
             },
             {
-                "node": "VARIABLE",
-                "expression": {
-                    "node": "IDENTIFIER",
-                    "identifier": "age"
+                "node": "CONDITION_CMP",
+                "left": {
+                    "node": "FIELD_PATH",
+                    "field": {
+                        "node": "IDENTIFIER",
+                        "identifier": "hqAmadeusId"
+                    },
+                    "table": {
+                        "node": "IDENTIFIER",
+                        "identifier": "h"
+                    }
                 },
-                "alias": null
-            },
-            {
-                "node": "VARIABLE",
-                "expression": {
-                    "node": "IDENTIFIER",
-                    "identifier": "phone"
+                "operator": {
+                    "node": "CONDITION_CMP_OPERATOR",
+                    "value": "<>"
                 },
-                "alias": null
+                "right": {
+                    "node": "LITERAL",
+                    "value": "",
+                    "type": 1
+                }
             }
-        ]
+        ],
+        "operator": {
+            "node": "CONDITION_LOGIC_OPERATOR",
+            "value": "AND"
+        }
+    },
+    "groupBy": {
+        "node": "STMT_GROUP_BY",
+        "wrapped": false,
+        "classKey": "Root.NodeInterface",
+        "nodes": []
+    },
+    "having": {
+        "node": "STMT_HAVING",
+        "wrapped": false,
+        "classKey": "Root.NodeInterface",
+        "nodes": [],
+        "operator": {
+            "node": "CONDITION_LOGIC_OPERATOR",
+            "value": "AND"
+        }
+    },
+    "orderBy": {
+        "node": "STMT_ORDER_BY_ITEMS",
+        "wrapped": false,
+        "classKey": "Stmt.OrderBy",
+        "nodes": []
+    },
+    "limit": {
+        "node": "STMT_LIMIT",
+        "offset": null,
+        "length": null
     },
     "semicolon": {
         "node": "LITERAL",
-        "value": false,
+        "value": true,
         "type": 2
-    },
-    "valueList": {
-        "node": "ARGS",
-        "wrapped": false,
-        "classKey": "Root.Arguments",
-        "nodes": [
-            {
-                "node": "ARGS",
-                "wrapped": true,
-                "classKey": "Root.NodeInterface",
-                "nodes": [
-                    {
-                        "node": "LITERAL",
-                        "value": "Mike",
-                        "type": 1
-                    },
-                    {
-                        "node": "LITERAL",
-                        "value": "25",
-                        "type": 3
-                    },
-                    {
-                        "node": "LITERAL",
-                        "value": "345-65-78",
-                        "type": 1
-                    }
-                ]
-            },
-            {
-                "node": "ARGS",
-                "wrapped": true,
-                "classKey": "Root.NodeInterface",
-                "nodes": [
-                    {
-                        "node": "FUNC_DEFAULT",
-                        "name": {
-                            "node": "IDENTIFIER",
-                            "identifier": "Concat"
-                        },
-                        "args": {
-                            "node": "ARGS",
-                            "wrapped": false,
-                            "classKey": "Root.NodeInterface",
-                            "nodes": [
-                                {
-                                    "node": "LITERAL",
-                                    "value": "U_ID",
-                                    "type": 1
-                                },
-                                {
-                                    "node": "FIELD_PATH",
-                                    "field": {
-                                        "node": "IDENTIFIER",
-                                        "identifier": "id"
-                                    },
-                                    "table": {
-                                        "node": "IDENTIFIER",
-                                        "identifier": "U"
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "node": "ARITHMETIC",
-                        "wrapped": false,
-                        "classKey": "Root.NodeInterface",
-                        "nodes": [
-                            {
-                                "node": "ARITHMETIC",
-                                "wrapped": false,
-                                "classKey": "Root.NodeInterface",
-                                "nodes": [
-                                    {
-                                        "node": "LITERAL",
-                                        "value": "25",
-                                        "type": 3
-                                    },
-                                    {
-                                        "node": "MATH_OPERATOR",
-                                        "value": "\/"
-                                    },
-                                    {
-                                        "node": "FUNC_DEFAULT",
-                                        "name": {
-                                            "node": "IDENTIFIER",
-                                            "identifier": "Cos"
-                                        },
-                                        "args": {
-                                            "node": "ARGS",
-                                            "wrapped": false,
-                                            "classKey": "Root.NodeInterface",
-                                            "nodes": [
-                                                {
-                                                    "node": "LITERAL",
-                                                    "value": "3.14",
-                                                    "type": 4
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "node": "LITERAL",
-                        "value": "345-65-78",
-                        "type": 1
-                    }
-                ]
-            },
-            {
-                "node": "ARGS",
-                "wrapped": true,
-                "classKey": "Root.NodeInterface",
-                "nodes": [
-                    {
-                        "node": "LITERAL",
-                        "value": "John",
-                        "type": 1
-                    },
-                    {
-                        "node": "ARITHMETIC",
-                        "wrapped": false,
-                        "classKey": "Root.NodeInterface",
-                        "nodes": [
-                            {
-                                "node": "LITERAL",
-                                "value": "5000",
-                                "type": 3
-                            },
-                            {
-                                "node": "MATH_OPERATOR",
-                                "value": "+"
-                            },
-                            {
-                                "node": "IDENTIFIER",
-                                "identifier": "id"
-                            }
-                        ]
-                    },
-                    {
-                        "node": "LITERAL",
-                        "value": "345-65-78",
-                        "type": 1
-                    }
-                ]
-            }
-        ]
     }
 }

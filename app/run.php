@@ -9,7 +9,7 @@ use Subapp\Sql\Query\Recognizer;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-$sqlVersion = 'Insert';
+$sqlVersion = 'Select1';
 
 $sql = file_get_contents(sprintf('%s/sql/%s.sql', __DIR__, $sqlVersion));
 
@@ -49,91 +49,91 @@ try {
     /** @var \Subapp\Sql\Ast\Stmt\Select $ast */
     $time = microtime(true);
     $ast = $processor->parse();
-    $parseTime = microtime(true) - $time;
+//    $parseTime = microtime(true) - $time;
     $renderer = new \Subapp\Sql\Converter\Converter();
     $renderer->setup(new \Subapp\Sql\Converter\DefaultConverterSetup());
-    $processor->setLexer(new Lexer());
-    $recognizer = new Recognizer($processor, Recognizer::COMMON);
-    $builder = new \Subapp\Sql\Query\Builder();
-    $builder->setRecognizer($recognizer);
-    
-    $query = new \Subapp\Sql\Query\Query($builder);
-    
-    $query->setConverter($renderer);
-    
-    ////// Update
-    $query->update('users U')->delayed();
-    $query->sets([
-        'name' => 'John',
-        'date' => '2018-01-01',
-        'hits' => $builder->sql('sum(U.hit)')
-    ]);
-    
-    $where = $builder->and(
-        $builder->or('U.id > 2', 'U.id < len(U.email)'),
-        $builder->or('U.id < 0', 'U.id > len(U.name)', $builder->eq('x', $builder->sql('len(x)')))
-    );
-    
-    $query->where($where);
-//    $query->where(null);
-
-    var_dump($query->getConverter()->toSql($query->getRoot()->getWhere()));
-    
-    echo $query->getSql() . PHP_EOL;
-    
-    ///////// Insert
-    $query->reset();
-    
-    $query->insert('users U')->ignore();
-    $query->fields('U.name', 'created');
-    $query->values([
-        ['tedd', '2019-01-01'],
-    ]);
-    $query->values([
-        ['john', $builder->sql('now()')],
-        ['nedd', '2019-01-01'],
-    ]);
-
-    echo $renderer->toSql($query->getAst()) . PHP_EOL;
-    
-    ////// Select
-    $query->reset();
-    
-    $query->select('users')->noCache();
-    $query->columns('test', 'id', 'created', 'count(*) cnt');
-    $query->where('id = 1');
-    
-    echo $query->getSql() . PHP_EOL;
-    
-    ////// Delete
-    $query->reset();
-    
-    $query->delete('users U')->quick();
-    $query->where(
-        $builder->or(
-            'U.id = 1',
-            $builder->ge('U.id', 1000),
-            $builder->ge('U.access',
-                $builder->sql('rand()'
-                )
-            ))
-    );
-    $query->limit(1);
-
-    echo $renderer->toSql($query->getAst()) . PHP_EOL;
-
-
+//    $processor->setLexer(new Lexer());
+//    $recognizer = new Recognizer($processor, Recognizer::COMMON);
+//    $builder = new \Subapp\Sql\Query\Builder();
+//    $builder->setRecognizer($recognizer);
 //
-//    $query->setRoot($ast->getRoot());
-
-//    var_dump($ast);
-
-//    $query->crossJoin('asd', 'aa', 'aa.id');
-    
-    $time = microtime(true);
+//    $query = new \Subapp\Sql\Query\Query($builder);
+//
+//    $query->setConverter($renderer);
+//
+//    ////// Update
+//    $query->update('users U')->delayed();
+//    $query->sets([
+//        'name' => 'John',
+//        'date' => '2018-01-01',
+//        'hits' => $builder->sql('sum(U.hit)')
+//    ]);
+//
+//    $where = $builder->and(
+//        $builder->or('U.id > 2', 'U.id < len(U.email)'),
+//        $builder->or('U.id < 0', 'U.id > len(U.name)', $builder->eq('x', $builder->sql('len(x)')))
+//    );
+//
+//    $query->where($where);
+////    $query->where(null);
+//
+////    var_dump($query->getConverter()->toSql($query->getRoot()->getWhere()));
+//
+//    echo $query->getSql() . PHP_EOL;
+//
+//    ///////// Insert
+//    $query->reset();
+//
+//    $query->insert('users U')->ignore();
+//    $query->fields('U.name', 'created');
+//    $query->values([
+//        ['tedd', '2019-01-01'],
+//    ]);
+//    $query->values([
+//        ['john', $builder->sql('now()')],
+//        ['nedd', '2019-01-01'],
+//    ]);
+//
+//    echo $renderer->toSql($query->getAst()) . PHP_EOL;
+//
+//    ////// Select
+//    $query->reset();
+//
+//    $query->select('users')->noCache();
+//    $query->columns('test', 'id', 'created', 'count(*) cnt');
+//    $query->where('id = 1');
+//
+//    echo $query->getSql() . PHP_EOL;
+//
+//    ////// Delete
+//    $query->reset();
+//
+//    $query->delete('users U')->quick();
+//    $query->where(
+//        $builder->or(
+//            'U.id = 1',
+//            $builder->ge('U.id', 1000),
+//            $builder->ge('U.access',
+//                $builder->sql('rand()'
+//                )
+//            ))
+//    );
+//    $query->limit(1);
+//
+//    echo $renderer->toSql($query->getAst()) . PHP_EOL;
+//
+//
+////
+////    $query->setRoot($ast->getRoot());
+//
+////    var_dump($ast);
+//
+////    $query->crossJoin('asd', 'aa', 'aa.id');
+//
+//    $time = microtime(true);
     $class = get_class($ast);
-//    file_put_contents(__DIR__ . '/select.json', json_encode($renderer->toArray($ast), 128));
-    
+////    file_put_contents(__DIR__ . '/select.json', json_encode($renderer->toArray($ast), 128));
+//
     echo "\n====== [{$class}] AST Converter ======\n";
 //    var_dump($ast);
     echo $renderer->toSql($ast);

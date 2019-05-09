@@ -35,6 +35,9 @@ class Join extends AbstractDefaultParser
             case $lexer->toToken(Lexer::T_RIGHT):
                 $join->setJoinType(JoinExpression::RIGHT);
                 break;
+            case $lexer->isNext(Lexer::T_JOIN):
+                $join->setJoinType(JoinExpression::INNER);
+                break;
             default:
                 $this->throwSyntaxError($lexer, Lexer::T_INNER, Lexer::T_LEFT, Lexer::T_RIGHT);
         }
